@@ -8,6 +8,6 @@
 
         public virtual Project Project { get; set; }
         public virtual Group Group { get; set; }
-        public virtual List<GroupProjectTask> GroupProjectTasks { get; set; }
+        public virtual ICollection<GroupProjectTask> GroupProjectTasks { get; set; }
     }
 }

@@ -10,8 +10,8 @@
         public string Status { get; set; }
 
         public virtual User User { get; set; }
-        public virtual List<ProjectTask> ProjectTasks { get; set; }
-        public virtual List<GroupProject> GroupProjects { get; set; }
+        public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
+        public virtual ICollection<GroupProject> GroupProjects { get; set; }
 
     }
 }
