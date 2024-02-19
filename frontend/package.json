@@ -13,9 +13,14 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
     "@tauri-apps/api": "^1.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1"
   },
   "devDependencies": {
     "@pnpm/eslint-config": "^1.1.0",
