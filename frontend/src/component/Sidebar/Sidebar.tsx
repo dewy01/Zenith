@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   Toolbar,
+  Tooltip,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
@@ -22,25 +23,36 @@ const drawerWidth = 58;
 type DrawerProps = {
   link: string;
   children: React.ReactNode;
+  tooltip: string;
 };
 
-const DrawerLink = ({ link, children }: DrawerProps) => {
+const DrawerLink = ({ link, children, tooltip }: DrawerProps) => {
   const location = useLocation();
   const isActive = location.pathname === link;
   return (
-    <NavLink to={link} style={{ textDecoration: "none", color: "inherit" }}>
-      <ListItem
-        disablePadding
-        sx={(theme) => ({
-          backgroundColor: isActive ? theme.palette.grey[900] : "",
-          display: "flex",
-        })}
-      >
-        <ListItemButton>
-          <ListItemIcon>{children}</ListItemIcon>
-        </ListItemButton>
-      </ListItem>
-    </NavLink>
+    <Tooltip title={tooltip} placement="right">
+      <NavLink to={link} style={{ textDecoration: "none", color: "inherit" }}>
+        <ListItem
+          disablePadding
+          sx={(theme) => ({
+            backgroundColor: isActive ? theme.palette.primary.main : "",
+            display: "flex",
+          })}
+        >
+          <ListItemButton>
+            <ListItemIcon
+              sx={(theme) => ({
+                color: isActive
+                  ? theme.palette.common.black
+                  : theme.palette.common.white,
+              })}
+            >
+              {children}
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
+      </NavLink>
+    </Tooltip>
   );
 };
 
@@ -55,6 +67,7 @@ export const Sidebar = () => {
           overflowX: "hidden",
           display: "flex",
           justifyContent: "space-between",
+          flexGrow: 1,
         },
       }}
       open
@@ -63,34 +76,34 @@ export const Sidebar = () => {
         <Toolbar></Toolbar>
         <Divider />
         <List sx={{ display: "flex", flexDirection: "column", gap: "2vh" }}>
-          <DrawerLink link="/home">
+          <DrawerLink link="/home" tooltip="Home">
             <HomeIcon />
           </DrawerLink>
 
-          <DrawerLink link="/projects">
+          <DrawerLink link="/projects" tooltip="Projects">
             <CheckBoxOutlinedIcon />
           </DrawerLink>
 
-          <DrawerLink link="/calendar">
+          <DrawerLink link="/calendar" tooltip="Calendar">
             <CalendarMonthIcon />
           </DrawerLink>
 
-          <DrawerLink link="/notes">
+          <DrawerLink link="/notes" tooltip="Notes">
             <InsertDriveFileIcon />
           </DrawerLink>
 
-          <DrawerLink link="/kanban">
+          <DrawerLink link="/kanban" tooltip="Kanban Board">
             <ViewKanbanIcon />
           </DrawerLink>
 
-          <DrawerLink link="/groups">
+          <DrawerLink link="/groups" tooltip="Group Projects">
             <PersonIcon />
           </DrawerLink>
         </List>
         <Divider />
       </Box>
       <List>
-        <DrawerLink link="/settings">
+        <DrawerLink link="/settings" tooltip="Settings">
           <SettingsIcon />
         </DrawerLink>
       </List>
