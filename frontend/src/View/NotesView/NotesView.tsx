@@ -25,7 +25,7 @@ export const NotesView = () => {
             </IconButton>
           </Box>
           <SearchField />
-          <DrawerLink link={"/notes"}>
+          <DrawerLink link={"/register"}>
             <Box display={"flex"} flexDirection={"column"} gap={1} padding={2}>
               <Typography>Title</Typography>
               <Typography variant="caption">31/12/2024, 21:51</Typography>
