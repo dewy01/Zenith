@@ -1,7 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./component/Router";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import { dark, light } from "./component/Theme";
+import darkScrollbar from "@mui/material/darkScrollbar";
 
 document.addEventListener(
   "auxclick",
@@ -17,6 +18,7 @@ const App = () => {
       <BrowserRouter>
         <Router />
         <CssBaseline />
+        <GlobalStyles styles={{ ...darkScrollbar() }} />
       </BrowserRouter>
     </ThemeProvider>
   );

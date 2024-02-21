@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "../Layout";
 import { ErrorView, NotFoundView } from "../../View/Errors";
+import { NotesView } from "../../View/NotesView";
 
 export const Router = () => {
   return (
@@ -23,7 +24,11 @@ export const Router = () => {
             element={<></>}
             errorElement={<ErrorView />}
           />
-          <Route path="/notes" element={<></>} errorElement={<ErrorView />} />
+          <Route
+            path="/notes"
+            element={<NotesView />}
+            errorElement={<ErrorView />}
+          />
           <Route path="/kanban" element={<></>} errorElement={<ErrorView />} />
           <Route path="/groups" element={<></>} errorElement={<ErrorView />} />
           {/* <Route path="/settings" element={<></>} /> */}
