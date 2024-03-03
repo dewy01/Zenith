@@ -28,6 +28,10 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
     control: control,
     name: "password",
   });
+  const passwordConfirm = useController({
+    control: control,
+    name: "passwordConfirm",
+  });
 
   return (
     <Box
@@ -78,6 +82,20 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           inputRef={password.field.ref}
           error={errors.password !== undefined}
           helperText={errors.password?.message ?? ""}
+        />
+
+        <TextField
+          sx={{ width: "240px" }}
+          label="Confirm Password"
+          type="password"
+          autoComplete="off"
+          name={passwordConfirm.field.name}
+          value={passwordConfirm.field.value}
+          onChange={passwordConfirm.field.onChange}
+          onBlur={passwordConfirm.field.onBlur}
+          inputRef={passwordConfirm.field.ref}
+          error={errors.passwordConfirm !== undefined}
+          helperText={errors.passwordConfirm?.message ?? ""}
         />
       </Stack>
     </Box>

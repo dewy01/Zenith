@@ -5,14 +5,25 @@ import { registerFormSchema } from "./schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NavLink } from "react-router-dom";
+import { mutateUserRegister } from "../../api/query";
 
 export const RegisterView = () => {
   const form = useForm<registerFormSchema>({
-    defaultValues: { id: -1, username: "", email: "", password: "" },
+    defaultValues: {
+      id: -1,
+      username: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
     resolver: zodResolver(registerFormSchema),
   });
+  const { mutateAsync } = mutateUserRegister();
 
-  const handleSubmit = (data: registerFormSchema) => console.log(data);
+  const handleSubmit = (data: registerFormSchema) => {
+    mutateAsync(data);
+    form.reset();
+  };
 
   return (
     <Box

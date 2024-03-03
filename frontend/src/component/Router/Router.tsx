@@ -4,6 +4,31 @@ import { ErrorView, NotFoundView } from "../../View/Errors";
 import { NotesView } from "../../View/NotesView";
 import { RegisterView } from "../../View/RegisterView";
 import { LoginView } from "../../View/LoginView";
+import { ReactNode } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { Box } from "@mui/material";
+
+type Props = { children: ReactNode };
+
+const PrivateRoute = ({ children }: Props) => {
+  const { isAuthenticated } = useAuth();
+
+  return isAuthenticated ? (
+    <Box>{children}</Box>
+  ) : (
+    <Navigate to={"/register"} replace={true} />
+  );
+};
+
+const AuthPrevent = ({ children }: Props) => {
+  const { isAuthenticated } = useAuth();
+
+  return isAuthenticated ? (
+    <Navigate to={"/home"} replace={true} />
+  ) : (
+    <Box>{children}</Box>
+  );
+};
 
 export const Router = () => {
   return (
@@ -15,24 +40,60 @@ export const Router = () => {
             element={<Navigate to="/home" />}
             errorElement={<ErrorView />}
           />
-          <Route path="/home" element={<></>} errorElement={<ErrorView />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
           <Route
             path="/projects"
-            element={<></>}
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
             errorElement={<ErrorView />}
           />
           <Route
             path="/calendar"
-            element={<></>}
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
             errorElement={<ErrorView />}
           />
           <Route
             path="/notes"
-            element={<NotesView />}
+            element={
+              <PrivateRoute>
+                <NotesView />
+              </PrivateRoute>
+            }
             errorElement={<ErrorView />}
           />
-          <Route path="/kanban" element={<></>} errorElement={<ErrorView />} />
-          <Route path="/groups" element={<></>} errorElement={<ErrorView />} />
+          <Route
+            path="/kanban"
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
+          <Route
+            path="/groups"
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
           {/* <Route path="/settings" element={<></>} /> */}
         </Route>
         <Route
@@ -42,12 +103,20 @@ export const Router = () => {
         />
         <Route
           path="/register"
-          element={<RegisterView />}
+          element={
+            <AuthPrevent>
+              <RegisterView />
+            </AuthPrevent>
+          }
           errorElement={<ErrorView />}
         />
         <Route
           path="/login"
-          element={<LoginView />}
+          element={
+            <AuthPrevent>
+              <LoginView />
+            </AuthPrevent>
+          }
           errorElement={<ErrorView />}
         />
       </Routes>

@@ -4,15 +4,20 @@ import { FORM_ID, LoginForm } from "./LoginForm";
 import { loginFormSchema } from "./schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { mutateUserLogin } from "../../api/query";
 
 export const LoginView = () => {
   const form = useForm<loginFormSchema>({
     defaultValues: { email: "", password: "" },
     resolver: zodResolver(loginFormSchema),
   });
+  const { mutateAsync } = mutateUserLogin();
 
-  const handleSubmit = (data: loginFormSchema) => console.log(data);
+  const handleSubmit = (data: loginFormSchema) => {
+    mutateAsync(data);
+    form.reset();
+  };
 
   return (
     <Box
