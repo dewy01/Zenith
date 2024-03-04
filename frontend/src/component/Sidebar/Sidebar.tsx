@@ -28,7 +28,7 @@ type DrawerProps = {
 
 const DrawerLink = ({ link, children, tooltip }: DrawerProps) => {
   const location = useLocation();
-  const isActive = location.pathname === link;
+  const isActive = location.pathname.includes(link);
   return (
     <Tooltip title={tooltip} placement="right">
       <NavLink to={link} style={{ textDecoration: "none", color: "inherit" }}>

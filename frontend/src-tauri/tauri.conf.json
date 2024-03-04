@@ -21,9 +21,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Taskify",
-        "width": 800,
-        "height": 600
+        "title": "Omnify",
+        "width": 1000,
+        "height": 800
       }
     ],
     "security": {

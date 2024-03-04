@@ -5,6 +5,7 @@ import { dark, light } from "./component/Theme";
 import darkScrollbar from "@mui/material/darkScrollbar";
 import { AuthProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SnackbarProvider } from "notistack";
 
 const queryClient = new QueryClient();
 
@@ -18,17 +19,24 @@ document.addEventListener(
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ThemeProvider theme={dark}>
-          <BrowserRouter>
-            <Router />
-            <CssBaseline />
-            <GlobalStyles styles={{ ...darkScrollbar() }} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <SnackbarProvider
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ThemeProvider theme={dark}>
+            <BrowserRouter>
+              <Router />
+              <CssBaseline />
+              <GlobalStyles styles={{ ...darkScrollbar() }} />
+            </BrowserRouter>
+          </ThemeProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </SnackbarProvider>
   );
 };
 

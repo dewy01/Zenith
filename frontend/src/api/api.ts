@@ -11,5 +11,5 @@ export const postUserRegister = async (userData: registerFormSchema) => {
 };
 
 export const postUserLogin = async (userData: loginFormSchema) => {
-    return (await axiosInstance.post('/api/account/login',userData).then());
+    return (await axiosInstance.post('/api/account/login',userData));
 };

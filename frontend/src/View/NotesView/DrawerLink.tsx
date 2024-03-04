@@ -8,7 +8,7 @@ type DrawerProps = {
 
 export const DrawerLink = ({ link, children }: DrawerProps) => {
   const location = useLocation();
-  const isActive = location.pathname === link;
+  const isActive = location.pathname.includes(link);
   return (
     <NavLink to={link} style={{ textDecoration: "none", color: "inherit" }}>
       <ListItem

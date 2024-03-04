@@ -75,7 +75,20 @@ export const Router = () => {
               </PrivateRoute>
             }
             errorElement={<ErrorView />}
-          />
+          >
+            <Route
+              path="/notes/:id"
+              element={
+                <PrivateRoute>
+                  <>
+                    xdxasdasddasdasdasdx asdasdsaasdsadas asdsadasadssad
+                    asdasdasdasda asdasdas
+                  </>
+                </PrivateRoute>
+              }
+              errorElement={<ErrorView />}
+            />
+          </Route>
           <Route
             path="/kanban"
             element={

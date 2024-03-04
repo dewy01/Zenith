@@ -9,6 +9,7 @@ export const Main = ({ children, sx, ...rest }: BoxProps) => {
         display: "flex",
         flexDirection: "column",
         padding: theme.spacing(3),
+        paddingLeft: theme.spacing(28),
       })}
       {...rest}
     >
