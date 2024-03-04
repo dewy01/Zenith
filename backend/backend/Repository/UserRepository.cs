@@ -91,16 +91,16 @@ namespace backend.Repository
         public async Task<string> GenerateJwt(LoginUserDto dto)
         {
             var user = await _context.Users
-                .SingleOrDefaultAsync(x => x.Email == dto.Email);
+                .SingleOrDefaultAsync(x => x.Email == dto.Email && x.RoleId != 1);
             if (user is null)
             {
-                throw new Exception("Invalid username or password or email not confirmed");
+                throw new Exception("This email is not verified");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.Password, dto.Password);
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new Exception("Invalid username or password");
+                throw new Exception("Invalid credentials");
             }
 
             var claims = new List<Claim>()

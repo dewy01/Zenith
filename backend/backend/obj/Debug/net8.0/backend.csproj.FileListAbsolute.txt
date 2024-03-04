@@ -137,3 +137,4 @@ C:\Users\dawid\Desktop\Praca-inzynierska\Projekt\taskify\backend\backend\bin\Deb
 C:\Users\dawid\Desktop\Praca-inzynierska\Projekt\taskify\backend\backend\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\dawid\Desktop\Praca-inzynierska\Projekt\taskify\backend\backend\bin\Debug\net8.0\FluentValidation.dll
 C:\Users\dawid\Desktop\Praca-inzynierska\Projekt\taskify\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\dawid\Desktop\Praca-inzynierska\Projekt\taskify\backend\backend\bin\Debug\net8.0\AutoMapper.dll

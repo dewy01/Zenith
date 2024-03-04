@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "PaRY33hbiU/RWZJuZ/vHtsDhwffrZY4mIgDuRtyH7+U+S/uAFLV9SoerE1aKcK8T0jX8K8lUExQh+sdcFM1w/Q==",
+  "dgSpecHash": "ZAYHWrV/Mnjq/FVLvBnWgd/Rm5uJ+jb1OgdV7mOg7G8mOyXxdEOufksWxA7aApWMJ9anYj+qhbqdOSNDQXNAHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\dawid\\Desktop\\Praca-inzynierska\\Projekt\\taskify\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\dawid\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\dawid\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\dawid\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\dawid\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
