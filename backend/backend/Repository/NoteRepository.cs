@@ -80,14 +80,13 @@ namespace backend.Repository
             var note = await _context.Notes.SingleOrDefaultAsync(note=>note.UserID == userId && note.NoteID == noteId);
             var noteDto = new EditNoteDto 
             { 
-                NoteID = note.NoteID,
                 Title = note.Title,
                 Content = note.Content,
             };
             return noteDto;
         }
 
-        public async Task UpdateNote(EditNoteDto dto)
+        public async Task UpdateNote(EditNoteDto dto, int noteId)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -95,7 +94,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == dto.NoteID);
+            var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
             note.Title = dto.Title;
             note.Content = dto.Content;
             await _context.SaveChangesAsync();

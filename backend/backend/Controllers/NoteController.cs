@@ -22,9 +22,9 @@ namespace backend.Controllers
             var notes = await _noteService.GetAllNotes();
             return await Task.FromResult(Ok(notes));
         }
-        [HttpGet("getNoteById")]
+        [HttpGet("getNoteById/{noteId}")]
         [Authorize]
-        public async Task<ActionResult<EditNoteDto>> GetNoteById(int noteId)
+        public async Task<ActionResult<EditNoteDto>> GetNoteById([FromRoute] int noteId)
         {
             var note = await _noteService.GetNoteById(noteId);
             return await Task.FromResult(Ok(note));
@@ -37,17 +37,17 @@ namespace backend.Controllers
             return await Task.FromResult(Ok());
         }
 
-        [HttpPatch("updateNote")]
+        [HttpPatch("updateNote/{noteId}")]
         [Authorize]
-        public async Task<ActionResult> updateNote(EditNoteDto dto)
+        public async Task<ActionResult> updateNote(EditNoteDto dto, [FromRoute] int noteId)
         {
-            await _noteService.UpdateNote(dto);
+            await _noteService.UpdateNote(dto,noteId);
             return await Task.FromResult(Ok());
         }
 
-        [HttpDelete("deleteNote")]
+        [HttpDelete("deleteNote/{noteId}")]
         [Authorize]
-        public async Task<ActionResult> deleteNote(int noteId)
+        public async Task<ActionResult> deleteNote([FromRoute] int noteId)
         {
             await _noteService.DeleteNote(noteId);
             return await Task.FromResult(Ok());

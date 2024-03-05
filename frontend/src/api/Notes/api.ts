@@ -2,11 +2,16 @@
 import axios from 'axios';
 import { BASE_URL } from '../../config/constants';
 
-export interface NoteList {
+export interface Note {
     noteID: number;
     title: string;
     content: string;
     createdAt: string;
+  }
+
+  export interface editNote {
+    title: string;
+    content: string;
   }
 
 const axiosInstance = axios.create({baseURL: BASE_URL});
@@ -23,9 +28,22 @@ axiosInstance.interceptors.request.use(
 
 export const queryAllNotes = async () => {
     const response = await axiosInstance.get('/api/notes/getAllNotes');
-    return response.data as NoteList[];
+    return response.data as Note[];
 };
 
 export const postAddNote = async () => {
     return (await axiosInstance.post('/api/notes/addNote'));
+};
+
+export const queryNoteByID = async (noteId : number) => {
+  const response = await axiosInstance.get(`/api/notes/getNoteById/${noteId}`);
+  return response.data as Note;
+};
+
+export const editNoteById = async (note: editNote,noteId : number) => {
+  return (await axiosInstance.patch(`/api/notes/editNote/${noteId}`,note));
+};
+
+export const deleteNoteById = async (noteId : number) => {
+  return (await axiosInstance.delete(`/api/notes/deleteNote/${noteId}`));
 };

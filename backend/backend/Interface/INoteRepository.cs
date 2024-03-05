@@ -9,7 +9,7 @@ namespace backend.Interface
         Task<EditNoteDto> GetNoteById(int noteId);
         Task<List<AllNotesDto>> GetAllNotes();
         Task AddNote();
-        Task UpdateNote(EditNoteDto dto);
+        Task UpdateNote(EditNoteDto dto, int noteId);
         Task DeleteNote(int noteId);
     }
 }
