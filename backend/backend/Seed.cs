@@ -36,12 +36,8 @@ namespace backend
                 var project2 = new Project { Title = "Project2", Description = "Description2", Deadline = DateTime.Now.AddDays(45), Status = "Active", User = user2 };
                 dataContext.Projects.AddRange(project1, project2);
 
-                var task1 = new Models.Task { Title = "Task1", Description = "Task description 1", Priority = 1, Deadline = DateTime.Now.AddDays(7), Category = "Category1", Status = "To Do", User = user1 };
-                var task2 = new Models.Task { Title = "Task2", Description = "Task description 2", Priority = 2, Deadline = DateTime.Now.AddDays(14), Category = "Category2", Status = "In Progress", User = user2 };
-                dataContext.Tasks.AddRange(task1, task2);
-
-                var groupProject1 = new GroupProject { Group = group1, Project = project1 };
-                var groupProject2 = new GroupProject { Group = group2, Project = project2 };
+                var groupProject1 = new GroupProject { Group = group1};
+                var groupProject2 = new GroupProject { Group = group2};
                 dataContext.GroupProjects.AddRange(groupProject1, groupProject2);
 
                 var groupProjectTask1 = new GroupProjectTask
@@ -52,7 +48,6 @@ namespace backend
                     Deadline = DateTime.Now.AddDays(20),
                     Category = "Category1",
                     Status = "In Progress",
-                    UserID = user1.UserID,
                     GroupProject = groupProject1
                 };
 
@@ -64,7 +59,6 @@ namespace backend
                     Deadline = DateTime.Now.AddDays(25),
                     Category = "Category2",
                     Status = "To Do",
-                    UserID = user1.UserID,
                     GroupProject = groupProject2
                 };
 

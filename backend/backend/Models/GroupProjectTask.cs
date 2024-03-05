@@ -10,7 +10,6 @@
         public DateTime Deadline { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
-        public int UserID { get; set; }
 
         public virtual GroupProject GroupProject { get; set; }
     }

@@ -37,6 +37,18 @@ namespace backend.Controllers
             string token = await _accountService.GenerateJwt(dto);
             return await Task.FromResult(Ok(token));
         }
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            await _accountService.ForgotPassword(email);
+            return await Task.FromResult(Ok());
+        }
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+            await _accountService.ResetPassword(dto);
+            return await Task.FromResult(Ok());
+        }
 
     }
 }

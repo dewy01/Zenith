@@ -45,9 +45,16 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public void DeleteNote(int noteId)
+        public async Task DeleteNote(int noteId)
         {
-            throw new NotImplementedException();
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null) 
+            {
+                throw new NotFoundException("User not found");
+            }
+            var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            _context.Remove(note);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<AllNotesDto>> GetAllNotes()
@@ -62,14 +69,37 @@ namespace backend.Repository
             return noteDtos;
         }
 
-        public Note GetNoteById(int noteId)
+        public async Task<EditNoteDto> GetNoteById(int noteId)
         {
-            throw new NotImplementedException();
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var note = await _context.Notes.SingleOrDefaultAsync(note=>note.UserID == userId && note.NoteID == noteId);
+            var noteDto = new EditNoteDto 
+            { 
+                NoteID = note.NoteID,
+                Title = note.Title,
+                Content = note.Content,
+            };
+            return noteDto;
         }
 
-        public void UpdateNote(Note note)
+        public async Task UpdateNote(EditNoteDto dto)
         {
-            throw new NotImplementedException();
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == dto.NoteID);
+            note.Title = dto.Title;
+            note.Content = dto.Content;
+            await _context.SaveChangesAsync();
+
         }
     }
 }

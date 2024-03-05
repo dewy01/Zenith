@@ -6,10 +6,10 @@ namespace backend.Interface
 {
     public interface INoteRepository
     {
-        Note GetNoteById(int noteId);
+        Task<EditNoteDto> GetNoteById(int noteId);
         Task<List<AllNotesDto>> GetAllNotes();
         Task AddNote();
-        void UpdateNote(Note note);
-        void DeleteNote(int noteId);
+        Task UpdateNote(EditNoteDto dto);
+        Task DeleteNote(int noteId);
     }
 }

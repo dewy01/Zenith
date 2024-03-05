@@ -91,7 +91,7 @@ namespace backend.Repository
         public async Task<string> GenerateJwt(LoginUserDto dto)
         {
             var user = await _context.Users
-                .SingleOrDefaultAsync(x => x.Email == dto.Email && x.RoleId != 1);
+                .SingleOrDefaultAsync(x => x.Email == dto.Email && x.Role.RoleName != "Unverified");
             if (user is null)
             {
                 throw new Exception("This email is not verified");
@@ -125,16 +125,45 @@ namespace backend.Repository
 
         public async Task<bool> VerifyEmail(string token)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => token == x.VerificationToken && x.RoleId == 1);
+            var user = await _context.Users.SingleOrDefaultAsync(x => token == x.VerificationToken && x.Role.RoleName == "Unverified");
             if (user is null)
             {
-                return await Task.FromResult(false);
+                throw new Exception("User not found");
             }
-            Role role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleID == 2);
+            Role role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName == "Verified");
             user.RoleId = role.RoleID;
             _context.Update(user);
             await _context.SaveChangesAsync();
             return await Task.FromResult(true);
+        }
+        public async Task ForgotPassword(string email)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.PasswordResetTime == null || DateTime.Now > x.PasswordResetTime);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            var token = CreateRandomToken();
+            user.PasswordResetTime = DateTime.Now.AddHours(1);
+            user.PasswordResetToken = token;
+            _context.Update(user);
+            await _emailSettings.SendEmailAsync(user.Email, "Password reset Token", token);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ResetPassword(ResetPasswordDto dto)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == dto.Email.ToLower() && x.PasswordResetToken == dto.ResetToken && DateTime.Now < x.PasswordResetTime );
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            var newPassword = _passwordHasher.HashPassword(user, dto.Password);
+            user.Password = newPassword;
+            user.PasswordResetToken = null;
+            user.PasswordResetTime = null;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

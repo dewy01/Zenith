@@ -1,13 +1,14 @@
-﻿using backend.Models;
+﻿using backend.Dto;
+using backend.Models;
 
 namespace backend.Interface
 {
     public interface IProjectRepository
     {
-        Project GetProjectById(int projectId);
-        List<Project> GetAllProjects();
-        void AddProject(Project project);
-        void UpdateProject(Project project);
-        void DeleteProject(int projectId);
+        Task<ProjectDto> GetProjectById(int projectId);
+        Task<IEnumerable<AllProjectsDto>> GetAllProjects();
+        Task AddProject(AddProjectDto project);
+        Task UpdateProject(EditProjectDto project);
+        Task DeleteProject(int projectId);
     }
 }
