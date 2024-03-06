@@ -1,7 +1,7 @@
 [package]
-name = "frontend"
+name = "Omnify"
 version = "0.0.1"
-description = "Omnify"
+description = "Productivity app"
 authors = ["you"]
 edition = "2021"
 

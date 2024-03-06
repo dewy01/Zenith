@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "frontend",
-    "version": "0.0.0"
+    "productName": "Omnify",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
