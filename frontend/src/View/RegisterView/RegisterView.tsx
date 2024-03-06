@@ -1,20 +1,20 @@
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
-import Logo from "../../assets/Logo.png";
-import { FORM_ID, RegisterForm } from "./RegisterForm";
-import { registerFormSchema } from "./schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NavLink } from "react-router-dom";
-import { mutateUserRegister } from "../../api/query";
+import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
+import Logo from '~/assets/Logo.png';
+import { FORM_ID, RegisterForm } from './RegisterForm';
+import { registerFormSchema } from './schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NavLink } from 'react-router-dom';
+import { mutateUserRegister } from '~/api/User/query';
 
 export const RegisterView = () => {
   const form = useForm<registerFormSchema>({
     defaultValues: {
       id: -1,
-      username: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
     },
     resolver: zodResolver(registerFormSchema),
   });
@@ -28,12 +28,12 @@ export const RegisterView = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
@@ -45,15 +45,15 @@ export const RegisterView = () => {
           borderRadius: 2,
         })}
       >
-        <Box display={"flex"} gap={2} justifyContent={"center"}>
-          <Avatar variant="square" alt="Taskify logo" src={Logo} />
+        <Box display={'flex'} gap={2} justifyContent={'center'}>
+          <Avatar variant="square" alt="Omnify logo" src={Logo} />
           <Typography variant="h4">Register</Typography>
         </Box>
         <RegisterForm onSubmit={handleSubmit} formContext={form} />
         <Button type="submit" form={FORM_ID} variant="contained">
           Register
         </Button>
-        <Button component={NavLink} to={"/login"}>
+        <Button component={NavLink} to={'/login'}>
           Login
         </Button>
       </Stack>

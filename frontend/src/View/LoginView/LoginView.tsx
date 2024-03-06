@@ -1,15 +1,16 @@
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
-import Logo from "../../assets/Logo.png";
-import { FORM_ID, LoginForm } from "./LoginForm";
-import { loginFormSchema } from "./schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NavLink, useLocation } from "react-router-dom";
-import { mutateUserLogin } from "../../api/query";
+import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
+import Logo from '~/assets/Logo.png';
+import { FORM_ID, LoginForm } from './LoginForm';
+import { loginFormSchema } from './schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { NavLink } from 'react-router-dom';
+import { mutateUserLogin } from '~/api/User/query';
+import { DialogPassword } from '../RegisterView/PasswordRenew';
 
 export const LoginView = () => {
   const form = useForm<loginFormSchema>({
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: '', password: '' },
     resolver: zodResolver(loginFormSchema),
   });
   const { mutateAsync } = mutateUserLogin();
@@ -22,12 +23,12 @@ export const LoginView = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
@@ -39,17 +40,20 @@ export const LoginView = () => {
           borderRadius: 2,
         })}
       >
-        <Box display={"flex"} gap={2} justifyContent={"center"}>
-          <Avatar variant="square" alt="Taskify logo" src={Logo} />
+        <Box display={'flex'} gap={2} justifyContent={'center'}>
+          <Avatar variant="square" alt="Omnify logo" src={Logo} />
           <Typography variant="h4">Login</Typography>
         </Box>
         <LoginForm onSubmit={handleSubmit} formContext={form} />
         <Button type="submit" form={FORM_ID} variant="contained">
           Login
         </Button>
-        <Button component={NavLink} to={"/register"}>
-          Register
-        </Button>
+        <Box display={'flex'}>
+          <DialogPassword />
+          <Button fullWidth component={NavLink} to={'/register'}>
+            Register
+          </Button>
+        </Box>
       </Stack>
     </Box>
   );

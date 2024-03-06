@@ -22,8 +22,9 @@
         "fullscreen": false,
         "resizable": true,
         "title": "Omnify",
+        "label": "main",
         "width": 1000,
-        "height": 800
+        "height": 750
       }
     ],
     "security": {
