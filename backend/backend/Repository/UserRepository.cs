@@ -85,7 +85,7 @@ namespace backend.Repository
 
         private string CreateRandomToken()
         {
-            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+            return Convert.ToHexString(RandomNumberGenerator.GetBytes(8));
         }
 
         public async Task<string> GenerateJwt(LoginUserDto dto)
@@ -136,9 +136,9 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
-        public async Task ForgotPassword(string email)
+        public async Task ForgotPassword(ForgotPasswordDto dto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.PasswordResetTime == null || DateTime.Now > x.PasswordResetTime);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == dto.Email.ToLower() && x.PasswordResetTime == null || DateTime.Now > x.PasswordResetTime);
             if (user is null)
             {
                 throw new Exception("User not found");
@@ -153,7 +153,7 @@ namespace backend.Repository
 
         public async Task ResetPassword(ResetPasswordDto dto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == dto.Email.ToLower() && x.PasswordResetToken == dto.ResetToken && DateTime.Now < x.PasswordResetTime );
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.PasswordResetToken == dto.ResetToken && DateTime.Now < x.PasswordResetTime );
             if (user is null)
             {
                 throw new Exception("User not found");

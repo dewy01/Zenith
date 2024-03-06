@@ -97,6 +97,7 @@ namespace backend.Repository
             var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
             note.Title = dto.Title;
             note.Content = dto.Content;
+            _context.Notes.Update(note);
             await _context.SaveChangesAsync();
 
         }

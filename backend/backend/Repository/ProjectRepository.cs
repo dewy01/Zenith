@@ -79,7 +79,7 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProject(EditProjectDto dto)
+        public async Task UpdateProject(EditProjectDto dto , int projectId)
         {
             var userId = _userContextRepository.GetUserId;
 
@@ -87,14 +87,17 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.Projects.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == dto.ProjectID);
+            var project = await _context.Projects.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
 
-            project.Title = dto.Title;
+            if(dto.Title != null || dto.Title != "")
+            {
+                project.Title = dto.Title;
+            }
             project.Status = dto.Status;
             project.Deadline = dto.Deadline;
             project.Description = dto.Description;
 
-            _context.Update(project);
+            _context.Projects.Update(project);
             await _context.SaveChangesAsync();
         }
 

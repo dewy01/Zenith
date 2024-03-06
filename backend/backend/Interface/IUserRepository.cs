@@ -13,7 +13,7 @@ namespace backend.Interface
         void DeleteUser(int userId);
         Task<string> GenerateJwt(LoginUserDto dto);
         Task<bool> VerifyEmail(string token);
-        Task ForgotPassword(string email);
+        Task ForgotPassword(ForgotPasswordDto email);
         Task ResetPassword(ResetPasswordDto dto);
     }
 }

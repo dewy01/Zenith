@@ -38,9 +38,9 @@ namespace backend.Controllers
             return await Task.FromResult(Ok(token));
         }
         [HttpPost("forgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
-            await _accountService.ForgotPassword(email);
+            await _accountService.ForgotPassword(dto);
             return await Task.FromResult(Ok());
         }
         [HttpPost("resetPassword")]

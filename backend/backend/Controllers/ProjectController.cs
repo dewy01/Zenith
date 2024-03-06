@@ -23,9 +23,9 @@ namespace backend.Controllers
             return await Task.FromResult(Ok(project));
         }
 
-        [HttpGet("getProjectById")]
+        [HttpGet("getProjectById/{projectId}")]
         [Authorize]
-        public async Task<ActionResult<ProjectDto>> getProjectById(int projectId)
+        public async Task<ActionResult<ProjectDto>> getProjectById([FromRoute] int projectId)
         {
             var project = await _projectService.GetProjectById(projectId);
             return await Task.FromResult(Ok(project));
@@ -38,17 +38,17 @@ namespace backend.Controllers
             return await Task.FromResult(Ok());
         }
 
-        [HttpPatch("updateProject")]
+        [HttpPatch("updateProject/{projectId}")]
         [Authorize]
-        public async Task<ActionResult> updateProject(EditProjectDto dto)
+        public async Task<ActionResult> updateProject(EditProjectDto dto, [FromRoute] int projectId)
         {
-            await _projectService.UpdateProject(dto);
+            await _projectService.UpdateProject(dto,projectId);
             return await Task.FromResult(Ok());
         }
 
-        [HttpDelete("deleteProject")]
+        [HttpDelete("deleteProject/{projectId}")]
         [Authorize]
-        public async Task<ActionResult> deleteProject(int projectId)
+        public async Task<ActionResult> deleteProject([FromRoute] int projectId)
         {
             await _projectService.DeleteProject(projectId);
             return await Task.FromResult(Ok());
