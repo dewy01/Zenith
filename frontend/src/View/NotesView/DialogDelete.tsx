@@ -6,10 +6,10 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-} from '@mui/material';
-import { useState } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteNote } from '~/api/Notes/query';
+} from "@mui/material";
+import { useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteNote } from "~/api/Notes/query";
 
 type Props = {
   noteId: number | null;
@@ -36,10 +36,10 @@ export const DialogDelete = ({ noteId }: Props) => {
         open={open}
         onClose={handleClose}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <DialogTitle>Delete note?</DialogTitle>
@@ -51,7 +51,9 @@ export const DialogDelete = ({ noteId }: Props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button color="inherit" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button
             color="error"
             onClick={() => {

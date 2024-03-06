@@ -6,6 +6,9 @@ import darkScrollbar from "@mui/material/darkScrollbar";
 import { AuthProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { enGB } from "date-fns/locale";
 
 const queryClient = new QueryClient();
 
@@ -25,17 +28,19 @@ const App = () => {
         horizontal: "right",
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ThemeProvider theme={dark}>
-            <BrowserRouter>
-              <Router />
-              <CssBaseline />
-              <GlobalStyles styles={{ ...darkScrollbar() }} />
-            </BrowserRouter>
-          </ThemeProvider>
-        </AuthProvider>
-      </QueryClientProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <ThemeProvider theme={dark}>
+              <BrowserRouter>
+                <Router />
+                <CssBaseline />
+                <GlobalStyles styles={{ ...darkScrollbar() }} />
+              </BrowserRouter>
+            </ThemeProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      </LocalizationProvider>
     </SnackbarProvider>
   );
 };

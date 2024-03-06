@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
 using backend.Dto;
 using backend.Models;
 
@@ -10,6 +10,7 @@ namespace backend
         public MapProfile() 
         {
             CreateMap<Note, AllNotesDto>();
+            CreateMap<Project, AllProjectsDto>();
         }
     }
 }

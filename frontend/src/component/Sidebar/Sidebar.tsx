@@ -81,7 +81,7 @@ export const Sidebar = () => {
           </DrawerLink>
 
           <DrawerLink link="/projects" tooltip="Projects">
-            <CheckBoxOutlinedIcon />
+            <ViewKanbanIcon />
           </DrawerLink>
 
           <DrawerLink link="/calendar" tooltip="Calendar">
@@ -92,8 +92,8 @@ export const Sidebar = () => {
             <InsertDriveFileIcon />
           </DrawerLink>
 
-          <DrawerLink link="/kanban" tooltip="Kanban Board">
-            <ViewKanbanIcon />
+          <DrawerLink link="/todo" tooltip="To Do">
+            <CheckBoxOutlinedIcon />
           </DrawerLink>
 
           <DrawerLink link="/groups" tooltip="Group Projects">
