@@ -6,13 +6,25 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { projectModel } from "./schema";
-import { Controller, UseFormReturn, useController } from "react-hook-form";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { taskModel } from "./schema";
+import { UseFormReturn, useController } from "react-hook-form";
+
+const categories = [
+  "Note",
+  "Email",
+  "Accounting",
+  "Meeting",
+  "Presentation",
+  "Research",
+  "Design",
+  "Development",
+  "Testing",
+  "Maintenance",
+];
 
 type Props = {
-  onSubmit: (value: projectModel) => void;
-  formContext: UseFormReturn<projectModel>;
+  onSubmit: (value: taskModel) => void;
+  formContext: UseFormReturn<taskModel>;
 };
 
 export const CreateForm = ({ onSubmit, formContext }: Props) => {
@@ -32,9 +44,9 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
     name: "description",
   });
 
-  const deadline = useController({
+  const category = useController({
     control: control,
-    name: "deadline",
+    name: "category",
   });
 
   const status = useController({
@@ -45,7 +57,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
   return (
     <Box
       component="form"
-      id="createProjectForm"
+      id="createtaskForm"
       sx={{ paddingTop: 1 }}
       onSubmit={handleSubmit((data) => onSubmit(data))}
     >
@@ -71,9 +83,10 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
               onBlur={status.field.onBlur}
               inputRef={status.field.ref}
             >
-              <MenuItem value="on Hold">on Hold</MenuItem>
+              <MenuItem value="Backlog">Backlog</MenuItem>
               <MenuItem value="in Progress">in Progress</MenuItem>
-              <MenuItem value="Done">Done</MenuItem>
+              <MenuItem value="For Review">For Review</MenuItem>
+              <MenuItem value="Closed">Closed</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -87,26 +100,21 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
           error={errors.description !== undefined}
           helperText={errors.description?.message}
         />
-        <Controller
-          name={deadline.field.name}
-          control={control}
-          data-testid="start-date"
-          render={() => (
-            <DatePicker
-              slotProps={{
-                textField: {
-                  error: errors.deadline !== undefined,
-                  helperText: errors.deadline?.message ?? undefined,
-                },
-              }}
-              label="Deadline"
-              value={deadline.field.value}
-              onChange={deadline.field.onChange}
-              disablePast
-              name="Deadline"
-            />
-          )}
-        />
+        <FormControl>
+          <InputLabel>Category</InputLabel>
+          <Select
+            label="Category"
+            name={category.field.name}
+            value={category.field.value}
+            onChange={category.field.onChange}
+            onBlur={category.field.onBlur}
+            inputRef={category.field.ref}
+          >
+            {categories.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
     </Box>
   );

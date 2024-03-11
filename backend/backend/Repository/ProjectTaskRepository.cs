@@ -53,8 +53,8 @@ namespace backend.Repository
             }
 
             var newProjectTask = new ProjectTask
-            {
-                ProjectID = dto.ProjectID,   
+            {  
+                ProjectID = dto.ProjectID,
                 Title = dto.Title,
                 Status = dto.Status,
                 Description = dto.Description,

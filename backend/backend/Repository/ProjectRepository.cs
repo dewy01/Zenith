@@ -6,6 +6,7 @@ using AutoMapper;
 using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using backend.Migrations;
+using System.Collections.ObjectModel;
 
 namespace backend.Repository
 {
@@ -30,7 +31,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             
-            var project = await _context.Projects.SingleOrDefaultAsync(x=>x.UserID == userId && x.ProjectID == projectId);
+            var project = await _context.Projects.Include(p => p.ProjectTasks).SingleOrDefaultAsync(x=>x.UserID == userId && x.ProjectID == projectId);
             var projectDto = new ProjectDto
             {
                 ProjectID = project.ProjectID,
@@ -38,7 +39,7 @@ namespace backend.Repository
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                ProjectTasks = _mapper.Map<List<ProjectTaskShortDto>>(project.ProjectTasks),
+                ProjectTasks = _mapper.Map<Collection<ProjectTaskShortDto>>(project.ProjectTasks),
             };
 
             return projectDto;

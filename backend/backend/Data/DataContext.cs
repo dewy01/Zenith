@@ -122,7 +122,7 @@ namespace backend.Data
                 .HasOne(pt => pt.Project)
                 .WithMany(p => p.ProjectTasks)
                 .HasForeignKey(pt => pt.ProjectID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GroupProjectTaskAsignee>()
                 .HasOne(gpta => gpta.GroupProjectTask)

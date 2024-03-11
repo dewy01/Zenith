@@ -1,5 +1,5 @@
 import {
-  IconButton,
+  Box,
   ListItem,
   ListItemText,
   ListSubheader,
@@ -8,7 +8,8 @@ import {
 } from "@mui/material";
 import { Project } from "~/api/Projects/api";
 import { formatDate } from "~/utils/dateTime";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { ProjectMenu } from "../ProjectMenu";
+import { NavLink } from "react-router-dom";
 
 type Props = {
   project: Project;
@@ -18,14 +19,27 @@ export const ProjectCard = ({ project }: Props) => {
   return (
     <>
       <ListItem sx={{ width: "80vw" }}>
-        <ListItemText
-          primary={project.title}
-          secondary={
-            <Typography variant="caption" color="text.primary">
-              {project.description}
-            </Typography>
-          }
-        />
+        <Box
+          component={NavLink}
+          to={`/projects/${project.projectID}`}
+          flex={1}
+          sx={{ textDecoration: "none" }}
+        >
+          <ListItemText
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+            primary={
+              <Typography color="text.primary">{project.title}</Typography>
+            }
+            secondary={
+              <Typography variant="caption" color="text.secondary">
+                {project.description}
+              </Typography>
+            }
+          />
+        </Box>
         <ListSubheader>
           <Stack alignItems={"end"}>
             <Typography>{project.status}</Typography>
@@ -34,9 +48,7 @@ export const ProjectCard = ({ project }: Props) => {
             </Typography>
           </Stack>
         </ListSubheader>
-        <IconButton>
-          <MoreHorizIcon />
-        </IconButton>
+        <ProjectMenu project={project} />
       </ListItem>
     </>
   );

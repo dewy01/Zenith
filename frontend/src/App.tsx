@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./component/Router";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
-import { dark, light } from "./component/Theme";
+import { dark } from "./component/Theme";
 import darkScrollbar from "@mui/material/darkScrollbar";
 import { AuthProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

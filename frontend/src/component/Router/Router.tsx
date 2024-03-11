@@ -8,6 +8,7 @@ import { ReactNode } from "react";
 import { useAuth } from "~/context/AuthContext";
 import { Box } from "@mui/material";
 import { ProjectView } from "~/View/ProjectView/ProjectView";
+import { ProjectTaskView } from "~/View/ProjectTask";
 
 type Props = { children: ReactNode };
 
@@ -55,6 +56,15 @@ export const Router = () => {
             element={
               <PrivateRoute>
                 <ProjectView />
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
+          <Route
+            path="/projects/:id"
+            element={
+              <PrivateRoute>
+                <ProjectTaskView />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

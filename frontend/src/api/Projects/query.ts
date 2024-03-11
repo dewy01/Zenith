@@ -1,10 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 import {
-  AddProject,
-  EditProject,
-  deleteNoteById,
-  editNoteById,
+  deleteProjectById,
+  editProjectById,
+  mutateProject,
   postAddProject,
   queryAllProjects,
   queryProjectID,
@@ -18,7 +17,7 @@ export const getAllProjects = () => {
   });
 };
 
-export const getProjectById = (projectId: number) => {
+export const getProjectById = (projectId: string) => {
   return useQuery({
     queryKey: ['projectById', projectId],
     queryFn: () => queryProjectID(projectId),
@@ -41,13 +40,15 @@ export const mutateAddProject = () => {
   });
 };
 
-export const mutateEditProject = (project: EditProject, projectId: number) => {
+export const mutateEditProject = () => {
   const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['editProject'],
-    mutationFn: () => editNoteById(project, projectId),
+    mutationFn: (project:mutateProject) => editProjectById(project),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projectById', projectId] });
+      enqueueSnackbar('Project edited');
+      queryClient.invalidateQueries({ queryKey: ['projectById'] });
       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
     },
     onError: () => {},
@@ -59,7 +60,7 @@ export const deleteProject = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['deleteProject'],
-    mutationFn: (projectId: number) => deleteNoteById(projectId),
+    mutationFn: (projectId: number) => deleteProjectById(projectId),
     onSuccess: () => {
       enqueueSnackbar('Project deleted');
       queryClient.invalidateQueries({ queryKey: ['allProjects'] });

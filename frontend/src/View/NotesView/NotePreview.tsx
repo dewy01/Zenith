@@ -38,7 +38,6 @@ export const NotePreview = ({ noteId }: Props) => {
   const handleToggle = () => setToggle(!toggle);
 
   const form = useForm<noteModel>({
-    defaultValues: { title: note?.title, content: note?.content },
     resolver: zodResolver(noteSchema),
     mode: "onChange",
   });
@@ -58,8 +57,19 @@ export const NotePreview = ({ noteId }: Props) => {
   );
 
   useEffect(() => {
-    mutateAsync();
-  }, [title.field.value, content.field.value]);
+    if (note) {
+      form.reset({
+        title: note.title || "",
+        content: note.content || "",
+      });
+    }
+  }, [note]);
+
+  useEffect(() => {
+    if (note) {
+      mutateAsync();
+    }
+  }, [note, title.field.value, content.field.value]);
 
   const classes = useStyles();
 
@@ -90,7 +100,6 @@ export const NotePreview = ({ noteId }: Props) => {
             if (form.formState.errors.title === undefined) handleToggle();
           }}
           value={title.field.value}
-          ref={title.field.ref}
           onChange={title.field.onChange}
           name={title.field.name}
           error={form.formState.errors.title !== undefined}

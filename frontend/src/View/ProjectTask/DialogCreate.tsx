@@ -6,13 +6,17 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useState } from "react";
-import { CreateForm } from "./CreateForm";
-import { projectModel, projectSchema } from "./schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { mutateAddProject } from "~/api/Projects/query";
+import { taskModel, taskSchema } from "./schema";
+import { mutateAddProjectTask } from "~/api/ProjectTask/query";
+import { CreateForm } from "./CreateForm";
 
-export const DialogCreate = () => {
+type Props = {
+  projectId: number;
+};
+
+export const DialogCreate = ({ projectId }: Props) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -23,26 +27,27 @@ export const DialogCreate = () => {
     setOpen(false);
   };
 
-  const projectForm = useForm<projectModel>({
+  const taskForm = useForm<taskModel>({
     defaultValues: {
+      projectID: projectId,
       title: "",
       description: "",
-      deadline: new Date(),
-      status: "on Hold",
+      status: "Backlog",
+      category: "Accounting",
     },
-    resolver: zodResolver(projectSchema),
+    resolver: zodResolver(taskSchema),
   });
-  const { mutateAsync } = mutateAddProject();
-  const handleSubmit = (data: projectModel) => {
+  const { mutateAsync } = mutateAddProjectTask();
+  const handleSubmit = (data: taskModel) => {
     mutateAsync(data);
-    projectForm.reset();
+    taskForm.reset();
     handleClose();
   };
 
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + project
+        + Project Task
       </Button>
       <Dialog
         open={open}
@@ -54,20 +59,15 @@ export const DialogCreate = () => {
           alignItems: "center",
         }}
       >
-        <DialogTitle>Create project</DialogTitle>
+        <DialogTitle>Create project Task</DialogTitle>
         <DialogContent>
-          <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
+          <CreateForm formContext={taskForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
             Cancel
           </Button>
-          <Button
-            type="submit"
-            form="createProjectForm"
-            color="success"
-            autoFocus
-          >
+          <Button type="submit" form="createtaskForm" color="success" autoFocus>
             Create
           </Button>
         </DialogActions>

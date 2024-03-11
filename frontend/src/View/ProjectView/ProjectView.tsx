@@ -1,15 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Divider,
-  FormControl,
-  InputLabel,
-  List,
-  MenuItem,
-  Select,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Divider, List, Toolbar, Typography } from "@mui/material";
 import { getAllProjects } from "~/api/Projects/query";
 import { LoadingView } from "../LoadingView/LoadingView";
 import { DialogCreate } from "./DialogCreate";
@@ -37,7 +26,7 @@ export const ProjectView = () => {
       </Box>
       <Box
         display={"flex"}
-        justifyContent={"space-evenly"}
+        justifyContent={"space-around"}
         alignItems={"center"}
         gap={2}
         sx={{ padding: 4 }}
@@ -45,14 +34,6 @@ export const ProjectView = () => {
         <Typography variant="h5">Explore projects</Typography>
         <Box display={"flex"} gap={2}>
           <SearchField />
-          <FormControl sx={{ width: "150px" }}>
-            <InputLabel>Sort</InputLabel>
-            <Select label="Sort">
-              <MenuItem value="on Hold">Status</MenuItem>
-              <MenuItem value="in Progress">Deadline</MenuItem>
-              <MenuItem value="Done">Name</MenuItem>
-            </Select>
-          </FormControl>
         </Box>
       </Box>
       <List

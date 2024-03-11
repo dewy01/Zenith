@@ -11,6 +11,7 @@ namespace backend
         {
             CreateMap<Note, AllNotesDto>();
             CreateMap<Project, AllProjectsDto>();
+            CreateMap<ProjectTask, ProjectTaskShortDto>();
         }
     }
 }

@@ -13,6 +13,7 @@ export interface Project {
 export interface ProjectTask {
   projectTaskID: number;
   title: string;
+  description: string;
   category: string;
   status: string;
 }
@@ -29,8 +30,13 @@ export interface ProjectWithTasks {
 export interface EditProject {
   Title: string;
   Description: string;
-  Deadline: string;
+  Deadline: Date;
   Status: string;
+}
+
+export interface mutateProject {
+  projectID: number;
+  data: EditProject
 }
 
 export interface AddProject {
@@ -59,17 +65,16 @@ export const postAddProject = async (project: projectModel) => {
   return await axiosInstance.post('/api/projects/addProject',project);
 };
 
-export const queryProjectID = async (projectId: number) => {
+export const queryProjectID = async (projectId: string) => {
   const response = await axiosInstance.get(`/api/projects/getProjectById/${projectId}`);
-  console.log(response.data);
   return response.data as ProjectWithTasks;
 };
 
-export const editNoteById = async (project: EditProject, projectId: number) => {
-  return await axiosInstance.patch(`/api/projects/updateProject/${projectId}`, project);
+export const editProjectById = async (project: mutateProject) => {
+  return await axiosInstance.patch(`/api/projects/updateProject/${project.projectID}`, project.data);
 };
 
-export const deleteNoteById = async (projectId: number) => {
+export const deleteProjectById = async (projectId: number) => {
   return await axiosInstance.delete(`/api/projects/deleteProject/${projectId}`);
 };
 

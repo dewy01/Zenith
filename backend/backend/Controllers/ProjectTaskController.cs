@@ -25,7 +25,7 @@ namespace backend.Controllers
 
         [HttpPost("addProjectTask")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllProjectsDto>>> addProjectTask(AddProjectTaskDto dto)
+        public async Task<ActionResult> addProjectTask(AddProjectTaskDto dto)
         {
             await _projectTaskService.AddProjectTask(dto);
             return await Task.FromResult(Ok());
