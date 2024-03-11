@@ -34,7 +34,6 @@ export const postAddNote = async () => {
 
 export const queryNoteByID = async (noteId: number) => {
   const response = await axiosInstance.get(`/api/notes/getNoteById/${noteId}`);
-  console.log(response.data);
   return response.data as Note;
 };
 

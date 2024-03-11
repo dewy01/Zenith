@@ -1,14 +1,15 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Layout } from "~/component/Layout/Layout";
-import { ErrorView, NotFoundView } from "~/View/Errors";
-import { NotesView } from "~/View/NotesView";
-import { RegisterView } from "~/View/RegisterView";
-import { LoginView } from "~/View/LoginView";
-import { ReactNode } from "react";
-import { useAuth } from "~/context/AuthContext";
-import { Box } from "@mui/material";
-import { ProjectView } from "~/View/ProjectView/ProjectView";
-import { ProjectTaskView } from "~/View/ProjectTask";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Layout } from '~/component/Layout/Layout';
+import { ErrorView, NotFoundView } from '~/View/Errors';
+import { NotesView } from '~/View/NotesView';
+import { RegisterView } from '~/View/RegisterView';
+import { LoginView } from '~/View/LoginView';
+import { ReactNode } from 'react';
+import { useAuth } from '~/context/AuthContext';
+import { Box } from '@mui/material';
+import { ProjectView } from '~/View/ProjectView/ProjectView';
+import { ProjectTaskView } from '~/View/ProjectTask';
+import { TodoView } from '~/View/TodoView/TodoView';
 
 type Props = { children: ReactNode };
 
@@ -18,7 +19,7 @@ const PrivateRoute = ({ children }: Props) => {
   return isAuthenticated ? (
     <Box>{children}</Box>
   ) : (
-    <Navigate to={"/register"} replace={true} />
+    <Navigate to={'/register'} replace={true} />
   );
 };
 
@@ -26,7 +27,7 @@ const AuthPrevent = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
 
   return isAuthenticated ? (
-    <Navigate to={"/home"} replace={true} />
+    <Navigate to={'/home'} replace={true} />
   ) : (
     <Box>{children}</Box>
   );
@@ -91,7 +92,7 @@ export const Router = () => {
             path="/todo"
             element={
               <PrivateRoute>
-                <></>
+                <TodoView />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

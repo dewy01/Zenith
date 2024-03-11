@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
-import { ProjectTask } from "~/api/Projects/api";
+import React from 'react';
+import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
+import { ProjectTask } from '~/api/Projects/api';
 
 type Props = {
   task: ProjectTask;
@@ -8,7 +8,7 @@ type Props = {
 
 export const ProjectTaskCard: React.FC<Props> = ({ task }) => {
   return (
-    <Card>
+    <Card draggable key={task.projectTaskID} sx={{ cursor: 'grab' }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {task.title}

@@ -5,27 +5,26 @@ import {
   IconButton,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { LoadingView } from "../LoadingView/LoadingView";
-import { NavLink, useParams } from "react-router-dom";
-import { getProjectById } from "~/api/Projects/query";
-import { ProjectView } from "../ProjectView/ProjectView";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { DialogCreate } from "./DialogCreate";
-import { ProjectTaskCard } from "~/component/ProjectTaskCard";
-import { useState } from "react";
-import { mutateChangeTaskStatus } from "~/api/ProjectTask/query";
-import { changeTaskStatus } from "~/api/ProjectTask/api";
+} from '@mui/material';
+import { LoadingView } from '../LoadingView/LoadingView';
+import { NavLink, useParams } from 'react-router-dom';
+import { getProjectById } from '~/api/Projects/query';
+import { ProjectView } from '../ProjectView/ProjectView';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { DialogCreate } from './DialogCreate';
+import { ProjectTaskCard } from '~/component/ProjectTaskCard';
+import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
+import { changeTaskStatus } from '~/api/ProjectTask/api';
 
 type Params = {
   id: string;
 };
 
 const columns = [
-  { name: "Backlog", color: "#ff927e" },
-  { name: "in Progress", color: "#e5cc8b" },
-  { name: "For Review", color: "#6faad6" },
-  { name: "Closed", color: "#9bcaa8" },
+  { name: 'Backlog', color: '#ff927e' },
+  { name: 'in Progress', color: '#e5cc8b' },
+  { name: 'For Review', color: '#6faad6' },
+  { name: 'Closed', color: '#9bcaa8' },
 ];
 
 export const ProjectTaskView = () => {
@@ -48,12 +47,12 @@ export const ProjectTaskView = () => {
   return (
     <Box>
       <Box>
-        <AppBar position="static">
+        <AppBar position="sticky">
           <Toolbar>
             <IconButton component={NavLink} to="/projects">
               <ArrowBackIcon />
             </IconButton>
-            <Box sx={{ textDecoration: "none", paddingLeft: 3, flexGrow: 1 }}>
+            <Box sx={{ textDecoration: 'none', paddingLeft: 3, flexGrow: 1 }}>
               <Typography variant="h6" color="text.primary">
                 {project.title}
               </Typography>
@@ -68,11 +67,12 @@ export const ProjectTaskView = () => {
           {columns.map((column) => (
             <>
               <Box
+                key={column.name}
                 display="flex"
                 flexDirection="column"
                 sx={{
-                  minWidth: "200px",
-                  width: "25%",
+                  minWidth: '200px',
+                  width: '25%',
                   padding: 1,
                 }}
                 justifyContent="center"
@@ -82,7 +82,7 @@ export const ProjectTaskView = () => {
                 <Box
                   sx={{
                     backgroundColor: column.color,
-                    width: "90%",
+                    width: '90%',
                     borderRadius: 5,
                   }}
                 >
@@ -92,7 +92,11 @@ export const ProjectTaskView = () => {
                   display="flex"
                   flexDirection="column"
                   gap={2}
-                  sx={{ minWidth: "200px", width: "80%" }}
+                  sx={{
+                    minWidth: '200px',
+                    width: '80%',
+                    minHeight: '80vh',
+                  }}
                 >
                   {project.projectTasks
                     .filter((task) => task.status === column.name)
@@ -101,7 +105,11 @@ export const ProjectTaskView = () => {
                     ))}
                 </Box>
               </Box>
-              <Divider orientation="vertical" flexItem />
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ minHeight: '90vh' }}
+              />
             </>
           ))}
         </Box>
