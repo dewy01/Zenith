@@ -22,5 +22,7 @@ namespace backend.Models
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<GroupMember> GroupMembers { get; set; }
         public virtual ICollection<KanbanTask> KanbanTasks { get; set; }
+
+        public virtual ICollection<ProjectTodo> ProjectTodos { get; set; }
     }
 }

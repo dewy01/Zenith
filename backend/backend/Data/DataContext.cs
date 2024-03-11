@@ -25,6 +25,8 @@ namespace backend.Data
         public DbSet<GroupProjectTaskAsignee> GroupProjectTaskAssignees { get; set; }
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<KanbanTask> KanbanTasks { get; set; }
+        public DbSet<ProjectTodo> ProjectTodos { get; set; }
+        public DbSet<Todo> Todos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +41,14 @@ namespace backend.Data
 
             modelBuilder.Entity<ProjectTask>()
                  .HasKey(pt => pt.ProjectTaskID);
+
+
+            modelBuilder.Entity<Todo>()
+                .HasKey(t => t.TodoID);
+
+            modelBuilder.Entity<ProjectTodo>()
+                 .HasKey(pt => pt.ProjectTodoID);
+
 
             modelBuilder.Entity<Note>()
                 .HasKey(n => n.NoteID);
@@ -122,6 +132,24 @@ namespace backend.Data
                 .HasOne(pt => pt.Project)
                 .WithMany(p => p.ProjectTasks)
                 .HasForeignKey(pt => pt.ProjectID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProjectTodo>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.ProjectTodos)
+                .HasForeignKey(p => p.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProjectTodo>()
+                .HasMany(p => p.Todos)
+                .WithOne(pt => pt.ProjectTodo)
+                .HasForeignKey(pt => pt.ProjectTodoID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Todo>()
+                .HasOne(pt => pt.ProjectTodo)
+                .WithMany(p => p.Todos)
+                .HasForeignKey(pt => pt.ProjectTodoID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GroupProjectTaskAsignee>()

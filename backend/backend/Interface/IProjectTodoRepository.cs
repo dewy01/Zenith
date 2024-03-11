@@ -1,0 +1,14 @@
+﻿using backend.Dto;
+using backend.Models;
+
+namespace backend.Interface
+{
+    public interface IProjectTodoRepository
+    {
+        Task<IEnumerable<AllProjectsTodoDto>> GetAllProjects();
+        Task AddProject(AddProjectTodoDto project);
+        Task UpdateProject(AddProjectTodoDto project, int projectId);
+        Task DeleteProject(int projectId);
+        Task<ProjectTodoDto> GetProjectById(int projectId);
+    }
+}
