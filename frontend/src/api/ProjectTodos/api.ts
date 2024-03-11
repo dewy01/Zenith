@@ -30,6 +30,7 @@ export interface Todo {
   todoID: number;
   title: string;
   description: string;
+  isDone: boolean;
 }
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });

@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./component/Router";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
-import { dark } from "./component/Theme";
+
 import darkScrollbar from "@mui/material/darkScrollbar";
 import { AuthProvider } from "./context/AuthContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,6 +9,7 @@ import { SnackbarProvider } from "notistack";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { enGB } from "date-fns/locale";
+import { dark } from "./Theme";
 
 const queryClient = new QueryClient();
 

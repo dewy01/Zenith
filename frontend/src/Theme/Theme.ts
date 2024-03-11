@@ -1,6 +1,6 @@
 import { grey } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import { blue } from './Color';
+import { blue, green, purple, red } from './Color';
 import 'typeface-montserrat';
 
 export const dark = createTheme({

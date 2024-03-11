@@ -7,6 +7,11 @@ export interface AddTodo {
   description: string;
 }
 
+export interface ToggleTodo {
+  todoID: number;
+  isDone: boolean;
+}
+
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 axiosInstance.interceptors.request.use((config) => {
@@ -19,4 +24,8 @@ axiosInstance.interceptors.request.use((config) => {
 
 export const postAddTodo = async (todo: AddTodo) => {
   return await axiosInstance.post('/api/todos/addTodo', todo);
+};
+
+export const patchToggleTodo = async (todo: ToggleTodo) => {
+  return await axiosInstance.patch(`/api/todos/toggleStatus/${todo.todoID}`, {isDone: todo.isDone});
 };

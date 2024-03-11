@@ -43,8 +43,10 @@ const DrawerLink = ({ link, children, tooltip }: DrawerProps) => {
             <ListItemIcon
               sx={(theme) => ({
                 color: isActive
-                  ? theme.palette.common.black
-                  : theme.palette.common.white,
+                  ? theme.palette.background.default
+                  : theme.palette.getContrastText(
+                      theme.palette.background.default,
+                    ),
               })}
             >
               {children}
