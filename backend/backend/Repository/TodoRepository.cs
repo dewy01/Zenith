@@ -51,6 +51,7 @@ namespace backend.Repository
                 ProjectTodoID = dto.ProjectTodoID,
                 Title = dto.Title,
                 Description = dto.Description,
+                IsDone = false,
 
             };
 
@@ -74,6 +75,22 @@ namespace backend.Repository
                 project.Description = dto.Description;
             }
             project.ProjectTodoID = dto.ProjectTodoID;
+
+            _context.Todos.Update(project);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task toggleDone(ToggleTodoDto dto, int projectId)
+        {
+            var userId = _userContextRepository.GetUserId;
+
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+            var project = await _context.Todos.SingleOrDefaultAsync(project => project.ProjectTodo.UserID == userId && project.TodoID == projectId);
+
+            project.IsDone = dto.isDone;
 
             _context.Todos.Update(project);
             await _context.SaveChangesAsync();

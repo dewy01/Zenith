@@ -39,6 +39,14 @@ namespace backend.Controllers
             return await Task.FromResult(Ok());
         }
 
+        [HttpPatch("toggleStatus/{todoId}")]
+        [Authorize]
+        public async Task<ActionResult> toggleTodo(ToggleTodoDto dto,[FromRoute] int todoId)
+        {
+            await _projectService.toggleDone(dto,todoId);
+            return await Task.FromResult(Ok());
+        }
+
         [HttpDelete("deleteTodo/{todoId}")]
         [Authorize]
         public async Task<ActionResult> deleteTodo([FromRoute] int todoId)
