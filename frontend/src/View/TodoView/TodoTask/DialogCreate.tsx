@@ -54,13 +54,14 @@ export const DialogCreate = ({ color, projectId }: Props) => {
         onClick={handleClickOpen}
         variant="contained"
         fullWidth
-        sx={{
+        sx={(theme) => ({
           backgroundColor: alpha(color, 0.9),
           '&:hover': {
             backgroundColor: alpha(color, 0.5),
             boxShadow: 'none',
           },
-        }}
+          color: theme.palette.getContrastText(color),
+        })}
       >
         Add new Task
       </Button>
@@ -75,7 +76,7 @@ export const DialogCreate = ({ color, projectId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create Todo</DialogTitle>
+        <DialogTitle>Create Task</DialogTitle>
         <DialogContent>
           <CreateForm formContext={todoForm} onSubmit={handleSubmit} />
         </DialogContent>

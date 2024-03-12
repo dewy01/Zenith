@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 import { ProjectView } from '~/View/ProjectView/ProjectView';
 import { ProjectTaskView } from '~/View/ProjectTask';
 import { TodoView } from '~/View/TodoView/TodoView';
+import { SettingsView } from '~/View/SettingsView';
 
 type Props = { children: ReactNode };
 
@@ -106,7 +107,14 @@ export const Router = () => {
             }
             errorElement={<ErrorView />}
           />
-          {/* <Route path="/settings" element={<></>} /> */}
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <SettingsView />
+              </PrivateRoute>
+            }
+          />
         </Route>
         <Route
           path="*"

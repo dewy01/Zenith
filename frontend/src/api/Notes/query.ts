@@ -43,12 +43,17 @@ type editProps = {
   content: string;
 };
 
-export const mutateEditNote = (note: editProps, noteId: number) => {
+type EditNote = {
+  noteId: number;
+  note: editProps;
+};
+
+export const mutateEditNote = () => {
   const queryClient = useQueryClient();
   //const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['editNote'],
-    mutationFn: () => editNoteById(note, noteId),
+    mutationFn: (note: EditNote) => editNoteById(note),
     onSuccess: () => {
       // enqueueSnackbar('Note edited');
       queryClient.invalidateQueries({ queryKey: ['noteById'] });

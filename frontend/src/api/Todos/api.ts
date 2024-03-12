@@ -27,5 +27,11 @@ export const postAddTodo = async (todo: AddTodo) => {
 };
 
 export const patchToggleTodo = async (todo: ToggleTodo) => {
-  return await axiosInstance.patch(`/api/todos/toggleStatus/${todo.todoID}`, {isDone: todo.isDone});
+  return await axiosInstance.patch(`/api/todos/toggleStatus/${todo.todoID}`, {
+    isDone: todo.isDone,
+  });
+};
+
+export const postDeleteTodo = async (todoID: number) => {
+  return await axiosInstance.delete(`/api/todos/deleteTodo/${todoID}`);
 };

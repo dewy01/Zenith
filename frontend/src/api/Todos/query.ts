@@ -1,6 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
-import { AddTodo, ToggleTodo, patchToggleTodo, postAddTodo } from './api';
+import {
+  AddTodo,
+  ToggleTodo,
+  patchToggleTodo,
+  postAddTodo,
+  postDeleteTodo,
+} from './api';
 
 export const mutateAddTodo = () => {
   const queryClient = useQueryClient();
@@ -18,7 +24,6 @@ export const mutateAddTodo = () => {
   });
 };
 
-
 export const mutateToggleTodo = () => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
@@ -26,6 +31,22 @@ export const mutateToggleTodo = () => {
     mutationKey: ['toggleTodo'],
     mutationFn: (todo: ToggleTodo) => patchToggleTodo(todo),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
+    },
+    onError: () => {
+      enqueueSnackbar('Server connection error');
+    },
+  });
+};
+
+export const deleteTodo = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['deleteTodo'],
+    mutationFn: (todoID: number) => postDeleteTodo(todoID),
+    onSuccess: () => {
+      enqueueSnackbar('Task deleted');
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
     onError: () => {

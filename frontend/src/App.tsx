@@ -1,20 +1,22 @@
-import { BrowserRouter } from "react-router-dom";
-import { Router } from "./component/Router";
-import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from './component/Router';
+import { CssBaseline, GlobalStyles, Theme, ThemeProvider } from '@mui/material';
 
-import darkScrollbar from "@mui/material/darkScrollbar";
-import { AuthProvider } from "./context/AuthContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SnackbarProvider } from "notistack";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { enGB } from "date-fns/locale";
-import { dark } from "./Theme";
+import darkScrollbar from '@mui/material/darkScrollbar';
+import { SnackbarOrigin, SnackbarProvider } from 'notistack';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { enGB } from 'date-fns/locale';
+import { handleSettings, dark } from './Theme';
+import { useState } from 'react';
 
-const queryClient = new QueryClient();
+const snackbarOptions = {
+  vertical: 'bottom',
+  horizontal: 'right',
+} as SnackbarOrigin;
 
 document.addEventListener(
-  "auxclick",
+  'auxclick',
   (e: Event) => {
     e.preventDefault();
   },
@@ -22,25 +24,18 @@ document.addEventListener(
 );
 
 const App = () => {
+  const theme = handleSettings();
+
   return (
-    <SnackbarProvider
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-    >
+    <SnackbarProvider anchorOrigin={snackbarOptions}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <ThemeProvider theme={dark}>
-              <BrowserRouter>
-                <Router />
-                <CssBaseline />
-                <GlobalStyles styles={{ ...darkScrollbar() }} />
-              </BrowserRouter>
-            </ThemeProvider>
-          </AuthProvider>
-        </QueryClientProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Router />
+            <CssBaseline />
+            <GlobalStyles styles={{ ...darkScrollbar() }} />
+          </BrowserRouter>
+        </ThemeProvider>
       </LocalizationProvider>
     </SnackbarProvider>
   );

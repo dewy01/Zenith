@@ -3,13 +3,14 @@ import { getProjectTodos } from '~/api/ProjectTodos/query';
 import { Main } from '~/component/Main';
 import { SearchField } from '~/component/SearchField';
 import { SubDrawer } from '~/component/SubDrawer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DrawerLink } from '../NotesView/DrawerLink';
 import { DialogCreate } from './DialogCreate';
 import { DialogDelete } from './DialogDelete';
 import { TodoPreview } from './TodoPreview';
 import { ProjectTodo } from '~/api/ProjectTodos/api';
 import { DialogEdit } from './DialogEdit';
+import { debounce } from 'lodash';
 
 export const TodoView = () => {
   const [selectedProject, setSelectedProject] = useState<
@@ -31,6 +32,16 @@ export const TodoView = () => {
     }
   }, [selectedProject, projects]);
 
+  const [filter, setFilter] = useState<string>('');
+
+  const handleFilter = useRef(
+    debounce(
+      (event: React.ChangeEvent<HTMLInputElement>) =>
+        setFilter(event.target.value),
+      500,
+    ),
+  ).current;
+
   return (
     <Main>
       <SubDrawer>
@@ -50,7 +61,7 @@ export const TodoView = () => {
             <Typography fontSize={24}>Todos</Typography>
             <DialogDelete todoId={selectedProject?.projectTodoID} />
           </Box>
-          <SearchField />
+          <SearchField onChange={handleFilter} />
           <List
             sx={{
               maxHeight: '90vh',
@@ -61,54 +72,60 @@ export const TodoView = () => {
             }}
           >
             {projects ? (
-              projects.map((project) => (
-                <Box
-                  onClick={() => setSelectedProject(project)}
-                  display={'flex'}
-                  flexDirection={'column'}
-                  sx={{
-                    cursor: 'pointer',
-                  }}
-                >
-                  <DrawerLink
-                    key={project.projectTodoID}
-                    isActive={
-                      project.projectTodoID === selectedProject?.projectTodoID
-                    }
-                    color={project.color}
+              projects
+                .filter((a) =>
+                  a.title
+                    .toLocaleLowerCase()
+                    .includes(filter.toLocaleLowerCase()),
+                )
+                .map((project) => (
+                  <Box
+                    onClick={() => setSelectedProject(project)}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    sx={{
+                      cursor: 'pointer',
+                    }}
                   >
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
+                    <DrawerLink
+                      key={project.projectTodoID}
+                      isActive={
+                        project.projectTodoID === selectedProject?.projectTodoID
+                      }
+                      color={project.color}
                     >
-                      <Box flexGrow={1}>
-                        <Typography
-                          sx={{
-                            textWrap: 'wrap',
-                            wordBreak: 'break-word',
-                          }}
-                        >
-                          {project.title}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            textWrap: 'wrap',
-                            wordBreak: 'break-word',
-                          }}
-                        >
-                          {project.description}
-                        </Typography>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Box flexGrow={1}>
+                          <Typography
+                            sx={{
+                              textWrap: 'wrap',
+                              wordBreak: 'break-word',
+                            }}
+                          >
+                            {project.title}
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              textWrap: 'wrap',
+                              wordBreak: 'break-word',
+                            }}
+                          >
+                            {project.description}
+                          </Typography>
+                        </Box>
+                        {project.projectTodoID ===
+                          selectedProject?.projectTodoID && (
+                          <DialogEdit project={selectedProject} />
+                        )}
                       </Box>
-                      {project.projectTodoID ===
-                        selectedProject?.projectTodoID && (
-                        <DialogEdit project={selectedProject} />
-                      )}
-                    </Box>
-                  </DrawerLink>
-                </Box>
-              ))
+                    </DrawerLink>
+                  </Box>
+                ))
             ) : (
               <></>
             )}

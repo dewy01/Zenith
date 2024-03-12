@@ -5,25 +5,25 @@ import {
   markdownShortcutPlugin,
   quotePlugin,
   thematicBreakPlugin,
-} from "@mdxeditor/editor";
-import { Box, TextField, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { getNoteById, mutateEditNote } from "~/api/Notes/query";
-import { useEffect, useState } from "react";
-import { noteModel, noteSchema } from "./schema";
-import { useController, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { debounce } from "lodash";
-import { LoadingView } from "../LoadingView/LoadingView";
+} from '@mdxeditor/editor';
+import { Box, TextField, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { getNoteById, mutateEditNote } from '~/api/Notes/query';
+import { useEffect, useState } from 'react';
+import { noteModel, noteSchema } from './schema';
+import { useController, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { debounce } from 'lodash';
+import { LoadingView } from '../LoadingView/LoadingView';
 
 const useStyles = makeStyles({
   root: {
-    outline: "none",
-    height: "35vh",
-    width: "100%",
-    fontFamily: "inherit",
-    fontSize: "16px",
-    whiteSpace: "pre-line",
+    outline: 'none',
+    height: '35vh',
+    width: '100%',
+    fontFamily: 'inherit',
+    fontSize: '16px',
+    whiteSpace: 'pre-line',
   },
 });
 
@@ -39,35 +39,41 @@ export const NotePreview = ({ noteId }: Props) => {
 
   const form = useForm<noteModel>({
     resolver: zodResolver(noteSchema),
-    mode: "onChange",
+    mode: 'onChange',
   });
 
   const title = useController({
     control: form.control,
-    name: "title",
+    name: 'title',
   });
   const content = useController({
     control: form.control,
-    name: "content",
+    name: 'content',
   });
 
-  const { mutateAsync } = mutateEditNote(
-    { title: title.field.value, content: content.field.value },
-    noteId,
-  );
+  const { mutateAsync } = mutateEditNote();
 
   useEffect(() => {
     if (note) {
       form.reset({
-        title: note.title || "",
-        content: note.content || "",
+        title: note.title || '',
+        content: note.content || '',
       });
     }
   }, [note]);
 
   useEffect(() => {
-    if (note) {
-      mutateAsync();
+    if (
+      note &&
+      (title.field.value !== note.title || content.field.value !== note.content)
+    ) {
+      mutateAsync({
+        noteId: noteId,
+        note: {
+          title: title.field.value,
+          content: content.field.value,
+        },
+      });
     }
   }, [note, title.field.value, content.field.value]);
 
@@ -82,7 +88,7 @@ export const NotePreview = ({ noteId }: Props) => {
       {toggle && note?.title ? (
         <Typography
           color="darkgrey"
-          textAlign={"center"}
+          textAlign={'center'}
           onDoubleClick={handleToggle}
         >
           {note?.title}
@@ -91,10 +97,10 @@ export const NotePreview = ({ noteId }: Props) => {
         <TextField
           placeholder="Note title"
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
           }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{ style: { textAlign: 'center' } }}
           variant="standard"
           onBlur={() => {
             if (form.formState.errors.title === undefined) handleToggle();

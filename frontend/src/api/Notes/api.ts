@@ -8,10 +8,14 @@ export interface Note {
   createdAt: string;
 }
 
-export interface editNote {
+type EditNote = {
+  noteId: number;
+  note: editProps;
+};
+type editProps = {
   title: string;
   content: string;
-}
+};
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
@@ -37,8 +41,11 @@ export const queryNoteByID = async (noteId: number) => {
   return response.data as Note;
 };
 
-export const editNoteById = async (note: editNote, noteId: number) => {
-  return await axiosInstance.patch(`/api/notes/updateNote/${noteId}`, note);
+export const editNoteById = async (note: EditNote) => {
+  return await axiosInstance.patch(
+    `/api/notes/updateNote/${note.noteId}`,
+    note.note,
+  );
 };
 
 export const deleteNoteById = async (noteId: number) => {
