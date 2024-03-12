@@ -39,6 +39,7 @@ builder.Services.AddTransient<IProjectRepository, ProjectRepository>();
 builder.Services.AddTransient<IProjectTaskRepository, ProjectTaskRepository>();
 builder.Services.AddScoped<IProjectTodoRepository, ProjectTodoRepository>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();

@@ -67,7 +67,7 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.Todos.SingleOrDefaultAsync(project => project.ProjectTodo.UserID == userId && project.ProjectTodoID == projectId);
+            var project = await _context.Todos.SingleOrDefaultAsync(project => project.ProjectTodo.UserID == userId && project.TodoID == projectId);
 
             if(dto.Title != null && dto.Title != "")
             {
@@ -103,7 +103,7 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.Todos.SingleOrDefaultAsync(project => project.ProjectTodo.UserID == userId && project.ProjectTodoID == projectId);
+            var project = await _context.Todos.SingleOrDefaultAsync(project => project.ProjectTodo.UserID == userId && project.TodoID == projectId);
             _context.Remove(project);
             await _context.SaveChangesAsync();
         }

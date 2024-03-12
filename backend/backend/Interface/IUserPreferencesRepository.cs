@@ -1,13 +1,11 @@
 ﻿using backend.Models;
+using backend.Dto;
 
 namespace backend.Interface
 {
     public interface IUserPreferencesRepository
     {
-        UserPreferences GetUserPreferencesById(int preferencesId);
-        List<UserPreferences> GetAllUserPreferences();
-        void AddUserPreferences(UserPreferences userPreferences);
-        void UpdateUserPreferences(UserPreferences userPreferences);
-        void DeleteUserPreferences(int preferencesId);
+        Task<UserPreferencesDto> GetSettings();
+        Task UpdateUserPreferences(UserPreferencesDto userPreferences);
     }
 }
