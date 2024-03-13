@@ -1,58 +1,92 @@
 ﻿using backend.Data;
+using backend.Dto;
+using backend.Exceptions;
 using backend.Interface;
 using backend.Models;
-using backend.Exceptions;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Microsoft.Extensions.Hosting;
 
 namespace backend.Repository
 {
     public class CalendarEventRepository : ICalendarEventRepository
     {
         private readonly DataContext _context;
+        private readonly IUserContextRepository _userContextRepository;
+        private readonly IMapper _mapper;
 
-        public CalendarEventRepository(DataContext context)
+        public CalendarEventRepository(DataContext context, IUserContextRepository userContextRepository, IMapper mapper)
         {
             _context = context;
+            _userContextRepository = userContextRepository;
+            _mapper = mapper;
         }
 
-        public CalendarEvent GetCalendarEventById(int eventId)
+        public async Task AddEvent(CalendarEventDto dto)
         {
-            var result = _context.CalendarEvents.FirstOrDefault(ce => ce.EventID == eventId);
+            var userId = _userContextRepository.GetUserId;
 
-            if (result == null)
+            if (userId == null)
             {
-                throw new NotFoundException("CalendarEvent not found");
+                throw new NotFoundException("User not found");
             }
 
-            return result;
-        }
-
-        public List<CalendarEvent> GetAllCalendarEvents()
-        {
-            return _context.CalendarEvents.ToList();
-        }
-
-        public void AddCalendarEvent(CalendarEvent calendarEvent)
-        {
-            _context.CalendarEvents.Add(calendarEvent);
-            _context.SaveChanges();
-        }
-
-        public void UpdateCalendarEvent(CalendarEvent calendarEvent)
-        {
-            _context.CalendarEvents.Update(calendarEvent);
-            _context.SaveChanges();
-        }
-
-        public void DeleteCalendarEvent(int eventId)
-        {
-            var calendarEvent = _context.CalendarEvents.Find(eventId);
-            if (calendarEvent != null)
+            var newEvent = new CalendarEvent
             {
-                _context.CalendarEvents.Remove(calendarEvent);
-                _context.SaveChanges();
+                UserID = userId.Value,
+                Title = dto.Title,
+                Description = dto.Description,
+                DateTime = dto.DateTime,
+                EventColor = dto.EventColor,
+            };
+
+            await _context.CalendarEvents.AddAsync(newEvent);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteEvent(int eventId)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
             }
+            var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
+            _context.Remove(ev);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<AllCalendarEventsDto>> GetAllEventsBetween(EventPaginationDto pagination)
+        {
+            List<CalendarEvent> userEvents;
+            var userId = _userContextRepository.GetUserId;
+            userEvents = await _context.CalendarEvents
+                .Where(ev => ev.UserID == userId && ev.DateTime > DateTime.Parse(pagination.from) && ev.DateTime < DateTime.Parse(pagination.to)) 
+                .ToListAsync();
+            if (userEvents.Count == 0) { return new List<AllCalendarEventsDto>(); }
+            var eventsDto = _mapper.Map<List<AllCalendarEventsDto>>(userEvents);
+            return eventsDto;
+        }
+
+        public async Task UpdateEvent(CalendarEventDto dto, int eventId)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
+            
+            ev.Title = dto.Title;
+            ev.DateTime = dto.DateTime;
+            ev.EventColor = dto.EventColor;
+            ev.Description  = dto.Description;
+
+            _context.CalendarEvents.Update(ev);
+            await _context.SaveChangesAsync();
+
         }
     }
 }

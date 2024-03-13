@@ -1,15 +1,10 @@
-﻿namespace backend.Models
+﻿namespace backend.Dto
 {
-    public class CalendarEvent
+    public class CalendarEventDto
     {
-        public int EventID { get; set; }
-        public int UserID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
         public string EventColor { get; set; }
-
-        public virtual User User { get; set; }
-
     }
 }

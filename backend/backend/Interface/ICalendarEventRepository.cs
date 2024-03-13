@@ -1,13 +1,13 @@
-﻿using backend.Models;
+﻿using backend.Dto;
+using backend.Models;
 
 namespace backend.Interface
 {
     public interface ICalendarEventRepository
     {
-        CalendarEvent GetCalendarEventById(int calendarEventId);
-        List<CalendarEvent> GetAllCalendarEvents();
-        void AddCalendarEvent(CalendarEvent calendarEvent);
-        void UpdateCalendarEvent(CalendarEvent calendarEvent);
-        void DeleteCalendarEvent(int calendarEventId);
+        Task<List<AllCalendarEventsDto>> GetAllEventsBetween(EventPaginationDto pagination);
+        Task AddEvent(CalendarEventDto dto);
+        Task UpdateEvent(CalendarEventDto dto, int eventId);
+        Task DeleteEvent(int eventId);
     }
 }
