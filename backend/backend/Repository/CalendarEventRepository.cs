@@ -37,7 +37,7 @@ namespace backend.Repository
                 UserID = userId.Value,
                 Title = dto.Title,
                 Description = dto.Description,
-                DateTime = dto.DateTime,
+                DateTime = DateTime.Parse(dto.DateTime),
                 EventColor = dto.EventColor,
             };
 
@@ -57,12 +57,12 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<AllCalendarEventsDto>> GetAllEventsBetween(EventPaginationDto pagination)
+        public async Task<List<AllCalendarEventsDto>> GetAllEventsBetween(string from, string to)
         {
             List<CalendarEvent> userEvents;
             var userId = _userContextRepository.GetUserId;
             userEvents = await _context.CalendarEvents
-                .Where(ev => ev.UserID == userId && ev.DateTime > DateTime.Parse(pagination.from) && ev.DateTime < DateTime.Parse(pagination.to)) 
+                .Where(ev => ev.UserID == userId && ev.DateTime > DateTime.Parse(from) && ev.DateTime < DateTime.Parse(to)) 
                 .ToListAsync();
             if (userEvents.Count == 0) { return new List<AllCalendarEventsDto>(); }
             var eventsDto = _mapper.Map<List<AllCalendarEventsDto>>(userEvents);
@@ -80,7 +80,7 @@ namespace backend.Repository
             var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
             
             ev.Title = dto.Title;
-            ev.DateTime = dto.DateTime;
+            ev.DateTime = DateTime.Parse(dto.DateTime);
             ev.EventColor = dto.EventColor;
             ev.Description  = dto.Description;
 

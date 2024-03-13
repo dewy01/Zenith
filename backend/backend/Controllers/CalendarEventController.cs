@@ -15,11 +15,11 @@ namespace backend.Controllers
             _calendarService = noteService;
         }
 
-        [HttpGet("getEventBetween")]
+        [HttpGet("getEventBetween/{from}/{to}")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllCalendarEventsDto>>> GetAllEvents(EventPaginationDto dto)
+        public async Task<ActionResult<IEnumerable<AllCalendarEventsDto>>> GetAllEvents([FromRoute]  string from, [FromRoute] string to)
         {
-            var events = await _calendarService.GetAllEventsBetween(dto);
+            var events = await _calendarService.GetAllEventsBetween(from, to);
             return await Task.FromResult(Ok(events));
         }
 
