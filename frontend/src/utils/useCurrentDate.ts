@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 
-export const useCurrentDate = (passedMonth?: number) => {
-  const current = dayjs().month();
-  const month = passedMonth ? passedMonth : Math.floor(current);
+export const useCurrentDate = (passedMonth: number) => {
+  const month = passedMonth
   const year = dayjs().year();
   const firstDay = dayjs(new Date(year, month, 1)).day();
 

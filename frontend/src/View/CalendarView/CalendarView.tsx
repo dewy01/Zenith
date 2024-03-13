@@ -12,7 +12,7 @@ import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
 
 export const CalendarView = () => {
-  const [month, setMonth] = useState(useCurrentDate());
+  const [month, setMonth] = useState(useCurrentDate(dayjs().month()));
   const { monthAsNumber, setMonthAsNumber } = useCalendar();
 
   useEffect(() => {
