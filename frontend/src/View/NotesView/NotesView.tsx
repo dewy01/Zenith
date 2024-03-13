@@ -80,15 +80,13 @@ export const NotesView = () => {
                 )
                 .map((note) => (
                   <Box
+                    key={note.createdAt}
                     onClick={() => setSelectedNote(note.noteID)}
                     display={'flex'}
                     flexDirection={'column'}
                     sx={{ cursor: 'pointer' }}
                   >
-                    <DrawerLink
-                      key={note.createdAt}
-                      isActive={note.noteID === selectedNote}
-                    >
+                    <DrawerLink isActive={note.noteID === selectedNote}>
                       <Typography
                         sx={{
                           textWrap: 'wrap',

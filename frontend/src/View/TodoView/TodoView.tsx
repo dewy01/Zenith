@@ -80,6 +80,7 @@ export const TodoView = () => {
                 )
                 .map((project) => (
                   <Box
+                    key={project.projectTodoID}
                     onClick={() => setSelectedProject(project)}
                     display={'flex'}
                     flexDirection={'column'}

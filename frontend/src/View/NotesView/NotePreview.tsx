@@ -33,9 +33,10 @@ type Props = {
 
 export const NotePreview = ({ noteId }: Props) => {
   const { data: note, isLoading } = getNoteById(noteId);
-
+  const [unsavedChanges, setUnsavedChanges] = useState(false); // Track changes
   const [toggle, setToggle] = useState(true);
   const handleToggle = () => setToggle(!toggle);
+  const { mutateAsync } = mutateEditNote();
 
   const form = useForm<noteModel>({
     resolver: zodResolver(noteSchema),
@@ -51,8 +52,6 @@ export const NotePreview = ({ noteId }: Props) => {
     name: 'content',
   });
 
-  const { mutateAsync } = mutateEditNote();
-
   useEffect(() => {
     if (note) {
       form.reset({
@@ -67,6 +66,18 @@ export const NotePreview = ({ noteId }: Props) => {
       note &&
       (title.field.value !== note.title || content.field.value !== note.content)
     ) {
+      setUnsavedChanges(true);
+    } else {
+      setUnsavedChanges(false);
+    }
+  }, [note, title.field.value, content.field.value]);
+
+  useEffect(() => {
+    handleSave();
+  }, [unsavedChanges]);
+
+  const handleSave = () => {
+    if (unsavedChanges) {
       mutateAsync({
         noteId: noteId,
         note: {
@@ -74,8 +85,9 @@ export const NotePreview = ({ noteId }: Props) => {
           content: content.field.value,
         },
       });
+      setUnsavedChanges(false);
     }
-  }, [note, title.field.value, content.field.value]);
+  };
 
   const classes = useStyles();
 

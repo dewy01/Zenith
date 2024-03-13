@@ -1,4 +1,11 @@
-import { Box, Paper, Tooltip, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Paper,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { getSettings, mutateEditSettings } from '~/api/Settings/query';
 import { LoadingView } from '../LoadingView/LoadingView';
 import CheckIcon from '@mui/icons-material/Check';
@@ -60,12 +67,17 @@ export const SettingsView = () => {
         gap: 2,
       })}
     >
+      <AppBar position="static" sx={{ borderRadius: '5px' }}>
+        <Toolbar>
+          <Typography variant="h6">Settings</Typography>
+        </Toolbar>
+      </AppBar>
       <Paper sx={{ maxWidth: '370px', padding: 3 }}>
         <Box display="flex" gap={2} alignItems="center">
           <Typography fontWeight={'medium'}>Primary color:</Typography>
           <Box display="flex" gap={1}>
             {colors.map((item) => (
-              <Paper className={classes.paper} elevation={8}>
+              <Paper key={item.name} className={classes.paper} elevation={8}>
                 <Tooltip title={item.name}>
                   <Box
                     className={classes.box}
@@ -95,13 +107,12 @@ export const SettingsView = () => {
           </Box>
         </Box>
       </Paper>
-
       <Paper sx={{ maxWidth: '320px', padding: 3 }}>
         <Box display="flex" gap={2} alignItems="center">
           <Typography fontWeight={'medium'}>Background color:</Typography>
           <Box display="flex" gap={1}>
             {themeColor.map((item) => (
-              <Paper className={classes.paper} elevation={8}>
+              <Paper key={item.name} className={classes.paper} elevation={8}>
                 <Tooltip title={item.name}>
                   <Box
                     className={classes.box}
@@ -133,13 +144,12 @@ export const SettingsView = () => {
           </Box>
         </Box>
       </Paper>
-
       <Paper sx={{ maxWidth: '320px', padding: 3 }}>
         <Box display="flex" gap={2} alignItems="center">
           <Typography fontWeight={'medium'}>Language:</Typography>
           <Box display="flex" gap={1}>
             {languages.map((item) => (
-              <Paper className={classes.paper} elevation={8}>
+              <Paper key={item.name} className={classes.paper} elevation={8}>
                 <Tooltip title={item.name}>
                   <Box className={classes.box} onClick={() => {}}>
                     <Typography>{item.value}</Typography>

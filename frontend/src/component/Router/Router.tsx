@@ -11,6 +11,8 @@ import { ProjectView } from '~/View/ProjectView/ProjectView';
 import { ProjectTaskView } from '~/View/ProjectTask';
 import { TodoView } from '~/View/TodoView/TodoView';
 import { SettingsView } from '~/View/SettingsView';
+import { CalendarView } from '~/View/CalendarView';
+import { CalendarProvider } from '~/context/CalendarContext';
 
 type Props = { children: ReactNode };
 
@@ -75,7 +77,9 @@ export const Router = () => {
             path="/calendar"
             element={
               <PrivateRoute>
-                <></>
+                <CalendarProvider>
+                  <CalendarView />
+                </CalendarProvider>
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

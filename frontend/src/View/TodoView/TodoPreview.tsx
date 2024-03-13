@@ -43,7 +43,7 @@ export const TodoPreview = ({ projectId }: Props) => {
         }}
       >
         {project.todos.map((todo) => (
-          <TodoCard todo={todo} color={project.color} />
+          <TodoCard key={todo.todoID} todo={todo} color={project.color} />
         ))}
         <DialogCreate color={project.color} projectId={projectId} />
       </Box>

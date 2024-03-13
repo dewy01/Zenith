@@ -28,7 +28,7 @@ dependencies:
     version: 5.15.12(@types/react@18.2.55)(react@18.2.0)
   '@mui/x-date-pickers':
     specifier: ^6.19.6
-    version: 6.19.6(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.10)(@mui/system@5.15.9)(@types/react@18.2.55)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
+    version: 6.19.6(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.10)(@mui/system@5.15.9)(@types/react@18.2.55)(date-fns@3.3.1)(dayjs@1.11.10)(react-dom@18.2.0)(react@18.2.0)
   '@tanstack/react-query':
     specifier: ^5.24.6
     version: 5.24.6(react@18.2.0)
@@ -41,6 +41,9 @@ dependencies:
   date-fns:
     specifier: ^3.3.1
     version: 3.3.1
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -1571,7 +1574,7 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@mui/x-date-pickers@6.19.6(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.10)(@mui/system@5.15.9)(@types/react@18.2.55)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/x-date-pickers@6.19.6(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.10)(@mui/system@5.15.9)(@types/react@18.2.55)(date-fns@3.3.1)(dayjs@1.11.10)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-QW9AFcPi0vLpkUhmquhhyhLaBvB0AZJuu3NTrE173qNKx3Z3n51aCLY9bc7c6i4ltZMMsVRHlvzQjsve04TC8A==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -1618,6 +1621,7 @@ packages:
       '@types/react-transition-group': 4.4.10
       clsx: 2.1.0
       date-fns: 3.3.1
+      dayjs: 1.11.10
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -3446,6 +3450,10 @@ packages:
 
   /date-fns@3.3.1:
     resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
+    dev: false
+
+  /dayjs@1.11.10:
+    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: false
 
   /debug@3.2.7:

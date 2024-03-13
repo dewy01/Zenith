@@ -43,10 +43,10 @@ export const ProjectView = () => {
         }}
       >
         {projects.map((item) => (
-          <div key={item.projectID}>
+          <Box key={item.projectID}>
             <ProjectCard project={item} />
             <Divider variant="middle" />
-          </div>
+          </Box>
         ))}
       </List>
     </Box>

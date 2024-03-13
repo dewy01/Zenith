@@ -4,13 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "@mui/material";
-import { useState } from "react";
-import { CreateForm } from "./CreateForm";
-import { projectModel, projectSchema } from "./schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { mutateAddProject } from "~/api/Projects/query";
+} from '@mui/material';
+import { useState } from 'react';
+import { CreateForm } from './CreateForm';
+import { projectModel, projectSchema } from './schema';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { mutateAddProject } from '~/api/Projects/query';
 
 export const DialogCreate = () => {
   const [open, setOpen] = useState(false);
@@ -25,10 +25,10 @@ export const DialogCreate = () => {
 
   const projectForm = useForm<projectModel>({
     defaultValues: {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       deadline: new Date(),
-      status: "on Hold",
+      status: 'on Hold',
     },
     resolver: zodResolver(projectSchema),
   });
@@ -48,10 +48,10 @@ export const DialogCreate = () => {
         open={open}
         onClose={handleClose}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <DialogTitle>Create project</DialogTitle>
@@ -62,12 +62,7 @@ export const DialogCreate = () => {
           <Button color="inherit" onClick={handleClose}>
             Cancel
           </Button>
-          <Button
-            type="submit"
-            form="createProjectForm"
-            color="success"
-            autoFocus
-          >
+          <Button type="submit" form="createProjectForm" color="success">
             Create
           </Button>
         </DialogActions>

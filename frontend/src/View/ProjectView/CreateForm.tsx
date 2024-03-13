@@ -5,10 +5,10 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@mui/material";
-import { projectModel } from "./schema";
-import { Controller, UseFormReturn, useController } from "react-hook-form";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+} from '@mui/material';
+import { projectModel } from './schema';
+import { Controller, UseFormReturn, useController } from 'react-hook-form';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 type Props = {
   onSubmit: (value: projectModel) => void;
@@ -24,22 +24,22 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
 
   const title = useController({
     control: control,
-    name: "title",
+    name: 'title',
   });
 
   const desc = useController({
     control: control,
-    name: "description",
+    name: 'description',
   });
 
   const deadline = useController({
     control: control,
-    name: "deadline",
+    name: 'deadline',
   });
 
   const status = useController({
     control: control,
-    name: "status",
+    name: 'status',
   });
 
   return (
@@ -49,8 +49,8 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
       sx={{ paddingTop: 1 }}
       onSubmit={handleSubmit((data) => onSubmit(data))}
     >
-      <Box display={"flex"} flexDirection={"column"} gap={2}>
-        <Box display={"flex"} gap={1}>
+      <Box display={'flex'} flexDirection={'column'} gap={2}>
+        <Box display={'flex'} gap={1}>
           <TextField
             label="Title"
             ref={title.field.ref}
@@ -61,7 +61,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
             error={errors.title !== undefined}
             helperText={errors.title?.message}
           />
-          <FormControl sx={{ width: "240px" }}>
+          <FormControl sx={{ width: '240px' }}>
             <InputLabel>Status</InputLabel>
             <Select
               label="Status"
@@ -90,7 +90,6 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
         <Controller
           name={deadline.field.name}
           control={control}
-          data-testid="start-date"
           render={() => (
             <DatePicker
               slotProps={{

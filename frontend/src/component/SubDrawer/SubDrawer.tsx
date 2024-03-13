@@ -1,4 +1,5 @@
-import { Drawer, DrawerProps } from "@mui/material";
+import { Drawer, DrawerProps } from '@mui/material';
+import { SIDEBAR_WIDTH } from '~/config/constants';
 
 export const SubDrawer = ({ children, sx, ...rest }: DrawerProps) => {
   return (
@@ -8,14 +9,14 @@ export const SubDrawer = ({ children, sx, ...rest }: DrawerProps) => {
       }}
       sx={{
         ...sx,
-        "& .MuiDrawer-paper": {
-          boxSizing: "border-box",
-          width: 200,
-          overflowX: "hidden",
-          display: "flex",
-          justifyContent: "space-between",
+        '& .MuiDrawer-paper': {
+          boxSizing: 'border-box',
+          width: 250,
+          overflowX: 'hidden',
+          display: 'flex',
+          justifyContent: 'space-between',
           flexGrow: 1,
-          marginLeft: "58px",
+          marginLeft: `${SIDEBAR_WIDTH}px`,
           padding: 1,
         },
       }}

@@ -81,12 +81,21 @@ export const ProjectTaskView = () => {
               >
                 <Box
                   sx={{
+                    width: '80%',
+                    padding: 2,
                     backgroundColor: column.color,
-                    width: '90%',
-                    borderRadius: 5,
+                    borderRadius: '5px',
                   }}
                 >
-                  <Typography textAlign="center">{column.name}</Typography>
+                  <Typography
+                    textAlign="center"
+                    fontWeight={500}
+                    sx={(theme) => ({
+                      color: theme.palette.getContrastText(column.color),
+                    })}
+                  >
+                    {column.name}
+                  </Typography>
                 </Box>
                 <Box
                   display="flex"

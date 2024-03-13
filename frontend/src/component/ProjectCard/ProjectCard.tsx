@@ -1,15 +1,16 @@
 import {
   Box,
+  List,
   ListItem,
   ListItemText,
   ListSubheader,
   Stack,
   Typography,
-} from "@mui/material";
-import { Project } from "~/api/Projects/api";
-import { formatDate } from "~/utils/dateTime";
-import { ProjectMenu } from "../ProjectMenu";
-import { NavLink } from "react-router-dom";
+} from '@mui/material';
+import { Project } from '~/api/Projects/api';
+import { formatDate } from '~/utils/dateTime';
+import { ProjectMenu } from '../ProjectMenu';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   project: Project;
@@ -17,18 +18,17 @@ type Props = {
 
 export const ProjectCard = ({ project }: Props) => {
   return (
-    <>
-      <ListItem sx={{ width: "80vw" }}>
+    <ListItem sx={{ width: '80vw' }}>
+      <List sx={{ flex: 1 }}>
         <Box
           component={NavLink}
           to={`/projects/${project.projectID}`}
-          flex={1}
-          sx={{ textDecoration: "none" }}
+          sx={{ textDecoration: 'none' }}
         >
           <ListItemText
             sx={{
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column',
             }}
             primary={
               <Typography color="text.primary">{project.title}</Typography>
@@ -40,16 +40,16 @@ export const ProjectCard = ({ project }: Props) => {
             }
           />
         </Box>
-        <ListSubheader>
-          <Stack alignItems={"end"}>
-            <Typography>{project.status}</Typography>
-            <Typography variant="caption">
-              {formatDate(project.deadline)}
-            </Typography>
-          </Stack>
-        </ListSubheader>
-        <ProjectMenu project={project} />
-      </ListItem>
-    </>
+      </List>
+      <ListSubheader>
+        <Stack alignItems={'end'}>
+          <Typography>{project.status}</Typography>
+          <Typography variant="caption">
+            {formatDate(project.deadline)}
+          </Typography>
+        </Stack>
+      </ListSubheader>
+      <ProjectMenu project={project} />
+    </ListItem>
   );
 };
