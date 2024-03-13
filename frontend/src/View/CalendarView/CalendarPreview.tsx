@@ -5,6 +5,7 @@ import { useCalendar } from '~/context/CalendarContext';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { makeStyles } from '@mui/styles';
+import { getEventBetween } from '~/api/Calendar/query';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,6 +19,11 @@ type Props = {
 };
 
 export const CalendarPreview = ({ month }: Props) => {
+  const { data: events } = getEventBetween({
+    from: month[0][0].format('DD MM YYYY').toString(),
+    to: month[4][6].format('DD MM YYYY').toString(),
+  });
+
   const { monthAsNumber, setMonthAsNumber } = useCalendar();
   const classes = useStyles();
 
@@ -50,7 +56,7 @@ export const CalendarPreview = ({ month }: Props) => {
         <Typography
           fontWeight={'500'}
           fontSize={32}
-          sx={{ minWidth: '15vw' }}
+          sx={{ minWidth: '20vw' }}
           textAlign={'center'}
         >
           {currentMonth}
@@ -64,7 +70,6 @@ export const CalendarPreview = ({ month }: Props) => {
           display: 'flex',
           flexDirection: 'column',
           maxWidth: '85vw',
-          maxHeight: '89vh',
         }}
       >
         {month.map((week, index) => (
@@ -78,7 +83,15 @@ export const CalendarPreview = ({ month }: Props) => {
             justifyContent="space-around"
           >
             {week.map((day, dayIndex) => (
-              <DayCard day={day} row={index} key={dayIndex} />
+              <DayCard
+                day={day}
+                row={index}
+                key={dayIndex}
+                events={events?.filter(
+                  (a) =>
+                    dayjs(a.dateTime).format('DD MM') === day.format('DD MM'),
+                )}
+              />
             ))}
           </Box>
         ))}

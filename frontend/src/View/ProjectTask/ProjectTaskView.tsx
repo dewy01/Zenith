@@ -5,6 +5,7 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { LoadingView } from '../LoadingView/LoadingView';
 import { NavLink, useParams } from 'react-router-dom';
@@ -20,14 +21,16 @@ type Params = {
   id: string;
 };
 
-const columns = [
-  { name: 'Backlog', color: '#ff927e' },
-  { name: 'in Progress', color: '#e5cc8b' },
-  { name: 'For Review', color: '#6faad6' },
-  { name: 'Closed', color: '#9bcaa8' },
-];
-
 export const ProjectTaskView = () => {
+  const theme = useTheme();
+
+  const columns = [
+    { name: 'Backlog', color: theme.palette.error.main },
+    { name: 'in Progress', color: theme.palette.warning.main },
+    { name: 'For Review', color: theme.palette.info.main },
+    { name: 'Closed', color: theme.palette.success.main },
+  ];
+
   const data = useParams<Params>();
   if (data.id === undefined) return <ProjectView />;
 

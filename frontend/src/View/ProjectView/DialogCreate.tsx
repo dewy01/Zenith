@@ -62,7 +62,12 @@ export const DialogCreate = () => {
           <Button color="inherit" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" form="createProjectForm" color="success">
+          <Button
+            type="submit"
+            form="createProjectForm"
+            color="success"
+            autoFocus
+          >
             Create
           </Button>
         </DialogActions>

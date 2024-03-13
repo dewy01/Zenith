@@ -2,13 +2,16 @@ import { Box, Paper, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DialogCreate } from './DialogCreate';
+import { CalendarEvent } from '~/api/Calendar/api';
+import { EventChip } from './EventChip';
 
 type Props = {
   day: dayjs.Dayjs;
   row: number;
+  events?: CalendarEvent[];
 };
 
-export const DayCard = ({ day, row }: Props) => {
+export const DayCard = ({ day, row, events }: Props) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -24,16 +27,15 @@ export const DayCard = ({ day, row }: Props) => {
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
-          // minHeight: '100px',
-          // minWidth: '100px',
-          aspectRatio: '1/1',
+          minHeight: '15vh',
+          minWidth: '100px',
           padding: 1,
           border: '1px solid',
           borderColor: theme.palette.action.hover,
           gap: 1,
         })}
       >
-        <Paper>
+        <Paper onClick={handleClickOpen} sx={{ cursor: 'pointer' }}>
           <Box display="flex" flexDirection="column" alignItems="center">
             {row === 0 && (
               <Typography variant="caption">
@@ -63,13 +65,16 @@ export const DayCard = ({ day, row }: Props) => {
           </Box>
         </Paper>
         <Box
-          onClick={handleClickOpen}
           sx={{
-            cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'column',
             flex: 1,
             minHeight: '80%',
+            gap: 0.5,
           }}
-        ></Box>
+        >
+          {events?.map((item) => <EventChip event={item} key={item.eventID} />)}
+        </Box>
       </Box>
       <DialogCreate open={open} setOpen={setOpen} day={day} key={day.date()} />
     </>

@@ -4,7 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  useTheme,
+  IconButton,
 } from '@mui/material';
 import { Dispatch } from 'react';
 import { CreateForm } from './CreateForm';
@@ -12,23 +12,26 @@ import dayjs from 'dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { eventModel, eventSchema } from './schema';
 import { useForm } from 'react-hook-form';
-import { mutateAddEvent } from '~/api/Calendar/query';
+import { mutateDeleteEvent, mutateEditEvent } from '~/api/Calendar/query';
+import { CalendarEvent } from '~/api/Calendar/api';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 type Props = {
   open: boolean;
   setOpen: Dispatch<boolean>;
-  day: dayjs.Dayjs;
+  event: CalendarEvent;
 };
 
-export const DialogCreate = ({ open, setOpen, day }: Props) => {
-  const { mutateAsync } = mutateAddEvent();
+export const DialogEdit = ({ open, setOpen, event }: Props) => {
+  const { mutateAsync: editEvent } = mutateEditEvent();
+  const { mutateAsync: deleteEvent } = mutateDeleteEvent();
 
   const eventForm = useForm<eventModel>({
     defaultValues: {
-      title: '',
-      description: '',
-      dateTime: day.format('DD.MM.YYYY'),
-      eventColor: useTheme().palette.secondary.dark,
+      title: event.title,
+      description: event.description,
+      dateTime: dayjs(event.dateTime).format('DD.MM.YYYY'),
+      eventColor: event.eventColor,
     },
     resolver: zodResolver(eventSchema),
   });
@@ -39,7 +42,15 @@ export const DialogCreate = ({ open, setOpen, day }: Props) => {
   };
 
   const handleSubmit = (data: eventModel) => {
-    mutateAsync(data);
+    editEvent({
+      eventId: event.eventID,
+      event: data,
+    });
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    deleteEvent(event.eventID);
     handleClose();
   };
 
@@ -54,7 +65,18 @@ export const DialogCreate = ({ open, setOpen, day }: Props) => {
         alignItems: 'center',
       }}
     >
-      <DialogTitle>New Event</DialogTitle>
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        Edit Event
+        <IconButton onClick={handleDelete}>
+          <DeleteOutlineIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
         <CreateForm formContext={eventForm} onSubmit={handleSubmit} />
       </DialogContent>
@@ -63,7 +85,7 @@ export const DialogCreate = ({ open, setOpen, day }: Props) => {
           Cancel
         </Button>
         <Button type="submit" form="createEventForm" color="success" autoFocus>
-          Create
+          Edit
         </Button>
       </DialogActions>
     </Dialog>

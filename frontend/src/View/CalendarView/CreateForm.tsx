@@ -4,6 +4,7 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  useTheme,
 } from '@mui/material';
 import { eventModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
@@ -30,6 +31,8 @@ type Props = {
 };
 
 export const CreateForm = ({ onSubmit, formContext }: Props) => {
+  const theme = useTheme();
+
   const {
     control,
     handleSubmit,
@@ -95,7 +98,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
             onBlur={desc.field.onBlur}
             name={desc.field.name}
             error={errors.description !== undefined}
-            helperText={errors.description?.message}
+            helperText={'Only in Week view'}
           />
         </Box>
 
@@ -103,7 +106,6 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
           <CalendarTodayIcon />
           <TextField
             sx={{ flex: 1 }}
-            label="Date"
             disabled
             ref={dateTime.field.ref}
             value={dateTime.field.value}
@@ -124,11 +126,11 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
             onChange={eventColor.field.onChange}
             onBlur={eventColor.field.onBlur}
           >
-            <ColorToggle value="#B57EDC" />
-            <ColorToggle value="#FF7F50" />
-            <ColorToggle value="#98FF98" />
-            <ColorToggle value="#FFA500" />
-            <ColorToggle value="#87CEEB" />
+            <ColorToggle value={theme.palette.secondary.dark} />
+            <ColorToggle value={theme.palette.error.dark} />
+            <ColorToggle value={theme.palette.success.dark} />
+            <ColorToggle value={theme.palette.warning.dark} />
+            <ColorToggle value={theme.palette.info.dark} />
           </ToggleButtonGroup>
         </Box>
       </Box>

@@ -127,7 +127,7 @@ export const NotePreview = ({ noteId }: Props) => {
       <MDXEditor
         markdown={note.content}
         ref={content.field.ref}
-        onChange={debounce(content.field.onChange, 1000)}
+        onChange={debounce(content.field.onChange, 500)}
         onBlur={content.field.onBlur}
         contentEditableClassName={classes.root}
         plugins={[
