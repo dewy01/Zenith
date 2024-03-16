@@ -4,6 +4,9 @@ import { BASE_URL } from '~/config/constants';
 export interface Settings {
   theme: string;
   color: string;
+  language: string;
+  reminder: number;
+  routes: { [routeName: string]: boolean };
 }
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });

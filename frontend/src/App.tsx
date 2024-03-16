@@ -1,14 +1,13 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './component/Router';
-import { CssBaseline, GlobalStyles, Theme, ThemeProvider } from '@mui/material';
+import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 
 import darkScrollbar from '@mui/material/darkScrollbar';
 import { SnackbarOrigin, SnackbarProvider } from 'notistack';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { enGB } from 'date-fns/locale';
-import { handleSettings, dark } from './Theme';
-import { useState } from 'react';
+import { handleSettings } from './Theme';
 
 const snackbarOptions = {
   vertical: 'bottom',
@@ -24,14 +23,14 @@ document.addEventListener(
 );
 
 const App = () => {
-  const theme = handleSettings();
+  const { theme, routes, language } = handleSettings();
 
   return (
     <SnackbarProvider anchorOrigin={snackbarOptions}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Router />
+            <Router routes={routes} />
             <CssBaseline />
             <GlobalStyles styles={{ ...darkScrollbar() }} />
           </BrowserRouter>

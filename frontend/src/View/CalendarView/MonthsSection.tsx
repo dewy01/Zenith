@@ -18,12 +18,10 @@ const months: string[] = [
 ];
 
 export const MonthsSection = () => {
-  const { monthAsNumber, setMonthAsNumber } = useCalendar();
+  const { monthAsNumber } = useCalendar();
   const setYear = dayjs(new Date(dayjs().year(), monthAsNumber)).format('YYYY');
   const normalizedMonthAsNumber =
     monthAsNumber < 0 ? 12 + (monthAsNumber % 12) : monthAsNumber % 12;
-
-  console.log(monthAsNumber);
 
   return (
     <Box

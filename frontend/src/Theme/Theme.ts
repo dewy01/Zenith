@@ -57,8 +57,16 @@ export const handleSettings = () => {
       },
     });
 
-    return theme;
+    return {
+      theme: theme,
+      routes : settings.routes,
+      language: settings.language
+    };
   } else {
-    return dark;
+    return {
+      theme:dark,
+      routes:{},
+      language: 'en'
+    }
   }
 };

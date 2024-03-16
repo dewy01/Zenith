@@ -36,11 +36,19 @@ const AuthPrevent = ({ children }: Props) => {
   );
 };
 
-export const Router = () => {
+type RouterProps = {
+  routes: { [routeName: string]: boolean };
+};
+
+export const Router = ({ routes }: RouterProps) => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />} errorElement={<ErrorView />}>
+        <Route
+          path="/"
+          element={<Layout routes={routes} />}
+          errorElement={<ErrorView />}
+        >
           <Route
             index={true}
             element={<Navigate to="/home" />}

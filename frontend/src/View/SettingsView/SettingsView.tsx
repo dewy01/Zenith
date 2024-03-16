@@ -14,6 +14,14 @@ import { LoadingView } from '../LoadingView/LoadingView';
 import CheckIcon from '@mui/icons-material/Check';
 import { makeStyles } from '@mui/styles';
 
+const routes: { [routeName: string]: boolean } = {
+  ['Notes']: true,
+  ['Calendar']: true,
+  ['Todo']: true,
+  ['Projects']: true,
+  ['Group Projects']: true,
+};
+
 const colors = [
   { name: 'blue', color: '#5AB4CF' },
   { name: 'purple', color: '#B680BC' },
@@ -45,10 +53,27 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const CheckboxOption = ({ name, checked, onClick }: any) => (
+  <Box display="flex" alignItems="center">
+    <Checkbox checked={checked} onClick={onClick} />
+    <Typography>{name}</Typography>
+  </Box>
+);
+
 export const SettingsView = () => {
   const { data: settings, isLoading } = getSettings();
   const { mutateAsync } = mutateEditSettings();
   const classes = useStyles();
+
+  const handleClick = (newSettings: any) => {
+    const updatedRoutes =
+      newSettings.routes || (settings ? settings.routes : routes);
+    mutateAsync({
+      ...settings,
+      ...newSettings,
+      routes: updatedRoutes,
+    });
+  };
 
   if (isLoading && !settings) {
     return <LoadingView />;
@@ -85,12 +110,7 @@ export const SettingsView = () => {
                       sx={{
                         backgroundColor: item.color,
                       }}
-                      onClick={() => {
-                        mutateAsync({
-                          theme: settings ? settings.theme : 'dark',
-                          color: item.name,
-                        });
-                      }}
+                      onClick={() => handleClick({ color: item.name })}
                     >
                       {settings?.color === item.name && (
                         <CheckIcon
@@ -120,12 +140,7 @@ export const SettingsView = () => {
                       sx={{
                         backgroundColor: item.color,
                       }}
-                      onClick={() => {
-                        mutateAsync({
-                          theme: item.name,
-                          color: settings ? settings.color : 'blue',
-                        });
-                      }}
+                      onClick={() => handleClick({ theme: item.name })}
                     >
                       {settings?.theme === item.name && (
                         <CheckIcon
@@ -148,45 +163,62 @@ export const SettingsView = () => {
         <Paper sx={{ maxWidth: '320px', padding: 3 }}>
           <Box display="flex" gap={2} alignItems="center">
             <Typography fontWeight={'medium'}>Language:</Typography>
-            <ToggleButtonGroup value={'en'}>
-              <ToggleButton value={'en'}>English</ToggleButton>
-              <ToggleButton value={'pl'}>Polish</ToggleButton>
+            <ToggleButtonGroup value={settings?.language}>
+              <ToggleButton
+                value={'en'}
+                onClick={() => handleClick({ language: 'en' })}
+              >
+                English
+              </ToggleButton>
+              <ToggleButton
+                value={'pl'}
+                onClick={() => handleClick({ language: 'pl' })}
+              >
+                Polish
+              </ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Paper>
         <Paper sx={{ maxWidth: '370px', padding: 3 }}>
           <Box display="flex" gap={2} alignItems="center">
             <Typography fontWeight={'medium'}>Reminder:</Typography>
-            <ToggleButtonGroup value={3}>
-              <ToggleButton value={3}>3 Days</ToggleButton>
-              <ToggleButton value={1}>1 Day</ToggleButton>
-              <ToggleButton value={0}>None</ToggleButton>
+            <ToggleButtonGroup value={settings?.reminder}>
+              <ToggleButton
+                value={3}
+                onClick={() => handleClick({ reminder: 3 })}
+              >
+                3 Days
+              </ToggleButton>
+              <ToggleButton
+                value={1}
+                onClick={() => handleClick({ reminder: 1 })}
+              >
+                1 Day
+              </ToggleButton>
+              <ToggleButton
+                value={0}
+                onClick={() => handleClick({ reminder: 0 })}
+              >
+                None
+              </ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Paper>
 
         <Paper sx={{ maxWidth: '350px', padding: 3 }}>
           <Typography fontWeight={'medium'}>Routes:</Typography>
-          <Box display="flex" alignItems="center">
-            <Checkbox />
-            <Typography>Notes</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Checkbox />
-            <Typography>Calendar</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Checkbox />
-            <Typography>To Do</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Checkbox />
-            <Typography>Projects</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Checkbox />
-            <Typography>Group Projects</Typography>
-          </Box>
+          {Object.entries(settings!.routes).map(([routeName, isChecked]) => (
+            <CheckboxOption
+              key={routeName}
+              name={routeName}
+              checked={isChecked}
+              onClick={() =>
+                handleClick({
+                  routes: { ...settings!.routes, [routeName]: !isChecked },
+                })
+              }
+            />
+          ))}
         </Paper>
       </Box>
     </>

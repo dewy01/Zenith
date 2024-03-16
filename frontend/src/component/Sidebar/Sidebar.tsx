@@ -57,7 +57,11 @@ const DrawerLink = ({ link, children, tooltip }: DrawerProps) => {
   );
 };
 
-export const Sidebar = () => {
+type RouterProps = {
+  routes: { [routeName: string]: boolean };
+};
+
+export const Sidebar = ({ routes }: RouterProps) => {
   return (
     <Drawer
       variant="permanent"
@@ -81,29 +85,40 @@ export const Sidebar = () => {
             <HomeIcon />
           </DrawerLink>
 
-          <DrawerLink link="/notes" tooltip="Notes">
-            <InsertDriveFileIcon />
-          </DrawerLink>
+          {routes['Notes'] && (
+            <DrawerLink link="/notes" tooltip="Notes">
+              <InsertDriveFileIcon />
+            </DrawerLink>
+          )}
 
-          <DrawerLink link="/calendar" tooltip="Calendar">
-            <CalendarMonthIcon />
-          </DrawerLink>
+          {routes['Calendar'] && (
+            <DrawerLink link="/calendar" tooltip="Calendar">
+              <CalendarMonthIcon />
+            </DrawerLink>
+          )}
 
-          <DrawerLink link="/todo" tooltip="To Do">
-            <CheckBoxOutlinedIcon />
-          </DrawerLink>
+          {routes['Todo'] && (
+            <DrawerLink link="/todo" tooltip="To Do">
+              <CheckBoxOutlinedIcon />
+            </DrawerLink>
+          )}
 
-          <DrawerLink link="/projects" tooltip="Projects">
-            <ViewKanbanIcon />
-          </DrawerLink>
+          {routes['Projects'] && (
+            <DrawerLink link="/projects" tooltip="Projects">
+              <ViewKanbanIcon />
+            </DrawerLink>
+          )}
 
           <Divider />
 
-          <DrawerLink link="/groups" tooltip="Group Projects">
-            <PersonIcon />
-          </DrawerLink>
-
-          <Divider />
+          {routes['Group Projects'] && (
+            <>
+              <DrawerLink link="/groups" tooltip="Group Projects">
+                <PersonIcon />
+              </DrawerLink>
+              <Divider />
+            </>
+          )}
         </List>
       </Box>
       <List>
