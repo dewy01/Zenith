@@ -1,5 +1,5 @@
 import { Paper, Typography, alpha } from '@mui/material';
-import { DialogEdit } from './DialogEdit';
+import { DialogEdit } from '../DialogEdit';
 import { useState } from 'react';
 import { CalendarEvent } from '~/api/Calendar/api';
 

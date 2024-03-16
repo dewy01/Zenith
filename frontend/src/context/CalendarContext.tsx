@@ -10,6 +10,8 @@ import dayjs from 'dayjs';
 interface CalendarContextProps {
   monthAsNumber: number;
   setMonthAsNumber: Dispatch<number>;
+  weekAsNumber: number;
+  setWeekAsNumber: Dispatch<number>;
 }
 
 const CalendarContext = createContext<CalendarContextProps | undefined>(
@@ -20,9 +22,14 @@ type Props = { children: ReactNode };
 
 export const CalendarProvider = ({ children }: Props) => {
   const [monthAsNumber, setMonthAsNumber] = useState(dayjs().month());
+  const [weekAsNumber, setWeekAsNumber] = useState(
+    dayjs().diff(dayjs().startOf('month'), 'week'),
+  );
 
   return (
-    <CalendarContext.Provider value={{ monthAsNumber, setMonthAsNumber }}>
+    <CalendarContext.Provider
+      value={{ monthAsNumber, setMonthAsNumber, weekAsNumber, setWeekAsNumber }}
+    >
       {children}
     </CalendarContext.Provider>
   );

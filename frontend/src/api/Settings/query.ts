@@ -16,9 +16,8 @@ export const mutateEditSettings = () => {
     mutationKey: ['editSettings'],
     mutationFn: (preferences: Settings) => editSettings(preferences),
     onSuccess: () => {
-      enqueueSnackbar('Settings saved');
       queryClient.invalidateQueries({ queryKey: ['allSettings'] });
     },
-    onError: () => {},
+    onError: () => {enqueueSnackbar('Server connection error');},
   });
 };

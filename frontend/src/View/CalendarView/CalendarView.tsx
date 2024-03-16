@@ -1,32 +1,51 @@
-import { Box, IconButton, List, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import {
+  Box,
+  IconButton,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
+import { useMemo, useState } from 'react';
 import { Main } from '~/component/Main';
 import { SubDrawer } from '~/component/SubDrawer';
-import { useCurrentDate } from '~/utils/useCurrentDate';
-import { CalendarPreview } from './CalendarPreview';
+import { CalendarPreview } from './MonthView/CalendarPreview';
 import { useCalendar } from '~/context/CalendarContext';
 import AddIcon from '@mui/icons-material/Add';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
+import { WeekPreview } from './WeekView/WeekPreview';
+import { MonthsSection } from './MonthsSection';
+
+enum ViewMode {
+  month,
+  week,
+}
 
 export const CalendarView = () => {
-  const [month, setMonth] = useState(useCurrentDate(dayjs().month()));
-  const { monthAsNumber, setMonthAsNumber } = useCalendar();
-
-  useEffect(() => {
-    setMonth(useCurrentDate(monthAsNumber));
-  }, [monthAsNumber]);
+  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.month);
+  const { monthAsNumber, setMonthAsNumber, setWeekAsNumber, weekAsNumber } =
+    useCalendar();
 
   const handleReset = () => {
     setMonthAsNumber(dayjs().month());
+    setWeekAsNumber(dayjs().diff(dayjs().startOf('month'), 'week'));
     enqueueSnackbar('Mont reset', {
       autoHideDuration: 1000,
     });
   };
 
-  const isSameMonth = monthAsNumber === dayjs().month();
+  const isSameMonth = useMemo(() => {
+    if (viewMode === ViewMode.month) {
+      return monthAsNumber === dayjs().month();
+    } else {
+      return (
+        monthAsNumber === dayjs().month() &&
+        weekAsNumber === dayjs().diff(dayjs().startOf('month'), 'week')
+      );
+    }
+  }, [monthAsNumber, weekAsNumber, viewMode]);
 
   const [open, setOpen] = useState(false);
 
@@ -40,7 +59,7 @@ export const CalendarView = () => {
         <Box
           display={'flex'}
           flexDirection={'column'}
-          gap={2}
+          gap={5}
           sx={{ overflow: 'hidden' }}
         >
           <Box
@@ -57,21 +76,28 @@ export const CalendarView = () => {
               <RestartAltIcon />
             </IconButton>
           </Box>
-          <List
-            sx={{
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 1,
-            }}
-          >
-            <></>
-          </List>
+          <ToggleButtonGroup value={viewMode} exclusive>
+            <ToggleButton
+              sx={{ width: '50%' }}
+              value={ViewMode.month}
+              onClick={() => setViewMode(ViewMode.month)}
+            >
+              Month
+            </ToggleButton>
+            <ToggleButton
+              sx={{ width: '50%' }}
+              value={ViewMode.week}
+              onClick={() => setViewMode(ViewMode.week)}
+            >
+              Week
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <MonthsSection />
         </Box>
       </SubDrawer>
 
-      <CalendarPreview month={month} />
+      {viewMode === ViewMode.month ? <CalendarPreview /> : <WeekPreview />}
+
       <DialogCreate open={open} setOpen={setOpen} day={dayjs()} />
     </Main>
   );

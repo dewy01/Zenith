@@ -6,6 +6,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { makeStyles } from '@mui/styles';
 import { getEventBetween } from '~/api/Calendar/query';
+import { useCurrentDate } from '~/utils/useCurrentDate';
+import { useEffect, useState } from 'react';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,17 +16,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-type Props = {
-  month: dayjs.Dayjs[][];
-};
+export const CalendarPreview = () => {
+  const { monthAsNumber, setMonthAsNumber } = useCalendar();
+  const [month, setMonth] = useState(useCurrentDate(monthAsNumber));
 
-export const CalendarPreview = ({ month }: Props) => {
+  useEffect(() => {
+    setMonth(useCurrentDate(monthAsNumber));
+  }, [monthAsNumber]);
+
   const { data: events } = getEventBetween({
     from: month[0][0].format('DD MM YYYY').toString(),
     to: month[4][6].format('DD MM YYYY').toString(),
   });
 
-  const { monthAsNumber, setMonthAsNumber } = useCalendar();
   const classes = useStyles();
 
   const handleNextMonth = () => {
