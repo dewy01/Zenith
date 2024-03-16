@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Migrations;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using Newtonsoft.Json;
 
 namespace backend.Repository
 {
@@ -32,10 +33,15 @@ namespace backend.Repository
             }
             var settings = await _context.UserPreferences.SingleOrDefaultAsync(settings => settings.UserID == userId);
 
+            var routes =  JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes);
+
             var dto = new UserPreferencesDto
             {
                 Theme = settings.Theme,
                 Color = settings.Color,
+                Language = settings.Language,
+                Reminder = settings.Reminder,
+                Routes = routes
             };
 
             return dto;
@@ -54,6 +60,10 @@ namespace backend.Repository
 
             settings.Theme = dto.Theme;
             settings.Color = dto.Color;
+            settings.Language = dto.Language;
+            settings.Reminder = dto.Reminder;
+            string routesJson = JsonConvert.SerializeObject(dto.Routes);
+            settings.Routes = routesJson;
 
             _context.UserPreferences.Update(settings);
             await _context.SaveChangesAsync();
