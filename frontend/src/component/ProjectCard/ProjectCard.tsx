@@ -31,7 +31,9 @@ export const ProjectCard = ({ project }: Props) => {
               flexDirection: 'column',
             }}
             primary={
-              <Typography color="text.primary">{project.title}</Typography>
+              <Typography fontSize={18} fontWeight={500} color="text.primary">
+                {project.title}
+              </Typography>
             }
             secondary={
               <Typography variant="caption" color="text.secondary">

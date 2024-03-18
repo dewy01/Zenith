@@ -21,9 +21,13 @@ export interface MutateProjectTask {
   data: EditProjectTask;
 }
 
+export interface ProjectTaskStatus {
+  status: string;
+}
+
 export interface changeTaskStatus {
   projectTaskID: string;
-  status: string;
+  status: ProjectTaskStatus;
 }
 
 export interface AddProjectTask {

@@ -1,7 +1,6 @@
 import {
   AppBar,
   Box,
-  Divider,
   IconButton,
   Toolbar,
   Typography,
@@ -14,8 +13,7 @@ import { ProjectView } from '../ProjectView/ProjectView';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { DialogCreate } from './DialogCreate';
 import { ProjectTaskCard } from '~/component/ProjectTaskCard';
-import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
-import { changeTaskStatus } from '~/api/ProjectTask/api';
+import { Column } from './Column';
 
 type Params = {
   id: string;
@@ -24,28 +22,14 @@ type Params = {
 export const ProjectTaskView = () => {
   const theme = useTheme();
 
-  const columns = [
-    { name: 'Backlog', color: theme.palette.error.main },
-    { name: 'in Progress', color: theme.palette.warning.main },
-    { name: 'For Review', color: theme.palette.info.main },
-    { name: 'Closed', color: theme.palette.success.main },
-  ];
-
   const data = useParams<Params>();
   if (data.id === undefined) return <ProjectView />;
 
   const { data: project, isLoading } = getProjectById(data.id);
-  const { mutateAsync } = mutateChangeTaskStatus();
 
   if (isLoading || project === undefined) {
     return <LoadingView />;
   }
-
-  const updateTask = (task: changeTaskStatus) => {
-    if (task) {
-      mutateAsync(task);
-    }
-  };
 
   return (
     <Box>
@@ -67,63 +51,29 @@ export const ProjectTaskView = () => {
           </Toolbar>
         </AppBar>
         <Box display="flex" justifyContent="space-evenly" alignItems="start">
-          {columns.map((column) => (
-            <>
-              <Box
-                key={column.name}
-                display="flex"
-                flexDirection="column"
-                sx={{
-                  minWidth: '200px',
-                  width: '25%',
-                  padding: 1,
-                }}
-                justifyContent="center"
-                alignItems="center"
-                gap={2}
-              >
-                <Box
-                  sx={{
-                    width: '80%',
-                    padding: 2,
-                    backgroundColor: column.color,
-                    borderRadius: '5px',
-                  }}
-                >
-                  <Typography
-                    textAlign="center"
-                    fontWeight={500}
-                    sx={(theme) => ({
-                      color: theme.palette.getContrastText(column.color),
-                    })}
-                  >
-                    {column.name}
-                  </Typography>
-                </Box>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  gap={2}
-                  sx={{
-                    minWidth: '200px',
-                    width: '80%',
-                    minHeight: '80vh',
-                  }}
-                >
-                  {project.projectTasks
-                    .filter((task) => task.status === column.name)
-                    .map((task) => (
-                      <ProjectTaskCard task={task} key={task.projectTaskID} />
-                    ))}
-                </Box>
-              </Box>
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ minHeight: '90vh' }}
-              />
-            </>
-          ))}
+          <Column name={'Backlog'} color={theme.palette.error.main}>
+            {project.backlog.map((task) => (
+              <ProjectTaskCard task={task} key={task.projectTaskID} />
+            ))}
+          </Column>
+
+          <Column name={'in Progress'} color={theme.palette.warning.main}>
+            {project.inProgress.map((task) => (
+              <ProjectTaskCard task={task} key={task.projectTaskID} />
+            ))}
+          </Column>
+
+          <Column name={'For Review'} color={theme.palette.info.main}>
+            {project.review.map((task) => (
+              <ProjectTaskCard task={task} key={task.projectTaskID} />
+            ))}
+          </Column>
+
+          <Column name={'Closed'} color={theme.palette.success.main}>
+            {project.closed.map((task) => (
+              <ProjectTaskCard task={task} key={task.projectTaskID} />
+            ))}
+          </Column>
         </Box>
       </Box>
     </Box>

@@ -53,6 +53,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+interface newSettingsProps {
+  theme?: string;
+  color?: string;
+  language?: string;
+  reminder?: number;
+  routes?: { [routeName: string]: boolean };
+}
+
 const CheckboxOption = ({ name, checked, onClick }: any) => (
   <Box display="flex" alignItems="center">
     <Checkbox checked={checked} onClick={onClick} />
@@ -65,14 +73,16 @@ export const SettingsView = () => {
   const { mutateAsync } = mutateEditSettings();
   const classes = useStyles();
 
-  const handleClick = (newSettings: any) => {
+  const handleClick = (newSettings: newSettingsProps) => {
     const updatedRoutes =
       newSettings.routes || (settings ? settings.routes : routes);
-    mutateAsync({
-      ...settings,
-      ...newSettings,
-      routes: updatedRoutes,
-    });
+    if (newSettings && settings) {
+      mutateAsync({
+        ...settings,
+        ...newSettings,
+        routes: updatedRoutes,
+      });
+    }
   };
 
   if (isLoading && !settings) {

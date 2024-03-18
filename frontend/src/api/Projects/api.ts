@@ -8,6 +8,7 @@ export interface Project {
   description: string;
   deadline: string;
   status: string;
+  completion: number;
 }
 
 export interface ProjectTask {
@@ -27,6 +28,18 @@ export interface ProjectWithTasks {
   projectTasks: ProjectTask[];
 }
 
+export interface ProjectByStatus {
+  projectID: number;
+  title: string;
+  description: string;
+  deadline: string;
+  status: string;
+  backlog: ProjectTask[];
+  inProgress: ProjectTask[];
+  review: ProjectTask[];
+  closed: ProjectTask[];
+}
+
 export interface EditProject {
   Title: string;
   Description: string;
@@ -36,7 +49,7 @@ export interface EditProject {
 
 export interface mutateProject {
   projectID: number;
-  data: EditProject
+  data: EditProject;
 }
 
 export interface AddProject {
@@ -62,19 +75,23 @@ export const queryAllProjects = async () => {
 };
 
 export const postAddProject = async (project: projectModel) => {
-  return await axiosInstance.post('/api/projects/addProject',project);
+  return await axiosInstance.post('/api/projects/addProject', project);
 };
 
 export const queryProjectID = async (projectId: string) => {
-  const response = await axiosInstance.get(`/api/projects/getProjectById/${projectId}`);
-  return response.data as ProjectWithTasks;
+  const response = await axiosInstance.get(
+    `/api/projects/getProjectById/${projectId}`,
+  );
+  return response.data as ProjectByStatus;
 };
 
 export const editProjectById = async (project: mutateProject) => {
-  return await axiosInstance.patch(`/api/projects/updateProject/${project.projectID}`, project.data);
+  return await axiosInstance.patch(
+    `/api/projects/updateProject/${project.projectID}`,
+    project.data,
+  );
 };
 
 export const deleteProjectById = async (projectId: number) => {
   return await axiosInstance.delete(`/api/projects/deleteProject/${projectId}`);
 };
-

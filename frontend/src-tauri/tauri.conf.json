@@ -24,7 +24,8 @@
         "title": "Omnify",
         "label": "main",
         "width": 1150,
-        "height": 750
+        "height": 750,
+        "fileDropEnabled": false
       }
     ],
     "security": {

@@ -23,7 +23,8 @@ export const mutateAddProjectTask = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['addProjectTask'],
-    mutationFn: (projectTask: AddProjectTask) => postAddProjectTask(projectTask),
+    mutationFn: (projectTask: AddProjectTask) =>
+      postAddProjectTask(projectTask),
     onSuccess: () => {
       enqueueSnackbar('Project task added');
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
@@ -39,7 +40,8 @@ export const mutateEditProjectTask = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['editProjectTask'],
-    mutationFn: (projectTask: MutateProjectTask) => editProjectTaskById(projectTask),
+    mutationFn: (projectTask: MutateProjectTask) =>
+      editProjectTaskById(projectTask),
     onSuccess: () => {
       enqueueSnackbar('Project task edited');
       queryClient.invalidateQueries({ queryKey: ['projectTaskById'] });
@@ -53,11 +55,14 @@ export const mutateChangeTaskStatus = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['changeStatus'],
-    mutationFn: (projectTask: changeTaskStatus) => changeProjectStatus(projectTask),
+    mutationFn: (projectTask: changeTaskStatus) =>
+      changeProjectStatus(projectTask),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['projectTaskById'] });
+      queryClient.invalidateQueries({ queryKey: ['projectById'] });
     },
-    onError: () => {},
+    onError: () => {
+      enqueueSnackbar('Server connection error');
+    },
   });
 };
 

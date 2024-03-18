@@ -1,9 +1,29 @@
-import { AppBar, Box, Divider, List, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Divider,
+  LinearProgress,
+  List,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { getAllProjects } from '~/api/Projects/query';
 import { LoadingView } from '../LoadingView/LoadingView';
 import { DialogCreate } from './DialogCreate';
 import { ProjectCard } from '~/component/ProjectCard';
 import { SearchField } from '~/component/SearchField';
+
+const deriveBarColor = (completion: string) => {
+  switch (completion) {
+    case 'on Hold':
+      return 'inherit';
+    case 'Done':
+      return 'success';
+    default:
+      return 'info';
+  }
+};
 
 export const ProjectView = () => {
   const { data: projects, isLoading } = getAllProjects();
@@ -40,11 +60,26 @@ export const ProjectView = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          gap: 1,
         }}
       >
         {projects.map((item) => (
           <Box key={item.projectID}>
             <ProjectCard project={item} />
+            <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>
+              <LinearProgress
+                sx={{
+                  width: '20%',
+                  marginTop: -1,
+                  marginBottom: 2,
+                  marginLeft: 2,
+                  padding: 0.5,
+                }}
+                color={deriveBarColor(item.status)}
+                variant="determinate"
+                value={item.completion}
+              />
+            </Tooltip>
             <Divider variant="middle" />
           </Box>
         ))}
