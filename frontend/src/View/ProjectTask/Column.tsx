@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, alpha } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
 import { changeTaskStatus } from '~/api/ProjectTask/api';
 import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
@@ -56,7 +56,10 @@ export const Column = ({ name, color, children }: Props) => {
           minWidth: '200px',
           width: '25%',
           padding: 1,
-          backgroundColor: isHovering ? theme.palette.action.focus : '',
+          backgroundColor: isHovering
+            ? alpha(theme.palette.action.focus, 0.02)
+            : '',
+          transition: '0.08s ease-in',
           minHeight: '90vh',
           height: 'auto',
           borderRight: '1px solid',
