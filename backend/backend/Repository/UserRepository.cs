@@ -71,6 +71,9 @@ namespace backend.Repository
                 UserID = newUser.UserID,
                 Theme = "dark",
                 Color = "blue",
+                Language = "en",
+                Reminder = 3,
+                Routes = "{notes:true,calendar:true,todo:true,project:true,groupproject:true}"
             };
 
             await _context.UserPreferences.AddAsync(preferences);

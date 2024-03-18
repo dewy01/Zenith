@@ -65,7 +65,7 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task ChangeProjectTaskStatus(string status, int projectTaskId)
+        public async Task ChangeProjectTaskStatus(ProjectTaskStatusDto status, int projectTaskId)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -74,7 +74,7 @@ namespace backend.Repository
             }
             var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
-            projectTask.Status = status;
+            projectTask.Status = status.Status;
 
             _context.Update(projectTask);
             await _context.SaveChangesAsync();

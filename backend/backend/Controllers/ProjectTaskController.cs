@@ -49,7 +49,7 @@ namespace backend.Controllers
 
         [HttpPatch("changeStatus/{projectTaskId}")]
         [Authorize]
-        public async Task<ActionResult> deleteProject(string status,[FromRoute] int projectTaskId)
+        public async Task<ActionResult> changeStatus(ProjectTaskStatusDto status,[FromRoute] int projectTaskId)
         {
             await _projectTaskService.ChangeProjectTaskStatus(status,projectTaskId);
             return await Task.FromResult(Ok());

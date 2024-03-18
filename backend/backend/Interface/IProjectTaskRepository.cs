@@ -10,7 +10,7 @@ namespace backend.Interface
         Task AddProjectTask(AddProjectTaskDto projectTask);
         Task UpdateProjectTask(ProjectTaskDto projectTask, int projectTaskId);
 
-        Task ChangeProjectTaskStatus(string status, int projectTaskId);
+        Task ChangeProjectTaskStatus(ProjectTaskStatusDto status, int projectTaskId);
         Task DeleteProjectTask(int projectTaskId);
     }
 }

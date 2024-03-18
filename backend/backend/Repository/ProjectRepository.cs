@@ -23,7 +23,7 @@ namespace backend.Repository
             _mapper = mapper;
         }
 
-        public async Task<ProjectDto> GetProjectById(int projectId)
+        public async Task<ProjectByStatusDto> GetProjectById(int projectId)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -32,14 +32,24 @@ namespace backend.Repository
             }
             
             var project = await _context.Projects.Include(p => p.ProjectTasks).SingleOrDefaultAsync(x=>x.UserID == userId && x.ProjectID == projectId);
-            var projectDto = new ProjectDto
+
+            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog");
+            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress");
+            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review");
+            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed");
+
+
+            var projectDto = new ProjectByStatusDto
             {
                 ProjectID = project.ProjectID,
                 Title = project.Title,
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                ProjectTasks = _mapper.Map<Collection<ProjectTaskShortDto>>(project.ProjectTasks),
+                Backlog = _mapper.Map<Collection<ProjectTaskShortDto>>(Backlog),
+                inProgress = _mapper.Map<Collection<ProjectTaskShortDto>>(inProgress),
+                Review = _mapper.Map<Collection<ProjectTaskShortDto>>(Review),
+                Closed = _mapper.Map<Collection<ProjectTaskShortDto>>(Closed),
             };
 
             return projectDto;
@@ -52,9 +62,25 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projects = await _context.Projects.Where(x => x.UserID == userId).ToListAsync();
+            var projects = await _context.Projects.Include(p=>p.ProjectTasks).Where(x => x.UserID == userId).ToListAsync();
             if (projects.Count == 0) { return new List<AllProjectsDto>(); }
-            var projectDtos = _mapper.Map<List<AllProjectsDto>>(projects);
+            var projectDtos = new List<AllProjectsDto>();
+            foreach (Project project in projects)
+            {
+                projectDtos.Add(new AllProjectsDto
+                {
+                    ProjectID = project.ProjectID,
+                    Title = project.Title,
+                    Deadline = project.Deadline,
+                    Description = project.Description,
+                    Status = project.Status,
+                    Completion = project.ProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.ProjectTasks.Count()) * 100) : 0,
+                });
+            }
+
+           // Old mapping, without completion progress
+           // var projectDtos = _mapper.Map<List<AllProjectsDto>>(projects);
+
             return projectDtos;
         }
 

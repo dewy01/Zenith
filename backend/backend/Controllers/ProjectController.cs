@@ -25,7 +25,7 @@ namespace backend.Controllers
 
         [HttpGet("getProjectById/{projectId}")]
         [Authorize]
-        public async Task<ActionResult<ProjectDto>> getProjectById([FromRoute] int projectId)
+        public async Task<ActionResult<ProjectByStatusDto>> getProjectById([FromRoute] int projectId)
         {
             var project = await _projectService.GetProjectById(projectId);
             return await Task.FromResult(Ok(project));
