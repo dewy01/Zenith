@@ -88,7 +88,7 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectID == projectTaskId);
+            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
             projectTask.Title = dto.Title;
             projectTask.Status = dto.Status;

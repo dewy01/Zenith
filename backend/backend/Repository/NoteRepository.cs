@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Task = System.Threading.Tasks.Task;
 using AutoMapper;
 using Microsoft.Extensions.Hosting;
+using System.Security.Cryptography;
 
 namespace backend.Repository
 {
@@ -103,6 +104,56 @@ namespace backend.Repository
             _context.Notes.Update(note);
             await _context.SaveChangesAsync();
 
+        }
+
+        public async Task<string> GetShareToken(int noteId)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            var token ="";
+            if(note.TokenResetTime > DateTime.Now)
+            {
+                token = note.ShareToken;
+            }
+            else
+            {
+                token = Convert.ToHexString(RandomNumberGenerator.GetBytes(4));
+                note.ShareToken = token;
+                note.TokenResetTime = DateTime.Now.AddMinutes(10);
+                _context.Notes.Update(note);
+                await _context.SaveChangesAsync();
+            }
+
+            return token;
+        }
+
+        public async Task<EditNoteDto> GetNoteFromToken(string token)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var note = await _context.Notes.SingleOrDefaultAsync(note => note.ShareToken == token && note.TokenResetTime > DateTime.Now);
+
+            if (note == null)
+            {
+                throw new NotFoundException("Note not found");
+            }
+
+            var noteDto = new EditNoteDto
+            {
+                Title = note.Title,
+                Content = note.Content,
+            };
+
+            return noteDto;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using backend.Dto;
 using backend.Interface;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,22 @@ namespace backend.Controllers
         {
             await _noteService.DeleteNote(noteId);
             return await Task.FromResult(Ok());
+        }
+
+        [HttpGet("getShareToken/{noteId}")]
+        [Authorize]
+        public async Task<ActionResult<string>> getShareToken([FromRoute] int noteId)
+        {
+            string token = await _noteService.GetShareToken(noteId);
+            return await Task.FromResult(Ok(token));
+        }
+
+        [HttpGet("getNoteFromToken/{token}")]
+        [Authorize]
+        public async Task<ActionResult<EditNoteDto>> getNoteFromToken([FromRoute] string token)
+        {
+            var note = await _noteService.GetNoteFromToken(token);
+            return await Task.FromResult(Ok(note));
         }
 
     }

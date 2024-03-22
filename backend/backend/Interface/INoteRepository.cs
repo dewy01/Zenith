@@ -11,5 +11,8 @@ namespace backend.Interface
         Task AddNote();
         Task UpdateNote(EditNoteDto dto, int noteId);
         Task DeleteNote(int noteId);
+
+        Task<string> GetShareToken(int noteId);
+        Task<EditNoteDto> GetNoteFromToken(string tokenId);
     }
 }
