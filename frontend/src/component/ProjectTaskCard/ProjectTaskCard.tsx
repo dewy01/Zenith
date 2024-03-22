@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, Chip, Typography } from '@mui/material';
 import { ProjectTask } from '~/api/Projects/api';
 import { pulseScale } from '~/Theme/Animations';
+import { DialogEdit } from '../../View/ProjectTask/DialogEdit';
 
 type Props = {
   task: ProjectTask;
@@ -61,9 +62,7 @@ export const ProjectTaskCard: React.FC<Props> = ({ task }) => {
             marginBottom: -2,
           }}
         >
-          <Typography gutterBottom variant="h5" component="div">
-            {task.title}
-          </Typography>
+          <DialogEdit task={task} />
           <Typography
             variant="body2"
             color="text.secondary"

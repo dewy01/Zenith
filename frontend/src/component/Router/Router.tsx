@@ -13,6 +13,7 @@ import { TodoView } from '~/View/TodoView/TodoView';
 import { SettingsView } from '~/View/SettingsView';
 import { CalendarView } from '~/View/CalendarView';
 import { CalendarProvider } from '~/context/CalendarContext';
+import { GroupView } from '~/View/GroupView';
 
 type Props = { children: ReactNode };
 
@@ -114,7 +115,7 @@ export const Router = ({ routes }: RouterProps) => {
             path="/groups"
             element={
               <PrivateRoute>
-                <></>
+                <GroupView />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

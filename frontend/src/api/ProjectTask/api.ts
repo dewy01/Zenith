@@ -5,7 +5,6 @@ export interface ProjectTask {
   projectTaskID: number;
   title: string;
   description: string;
-  deadline: string;
   status: string;
 }
 
@@ -42,13 +41,10 @@ export interface TaskCategory {
   category:
     | 'Note'
     | 'Email'
-    | 'Accounting'
     | 'Meeting'
-    | 'Presentation'
     | 'Research'
     | 'Design'
     | 'Development'
-    | 'Testing'
     | 'Maintenance';
 }
 

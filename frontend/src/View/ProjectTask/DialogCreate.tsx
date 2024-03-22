@@ -4,13 +4,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "@mui/material";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { taskModel, taskSchema } from "./schema";
-import { mutateAddProjectTask } from "~/api/ProjectTask/query";
-import { CreateForm } from "./CreateForm";
+} from '@mui/material';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { taskModel, taskSchema } from './schema';
+import { mutateAddProjectTask } from '~/api/ProjectTask/query';
+import { CreateForm } from './CreateForm';
 
 type Props = {
   projectId: number;
@@ -30,10 +30,10 @@ export const DialogCreate = ({ projectId }: Props) => {
   const taskForm = useForm<taskModel>({
     defaultValues: {
       projectID: projectId,
-      title: "",
-      description: "",
-      status: "Backlog",
-      category: "Accounting",
+      title: '',
+      description: '',
+      status: 'Backlog',
+      category: 'Note',
     },
     resolver: zodResolver(taskSchema),
   });
@@ -53,10 +53,10 @@ export const DialogCreate = ({ projectId }: Props) => {
         open={open}
         onClose={handleClose}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <DialogTitle>Create project Task</DialogTitle>

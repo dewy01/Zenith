@@ -6,6 +6,8 @@ import {
   postAddNote,
   queryAllNotes,
   queryNoteByID,
+  queryNoteFromToken,
+  queryShareToken,
 } from './api';
 
 export const getAllNotes = () => {
@@ -50,12 +52,10 @@ type EditNote = {
 
 export const mutateEditNote = () => {
   const queryClient = useQueryClient();
-  //const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['editNote'],
     mutationFn: (note: EditNote) => editNoteById(note),
     onSuccess: () => {
-      // enqueueSnackbar('Note edited');
       queryClient.invalidateQueries({ queryKey: ['noteById'] });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
@@ -76,5 +76,24 @@ export const deleteNote = () => {
     onError: () => {
       enqueueSnackbar('Server conntection error');
     },
+  });
+};
+
+export const getShareToken = (noteId: number) => {
+  return useQuery({
+    queryKey: ['shareToken',noteId],
+    queryFn: () => queryShareToken(noteId),
+    enabled:false,
+    refetchOnWindowFocus:false,
+    refetchOnMount:false,
+  });
+};
+
+export const getNoteFromToken = (token: string) => {
+  return useQuery({
+    queryKey: ['noteFromToken'],
+    queryFn: () => queryNoteFromToken(token),
+    enabled:false,
+    refetchOnWindowFocus:false,
   });
 };

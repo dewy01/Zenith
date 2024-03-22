@@ -71,7 +71,7 @@ export const ProjectTaskView = () => {
 
           <Column name={'Closed'} color={theme.palette.success.main}>
             {project.closed.map((task) => (
-              <ProjectTaskCard task={task} key={task.projectTaskID} />
+              <ProjectTaskCard task={task} key={JSON.stringify(task)} />
             ))}
           </Column>
         </Box>

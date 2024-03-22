@@ -44,7 +44,7 @@ export const mutateEditProjectTask = () => {
       editProjectTaskById(projectTask),
     onSuccess: () => {
       enqueueSnackbar('Project task edited');
-      queryClient.invalidateQueries({ queryKey: ['projectTaskById'] });
+      queryClient.invalidateQueries({ queryKey: ['projectById'] });
     },
     onError: () => {},
   });
@@ -74,7 +74,7 @@ export const deleteProjectTask = () => {
     mutationFn: (projectTaskId: number) => deleteProjectTaskById(projectTaskId),
     onSuccess: () => {
       enqueueSnackbar('Project task deleted');
-      queryClient.invalidateQueries({ queryKey: ['projectTaskById'] });
+      queryClient.invalidateQueries({ queryKey: ['projectById'] });
     },
     onError: () => {
       enqueueSnackbar('Server connection error');

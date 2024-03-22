@@ -51,3 +51,13 @@ export const editNoteById = async (note: EditNote) => {
 export const deleteNoteById = async (noteId: number) => {
   return await axiosInstance.delete(`/api/notes/deleteNote/${noteId}`);
 };
+
+export const queryShareToken = async (noteId: number) => {
+  const response = await axiosInstance.get(`/api/notes/getShareToken/${noteId}`);
+  return response.data as string;
+};
+
+export const queryNoteFromToken = async (token: string) => {
+  const response = await axiosInstance.get(`/api/notes/getNoteFromToken/${token}`);
+  return response.data as Note;
+};

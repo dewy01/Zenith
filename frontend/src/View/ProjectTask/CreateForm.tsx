@@ -5,21 +5,18 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@mui/material";
-import { taskModel } from "./schema";
-import { UseFormReturn, useController } from "react-hook-form";
+} from '@mui/material';
+import { taskModel } from './schema';
+import { UseFormReturn, useController } from 'react-hook-form';
 
 const categories = [
-  "Note",
-  "Email",
-  "Accounting",
-  "Meeting",
-  "Presentation",
-  "Research",
-  "Design",
-  "Development",
-  "Testing",
-  "Maintenance",
+  'Note',
+  'Email',
+  'Meeting',
+  'Research',
+  'Design',
+  'Development',
+  'Maintenance',
 ];
 
 type Props = {
@@ -36,22 +33,22 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
 
   const title = useController({
     control: control,
-    name: "title",
+    name: 'title',
   });
 
   const desc = useController({
     control: control,
-    name: "description",
+    name: 'description',
   });
 
   const category = useController({
     control: control,
-    name: "category",
+    name: 'category',
   });
 
   const status = useController({
     control: control,
-    name: "status",
+    name: 'status',
   });
 
   return (
@@ -61,8 +58,8 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
       sx={{ paddingTop: 1 }}
       onSubmit={handleSubmit((data) => onSubmit(data))}
     >
-      <Box display={"flex"} flexDirection={"column"} gap={2}>
-        <Box display={"flex"} gap={1}>
+      <Box display={'flex'} flexDirection={'column'} gap={2}>
+        <Box display={'flex'} gap={1}>
           <TextField
             label="Title"
             ref={title.field.ref}
@@ -73,7 +70,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
             error={errors.title !== undefined}
             helperText={errors.title?.message}
           />
-          <FormControl sx={{ width: "240px" }}>
+          <FormControl sx={{ width: '240px' }}>
             <InputLabel>Status</InputLabel>
             <Select
               label="Status"
@@ -91,6 +88,9 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
           </FormControl>
         </Box>
         <TextField
+          rows={8}
+          multiline
+          maxRows={8}
           label="Description"
           ref={desc.field.ref}
           value={desc.field.value}
