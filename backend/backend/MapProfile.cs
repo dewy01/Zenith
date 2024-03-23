@@ -15,6 +15,8 @@ namespace backend
             CreateMap<ProjectTodo, AllProjectsTodoDto>();
             CreateMap<Todo, TodoDto>();
             CreateMap<CalendarEvent, AllCalendarEventsDto>();
+            CreateMap<GroupProject, AllGroupProjectsDto>();
+            CreateMap<User, GroupUsersDto>();
         }
     }
 }

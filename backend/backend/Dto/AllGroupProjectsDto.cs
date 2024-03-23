@@ -1,13 +1,12 @@
 ﻿namespace backend.Dto
 {
-    public class AllProjectsDto
+    public class AllGroupProjectsDto
     {
-        public int ProjectID { get; set; }
+        public int GroupProjectID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
         public string Status { get; set; }
-        public float Completion {  get; set; }
-
+        public float Completion { get; set; }
     }
 }

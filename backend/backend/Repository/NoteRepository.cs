@@ -54,7 +54,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
-            _context.Remove(note);
+            _context.Notes.Remove(note);
             await _context.SaveChangesAsync();
         }
 
@@ -103,7 +103,6 @@ namespace backend.Repository
             note.Content = dto.Content;
             _context.Notes.Update(note);
             await _context.SaveChangesAsync();
-
         }
 
         public async Task<string> GetShareToken(int noteId)
@@ -115,14 +114,14 @@ namespace backend.Repository
             }
 
             var note = await _context.Notes.SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
-            var token ="";
+            var token = "NT-";
             if(note.TokenResetTime > DateTime.Now)
             {
                 token = note.ShareToken;
             }
             else
             {
-                token = Convert.ToHexString(RandomNumberGenerator.GetBytes(4));
+                token += Convert.ToHexString(RandomNumberGenerator.GetBytes(4));
                 note.ShareToken = token;
                 note.TokenResetTime = DateTime.Now.AddMinutes(10);
                 _context.Notes.Update(note);

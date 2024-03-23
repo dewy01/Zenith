@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240323163324_groups")]
+    partial class groups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,6 +79,29 @@ namespace backend.Migrations
                     b.HasKey("GroupID");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupMember", b =>
+                {
+                    b.Property<int>("GroupMemberID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupMemberID"));
+
+                    b.Property<int>("GroupID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupMemberID");
+
+                    b.HasIndex("GroupID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("GroupMembers");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -414,9 +440,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GroupID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -439,8 +462,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
-
-                    b.HasIndex("GroupID");
 
                     b.HasIndex("RoleId");
 
@@ -492,6 +513,25 @@ namespace backend.Migrations
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupMember", b =>
+                {
+                    b.HasOne("backend.Models.Group", "Group")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.User", "User")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -605,18 +645,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.User", b =>
                 {
-                    b.HasOne("backend.Models.Group", "Group")
-                        .WithMany("Users")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("backend.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Group");
 
                     b.Navigation("Role");
                 });
@@ -634,9 +667,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Group", b =>
                 {
-                    b.Navigation("GroupProjects");
+                    b.Navigation("GroupMembers");
 
-                    b.Navigation("Users");
+                    b.Navigation("GroupProjects");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -662,6 +695,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Navigation("CalendarEvents");
+
+                    b.Navigation("GroupMembers");
 
                     b.Navigation("KanbanTasks");
 

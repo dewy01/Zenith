@@ -1,13 +1,17 @@
-﻿using backend.Models;
+﻿using backend.Dto;
+using backend.Models;
 
 namespace backend.Interface
 {
     public interface IGroupRepository
     {
-        Group GetGroupById(int groupId);
-        List<Group> GetAllGroups();
-        void AddGroup(Group group);
-        void UpdateGroup(Group group);
-        void DeleteGroup(int groupId);
+        Task<GroupByIdDto> GetGroup();
+        Task AddGroup(GroupEditDto group);
+        Task UpdateGroup(GroupEditDto dto, int groupId);
+        Task DeleteGroup(int groupId);
+        Task<string> GetInviteToken(int groupId);
+        Task<bool> isInGroup();
+        Task JoinGroup(string tokenId);
+        Task LeaveGroup(int groupId);
     }
 }

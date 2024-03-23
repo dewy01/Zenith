@@ -19,10 +19,8 @@ namespace backend.Data
         public DbSet<CalendarEvent> CalendarEvents { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<GroupMember> GroupMembers { get; set; }
         public DbSet<GroupProject> GroupProjects { get; set; }
         public DbSet<GroupProjectTask> GroupProjectTasks { get; set; }
-        public DbSet<GroupProjectTaskAsignee> GroupProjectTaskAssignees { get; set; }
         public DbSet<UserPreferences> UserPreferences { get; set; }
         public DbSet<KanbanTask> KanbanTasks { get; set; }
         public DbSet<ProjectTodo> ProjectTodos { get; set; }
@@ -62,17 +60,11 @@ namespace backend.Data
             modelBuilder.Entity<Group>()
                 .HasKey(g => g.GroupID);
 
-            modelBuilder.Entity<GroupMember>()
-                .HasKey(gm => gm.GroupMemberID);
-
             modelBuilder.Entity<GroupProject>()
                 .HasKey(gp => gp.GroupProjectID);
 
             modelBuilder.Entity<GroupProjectTask>()
                 .HasKey(gpt => gpt.GroupProjectTaskID);
-
-            modelBuilder.Entity<GroupProjectTaskAsignee>()
-                .HasKey(gpta => gpta.AssignmentID);
 
             modelBuilder.Entity<KanbanTask>()
                 .HasKey(kt => kt.KanbanTaskID); 
@@ -84,6 +76,12 @@ namespace backend.Data
                 .HasOne(u => u.Preferences)
                 .WithOne(up => up.User)
                 .HasForeignKey<UserPreferences>(up => up.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Group)
+                .WithMany(g => g.Users)
+                .HasForeignKey(u => u.GroupID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
@@ -108,12 +106,6 @@ namespace backend.Data
                 .HasMany(u => u.Notifications)
                 .WithOne(n => n.User)
                 .HasForeignKey(n => n.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.GroupMembers)
-                .WithOne(gm => gm.User)
-                .HasForeignKey(gm => gm.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Project>()
@@ -152,17 +144,23 @@ namespace backend.Data
                 .HasForeignKey(pt => pt.ProjectTodoID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<GroupProjectTaskAsignee>()
-                .HasOne(gpta => gpta.GroupProjectTask)
-                .WithMany()
-                .HasForeignKey(gpta => gpta.GroupProjectTaskID)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<GroupProjectTaskAsignee>()
-                .HasOne(gpta => gpta.User)
-                .WithMany()
-                .HasForeignKey(gpta => gpta.UserID)
+            modelBuilder.Entity<GroupProjectTask>()
+                .HasOne(gpt => gpt.GroupProject)
+                .WithMany(gp => gp.GroupProjectTasks)
+                .HasForeignKey(gpt => gpt.GroupProjectID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GroupProjectTask>()
+                .HasOne(gpt => gpt.User)
+                .WithMany()
+                .HasForeignKey(gpt => gpt.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Group>()
+                .HasMany(p => p.Users)
+                .WithOne(pt => pt.Group)
+                .HasForeignKey(pt => pt.GroupID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
 
