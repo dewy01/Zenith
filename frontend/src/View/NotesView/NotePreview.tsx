@@ -126,6 +126,7 @@ export const NotePreview = ({ noteId }: Props) => {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            marginTop: -0.5,
           }}
           inputProps={{ style: { textAlign: 'center' } }}
           variant="standard"
