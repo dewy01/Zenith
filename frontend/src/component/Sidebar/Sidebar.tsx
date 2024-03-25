@@ -18,6 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { NavLink, useLocation } from 'react-router-dom';
 import { SIDEBAR_WIDTH } from '~/config/constants';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 type DrawerProps = {
   link: string;
@@ -121,9 +122,12 @@ export const Sidebar = ({ routes }: RouterProps) => {
           )}
         </List>
       </Box>
-      <List>
+      <List sx={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
         <DrawerLink link="/settings" tooltip="Settings">
           <SettingsIcon />
+        </DrawerLink>
+        <DrawerLink link="/logout" tooltip="Logout">
+          <LogoutIcon />
         </DrawerLink>
       </List>
     </Drawer>

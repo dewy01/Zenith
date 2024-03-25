@@ -73,7 +73,7 @@ namespace backend.Repository
                 Color = "blue",
                 Language = "en",
                 Reminder = 3,
-                Routes = "{notes:true,calendar:true,todo:true,project:true,groupproject:true}"
+                Routes = "{\"Notes\":true,\"Calendar\":true,\"Todo\":true,\"Projects\":true,\"Group Projects\":true}"
             };
 
             await _context.UserPreferences.AddAsync(preferences);

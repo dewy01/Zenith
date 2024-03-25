@@ -14,6 +14,7 @@ import { SettingsView } from '~/View/SettingsView';
 import { CalendarView } from '~/View/CalendarView';
 import { CalendarProvider } from '~/context/CalendarContext';
 import { GroupView } from '~/View/GroupView';
+import { LogoutView } from '~/View/LogoutView';
 
 type Props = { children: ReactNode };
 
@@ -125,6 +126,14 @@ export const Router = ({ routes }: RouterProps) => {
             element={
               <PrivateRoute>
                 <SettingsView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/logout"
+            element={
+              <PrivateRoute>
+                <LogoutView />
               </PrivateRoute>
             }
           />
