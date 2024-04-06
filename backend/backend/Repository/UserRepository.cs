@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using backend.Migrations;
 
 namespace backend.Repository
 {
@@ -51,6 +52,13 @@ namespace backend.Repository
 
         public async Task AddUser(RegisterUserDto dto)
         {
+            var user = _context.Users.SingleOrDefaultAsync(user => user.Email == dto.Email || user.Username == dto.Username);
+
+            if(user != null) 
+            {
+                throw new Exception("This user already exists");
+            }
+
             var newUser = new User()
             {
                 Email = dto.Email,

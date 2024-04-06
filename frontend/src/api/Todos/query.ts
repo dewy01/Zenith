@@ -18,23 +18,16 @@ export const mutateAddTodo = () => {
       enqueueSnackbar('Todo added');
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 
 export const mutateToggleTodo = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['toggleTodo'],
     mutationFn: (todo: ToggleTodo) => patchToggleTodo(todo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };
@@ -48,9 +41,6 @@ export const deleteTodo = () => {
     onSuccess: () => {
       enqueueSnackbar('Task deleted');
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };

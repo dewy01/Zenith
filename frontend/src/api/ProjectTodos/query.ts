@@ -35,9 +35,6 @@ export const mutateAddProjectTodo = () => {
       enqueueSnackbar('Todo added');
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 
@@ -53,9 +50,6 @@ export const mutateEditProjectTodo = () => {
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 
@@ -68,9 +62,6 @@ export const deleteProjectTodo = () => {
     onSuccess: () => {
       enqueueSnackbar('Todo deleted');
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };

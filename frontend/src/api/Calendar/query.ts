@@ -26,9 +26,6 @@ export const mutateAddEvent = () => {
       enqueueSnackbar('Event added');
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server conntection error');
-    },
   });
 };
 
@@ -42,9 +39,6 @@ export const mutateEditEvent = () => {
       enqueueSnackbar('Event edited');
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server conntection error');
-    },
   });
 };
 
@@ -57,9 +51,6 @@ export const mutateDeleteEvent = () => {
     onSuccess: () => {
       enqueueSnackbar('Event deleted');
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server conntection error');
     },
   });
 };

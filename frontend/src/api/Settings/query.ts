@@ -1,23 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSnackbar } from 'notistack';
 import { Settings, editSettings, querySettings } from './api';
+import { useAuth } from '~/context/AuthContext';
 
 export const getSettings = () => {
+  const { isAuthenticated } = useAuth();
   return useQuery({
     queryKey: ['allSettings'],
     queryFn: querySettings,
+    enabled: isAuthenticated
   });
 };
 
 export const mutateEditSettings = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['editSettings'],
     mutationFn: (preferences: Settings) => editSettings(preferences),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allSettings'] });
     },
-    onError: () => {enqueueSnackbar('Server connection error');},
   });
 };

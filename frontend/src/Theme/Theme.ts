@@ -43,8 +43,8 @@ const handleColor = (color: string) => {
 };
 
 export const handleSettings = () => {
-  const { data: settings, isLoading } = getSettings();
   const { isAuthenticated } = useAuth();
+  const { data: settings, isLoading } = getSettings();
 
   if (settings && !isLoading && isAuthenticated) {
     const theme = createTheme({

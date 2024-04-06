@@ -34,9 +34,6 @@ export const mutateAddGroup = () => {
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 

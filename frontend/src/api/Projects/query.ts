@@ -34,9 +34,6 @@ export const mutateAddProject = () => {
       enqueueSnackbar('Project added');
       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 
@@ -51,7 +48,6 @@ export const mutateEditProject = () => {
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
     },
-    onError: () => {},
   });
 };
 
@@ -64,9 +60,6 @@ export const deleteProject = () => {
     onSuccess: () => {
       enqueueSnackbar('Project deleted');
       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };

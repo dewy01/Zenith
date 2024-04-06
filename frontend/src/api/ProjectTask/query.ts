@@ -29,9 +29,6 @@ export const mutateAddProjectTask = () => {
       enqueueSnackbar('Project task added');
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
-    },
   });
 };
 
@@ -46,22 +43,17 @@ export const mutateEditProjectTask = () => {
       enqueueSnackbar('Project task edited');
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
     },
-    onError: () => {},
   });
 };
 
 export const mutateChangeTaskStatus = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['changeStatus'],
     mutationFn: (projectTask: changeTaskStatus) =>
       changeProjectStatus(projectTask),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };
@@ -75,9 +67,6 @@ export const deleteProjectTask = () => {
     onSuccess: () => {
       enqueueSnackbar('Project task deleted');
       queryClient.invalidateQueries({ queryKey: ['projectById'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server connection error');
     },
   });
 };

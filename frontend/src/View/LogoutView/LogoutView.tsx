@@ -1,6 +1,8 @@
-export const LogoutView = () => {
-  localStorage.removeItem('Auth-token');
-  location.pathname = '/login';
+import { useAuth } from '~/context/AuthContext';
 
-  return <></>;
+export const LogoutView = () => {
+  const { logout } = useAuth();
+  logout();
+
+  return null;
 };

@@ -13,18 +13,26 @@ import {
   resetPasswordModel,
 } from '~/View/RegisterView/PasswordRenew/schema';
 import { useAuth } from '~/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { STATUS_CODE } from '../api';
+import { AxiosError } from 'axios';
 
 export const mutateUserRegister = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   return useMutation({
     mutationKey: ['register'],
     mutationFn: (userData: registerFormSchema) => postUserRegister(userData),
     onSuccess: () => {
       enqueueSnackbar('Registration completed, now verify your email');
-      location.pathname = '/login';
+      navigate('/login',{replace:true})
     },
-    onError: () => {
-      enqueueSnackbar('This email is already in use');
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === STATUS_CODE.INTERNAL_SERVER_ERROR) {
+          enqueueSnackbar({ variant: 'error', message: 'Email or username already in use' });
+        }
+      }
     },
   });
 };
@@ -32,16 +40,21 @@ export const mutateUserRegister = () => {
 export const mutateUserLogin = () => {
   const { login } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   return useMutation({
     mutationKey: ['login'],
     mutationFn: (userData: loginFormSchema) => postUserLogin(userData),
     onSuccess: (data) => {
       const jwtToken = 'Bearer ' + data.data;
       login(jwtToken);
-      location.pathname = '/home';
+      navigate('/home',{replace:true})
     },
-    onError: () => {
-      enqueueSnackbar('Invalid credentials');
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === STATUS_CODE.INTERNAL_SERVER_ERROR) {
+          enqueueSnackbar({ variant: 'error', message: 'Invalid credentials' });
+        }
+      }
     },
   });
 };
@@ -54,9 +67,6 @@ export const mutateForgotPassword = () => {
     onSuccess: () => {
       enqueueSnackbar('Reset token sent to email');
     },
-    onError: () => {
-      enqueueSnackbar('Server error');
-    },
   });
 };
 
@@ -67,9 +77,6 @@ export const mutateResetPassword = () => {
     mutationFn: (userData: resetPasswordModel) => postResetPassword(userData),
     onSuccess: () => {
       enqueueSnackbar('Password renewed');
-    },
-    onError: () => {
-      enqueueSnackbar('Server error');
     },
   });
 };

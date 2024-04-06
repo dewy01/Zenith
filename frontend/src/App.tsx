@@ -1,11 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './component/Router';
-import {
-  CssBaseline,
-  GlobalStyles,
-  ThemeProvider,
-  styled,
-} from '@mui/material';
+import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import darkScrollbar from '@mui/material/darkScrollbar';
 import { SnackbarOrigin, SnackbarProvider } from 'notistack';
 import { LocalizationProvider } from '@mui/x-date-pickers';

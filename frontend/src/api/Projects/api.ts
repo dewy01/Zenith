@@ -1,6 +1,5 @@
-import axios from 'axios';
+import { axiosInstance } from '../api';
 import { projectModel } from '~/View/ProjectView/schema';
-import { BASE_URL } from '~/config/constants';
 
 export interface Project {
   projectID: number;
@@ -58,16 +57,6 @@ export interface AddProject {
   deadline: string;
   status: string;
 }
-
-const axiosInstance = axios.create({ baseURL: BASE_URL });
-
-axiosInstance.interceptors.request.use((config) => {
-  const authToken = localStorage.getItem('Auth-token');
-  if (authToken) {
-    config.headers.Authorization = authToken;
-  }
-  return config;
-});
 
 export const queryAllProjects = async () => {
   const response = await axiosInstance.get('/api/projects/getAllProjects');

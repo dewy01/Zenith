@@ -34,9 +34,6 @@ export const mutateAddNote = () => {
       enqueueSnackbar('Note added');
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
-    onError: () => {
-      enqueueSnackbar('Server conntection error');
-    },
   });
 };
 
@@ -59,7 +56,6 @@ export const mutateEditNote = () => {
       queryClient.invalidateQueries({ queryKey: ['noteById'] });
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
-    onError: () => {},
   });
 };
 
@@ -72,9 +68,6 @@ export const deleteNote = () => {
     onSuccess: () => {
       enqueueSnackbar('Note deleted');
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
-    },
-    onError: () => {
-      enqueueSnackbar('Server conntection error');
     },
   });
 };
