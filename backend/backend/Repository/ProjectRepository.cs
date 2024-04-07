@@ -33,10 +33,10 @@ namespace backend.Repository
             
             var project = await _context.Projects.Include(p => p.ProjectTasks).SingleOrDefaultAsync(x=>x.UserID == userId && x.ProjectID == projectId);
 
-            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog");
-            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress");
-            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review");
-            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed");
+            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x=>x.EditTime);
+            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
+            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderBy(x => x.EditTime);
+            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed").OrderBy(x => x.EditTime);
 
 
             var projectDto = new ProjectByStatusDto

@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public string Category { get; set; }
         public string Status { get; set; }
+        public DateTime EditTime { get; set; }
 
         public virtual Project Project { get; set; }
 

@@ -3,6 +3,7 @@ using backend.Data;
 using backend.Dto;
 using backend.Exceptions;
 using backend.Interface;
+using backend.Migrations;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +60,7 @@ namespace backend.Repository
                 Status = dto.Status,
                 Description = dto.Description,
                 Category = dto.Category,
+                EditTime = DateTime.UtcNow
             };
 
             await _context.ProjectTasks.AddAsync(newProjectTask);
@@ -75,8 +77,12 @@ namespace backend.Repository
             var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
             projectTask.Status = status.Status;
+            projectTask.EditTime = DateTime.UtcNow;
 
             _context.Update(projectTask);
+
+            await UpdateProjectStatus(projectTask.ProjectID);
+
             await _context.SaveChangesAsync();
         }
 
@@ -91,11 +97,17 @@ namespace backend.Repository
             var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
             projectTask.Title = dto.Title;
+            if (projectTask.Status != dto.Status)
+            {
+                projectTask.EditTime = DateTime.UtcNow;
+            }
             projectTask.Status = dto.Status;
             projectTask.Description = dto.Description;
             projectTask.Category = dto.Category;
 
             _context.Update(projectTask);
+            await UpdateProjectStatus(projectTask.ProjectID);
+
             await _context.SaveChangesAsync();
         }
 
@@ -111,6 +123,29 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
+        private async Task UpdateProjectStatus(int projectId)
+        {
+            var project = await _context.Projects
+                .Include(p => p.ProjectTasks)
+                .SingleOrDefaultAsync(x => x.ProjectID == projectId);
+
+            if (project != null && project.Status != "on Hold")
+            {
+                bool allTasksClosed = project.ProjectTasks.All(task => task.Status == "Closed");
+
+                if (!allTasksClosed)
+                {
+                    project.Status = "in Progress";
+                }
+                else
+                {
+                    project.Status = "Done";
+                }
+
+                _context.Update(project);
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }
