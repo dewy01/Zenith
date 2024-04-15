@@ -113,7 +113,7 @@ export const Router = ({ routes }: RouterProps) => {
             errorElement={<ErrorView />}
           />
           <Route
-            path="/groups"
+            path="/group"
             element={
               <PrivateRoute>
                 <GroupView />

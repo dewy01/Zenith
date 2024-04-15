@@ -1,9 +1,10 @@
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { mutateAddGroup } from '~/api/Group/query';
+import { mutateAddGroup, mutateJoinGroup } from '~/api/Group/query';
 
 export const NoGroupView = () => {
   const { mutateAsync: AddGroup } = mutateAddGroup();
+  const { mutateAsync: JoinGroup } = mutateJoinGroup();
 
   const [group, setGroup] = useState<string>('');
   const [token, setToken] = useState<string>('');
@@ -37,8 +38,13 @@ export const NoGroupView = () => {
         <Box display="flex" gap={5}>
           <Box display="flex" flexDirection="column" gap={2}>
             <Typography>Join a group</Typography>
-            <TextField label="Code"></TextField>
-            <Button variant="contained">Join</Button>
+            <TextField onChange={handleTokenChange} label="Code"></TextField>
+            <Button
+              onClick={() => JoinGroup({ token: token })}
+              variant="contained"
+            >
+              Join
+            </Button>
           </Box>
           <Divider orientation="vertical" />
           <Box display="flex" flexDirection="column" gap={2}>

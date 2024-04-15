@@ -32,26 +32,34 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var group = await _context.Groups.SingleOrDefaultAsync(g => g.Users.SingleOrDefault(x=>x.UserID==userId).UserID == userId);
+            var group = await _context.Groups
+                .Include(g => g.Users)
+                .SingleOrDefaultAsync(g => g.Users.Any(u => u.UserID == userId));
 
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
+
             var projectDtos = new List<AllGroupProjectsDto>();
-            foreach (GroupProject project in group.GroupProjects)
+            if (group.GroupProjects != null)
             {
-                projectDtos.Add(new AllGroupProjectsDto
+                foreach (GroupProject project in group.GroupProjects)
                 {
-                    GroupProjectID = project.GroupProjectID,
-                    Title = project.Title,
-                    Deadline = project.Deadline,
-                    Description = project.Description,
-                    Status = project.Status,
-                    Completion = project.GroupProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.GroupProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.GroupProjectTasks.Count()) * 100) : 0,
-                });
+                    projectDtos.Add(new AllGroupProjectsDto
+                    {
+                        GroupProjectID = project.GroupProjectID,
+                        Title = project.Title,
+                        Deadline = project.Deadline,
+                        Description = project.Description,
+                        Status = project.Status,
+                        Completion = project.GroupProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.GroupProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.GroupProjectTasks.Count()) * 100) : 0,
+                    });
+                }
             }
+
             var userDto = _mapper.Map<List<GroupUsersDto>>(group.Users);
+            userDto.ForEach(x => x.IsMe = (x.UserID != userId));
 
             var groupDto = new GroupByIdDto
             {
@@ -63,6 +71,7 @@ namespace backend.Repository
 
             return groupDto;
         }
+
 
 
         public async Task<bool> isInGroup()
@@ -90,8 +99,9 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
+
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserID == userId);
-            if (user== null || user.GroupID != null)
+            if (user == null || user.GroupID != null)
             {
                 throw new NotFoundException("Invalid operation");
             }
@@ -99,20 +109,26 @@ namespace backend.Repository
             var newGroup = new Group
             {
                 GroupName = dto.GroupName,
-                Users = new List<User>(),
+                Users = new List<User> { user },
                 GroupProjects = new List<GroupProject>(),
             };
-            _context.Groups.Add(newGroup);
+
+            await _context.Groups.AddAsync(newGroup);
             await _context.SaveChangesAsync();
 
-            newGroup.Users.Add(user);
-            user.GroupID = newGroup.GroupID;
+            var group = await _context.Groups.SingleOrDefaultAsync(g => g.GroupID == newGroup.GroupID);
+            if (group == null)
+            {
+                throw new NotFoundException("Failed to retrieve the newly created group");
+            }
 
-            _context.Groups.Update(newGroup);
+            user.GroupID = newGroup.GroupID;
+            user.Group = newGroup;
             _context.Users.Update(user);
 
             await _context.SaveChangesAsync();
         }
+
 
 
         public async Task UpdateGroup(GroupEditDto dto, int groupId)
@@ -169,7 +185,7 @@ namespace backend.Repository
             return token;
         }
 
-        public async Task JoinGroup(string token)
+        public async Task JoinGroup(TokenDto dto)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -177,7 +193,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var group = await _context.Groups.SingleOrDefaultAsync(group => group.InviteToken == token && group.TokenResetTime > DateTime.Now);
+            var group = await _context.Groups.SingleOrDefaultAsync(group => group.InviteToken == dto.Token && group.TokenResetTime > DateTime.Now);
 
             if (group == null)
             {
@@ -191,7 +207,7 @@ namespace backend.Repository
 
         }
 
-        public async Task LeaveGroup(int groupId)
+        public async Task LeaveGroup(LeaveGroupDto dto)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -199,28 +215,31 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var group = await _context.Groups.SingleOrDefaultAsync(group => group.GroupID == groupId);
+            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(g => g.GroupID == dto.GroupID);
 
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserID == userId);
 
+            var user = group.Users.FirstOrDefault(u => u.UserID == userId);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User not found in the group");
+            }
+
+            group.Users.Remove(user);
             user.GroupID = null;
-            group.Users.ToList().Remove(user);
-            _context.Users.Update(user);
-            _context.Groups.Update(group);
-
-            await _context.SaveChangesAsync();
 
             if (group.Users.Count == 0)
             {
-                await DeleteGroup(groupId);
-                await _context.SaveChangesAsync();
+                _context.Groups.Remove(group);
             }
 
+            await _context.SaveChangesAsync();
         }
+
 
     }
 }

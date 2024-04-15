@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
-import { AddGroup, postAddGroup, queryGroup, queryIsInGroup } from './api';
+import { AddGroup, LeaveGroup, TokenDto, postAddGroup, postJoinGroup, postLeaveGroup, queryGroup, queryGroupToken, queryIsInGroup } from './api';
 
 // export const getAllProjects = () => {
 //   return useQuery({
@@ -23,6 +23,16 @@ export const getIsInGroup = () => {
   });
 };
 
+export const gtInviteToken = (groupId:number) => {
+  return useQuery({
+    queryKey: ['getGroupToken'],
+    queryFn: () => queryGroupToken(groupId),
+    enabled:false,
+    refetchOnWindowFocus:false,
+    refetchOnMount:false,
+  });
+};
+
 export const mutateAddGroup = () => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
@@ -33,6 +43,36 @@ export const mutateAddGroup = () => {
       enqueueSnackbar('Group created');
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
+    },
+  });
+};
+
+export const mutateJoinGroup = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['joinGroup'],
+    mutationFn: (token : TokenDto) => postJoinGroup(token),
+    onSuccess: () => {
+      enqueueSnackbar('Group joined');
+      queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
+      queryClient.invalidateQueries({ queryKey: ['getGroup'] });
+    },
+    onError: ()=>{
+      enqueueSnackbar({variant: 'error', message:'Invalid group code'})
+    }
+  });
+};
+
+export const mutateLeaveGroup = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['leaveGroup'],
+    mutationFn: (groupId : LeaveGroup) => postLeaveGroup(groupId),
+    onSuccess: () => {
+      enqueueSnackbar('Group left');
+      queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
     },
   });
 };

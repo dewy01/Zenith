@@ -50,7 +50,7 @@ namespace backend.Controllers
 
         [HttpPost("leaveGroup")]
         [Authorize]
-        public async Task<ActionResult> leaveGroup([FromBody] int groupId)
+        public async Task<ActionResult> leaveGroup([FromBody] LeaveGroupDto groupId)
         {
             await _groupService.LeaveGroup(groupId);
             return await Task.FromResult(Ok());
@@ -66,7 +66,7 @@ namespace backend.Controllers
 
         [HttpPost("joinGroup")]
         [Authorize]
-        public async Task<ActionResult> joinGroup([FromBody] string token)
+        public async Task<ActionResult> joinGroup([FromBody] TokenDto token)
         {
             await _groupService.JoinGroup(token);
             return await Task.FromResult(Ok());

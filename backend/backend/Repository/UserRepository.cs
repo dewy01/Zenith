@@ -52,9 +52,9 @@ namespace backend.Repository
 
         public async Task AddUser(RegisterUserDto dto)
         {
-            var user = _context.Users.SingleOrDefaultAsync(user => user.Email == dto.Email || user.Username == dto.Username);
+            var user = await _context.Users.SingleOrDefaultAsync(user => user.Email == dto.Email || user.Username == dto.Username);
 
-            if(user != null) 
+            if (user != null) 
             {
                 throw new Exception("This user already exists");
             }
@@ -153,7 +153,7 @@ namespace backend.Repository
             {
                 throw new Exception("User not found");
             }
-            Role role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName == "Verified");
+            Role role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName == "User");
             user.RoleId = role.RoleID;
             _context.Update(user);
             await _context.SaveChangesAsync();

@@ -99,7 +99,7 @@ export const NotePreview = ({ noteId }: Props) => {
   useEffect(() => {
     if (token && shareButtonClicked) {
       navigator.clipboard.writeText(token);
-      enqueueSnackbar(`Copied '${token}' clipboard`);
+      enqueueSnackbar(`Copied '${token}' to clipboard`);
       setShareButtonClicked(false);
     }
   }, [token, shareButtonClicked]);

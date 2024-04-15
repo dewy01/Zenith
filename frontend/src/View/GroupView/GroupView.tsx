@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import { NoGroupView } from './NoGroupView';
 import { getIsInGroup } from '~/api/Group/query';
 import { LoadingView } from '../LoadingView/LoadingView';
+import { GroupProjectView } from './GroupProjectView/GroupProjectView';
 
 export const GroupView = () => {
   const { data: group, isLoading } = getIsInGroup();
@@ -10,5 +11,5 @@ export const GroupView = () => {
     return <LoadingView />;
   }
 
-  return <Box>{group ? <>Youre in a group</> : <NoGroupView />}</Box>;
+  return <Box>{group ? <GroupProjectView /> : <NoGroupView />}</Box>;
 };

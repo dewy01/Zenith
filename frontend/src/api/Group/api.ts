@@ -1,9 +1,10 @@
 import { axiosInstance } from '../api';
 
-export interface User {
+export interface GroupUser {
   userID: number;
   username: string;
   email: string;
+  isMe: boolean;
 }
 
 export interface GroupProject {
@@ -18,7 +19,7 @@ export interface GroupProject {
 export interface Group {
   groupID: number;
   groupName: string;
-  users: User[];
+  users: GroupUser[];
   groupProjects: GroupProject[];
 }
 
@@ -26,9 +27,24 @@ export interface AddGroup{
   groupName: string;
 }
 
+export interface TokenDto {
+  token:string
+}
+
+export interface LeaveGroup {
+  groupID:number
+}
 
 export const postAddGroup = async (group: AddGroup) => {
   return await axiosInstance.post('/api/groups/addGroup', group);
+};
+
+export const postJoinGroup = async (token: TokenDto) => {
+  return await axiosInstance.post('/api/groups/joinGroup', token);
+};
+
+export const postLeaveGroup = async (groupId: LeaveGroup) => {
+  return await axiosInstance.post('/api/groups/leaveGroup', groupId);
 };
 
 export const queryGroup = async () => {
@@ -39,6 +55,11 @@ export const queryGroup = async () => {
 export const queryIsInGroup = async () => {
   const response = await axiosInstance.get(`/api/groups/isInGroup`);
   return response.data as boolean;
+};
+
+export const queryGroupToken = async (groupId:number) => {
+  const response = await axiosInstance.get(`/api/groups/getInviteToken/${groupId}`);
+  return response.data as string;
 };
 
 // export const editProjectById = async (project: mutateProject) => {

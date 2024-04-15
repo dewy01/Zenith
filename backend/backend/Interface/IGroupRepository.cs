@@ -11,7 +11,7 @@ namespace backend.Interface
         Task DeleteGroup(int groupId);
         Task<string> GetInviteToken(int groupId);
         Task<bool> isInGroup();
-        Task JoinGroup(string tokenId);
-        Task LeaveGroup(int groupId);
+        Task JoinGroup(TokenDto tokenId);
+        Task LeaveGroup(LeaveGroupDto dto);
     }
 }

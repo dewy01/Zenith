@@ -1,38 +1,23 @@
 import {
-  AppBar,
   Box,
-  Divider,
-  LinearProgress,
-  List,
-  Toolbar,
-  Tooltip,
   Typography,
+  List,
+  Tooltip,
+  LinearProgress,
+  Divider,
 } from '@mui/material';
-import { getAllProjects } from '~/api/Projects/query';
-import { LoadingView } from '../LoadingView/LoadingView';
-import { DialogCreate } from './DialogCreate';
-import { ProjectCard } from '~/component/ProjectCard';
+import { GroupProject } from '~/api/Group/api';
+import { GroupProjectCard } from '~/component/GroupProjectCard/GroupProjectCard';
 import { SearchField } from '~/component/SearchField';
 import { deriveBarColor } from '~/utils/deriveBarColor';
 
-export const ProjectView = () => {
-  const { data: projects, isLoading } = getAllProjects();
+type Props = {
+  groupProjects: GroupProject[];
+};
 
-  if (isLoading || projects === undefined) {
-    return <LoadingView />;
-  }
-
+export const ProjectTab = ({ groupProjects }: Props) => {
   return (
-    <Box>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Projects
-          </Typography>
-          <DialogCreate />
-        </Toolbar>
-      </AppBar>
-
+    <>
       <Box
         display={'flex'}
         justifyContent={'space-around'}
@@ -53,9 +38,9 @@ export const ProjectView = () => {
           gap: 1,
         }}
       >
-        {projects.map((item) => (
-          <Box key={item.projectID}>
-            <ProjectCard project={item} />
+        {groupProjects.map((item) => (
+          <Box key={item.groupProjectID}>
+            <GroupProjectCard project={item} />
             <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>
               <LinearProgress
                 sx={{
@@ -74,6 +59,6 @@ export const ProjectView = () => {
           </Box>
         ))}
       </List>
-    </Box>
+    </>
   );
 };

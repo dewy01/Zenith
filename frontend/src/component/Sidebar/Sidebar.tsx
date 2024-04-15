@@ -114,7 +114,7 @@ export const Sidebar = ({ routes }: RouterProps) => {
 
           {routes['Group Projects'] && (
             <>
-              <DrawerLink link="/groups" tooltip="Group Projects">
+              <DrawerLink link="/group" tooltip="Group Projects">
                 <PersonIcon />
               </DrawerLink>
               <Divider />
