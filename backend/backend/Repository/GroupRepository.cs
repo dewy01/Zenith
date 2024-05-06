@@ -41,32 +41,15 @@ namespace backend.Repository
                 throw new NotFoundException("Group not found");
             }
 
-            var projectDtos = new List<AllGroupProjectsDto>();
-            if (group.GroupProjects != null)
-            {
-                foreach (GroupProject project in group.GroupProjects)
-                {
-                    projectDtos.Add(new AllGroupProjectsDto
-                    {
-                        GroupProjectID = project.GroupProjectID,
-                        Title = project.Title,
-                        Deadline = project.Deadline,
-                        Description = project.Description,
-                        Status = project.Status,
-                        Completion = project.GroupProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.GroupProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.GroupProjectTasks.Count()) * 100) : 0,
-                    });
-                }
-            }
 
             var userDto = _mapper.Map<List<GroupUsersDto>>(group.Users);
-            userDto.ForEach(x => x.IsMe = (x.UserID != userId));
+            userDto.ForEach(x => x.IsMe = (x.UserID == userId));
 
             var groupDto = new GroupByIdDto
             {
                 GroupID = group.GroupID,
                 GroupName = group.GroupName,
                 Users = userDto,
-                GroupProjects = projectDtos,
             };
 
             return groupDto;

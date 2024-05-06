@@ -7,6 +7,5 @@ namespace backend.Dto
         public int GroupID { get; set; }
         public string GroupName { get; set; }
         public virtual List<GroupUsersDto> Users { get; set; }
-        public virtual List<AllGroupProjectsDto> GroupProjects { get; set; }
     }
 }

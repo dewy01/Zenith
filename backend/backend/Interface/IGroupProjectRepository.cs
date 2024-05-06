@@ -1,13 +1,14 @@
-﻿using backend.Models;
+﻿using backend.Dto;
+using backend.Models;
 
 namespace backend.Interface
 {
     public interface IGroupProjectRepository
     {
-        GroupProject GetGroupProjectById(int groupProjectId);
-        List<GroupProject> GetAllGroupProjects();
-        void AddGroupProject(GroupProject groupProject);
-        void UpdateGroupProject(GroupProject groupProject);
-        void DeleteGroupProject(int groupProjectId);
+        Task<ProjectByStatusDto> GetGroupProjectById(int projectId);
+        Task<IEnumerable<AllGroupProjectsDto>> GetAllGroupProjects();
+        Task AddGroupProject(AddGroupProjectDto dto);
+        Task UpdateGroupProject(EditProjectDto dto, int projectId);
+        Task DeleteGroupProject(int projectId);
     }
 }

@@ -40,8 +40,6 @@ namespace backend
                 {
                     Title = "GroupTask1",
                     Description = "Group task description 1",
-                    Priority = 1,
-                    Deadline = DateTime.Now.AddDays(20),
                     Category = "Category1",
                     Status = "In Progress",
                     GroupProject = groupProject1
@@ -51,8 +49,6 @@ namespace backend
                 {
                     Title = "GroupTask2",
                     Description = "Group task description 2",
-                    Priority = 2,
-                    Deadline = DateTime.Now.AddDays(25),
                     Category = "Category2",
                     Status = "To Do",
                     GroupProject = groupProject2
