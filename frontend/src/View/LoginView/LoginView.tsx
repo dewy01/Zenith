@@ -16,8 +16,11 @@ export const LoginView = () => {
   const { mutateAsync } = mutateUserLogin();
 
   const handleSubmit = (data: loginFormSchema) => {
-    mutateAsync(data);
-    form.reset();
+    mutateAsync(data, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (

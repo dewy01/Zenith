@@ -1,20 +1,19 @@
 import { Box, Typography, alpha } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
 import { changeTaskStatus } from '~/api/ProjectTask/api';
-import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
 
 type Props = {
   name: string;
   color: string;
   children: ReactNode;
+  mutateStatus: (task: changeTaskStatus) => void;
 };
 
-export const Column = ({ name, color, children }: Props) => {
+export const Column = ({ name, color, children, mutateStatus }: Props) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
-  const { mutateAsync } = mutateChangeTaskStatus();
   const updateTask = (task: changeTaskStatus) => {
     if (task) {
-      mutateAsync(task);
+      mutateStatus(task);
     }
   };
 
@@ -60,8 +59,9 @@ export const Column = ({ name, color, children }: Props) => {
             ? alpha(theme.palette.action.focus, 0.02)
             : '',
           transition: '0.08s ease-in',
-          minHeight: '90vh',
-          height: 'auto',
+          minHeight: 'calc(100vh - 64px)',
+          maxHeight: 'calc(100vh - 64px)',
+          overflow: 'auto',
           borderRight: '1px solid',
           borderColor: theme.palette.action.focus,
         })}

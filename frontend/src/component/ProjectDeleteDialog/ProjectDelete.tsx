@@ -6,18 +6,17 @@ import {
   DialogContentText,
   DialogTitle,
   MenuItem,
-} from "@mui/material";
-import { useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProject } from "~/api/Projects/query";
+} from '@mui/material';
+import { useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type Props = {
   projectId: number;
   onSubmit: () => void;
+  mutateDelete: (projectId: number) => void;
 };
 
-export const ProjectDelete = ({ projectId, onSubmit }: Props) => {
-  const { mutateAsync } = deleteProject();
+export const ProjectDelete = ({ projectId, onSubmit, mutateDelete }: Props) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -37,10 +36,10 @@ export const ProjectDelete = ({ projectId, onSubmit }: Props) => {
         open={open}
         onClose={handleClose}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <DialogTitle>Delete project?</DialogTitle>
@@ -65,7 +64,7 @@ export const ProjectDelete = ({ projectId, onSubmit }: Props) => {
           <Button
             color="error"
             onClick={() => {
-              mutateAsync(projectId);
+              mutateDelete(projectId);
               handleClose();
               onSubmit();
             }}

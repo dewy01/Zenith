@@ -15,6 +15,7 @@ import { CalendarView } from '~/View/CalendarView';
 import { CalendarProvider } from '~/context/CalendarContext';
 import { GroupView } from '~/View/GroupView';
 import { LogoutView } from '~/View/LogoutView';
+import { GroupProjectTaskView } from '~/View/GroupView/GroupProjectTaskView';
 
 type Props = { children: ReactNode };
 
@@ -117,6 +118,15 @@ export const Router = ({ routes }: RouterProps) => {
             element={
               <PrivateRoute>
                 <GroupView />
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
+          <Route
+            path="/group/project/:id"
+            element={
+              <PrivateRoute>
+                <GroupProjectTaskView />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

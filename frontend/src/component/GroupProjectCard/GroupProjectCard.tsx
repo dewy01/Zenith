@@ -10,6 +10,7 @@ import {
 import { formatDate } from '~/utils/dateTime';
 import { NavLink } from 'react-router-dom';
 import { GroupProject } from '~/api/Group/api';
+import { GroupProjectMenu } from '../GroupProjectMenu';
 
 type Props = {
   project: GroupProject;
@@ -21,7 +22,7 @@ export const GroupProjectCard = ({ project }: Props) => {
       <List sx={{ flex: 1 }}>
         <Box
           component={NavLink}
-          to={`/group/projects/${project.groupProjectID}`}
+          to={`/group/project/${project.groupProjectID}`}
           sx={{ textDecoration: 'none' }}
         >
           <ListItemText
@@ -50,7 +51,7 @@ export const GroupProjectCard = ({ project }: Props) => {
           </Typography>
         </Stack>
       </ListSubheader>
-      {/* <ProjectMenu project={project} /> */}
+      <GroupProjectMenu project={project} />
     </ListItem>
   );
 };

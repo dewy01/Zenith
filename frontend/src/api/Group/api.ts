@@ -11,7 +11,7 @@ export interface GroupProject {
   groupProjectID: number;
   title: string;
   description: string;
-  deadline: Date;
+  deadline: string;
   status: string;
   completion: number;
 }
@@ -20,7 +20,6 @@ export interface Group {
   groupID: number;
   groupName: string;
   users: GroupUser[];
-  groupProjects: GroupProject[];
 }
 
 export interface AddGroup{

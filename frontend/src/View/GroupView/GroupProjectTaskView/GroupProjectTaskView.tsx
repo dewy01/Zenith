@@ -6,26 +6,25 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { LoadingView } from '../LoadingView/LoadingView';
 import { NavLink, useParams } from 'react-router-dom';
-import { getProjectById } from '~/api/Projects/query';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { DialogCreate } from './DialogCreate';
 import { ProjectTaskCard } from '~/component/ProjectTaskCard';
 import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
 import { Column } from '~/component/Column';
+import { LoadingView } from '~/View/LoadingView/LoadingView';
+import { getGroupProjectById } from '~/api/GroupProjects/query';
 
 type Params = {
   id: string;
 };
 
-export const ProjectTaskView = () => {
+export const GroupProjectTaskView = () => {
   const theme = useTheme();
 
   const data = useParams<Params>();
   if (data.id === undefined) return;
 
-  const { data: project, isLoading } = getProjectById(data.id);
+  const { data: project, isLoading } = getGroupProjectById(data.id);
   const { mutateAsync } = mutateChangeTaskStatus();
 
   if (isLoading || project === undefined) {
@@ -37,7 +36,7 @@ export const ProjectTaskView = () => {
       <Box>
         <AppBar position="sticky">
           <Toolbar>
-            <IconButton component={NavLink} to="/projects">
+            <IconButton component={NavLink} to="/group">
               <ArrowBackIcon />
             </IconButton>
             <Box sx={{ textDecoration: 'none', paddingLeft: 3, flexGrow: 1 }}>
@@ -48,7 +47,7 @@ export const ProjectTaskView = () => {
                 {project.description}
               </Typography>
             </Box>
-            <DialogCreate projectId={project.projectID} />
+            {/* <DialogCreate projectId={project.projectID} /> */}
           </Toolbar>
         </AppBar>
         <Box display="flex" justifyContent="space-evenly" alignItems="start">

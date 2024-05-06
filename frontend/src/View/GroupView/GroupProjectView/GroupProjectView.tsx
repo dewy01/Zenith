@@ -10,11 +10,12 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
-import { getGroup, gtInviteToken } from '~/api/Group/query';
+import { getGroup, getInviteToken } from '~/api/Group/query';
 import { ProjectTab } from './ProjectTab';
 import { UserTab } from './UsersTab';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { enqueueSnackbar } from 'notistack';
+import { DialogCreate } from './DialogCreate';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -51,11 +52,9 @@ export const GroupProjectView = () => {
     setValue(newValue);
   };
 
-  if (isLoading || group === undefined) {
-    return <LoadingView />;
-  }
-
-  const { data: token, refetch: getNewToken } = gtInviteToken(group?.groupID);
+  const { data: token, refetch: getNewToken } = getInviteToken(
+    group ? group.groupID : 0,
+  );
   const [shareButtonClicked, setShareButtonClicked] = useState(false);
 
   useEffect(() => {
@@ -66,6 +65,10 @@ export const GroupProjectView = () => {
     }
   }, [token, shareButtonClicked]);
 
+  if (isLoading || !group) {
+    return <LoadingView />;
+  }
+
   return (
     <Box>
       <AppBar position="sticky">
@@ -73,6 +76,7 @@ export const GroupProjectView = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {group.groupName}
           </Typography>
+          <DialogCreate groupId={group.groupID} />
           <Tooltip title="Invite users">
             <IconButton
               onClick={() => {
@@ -83,7 +87,6 @@ export const GroupProjectView = () => {
               <IosShareIcon sx={{ height: 20, width: 20, color: 'darkgrey' }} />
             </IconButton>
           </Tooltip>
-          {/* <DialogCreate /> */}
         </Toolbar>
       </AppBar>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -98,7 +101,7 @@ export const GroupProjectView = () => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ProjectTab groupProjects={group.groupProjects} />
+        <ProjectTab />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <UserTab users={group.users} groupId={group.groupID} />

@@ -48,7 +48,7 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
         </Box>
       </List>
 
-      {!user.isMe && (
+      {user.isMe && (
         <Tooltip title={'Leave group'}>
           <IconButton onClick={() => leaveGroup({ groupID: groupId })}>
             <ExitToAppIcon />

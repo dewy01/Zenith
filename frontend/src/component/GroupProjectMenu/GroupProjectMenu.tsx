@@ -5,17 +5,17 @@ import { IconButton } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import CloseIcon from '@mui/icons-material/Close';
 import { ProjectDelete } from '~/component/ProjectDeleteDialog';
-import { DialogEdit } from '~/View/ProjectView/DialogEdit';
-import { Project } from '~/api/Projects/api';
-import { deleteProject } from '~/api/Projects/query';
+import { GroupProject } from '~/api/Group/api';
+import { deleteGroupProject } from '~/api/GroupProjects/query';
+import { DialogEdit } from '~/View/GroupView/GroupProjectView/DialogEdit';
 
 type Props = {
-  project: Project;
+  project: GroupProject;
 };
 
-export const ProjectMenu = ({ project }: Props) => {
+export const GroupProjectMenu = ({ project }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { mutateAsync } = deleteProject();
+  const { mutateAsync } = deleteGroupProject();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,7 +38,7 @@ export const ProjectMenu = ({ project }: Props) => {
         <DialogEdit project={project} onSubmit={handleClose} />
 
         <ProjectDelete
-          projectId={project.projectID}
+          projectId={project.groupProjectID}
           onSubmit={handleClose}
           mutateDelete={mutateAsync}
         />

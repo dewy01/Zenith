@@ -6,16 +6,18 @@ import {
   LinearProgress,
   Divider,
 } from '@mui/material';
-import { GroupProject } from '~/api/Group/api';
+import { LoadingView } from '~/View/LoadingView/LoadingView';
+import { getAllGroupProjects } from '~/api/GroupProjects/query';
 import { GroupProjectCard } from '~/component/GroupProjectCard/GroupProjectCard';
 import { SearchField } from '~/component/SearchField';
 import { deriveBarColor } from '~/utils/deriveBarColor';
 
-type Props = {
-  groupProjects: GroupProject[];
-};
+export const ProjectTab = () => {
+  const { data: group, isLoading } = getAllGroupProjects();
 
-export const ProjectTab = ({ groupProjects }: Props) => {
+  if (isLoading || !group) {
+    return <LoadingView />;
+  }
   return (
     <>
       <Box
@@ -38,7 +40,7 @@ export const ProjectTab = ({ groupProjects }: Props) => {
           gap: 1,
         }}
       >
-        {groupProjects.map((item) => (
+        {group.map((item) => (
           <Box key={item.groupProjectID}>
             <GroupProjectCard project={item} />
             <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>

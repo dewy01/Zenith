@@ -2,12 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 import { AddGroup, LeaveGroup, TokenDto, postAddGroup, postJoinGroup, postLeaveGroup, queryGroup, queryGroupToken, queryIsInGroup } from './api';
 
-// export const getAllProjects = () => {
-//   return useQuery({
-//     queryKey: ['allProjects'],
-//     queryFn: queryAllProjects,
-//   });
-// };
 
 export const getGroup = () => {
   return useQuery({
@@ -23,7 +17,7 @@ export const getIsInGroup = () => {
   });
 };
 
-export const gtInviteToken = (groupId:number) => {
+export const getInviteToken = (groupId:number) => {
   return useQuery({
     queryKey: ['getGroupToken'],
     queryFn: () => queryGroupToken(groupId),
