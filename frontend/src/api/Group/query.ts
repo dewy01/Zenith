@@ -1,7 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
-import { AddGroup, LeaveGroup, TokenDto, postAddGroup, postJoinGroup, postLeaveGroup, queryGroup, queryGroupToken, queryIsInGroup } from './api';
-
+import {
+  AddGroup,
+  ChangeRole,
+  GroupRole,
+  LeaveGroup,
+  TokenDto,
+  changeRole,
+  postAddGroup,
+  postJoinGroup,
+  postLeaveGroup,
+  queryGroup,
+  queryGroupToken,
+  queryIsInGroup,
+  queryOwnRole,
+  setAdmin,
+} from './api';
+import { useGroupContext } from '~/context/GroupRole';
 
 export const getGroup = () => {
   return useQuery({
@@ -17,13 +32,20 @@ export const getIsInGroup = () => {
   });
 };
 
-export const getInviteToken = (groupId:number) => {
+export const getOwnRole = () => {
+  return useQuery({
+    queryKey: ['getOwnRole'],
+    queryFn: () => queryOwnRole(),
+  });
+};
+
+export const getInviteToken = (groupId: number) => {
   return useQuery({
     queryKey: ['getGroupToken'],
     queryFn: () => queryGroupToken(groupId),
-    enabled:false,
-    refetchOnWindowFocus:false,
-    refetchOnMount:false,
+    enabled: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 };
 
@@ -32,7 +54,7 @@ export const mutateAddGroup = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['addGroup'],
-    mutationFn: (group : AddGroup) => postAddGroup(group),
+    mutationFn: (group: AddGroup) => postAddGroup(group),
     onSuccess: () => {
       enqueueSnackbar('Group created');
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
@@ -46,15 +68,15 @@ export const mutateJoinGroup = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['joinGroup'],
-    mutationFn: (token : TokenDto) => postJoinGroup(token),
+    mutationFn: (token: TokenDto) => postJoinGroup(token),
     onSuccess: () => {
       enqueueSnackbar('Group joined');
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
     },
-    onError: ()=>{
-      enqueueSnackbar({variant: 'error', message:'Invalid group code'})
-    }
+    onError: () => {
+      enqueueSnackbar({ variant: 'error', message: 'Invalid group code' });
+    },
   });
 };
 
@@ -63,7 +85,7 @@ export const mutateLeaveGroup = () => {
   const { enqueueSnackbar } = useSnackbar();
   return useMutation({
     mutationKey: ['leaveGroup'],
-    mutationFn: (groupId : LeaveGroup) => postLeaveGroup(groupId),
+    mutationFn: (groupId: LeaveGroup) => postLeaveGroup(groupId),
     onSuccess: () => {
       enqueueSnackbar('Group left');
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
@@ -71,33 +93,31 @@ export const mutateLeaveGroup = () => {
   });
 };
 
-// export const mutateEditProject = () => {
-//   const queryClient = useQueryClient();
-//   const { enqueueSnackbar } = useSnackbar();
-//   return useMutation({
-//     mutationKey: ['editProject'],
-//     mutationFn: (project:mutateProject) => editProjectById(project),
-//     onSuccess: () => {
-//       enqueueSnackbar('Project edited');
-//       queryClient.invalidateQueries({ queryKey: ['projectById'] });
-//       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
-//     },
-//     onError: () => {},
-//   });
-// };
+export const mutateChangeRole = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['changeRole'],
+    mutationFn: (item: ChangeRole) => changeRole(item),
+    onSuccess: () => {
+      enqueueSnackbar('Role changed');
+      queryClient.invalidateQueries({ queryKey: ['getGroup'] });
+    },
+  });
+};
 
-// export const deleteProject = () => {
-//   const queryClient = useQueryClient();
-//   const { enqueueSnackbar } = useSnackbar();
-//   return useMutation({
-//     mutationKey: ['deleteProject'],
-//     mutationFn: (projectId: number) => deleteProjectById(projectId),
-//     onSuccess: () => {
-//       enqueueSnackbar('Project deleted');
-//       queryClient.invalidateQueries({ queryKey: ['allProjects'] });
-//     },
-//     onError: () => {
-//       enqueueSnackbar('Server connection error');
-//     },
-//   });
-// };
+export const mutateSetAdmin = () => {
+  const { setUserRole } = useGroupContext();
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['setAdmin'],
+    mutationFn: (item: ChangeRole) => setAdmin(item),
+    onSuccess: () => {
+      enqueueSnackbar('Admin user changed');
+      setUserRole(GroupRole.User);
+      queryClient.invalidateQueries({ queryKey: ['getGroup'] });
+      queryClient.invalidateQueries({ queryKey: ['getOwnRole'] });
+    },
+  });
+};

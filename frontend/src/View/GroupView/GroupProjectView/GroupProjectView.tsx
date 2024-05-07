@@ -10,12 +10,13 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
-import { getGroup, getInviteToken } from '~/api/Group/query';
+import { getGroup, getInviteToken, getOwnRole } from '~/api/Group/query';
 import { ProjectTab } from './ProjectTab';
 import { UserTab } from './UsersTab';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
+import { useGroupContext } from '~/context/GroupRole';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,6 +46,8 @@ function TabPanel(props: TabPanelProps) {
 
 export const GroupProjectView = () => {
   const { data: group, isLoading } = getGroup();
+  const { data: role } = getOwnRole();
+  const { setUserRole, isModerator } = useGroupContext();
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -65,6 +68,12 @@ export const GroupProjectView = () => {
     }
   }, [token, shareButtonClicked]);
 
+  useEffect(() => {
+    if (role) {
+      setUserRole(role);
+    }
+  }, [role]);
+
   if (isLoading || !group) {
     return <LoadingView />;
   }
@@ -76,17 +85,23 @@ export const GroupProjectView = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {group.groupName}
           </Typography>
-          <DialogCreate groupId={group.groupID} />
-          <Tooltip title="Invite users">
-            <IconButton
-              onClick={() => {
-                getNewToken();
-                setShareButtonClicked(true);
-              }}
-            >
-              <IosShareIcon sx={{ height: 20, width: 20, color: 'darkgrey' }} />
-            </IconButton>
-          </Tooltip>
+          {isModerator && (
+            <>
+              <DialogCreate groupId={group.groupID} />
+              <Tooltip title="Invite users">
+                <IconButton
+                  onClick={() => {
+                    getNewToken();
+                    setShareButtonClicked(true);
+                  }}
+                >
+                  <IosShareIcon
+                    sx={{ height: 20, width: 20, color: 'darkgrey' }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

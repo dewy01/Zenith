@@ -11,12 +11,14 @@ import { formatDate } from '~/utils/dateTime';
 import { NavLink } from 'react-router-dom';
 import { GroupProject } from '~/api/Group/api';
 import { GroupProjectMenu } from '../GroupProjectMenu';
+import { useGroupContext } from '~/context/GroupRole';
 
 type Props = {
   project: GroupProject;
 };
 
 export const GroupProjectCard = ({ project }: Props) => {
+  const { isModerator } = useGroupContext();
   return (
     <ListItem sx={{ width: '80vw' }}>
       <List sx={{ flex: 1 }}>
@@ -51,7 +53,7 @@ export const GroupProjectCard = ({ project }: Props) => {
           </Typography>
         </Stack>
       </ListSubheader>
-      <GroupProjectMenu project={project} />
+      {isModerator && <GroupProjectMenu project={project} />}
     </ListItem>
   );
 };

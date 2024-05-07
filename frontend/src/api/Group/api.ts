@@ -3,8 +3,15 @@ import { axiosInstance } from '../api';
 export interface GroupUser {
   userID: number;
   username: string;
+  userRole: GroupRole;
   email: string;
   isMe: boolean;
+}
+
+export enum GroupRole {
+  User,
+  Moderator,
+  Admin,
 }
 
 export interface GroupProject {
@@ -22,16 +29,20 @@ export interface Group {
   users: GroupUser[];
 }
 
-export interface AddGroup{
+export interface AddGroup {
   groupName: string;
 }
 
 export interface TokenDto {
-  token:string
+  token: string;
 }
 
 export interface LeaveGroup {
-  groupID:number
+  groupID: number;
+}
+
+export interface ChangeRole {
+  userId: number;
 }
 
 export const postAddGroup = async (group: AddGroup) => {
@@ -56,18 +67,22 @@ export const queryIsInGroup = async () => {
   return response.data as boolean;
 };
 
-export const queryGroupToken = async (groupId:number) => {
-  const response = await axiosInstance.get(`/api/groups/getInviteToken/${groupId}`);
+export const queryGroupToken = async (groupId: number) => {
+  const response = await axiosInstance.get(
+    `/api/groups/getInviteToken/${groupId}`,
+  );
   return response.data as string;
 };
 
-// export const editProjectById = async (project: mutateProject) => {
-//   return await axiosInstance.patch(
-//     `/api/projects/updateProject/${project.projectID}`,
-//     project.data,
-//   );
-// };
+export const queryOwnRole = async () => {
+  const response = await axiosInstance.get(`/api/groups/getOwnRole`);
+  return response.data as GroupRole;
+};
 
-// export const deleteProjectById = async (projectId: number) => {
-//   return await axiosInstance.delete(`/api/projects/deleteProject/${projectId}`);
-// };
+export const changeRole = async (item: ChangeRole) => {
+  return await axiosInstance.patch('/api/groups/changeRole', item);
+};
+
+export const setAdmin = async (item: ChangeRole) => {
+  return await axiosInstance.patch('/api/groups/setAdmin', item);
+};
