@@ -1,9 +1,6 @@
-import axios from "axios";
-import { BASE_URL } from "~/config/constants";
-import {
-  QueryCache,
-  QueryClient,
-} from '@tanstack/react-query';
+import axios from 'axios';
+import { BASE_URL } from '~/config/constants';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import { AxiosError } from 'axios';
 
@@ -30,7 +27,8 @@ export const queryClient = new QueryClient({
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === STATUS_CODE.UNAUTHORIZED) {
-          localStorage.removeItem('Auth-token')
+          localStorage.removeItem('Auth-token');
+          queryClient.removeQueries();
           window.location.reload();
         }
         enqueueSnackbar({ variant: 'error', message: err.message });
@@ -46,4 +44,3 @@ export const queryClient = new QueryClient({
     },
   },
 });
-

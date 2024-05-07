@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from 'react';
+import { queryClient } from '~/api/api';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -12,17 +13,18 @@ type Props = { children: ReactNode };
 
 export const AuthProvider = ({ children }: Props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem("Auth-token") !== null;
+    return localStorage.getItem('Auth-token') !== null;
   });
 
   const login = (token: string) => {
-    localStorage.setItem("Auth-token", token);
+    localStorage.setItem('Auth-token', token);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("Auth-token");
+    localStorage.removeItem('Auth-token');
     setIsAuthenticated(false);
+    queryClient.removeQueries();
   };
 
   return (
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }: Props) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within its Provider");
+    throw new Error('useAuth must be used within its Provider');
   }
   return context;
 };

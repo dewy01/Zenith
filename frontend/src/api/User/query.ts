@@ -1,9 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  postDeleteAccount,
   postForgotPassword,
   postResetPassword,
   postUserLogin,
   postUserRegister,
+  queryMyAccount,
 } from './api';
 import { registerFormSchema } from '~/View/RegisterView/schema';
 import { loginFormSchema } from '~/View/LoginView/schema';
@@ -25,12 +27,15 @@ export const mutateUserRegister = () => {
     mutationFn: (userData: registerFormSchema) => postUserRegister(userData),
     onSuccess: () => {
       enqueueSnackbar('Registration completed, now verify your email');
-      navigate('/login',{replace:true})
+      navigate('/login', { replace: true });
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === STATUS_CODE.INTERNAL_SERVER_ERROR) {
-          enqueueSnackbar({ variant: 'error', message: 'Email or username already in use' });
+          enqueueSnackbar({
+            variant: 'error',
+            message: 'Email or username already in use',
+          });
         }
       }
     },
@@ -47,7 +52,7 @@ export const mutateUserLogin = () => {
     onSuccess: (data) => {
       const jwtToken = 'Bearer ' + data.data;
       login(jwtToken);
-      navigate('/home',{replace:true})
+      navigate('/home', { replace: true });
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
@@ -78,5 +83,25 @@ export const mutateResetPassword = () => {
     onSuccess: () => {
       enqueueSnackbar('Password renewed');
     },
+  });
+};
+
+export const mutateDeleteAccount = () => {
+  const { logout } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['deleteAccout'],
+    mutationFn: () => postDeleteAccount(),
+    onSuccess: () => {
+      enqueueSnackbar('Account deleted');
+      logout();
+    },
+  });
+};
+
+export const getMyAccount = () => {
+  return useQuery({
+    queryKey: ['getMyAccount'],
+    queryFn: () => queryMyAccount(),
   });
 };

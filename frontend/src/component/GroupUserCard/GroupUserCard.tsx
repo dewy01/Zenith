@@ -9,15 +9,11 @@ import {
 } from '@mui/material';
 import { GroupUser } from '~/api/Group/api';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import {
-  mutateChangeRole,
-  mutateLeaveGroup,
-  mutateSetAdmin,
-} from '~/api/Group/query';
+import { mutateChangeRole, mutateLeaveGroup } from '~/api/Group/query';
 import { getGroupRole } from '~/utils/useGroupRoles';
 import { useGroupContext } from '~/context/GroupRole';
+import { SetAdminDialog } from './SetAdminDialog';
 
 type Props = {
   user: GroupUser;
@@ -27,7 +23,6 @@ type Props = {
 export const GroupUserCard = ({ user, groupId }: Props) => {
   const { mutateAsync: leaveGroup } = mutateLeaveGroup();
   const { mutateAsync: changeRole } = mutateChangeRole();
-  const { mutateAsync: setAdmin } = mutateSetAdmin();
   const { isGranted } = useGroupContext();
 
   return (
@@ -76,11 +71,7 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
       )}
       {!user.isMe && isGranted && (
         <>
-          <Tooltip title={'Grant admin'}>
-            <IconButton onClick={() => setAdmin({ userId: user.userID })}>
-              <VerifiedUserIcon />
-            </IconButton>
-          </Tooltip>
+          <SetAdminDialog userId={user.userID} />
           <Tooltip title={'Switch role ( User / Moderator )'}>
             <IconButton onClick={() => changeRole({ userId: user.userID })}>
               <CompareArrowsIcon />
@@ -88,8 +79,6 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
           </Tooltip>
         </>
       )}
-
-      {/* <ProjectMenu project={project} /> */}
     </ListItem>
   );
 };

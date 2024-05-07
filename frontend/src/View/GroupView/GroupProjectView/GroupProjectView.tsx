@@ -105,12 +105,7 @@ export const GroupProjectView = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          variant="fullWidth"
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs variant="fullWidth" value={value} onChange={handleChange}>
           <Tab label="Projects" />
           <Tab label="Users" />
         </Tabs>

@@ -16,6 +16,7 @@ import { CalendarProvider } from '~/context/CalendarContext';
 import { GroupView } from '~/View/GroupView';
 import { LogoutView } from '~/View/LogoutView';
 import { GroupProjectTaskView } from '~/View/GroupView/GroupProjectTaskView';
+import { HomeView } from '~/View/HomeView';
 
 type Props = { children: ReactNode };
 
@@ -61,7 +62,7 @@ export const Router = ({ routes }: RouterProps) => {
             path="/home"
             element={
               <PrivateRoute>
-                <></>
+                <HomeView />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

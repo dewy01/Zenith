@@ -6,6 +6,13 @@ import {
   forgotPasswordModel,
   resetPasswordModel,
 } from '~/View/RegisterView/PasswordRenew/schema';
+import { axiosInstance as loggedInstance } from '../api';
+
+export interface MyAccount {
+  username: string;
+  email: string;
+  groupName: string;
+}
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });
 
@@ -23,4 +30,13 @@ export const postForgotPassword = async (userData: forgotPasswordModel) => {
 
 export const postResetPassword = async (userData: resetPasswordModel) => {
   return await axiosInstance.post('/api/account/resetPassword', userData);
+};
+
+export const postDeleteAccount = async () => {
+  return await loggedInstance.delete('/api/account/deleteAccount');
+};
+
+export const queryMyAccount = async () => {
+  const response = await loggedInstance.get('/api/account/getMyAccount');
+  return response.data as MyAccount;
 };

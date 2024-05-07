@@ -13,6 +13,7 @@ import { getSettings, mutateEditSettings } from '~/api/Settings/query';
 import { LoadingView } from '../LoadingView/LoadingView';
 import CheckIcon from '@mui/icons-material/Check';
 import { makeStyles } from '@mui/styles';
+import { DeleteAccountDialog } from './DeleteAccountDialog';
 
 const routes: { [routeName: string]: boolean } = {
   ['Notes']: true,
@@ -229,6 +230,19 @@ export const SettingsView = () => {
               }
             />
           ))}
+        </Paper>
+
+        <Paper
+          sx={{
+            maxWidth: '350px',
+            padding: 3,
+            gap: 3,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Typography fontWeight={'medium'}>Delete account:</Typography>
+          <DeleteAccountDialog />
         </Paper>
       </Box>
     </>
