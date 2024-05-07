@@ -13,5 +13,8 @@ namespace backend.Interface
         Task<bool> isInGroup();
         Task JoinGroup(TokenDto tokenId);
         Task LeaveGroup(LeaveGroupDto dto);
+        Task ChangeRole(ChangeRoleDto dto);
+        Task SetAdmin(ChangeRoleDto dto);
+        Task<Enums.GroupRole> GetOwnRole();
     }
 }

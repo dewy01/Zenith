@@ -72,5 +72,30 @@ namespace backend.Controllers
             return await Task.FromResult(Ok());
         }
 
+        [HttpPatch("changeRole")]
+        [Authorize]
+        public async Task<ActionResult> changeRole(ChangeRoleDto dto)
+        {
+            await _groupService.ChangeRole(dto);
+            return await Task.FromResult(Ok());
+        }
+
+        [HttpPatch("setAdmin")]
+        [Authorize]
+        public async Task<ActionResult> setAdmin(ChangeRoleDto dto)
+        {
+            await _groupService.SetAdmin(dto);
+            return await Task.FromResult(Ok());
+        }
+
+
+        [HttpGet("getOwnRole")]
+        [Authorize]
+        public async Task<ActionResult<Enums.GroupRole>> getOwnRole()
+        {
+            var role = await _groupService.GetOwnRole();
+            return await Task.FromResult(Ok(role));
+        }
+
     }
 }

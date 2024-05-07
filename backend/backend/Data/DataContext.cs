@@ -25,6 +25,7 @@ namespace backend.Data
         public DbSet<KanbanTask> KanbanTasks { get; set; }
         public DbSet<ProjectTodo> ProjectTodos { get; set; }
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<GroupRole> GroupRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -161,6 +162,19 @@ namespace backend.Data
                 .WithOne(pt => pt.Group)
                 .HasForeignKey(pt => pt.GroupID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GroupRole>()
+                .HasKey(gr => new { gr.UserId, gr.GroupId });
+
+            modelBuilder.Entity<GroupRole>()
+                .HasOne(gr => gr.User)
+                .WithMany()
+                .HasForeignKey(gr => gr.UserId);
+
+            modelBuilder.Entity<GroupRole>()
+                .HasOne(gr => gr.Group)
+                .WithMany()
+                .HasForeignKey(gr => gr.GroupId);
 
             base.OnModelCreating(modelBuilder);
 

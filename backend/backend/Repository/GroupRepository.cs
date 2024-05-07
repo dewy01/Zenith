@@ -41,9 +41,16 @@ namespace backend.Repository
                 throw new NotFoundException("Group not found");
             }
 
+            var groupRoles = await _context.GroupRoles
+                .Where(g => g.GroupId == group.GroupID)
+                .ToListAsync();
 
             var userDto = _mapper.Map<List<GroupUsersDto>>(group.Users);
-            userDto.ForEach(x => x.IsMe = (x.UserID == userId));
+            userDto.ForEach(u =>
+            {
+                u.IsMe = u.UserID == userId;
+                u.UserRole = groupRoles.FirstOrDefault(x => x.UserId == u.UserID).Role;
+            });
 
             var groupDto = new GroupByIdDto
             {
@@ -109,6 +116,16 @@ namespace backend.Repository
             user.Group = newGroup;
             _context.Users.Update(user);
 
+            await _context.SaveChangesAsync();
+
+            var groupRole = new GroupRole
+            {
+                UserId = user.UserID,
+                GroupId = newGroup.GroupID,
+                Role = Enums.GroupRole.Admin
+            };
+
+            await _context.GroupRoles.AddAsync(groupRole);
             await _context.SaveChangesAsync();
         }
 
@@ -188,6 +205,16 @@ namespace backend.Repository
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
+
+            var groupRole = new GroupRole
+            {
+                UserId = user.UserID,
+                GroupId = group.GroupID,
+                Role = Enums.GroupRole.User
+            };
+
+            await _context.GroupRoles.AddAsync(groupRole);
+            await _context.SaveChangesAsync();
         }
 
         public async Task LeaveGroup(LeaveGroupDto dto)
@@ -198,22 +225,36 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(g => g.GroupID == dto.GroupID);
+            var groupUser = await _context.GroupRoles.SingleOrDefaultAsync(u => u.UserId == userId);
+            if (groupUser == null)
+            {
+                throw new NotFoundException("User not found in the group");
+            }
 
+            if (groupUser.Role == Enums.GroupRole.Admin)
+            {
+                throw new InvalidOperationException("Admin cannot leave the group");
+            }
+
+            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(g => g.GroupID == dto.GroupID);
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
 
             var user = group.Users.FirstOrDefault(u => u.UserID == userId);
-
             if (user == null)
             {
                 throw new NotFoundException("User not found in the group");
             }
 
             group.Users.Remove(user);
-            user.GroupID = null;
+
+            var groupRole = await _context.GroupRoles.FirstOrDefaultAsync(gr => gr.GroupId == group.GroupID && gr.UserId == userId);
+            if (groupRole != null)
+            {
+                _context.GroupRoles.Remove(groupRole);
+            }
 
             if (group.Users.Count == 0)
             {
@@ -221,6 +262,74 @@ namespace backend.Repository
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangeRole(ChangeRoleDto dto)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var groupUser = await  _context.GroupRoles.SingleOrDefaultAsync(u=>u.UserId == userId);
+
+            if (groupUser == null) { throw new NotFoundException("User not found"); }
+
+            if(groupUser.Role == Enums.GroupRole.Admin)
+            {
+                var changedUser = await _context.GroupRoles.SingleOrDefaultAsync(u => u.UserId == dto.UserId);
+                if (changedUser == null) throw new NotFoundException("User not found");
+                var newRole = (changedUser.Role == Enums.GroupRole.User) ? Enums.GroupRole.Moderator : Enums.GroupRole.User;
+                changedUser.Role = newRole;
+                _context.GroupRoles.Update(changedUser);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task SetAdmin(ChangeRoleDto dto)
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var groupUser = await _context.GroupRoles.SingleOrDefaultAsync(u => u.UserId == userId);
+
+            if (groupUser == null) { throw new NotFoundException("User not found"); }
+
+            if (groupUser.Role == Enums.GroupRole.Admin)
+            {
+                groupUser.Role = Enums.GroupRole.User;
+                _context.GroupRoles.Update(groupUser);
+
+                var changedUser = await _context.GroupRoles.SingleOrDefaultAsync(u => u.UserId == dto.UserId);
+                if (changedUser == null) throw new NotFoundException("User not found");
+                changedUser.Role = Enums.GroupRole.Admin;
+                _context.GroupRoles.Update(changedUser);
+            }
+
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task<Enums.GroupRole> GetOwnRole()
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var groupRole = await _context.GroupRoles.SingleOrDefaultAsync(x => x.UserId == userId);
+            if(groupRole == null)
+            {
+                throw new NotFoundException("User not found in the group");
+            }
+
+            return groupRole.Role;
         }
 
 
