@@ -24,25 +24,53 @@ namespace backend.Repository
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthSettings _authSettings;
         private readonly IEmailRepository _emailSettings;
+        private readonly IUserContextRepository _userContextRepository;
 
-        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, AuthSettings authSettings, IEmailRepository emailSettings)
+        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, AuthSettings authSettings, IEmailRepository emailSettings, IUserContextRepository userContextRepository)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _authSettings = authSettings;
             _emailSettings = emailSettings;
+            _userContextRepository = userContextRepository;
         }
 
-        public User GetUserById(int userId)
+        public async Task<UserDto> GetUserById()
         {
-            var result = _context.Users.FirstOrDefault(u => u.UserID == userId);
-
-            if (result == null)
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
             {
                 throw new NotFoundException("User not found");
             }
 
-            return result;
+            var user = await _context.Users.SingleOrDefaultAsync(user => user.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var group = await _context.Groups
+            .Where(g => g.Users.Any(u => u.UserID == userId))
+            .SingleOrDefaultAsync();
+
+            if (group == null)
+            {
+                return new UserDto()
+                {
+                    Username = user.Username,
+                    Email = user.Email,
+                    GroupName = null,
+                };
+            }
+
+            var userDto = new UserDto()
+            {
+                Username = user.Username,
+                Email = user.Email,
+                GroupName = group.GroupName,
+            };
+
+            return userDto;
         }
 
         public List<User> GetAllUsers()
@@ -96,14 +124,22 @@ namespace backend.Repository
             _context.SaveChanges();
         }
 
-        public void DeleteUser(int userId)
+        public async Task DeleteUser()
         {
-            var user = _context.Users.Find(userId);
-            if (user != null)
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
             {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                throw new NotFoundException("User not found");
             }
+
+            var user = await _context.Users.SingleOrDefaultAsync(user => user.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         private string CreateRandomToken()

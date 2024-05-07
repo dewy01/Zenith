@@ -50,5 +50,22 @@ namespace backend.Controllers
             return await Task.FromResult(Ok());
         }
 
+        [HttpGet("getMyAccount")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetUser()
+        {
+            var result = await _accountService.GetUserById();
+            return await Task.FromResult(Ok(result));
+        }
+
+
+        [HttpDelete("deleteAccount")]
+        [Authorize]
+        public async Task<IActionResult> DeleteAccount()
+        {
+            await _accountService.DeleteUser();
+            return await Task.FromResult(Ok());
+        }
+
     }
 }

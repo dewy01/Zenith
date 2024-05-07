@@ -6,11 +6,11 @@ namespace backend.Interface
 {
     public interface IUserRepository
     {
-        User GetUserById(int userId);
+        Task<UserDto> GetUserById();
         List<User> GetAllUsers();
         Task AddUser(RegisterUserDto user);
         void UpdateUser(User user);
-        void DeleteUser(int userId);
+        Task DeleteUser();
         Task<string> GenerateJwt(LoginUserDto dto);
         Task<bool> VerifyEmail(string token);
         Task ForgotPassword(ForgotPasswordDto email);
