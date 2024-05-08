@@ -17,6 +17,7 @@ import { GroupView } from '~/View/GroupView';
 import { LogoutView } from '~/View/LogoutView';
 import { GroupProjectTaskView } from '~/View/GroupView/GroupProjectTaskView';
 import { HomeView } from '~/View/HomeView';
+import { NoConnectionView } from '~/View/NoConnectionView';
 
 type Props = { children: ReactNode };
 
@@ -170,6 +171,11 @@ export const Router = ({ routes }: RouterProps) => {
               <LoginView />
             </AuthPrevent>
           }
+          errorElement={<ErrorView />}
+        />
+        <Route
+          path="/connection"
+          element={<NoConnectionView />}
           errorElement={<ErrorView />}
         />
       </Routes>
