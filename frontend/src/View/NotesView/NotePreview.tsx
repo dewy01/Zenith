@@ -24,7 +24,8 @@ import { DialogCopy } from './DialogCopy';
 const useStyles = makeStyles({
   root: {
     outline: 'none',
-    minHeight: '35vh',
+    maxHeight: '90vh',
+    minHeight: '40vh',
     width: '100%',
     fontFamily: 'inherit',
     fontSize: '16px',
@@ -151,6 +152,7 @@ export const NotePreview = ({ noteId }: Props) => {
           onChange={debounce(content.field.onChange, 500)}
           onBlur={content.field.onBlur}
           contentEditableClassName={classes.root}
+          placeholder={false}
           plugins={[
             headingsPlugin(),
             listsPlugin(),
@@ -189,7 +191,7 @@ export const NotePreview = ({ noteId }: Props) => {
             <IosShareIcon sx={{ height: 15, width: 15, color: 'darkgrey' }} />
           </IconButton>
         </Tooltip>
-        <DialogCopy noteId={noteId} />
+        <DialogCopy />
         {isPending ? (
           <Box display="flex" alignItems="center" gap={0.5}>
             <Typography

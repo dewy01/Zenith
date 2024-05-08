@@ -16,7 +16,6 @@ type editProps = {
   content: string;
 };
 
-
 export const queryAllNotes = async () => {
   const response = await axiosInstance.get('/api/notes/getAllNotes');
   return response.data as Note[];
@@ -43,11 +42,15 @@ export const deleteNoteById = async (noteId: number) => {
 };
 
 export const queryShareToken = async (noteId: number) => {
-  const response = await axiosInstance.get(`/api/notes/getShareToken/${noteId}`);
+  const response = await axiosInstance.get(
+    `/api/notes/getShareToken/${noteId}`,
+  );
   return response.data as string;
 };
 
 export const queryNoteFromToken = async (token: string) => {
-  const response = await axiosInstance.get(`/api/notes/getNoteFromToken/${token}`);
+  const response = await axiosInstance.get(
+    `/api/notes/getNoteFromToken/${token}`,
+  );
   return response.data as Note;
 };

@@ -1,15 +1,15 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
-} from "@mui/material";
-import { useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteNote } from "~/api/Notes/query";
+} from '@mui/material';
+import { useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteNote } from '~/api/Notes/query';
 
 type Props = {
   noteId: number | null;
@@ -36,19 +36,19 @@ export const DialogDelete = ({ noteId }: Props) => {
         open={open}
         onClose={handleClose}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <DialogTitle>Delete note?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <Alert severity="error">
             Deleting this note means that all provided data will be lost.
             <br />
             Are you sure?
-          </DialogContentText>
+          </Alert>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>

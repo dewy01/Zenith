@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography, alpha } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useCalendar } from '~/context/CalendarContext';
 
@@ -50,11 +50,23 @@ export const MonthsSection = () => {
                 borderRadius: '50%',
                 backgroundColor:
                   index === normalizedMonthAsNumber
-                    ? theme.palette.primary.dark
+                    ? theme.palette.primary.main
                     : '',
               })}
             >
-              <Typography variant="subtitle2">{month}</Typography>
+              <Typography
+                variant="subtitle2"
+                sx={(theme) => ({
+                  color:
+                    index === normalizedMonthAsNumber
+                      ? theme.palette.getContrastText(
+                          theme.palette.primary.main,
+                        )
+                      : '',
+                })}
+              >
+                {month}
+              </Typography>
             </Box>
           </Box>
         ))}

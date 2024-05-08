@@ -39,7 +39,7 @@ namespace backend.Repository
                 UserID = userId.Value,
                 Title = "Untitled",
                 CreatedAt = DateTime.Now,
-                Content = "",
+                Content = " ",
             };
 
             await _context.Notes.AddAsync(newNote);
@@ -151,6 +151,17 @@ namespace backend.Repository
                 Title = note.Title,
                 Content = note.Content,
             };
+
+            var newNote = new Note()
+            {
+                UserID = userId.Value,
+                Title = note.Title,
+                Content = note.Content,
+                CreatedAt = new DateTime(),
+            };
+
+            await _context.Notes.AddAsync(newNote);
+            await _context.SaveChangesAsync();
 
             return noteDto;
         }

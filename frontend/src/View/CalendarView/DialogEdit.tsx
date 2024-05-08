@@ -84,7 +84,7 @@ export const DialogEdit = ({ open, setOpen, event }: Props) => {
         <Button color="inherit" onClick={handleClose}>
           Cancel
         </Button>
-        <Button type="submit" form="createEventForm" color="success" autoFocus>
+        <Button type="submit" form="createEventForm" color="info" autoFocus>
           Edit
         </Button>
       </DialogActions>

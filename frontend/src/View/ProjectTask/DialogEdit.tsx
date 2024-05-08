@@ -125,7 +125,7 @@ export const DialogEdit = ({ task }: Props) => {
           >
             Cancel
           </Button>
-          <Button type="submit" form="createtaskForm" color="success" autoFocus>
+          <Button type="submit" form="createtaskForm" color="info" autoFocus>
             Edit
           </Button>
         </DialogActions>

@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Paper, Stack, Typography } from '@mui/material';
 import Logo from '~/assets/Logo.png';
 import { FORM_ID, LoginForm } from './LoginForm';
 import { loginFormSchema } from './schema';
@@ -35,29 +35,29 @@ export const LoginView = () => {
         gap: 2,
       }}
     >
-      <Stack
-        gap={3}
-        sx={(theme) => ({
-          backgroundColor: theme.palette.action.focus,
-          padding: 8,
-          borderRadius: 2,
-        })}
-      >
-        <Box display={'flex'} gap={2} justifyContent={'center'}>
-          <Avatar variant="square" alt="Omnify logo" src={Logo} />
-          <Typography variant="h4">Login</Typography>
-        </Box>
-        <LoginForm onSubmit={handleSubmit} formContext={form} />
-        <Button type="submit" form={FORM_ID} variant="contained">
-          Login
-        </Button>
-        <Box display={'flex'}>
-          <DialogPassword />
-          <Button fullWidth component={NavLink} to={'/register'}>
-            Register
+      <Paper sx={{ paddingY: 6, paddingX: 6 }} elevation={2}>
+        <Stack gap={3}>
+          <Box display={'flex'} gap={2} justifyContent={'center'}>
+            <Avatar variant="square" alt="Omnify logo" src={Logo} />
+            <Typography variant="h4">Login</Typography>
+          </Box>
+          <LoginForm onSubmit={handleSubmit} formContext={form} />
+          <Button type="submit" form={FORM_ID} variant="contained">
+            Login
           </Button>
-        </Box>
-      </Stack>
+          <Box display={'flex'}>
+            <DialogPassword />
+            <Button
+              color="inherit"
+              fullWidth
+              component={NavLink}
+              to={'/register'}
+            >
+              Go to register
+            </Button>
+          </Box>
+        </Stack>
+      </Paper>
     </Box>
   );
 };

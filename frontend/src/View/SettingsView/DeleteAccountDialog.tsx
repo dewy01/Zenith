@@ -9,6 +9,7 @@ import {
   Tooltip,
   FormControlLabel,
   Checkbox,
+  Alert,
 } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { mutateDeleteAccount } from '~/api/User/query';
@@ -50,14 +51,20 @@ export const DeleteAccountDialog = () => {
       >
         <DialogTitle>Delete account</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            This action will remove your account and its whole data.
-            <br />
-            Are you sure?
+          <DialogContentText>
+            <Alert severity="error">
+              This action will remove your account and its whole data.
+              <br />
+              Are you sure?
+            </Alert>
           </DialogContentText>
           <FormControlLabel
             control={
-              <Checkbox checked={confirmed} onChange={handleCheckboxChange} />
+              <Checkbox
+                color="error"
+                checked={confirmed}
+                onChange={handleCheckboxChange}
+              />
             }
             label="I'm sure"
           />

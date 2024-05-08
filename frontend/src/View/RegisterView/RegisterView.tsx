@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Paper, Stack, Typography } from '@mui/material';
 import Logo from '~/assets/Logo.png';
 import { FORM_ID, RegisterForm } from './RegisterForm';
 import { registerFormSchema } from './schema';
@@ -37,26 +37,21 @@ export const RegisterView = () => {
         gap: 2,
       }}
     >
-      <Stack
-        gap={3}
-        sx={(theme) => ({
-          backgroundColor: theme.palette.action.focus,
-          padding: 8,
-          borderRadius: 2,
-        })}
-      >
-        <Box display={'flex'} gap={2} justifyContent={'center'}>
-          <Avatar variant="square" alt="Omnify logo" src={Logo} />
-          <Typography variant="h4">Register</Typography>
-        </Box>
-        <RegisterForm onSubmit={handleSubmit} formContext={form} />
-        <Button type="submit" form={FORM_ID} variant="contained">
-          Register
-        </Button>
-        <Button component={NavLink} to={'/login'}>
-          Login
-        </Button>
-      </Stack>
+      <Paper sx={{ paddingY: 6, paddingX: 8 }} elevation={2}>
+        <Stack gap={3}>
+          <Box display={'flex'} gap={2} justifyContent={'center'}>
+            <Avatar variant="square" alt="Omnify logo" src={Logo} />
+            <Typography variant="h4">Register</Typography>
+          </Box>
+          <RegisterForm onSubmit={handleSubmit} formContext={form} />
+          <Button type="submit" form={FORM_ID} variant="contained">
+            Register
+          </Button>
+          <Button color="inherit" component={NavLink} to={'/login'}>
+            Go to login
+          </Button>
+        </Stack>
+      </Paper>
     </Box>
   );
 };

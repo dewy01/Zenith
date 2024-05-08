@@ -87,7 +87,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
           <Button
             type="submit"
             form="createProjectForm"
-            color="success"
+            color="info"
             autoFocus
             onClick={onSubmit}
           >

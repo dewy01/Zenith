@@ -1,10 +1,13 @@
 import {
+  Alert,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControlLabel,
   IconButton,
   Tooltip,
 } from '@mui/material';
@@ -19,13 +22,19 @@ type Props = {
 export const SetAdminDialog = ({ userId }: Props) => {
   const { mutateAsync: setAdmin } = mutateSetAdmin();
   const [open, setOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setConfirmed(false);
     setOpen(false);
+  };
+
+  const handleCheckboxChange = (event: any) => {
+    setConfirmed(event.target.checked);
   };
 
   return (
@@ -47,10 +56,22 @@ export const SetAdminDialog = ({ userId }: Props) => {
       >
         <DialogTitle>Grant admin?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Setting user as admin will remove your current role.
-            <br />
-            Are you sure?
+          <DialogContentText>
+            <Alert severity="warning">
+              Setting another user as admin will remove your current role.
+              <br />
+              Are you sure?
+            </Alert>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="warning"
+                  checked={confirmed}
+                  onChange={handleCheckboxChange}
+                />
+              }
+              label="I'm sure"
+            />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -68,6 +89,7 @@ export const SetAdminDialog = ({ userId }: Props) => {
               setAdmin({ userId: userId });
               handleClose();
             }}
+            disabled={!confirmed}
             autoFocus
           >
             Grant

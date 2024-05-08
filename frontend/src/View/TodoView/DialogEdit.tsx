@@ -87,7 +87,7 @@ export const DialogEdit = ({ project }: Props) => {
           <Button
             type="submit"
             form="createTodoProjectForm"
-            color="success"
+            color="info"
             autoFocus
           >
             Edit

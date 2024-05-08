@@ -74,11 +74,11 @@ export const deleteNote = () => {
 
 export const getShareToken = (noteId: number) => {
   return useQuery({
-    queryKey: ['shareToken',noteId],
+    queryKey: ['shareToken', noteId],
     queryFn: () => queryShareToken(noteId),
-    enabled:false,
-    refetchOnWindowFocus:false,
-    refetchOnMount:false,
+    enabled: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 };
 
@@ -86,7 +86,8 @@ export const getNoteFromToken = (token: string) => {
   return useQuery({
     queryKey: ['noteFromToken'],
     queryFn: () => queryNoteFromToken(token),
-    enabled:false,
-    refetchOnWindowFocus:false,
+    enabled: false,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 };

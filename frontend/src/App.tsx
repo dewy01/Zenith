@@ -34,6 +34,7 @@ const App = () => {
 
   return (
     <SnackbarProvider
+      preventDuplicate
       anchorOrigin={snackbarOptions}
       classes={{ containerRoot: classes.root }}
     >

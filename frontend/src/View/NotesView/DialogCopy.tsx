@@ -1,9 +1,9 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   TextField,
@@ -11,16 +11,12 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { getNoteFromToken, mutateEditNote } from '~/api/Notes/query';
+import { getNoteFromToken } from '~/api/Notes/query';
+import { queryClient } from '~/api/api';
 
-type Props = {
-  noteId: number;
-};
-
-export const DialogCopy = ({ noteId }: Props) => {
+export const DialogCopy = () => {
   const [token, setToken] = useState<string>('');
-  const { mutateAsync } = mutateEditNote();
-  const { data: note, refetch: getNote } = getNoteFromToken(token);
+  const { data: isCopied, refetch: getNote } = getNoteFromToken(token);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -32,16 +28,10 @@ export const DialogCopy = ({ noteId }: Props) => {
   };
 
   useEffect(() => {
-    if (note) {
-      mutateAsync({
-        noteId: noteId,
-        note: {
-          title: note.title,
-          content: note.content,
-        },
-      });
+    if (isCopied) {
+      queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     }
-  }, [note]);
+  }, [isCopied]);
 
   const handleTokenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value);
@@ -68,11 +58,7 @@ export const DialogCopy = ({ noteId }: Props) => {
         <DialogContent
           sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         >
-          <DialogContentText>
-            Action will remove current note data
-            <br />
-            Are you sure?
-          </DialogContentText>
+          <Alert severity="info">Action will create a new note</Alert>
           <TextField
             value={token}
             onChange={handleTokenChange}

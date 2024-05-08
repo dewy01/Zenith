@@ -1,13 +1,13 @@
-import { Box, Stack, TextField } from "@mui/material";
-import { UseFormReturn, useController } from "react-hook-form";
-import { registerFormSchema } from "./schema";
+import { Box, Stack, TextField } from '@mui/material';
+import { UseFormReturn, useController } from 'react-hook-form';
+import { registerFormSchema } from './schema';
 
 type registerFormProps = {
   onSubmit: (value: registerFormSchema) => void;
   formContext: UseFormReturn<registerFormSchema>;
 };
 
-export const FORM_ID = "register-form";
+export const FORM_ID = 'register-form';
 
 export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
   const {
@@ -18,19 +18,19 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
 
   const username = useController({
     control: control,
-    name: "username",
+    name: 'username',
   });
   const email = useController({
     control: control,
-    name: "email",
+    name: 'email',
   });
   const password = useController({
     control: control,
-    name: "password",
+    name: 'password',
   });
   const passwordConfirm = useController({
     control: control,
-    name: "passwordConfirm",
+    name: 'passwordConfirm',
   });
 
   return (
@@ -43,7 +43,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
     >
       <Stack gap={2}>
         <TextField
-          sx={{ width: "240px" }}
+          sx={{ width: '300px' }}
           label="Username"
           autoFocus
           autoComplete="off"
@@ -53,11 +53,11 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           onBlur={username.field.onBlur}
           inputRef={username.field.ref}
           error={errors.username !== undefined}
-          helperText={errors.username?.message ?? ""}
+          helperText={errors.username?.message ?? ''}
         />
 
         <TextField
-          sx={{ width: "240px" }}
+          sx={{ width: '300px' }}
           label="Email"
           type="text"
           autoComplete="off"
@@ -67,11 +67,11 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           onBlur={email.field.onBlur}
           inputRef={email.field.ref}
           error={errors.email !== undefined}
-          helperText={errors.email?.message ?? ""}
+          helperText={errors.email?.message ?? ''}
         />
 
         <TextField
-          sx={{ width: "240px" }}
+          sx={{ width: '300px' }}
           label="Password"
           type="password"
           autoComplete="off"
@@ -81,11 +81,11 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           onBlur={password.field.onBlur}
           inputRef={password.field.ref}
           error={errors.password !== undefined}
-          helperText={errors.password?.message ?? ""}
+          helperText={errors.password?.message ?? ''}
         />
 
         <TextField
-          sx={{ width: "240px" }}
+          sx={{ width: '300px' }}
           label="Confirm Password"
           type="password"
           autoComplete="off"
@@ -95,7 +95,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           onBlur={passwordConfirm.field.onBlur}
           inputRef={passwordConfirm.field.ref}
           error={errors.passwordConfirm !== undefined}
-          helperText={errors.passwordConfirm?.message ?? ""}
+          helperText={errors.passwordConfirm?.message ?? ''}
         />
       </Stack>
     </Box>

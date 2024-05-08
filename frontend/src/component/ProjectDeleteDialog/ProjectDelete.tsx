@@ -1,9 +1,9 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   MenuItem,
 } from '@mui/material';
@@ -44,12 +44,12 @@ export const ProjectDelete = ({ projectId, onSubmit, mutateDelete }: Props) => {
       >
         <DialogTitle>Delete project?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Deleting this proejct means that all provided data and it's Tasks
+          <Alert severity="error">
+            Deleting this project means that all provided data and it's Tasks
             will be lost.
             <br />
             Are you sure?
-          </DialogContentText>
+          </Alert>
         </DialogContent>
         <DialogActions>
           <Button

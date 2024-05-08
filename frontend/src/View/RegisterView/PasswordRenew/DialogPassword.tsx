@@ -66,9 +66,11 @@ export const DialogPassword = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button color="inherit" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button type="submit" form="resetForm" color="success">
-            Send
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
