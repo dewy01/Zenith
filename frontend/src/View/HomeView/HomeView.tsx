@@ -13,7 +13,6 @@ export const HomeView = () => {
     return <LoadingView />;
   }
 
-  console.log(user);
   return (
     <Box
       display="flex"

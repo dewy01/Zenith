@@ -1,9 +1,9 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
 } from '@mui/material';
@@ -44,11 +44,11 @@ export const DialogDelete = ({ todoId }: Props) => {
       >
         <DialogTitle>Delete Todo?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <Alert severity="error">
             Deleting this Todo means that all provided data will be lost.
             <br />
             Are you sure?
-          </DialogContentText>
+          </Alert>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>

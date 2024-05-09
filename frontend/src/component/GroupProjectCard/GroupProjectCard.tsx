@@ -28,10 +28,15 @@ export const GroupProjectCard = ({ project }: Props) => {
           sx={{ textDecoration: 'none' }}
         >
           <ListItemText
-            sx={{
+            sx={(theme) => ({
               display: 'flex',
               flexDirection: 'column',
-            }}
+              color: theme.palette.text.primary,
+              '&:hover': {
+                textDecoration: 'underline',
+                textDecorationColor: theme.palette.text.secondary,
+              },
+            })}
             primary={
               <Typography fontSize={18} fontWeight={500} color="text.primary">
                 {project.title}

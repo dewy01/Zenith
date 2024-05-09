@@ -8,11 +8,12 @@ import {
 } from '@mui/material';
 import { NavLink, useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { ProjectTaskCard } from '~/component/ProjectTaskCard';
-import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
 import { Column } from '~/component/Column';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
 import { getGroupProjectById } from '~/api/GroupProjects/query';
+import { DialogCreate } from './DialogCreate';
+import { GroupProjectTaskCard } from '~/component/GroupProjectTaskCard';
+import { mutateChangeGroupTaskStatus } from '~/api/GroupProjectTask/query';
 
 type Params = {
   id: string;
@@ -25,7 +26,7 @@ export const GroupProjectTaskView = () => {
   if (data.id === undefined) return;
 
   const { data: project, isLoading } = getGroupProjectById(data.id);
-  const { mutateAsync } = mutateChangeTaskStatus();
+  const { mutateAsync } = mutateChangeGroupTaskStatus();
 
   if (isLoading || project === undefined) {
     return <LoadingView />;
@@ -47,7 +48,7 @@ export const GroupProjectTaskView = () => {
                 {project.description}
               </Typography>
             </Box>
-            {/* <DialogCreate projectId={project.projectID} /> */}
+            <DialogCreate projectId={project.projectID} />
           </Toolbar>
         </AppBar>
         <Box display="flex" justifyContent="space-evenly" alignItems="start">
@@ -57,7 +58,7 @@ export const GroupProjectTaskView = () => {
             mutateStatus={mutateAsync}
           >
             {project.backlog.map((task) => (
-              <ProjectTaskCard task={task} key={task.projectTaskID} />
+              <GroupProjectTaskCard task={task} key={task.projectTaskID} />
             ))}
           </Column>
 
@@ -67,7 +68,7 @@ export const GroupProjectTaskView = () => {
             mutateStatus={mutateAsync}
           >
             {project.inProgress.map((task) => (
-              <ProjectTaskCard task={task} key={task.projectTaskID} />
+              <GroupProjectTaskCard task={task} key={task.projectTaskID} />
             ))}
           </Column>
 
@@ -77,7 +78,7 @@ export const GroupProjectTaskView = () => {
             mutateStatus={mutateAsync}
           >
             {project.review.map((task) => (
-              <ProjectTaskCard task={task} key={task.projectTaskID} />
+              <GroupProjectTaskCard task={task} key={task.projectTaskID} />
             ))}
           </Column>
 
@@ -87,7 +88,7 @@ export const GroupProjectTaskView = () => {
             mutateStatus={mutateAsync}
           >
             {project.closed.map((task) => (
-              <ProjectTaskCard task={task} key={JSON.stringify(task)} />
+              <GroupProjectTaskCard task={task} key={JSON.stringify(task)} />
             ))}
           </Column>
         </Box>

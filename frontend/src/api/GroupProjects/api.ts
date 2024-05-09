@@ -17,6 +17,7 @@ export interface ProjectTask {
   description: string;
   category: string;
   status: string;
+  user:string;
 }
 
 export interface ProjectWithTasks {

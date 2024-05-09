@@ -3,7 +3,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListSubheader,
   Stack,
   Typography,
 } from '@mui/material';
@@ -26,12 +25,17 @@ export const ProjectCard = ({ project }: Props) => {
           sx={{ textDecoration: 'none' }}
         >
           <ListItemText
-            sx={{
+            sx={(theme) => ({
               display: 'flex',
               flexDirection: 'column',
-            }}
+              color: theme.palette.text.primary,
+              '&:hover': {
+                textDecoration: 'underline',
+                textDecorationColor: theme.palette.text.secondary,
+              },
+            })}
             primary={
-              <Typography fontSize={18} fontWeight={500} color="text.primary">
+              <Typography fontSize={18} fontWeight={500}>
                 {project.title}
               </Typography>
             }
@@ -43,15 +47,16 @@ export const ProjectCard = ({ project }: Props) => {
           />
         </Box>
       </List>
-      <ListSubheader>
+
+      <Box display="flex" gap={2}>
         <Stack alignItems={'end'}>
-          <Typography>{project.status}</Typography>
-          <Typography variant="caption">
+          <Typography color="text.secondary">{project.status}</Typography>
+          <Typography color="text.secondary" variant="caption">
             {formatDate(project.deadline)}
           </Typography>
         </Stack>
-      </ListSubheader>
-      <ProjectMenu project={project} />
+        <ProjectMenu project={project} />
+      </Box>
     </ListItem>
   );
 };
