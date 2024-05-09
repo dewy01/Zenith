@@ -157,7 +157,7 @@ namespace backend.Repository
                 UserID = userId.Value,
                 Title = note.Title,
                 Content = note.Content,
-                CreatedAt = new DateTime(),
+                CreatedAt = DateTime.Now,
             };
 
             await _context.Notes.AddAsync(newNote);

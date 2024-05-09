@@ -5,7 +5,7 @@ namespace backend.Interface
 {
     public interface IGroupProjectRepository
     {
-        Task<ProjectByStatusDto> GetGroupProjectById(int projectId);
+        Task<GroupProjectByStatusDto> GetGroupProjectById(int projectId);
         Task<IEnumerable<AllGroupProjectsDto>> GetAllGroupProjects();
         Task AddGroupProject(AddGroupProjectDto dto);
         Task UpdateGroupProject(EditProjectDto dto, int projectId);

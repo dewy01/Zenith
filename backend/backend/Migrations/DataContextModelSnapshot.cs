@@ -52,7 +52,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("CalendarEvents");
+                    b.ToTable("CalendarEvents", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Group", b =>
@@ -75,7 +75,7 @@ namespace backend.Migrations
 
                     b.HasKey("GroupID");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -108,7 +108,7 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupID");
 
-                    b.ToTable("GroupProjects");
+                    b.ToTable("GroupProjects", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.GroupProjectTask", b =>
@@ -150,7 +150,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("GroupProjectTasks");
+                    b.ToTable("GroupProjectTasks", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.GroupRole", b =>
@@ -168,7 +168,7 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("GroupRoles");
+                    b.ToTable("GroupRoles", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.KanbanTask", b =>
@@ -208,7 +208,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("KanbanTasks");
+                    b.ToTable("KanbanTasks", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Note", b =>
@@ -243,7 +243,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Notes");
+                    b.ToTable("Notes", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Notification", b =>
@@ -271,7 +271,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Project", b =>
@@ -304,7 +304,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.ProjectTask", b =>
@@ -341,7 +341,7 @@ namespace backend.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("ProjectTasks");
+                    b.ToTable("ProjectTasks", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.ProjectTodo", b =>
@@ -371,7 +371,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("ProjectTodos");
+                    b.ToTable("ProjectTodos", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Role", b =>
@@ -388,7 +388,7 @@ namespace backend.Migrations
 
                     b.HasKey("RoleID");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Todo", b =>
@@ -417,7 +417,7 @@ namespace backend.Migrations
 
                     b.HasIndex("ProjectTodoID");
 
-                    b.ToTable("Todos");
+                    b.ToTable("Todos", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -462,7 +462,7 @@ namespace backend.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.UserPreferences", b =>
@@ -500,7 +500,7 @@ namespace backend.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("UserPreferences");
+                    b.ToTable("UserPreferences", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.CalendarEvent", b =>

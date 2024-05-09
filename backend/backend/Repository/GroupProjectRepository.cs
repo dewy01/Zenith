@@ -24,7 +24,7 @@ namespace backend.Repository
             _mapper = mapper;
         }
 
-        public async Task<ProjectByStatusDto> GetGroupProjectById(int projectId)
+        public async Task<GroupProjectByStatusDto> GetGroupProjectById(int projectId)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -40,17 +40,17 @@ namespace backend.Repository
             var Closed = project.GroupProjectTasks.Where(pt => pt.Status == "Closed").OrderBy(x => x.EditTime);
 
 
-            var projectDto = new ProjectByStatusDto
+            var projectDto = new GroupProjectByStatusDto
             {
                 ProjectID = project.GroupProjectID,
                 Title = project.Title,
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                Backlog = _mapper.Map<Collection<ProjectTaskShortDto>>(Backlog),
-                inProgress = _mapper.Map<Collection<ProjectTaskShortDto>>(inProgress),
-                Review = _mapper.Map<Collection<ProjectTaskShortDto>>(Review),
-                Closed = _mapper.Map<Collection<ProjectTaskShortDto>>(Closed),
+                Backlog = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Backlog),
+                inProgress = _mapper.Map<Collection<GroupProjectTaskShortDto>>(inProgress),
+                Review = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Review),
+                Closed = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Closed),
             };
 
             return projectDto;
