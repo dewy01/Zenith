@@ -9,6 +9,7 @@ export interface Project {
   deadline: string;
   status: string;
   completion: number;
+  isOutdated: boolean;
 }
 
 export interface ProjectTask {
@@ -18,6 +19,7 @@ export interface ProjectTask {
   category: string;
   status: string;
   user:string;
+  canEdit: boolean;
 }
 
 export interface ProjectWithTasks {

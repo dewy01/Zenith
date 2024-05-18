@@ -22,6 +22,11 @@ export const GroupProjectTaskCard: React.FC<Props> = ({ task }) => {
   const cloneRef = React.useRef();
 
   const handleOnDragStart = (e: any) => {
+    if (!task.canEdit) {
+      e.preventDefault();
+      return;
+    }
+
     setIsHovering(true);
     e.dataTransfer.setData('taskId', task.projectTaskID.toString());
     e.dataTransfer.setData('taskColumn', task.status);
@@ -55,10 +60,14 @@ export const GroupProjectTaskCard: React.FC<Props> = ({ task }) => {
       key={task.projectTaskID}
       id={`${task.projectTaskID}`}
       sx={(theme) => ({
-        cursor: 'grab',
+        cursor: !task.canEdit ? 'cursor' : 'grab',
         backgroundColor: isHovering ? theme.palette.action.focus : '',
         animation: isHovering ? `${pulseScale} 2s infinite` : '',
         opacity: isHovering ? 0.3 : 1,
+        '&: hover': {
+          transition: '0.1s ease',
+          backgroundColor: theme.palette.action.hover,
+        },
       })}
       onDragStart={handleOnDragStart}
       onDragEnd={handleOnDragEnd}
@@ -71,7 +80,16 @@ export const GroupProjectTaskCard: React.FC<Props> = ({ task }) => {
             marginBottom: -2,
           }}
         >
-          <DialogEdit task={task} />
+          {task.canEdit ? (
+            <DialogEdit task={task} />
+          ) : (
+            <>
+              <Typography gutterBottom fontSize={20} component="div">
+                {task.title}
+              </Typography>
+            </>
+          )}
+
           <Typography
             variant="body2"
             color="text.secondary"

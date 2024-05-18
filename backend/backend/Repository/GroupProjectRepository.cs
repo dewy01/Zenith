@@ -31,6 +31,15 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
+            var currentUserRole = await _context.GroupRoles
+                .SingleOrDefaultAsync(g => g.UserId == userId);
+
+            if (currentUserRole == null)
+            {
+                throw new NotFoundException("Role not found");
+            }
+
+
             var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
@@ -47,10 +56,22 @@ namespace backend.Repository
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                Backlog = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Backlog),
-                inProgress = _mapper.Map<Collection<GroupProjectTaskShortDto>>(inProgress),
-                Review = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Review),
-                Closed = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Closed),
+                Backlog = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Backlog, opt => {
+                    opt.Items["CurrentUserId"] = userId;
+                    opt.Items["CurrentUserRole"] = currentUserRole.Role;
+                }),
+                inProgress = _mapper.Map<Collection<GroupProjectTaskShortDto>>(inProgress, opt => {
+                    opt.Items["CurrentUserId"] = userId;
+                    opt.Items["CurrentUserRole"] = currentUserRole.Role;
+                }),
+                Review = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Review, opt => {
+                    opt.Items["CurrentUserId"] = userId;
+                    opt.Items["CurrentUserRole"] = currentUserRole.Role;
+                }),
+                Closed = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Closed, opt => {
+                    opt.Items["CurrentUserId"] = -1;
+                    opt.Items["CurrentUserRole"] = currentUserRole.Role;
+                }),
             };
 
             return projectDto;
@@ -77,6 +98,7 @@ namespace backend.Repository
                     Description = project.Description,
                     Status = project.Status,
                     Completion = project.GroupProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.GroupProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.GroupProjectTasks.Count()) * 100) : 0,
+                    isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
                 });
             }
 

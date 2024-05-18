@@ -61,7 +61,7 @@ export const TodoView = () => {
             <Typography fontSize={24}>Todos</Typography>
             <DialogDelete todoId={selectedProject?.projectTodoID} />
           </Box>
-          <SearchField onChange={handleFilter} />
+          <SearchField onChange={handleFilter} placeholder="Search todos" />
           <List
             sx={{
               maxHeight: '90vh',

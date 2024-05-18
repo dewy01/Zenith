@@ -25,32 +25,22 @@ export const ProjectView = () => {
   return (
     <Box>
       <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" component="div">
             Projects
           </Typography>
+          <SearchField placeholder="Search projects" />
           <DialogCreate />
         </Toolbar>
       </AppBar>
 
-      <Box
-        display={'flex'}
-        justifyContent={'space-around'}
-        alignItems={'center'}
-        gap={2}
-        sx={{ padding: 4 }}
-      >
-        <Typography variant="h5">Explore projects</Typography>
-        <Box display={'flex'} gap={2}>
-          <SearchField />
-        </Box>
-      </Box>
       <List
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: 1,
+          paddingY: 8,
         }}
       >
         {projects.map((item) => (

@@ -1,4 +1,6 @@
 import { Box, Typography, List, Divider } from '@mui/material';
+import { debounce } from 'lodash';
+import { useRef, useState } from 'react';
 import { GroupUser } from '~/api/Group/api';
 import { GroupUserCard } from '~/component/GroupUserCard';
 import { SearchField } from '~/component/SearchField';
@@ -9,6 +11,15 @@ type Props = {
 };
 
 export const UserTab = ({ users, groupId }: Props) => {
+  const [filter, setFilter] = useState<string>('');
+
+  const handleFilter = useRef(
+    debounce(
+      (event: React.ChangeEvent<HTMLInputElement>) =>
+        setFilter(event.target.value),
+      500,
+    ),
+  ).current;
   return (
     <>
       <Box
@@ -20,7 +31,7 @@ export const UserTab = ({ users, groupId }: Props) => {
       >
         <Typography variant="h5">Explore Users</Typography>
         <Box display={'flex'} gap={2}>
-          <SearchField />
+          <SearchField onChange={handleFilter} placeholder="Search users" />
         </Box>
       </Box>
       <List
@@ -31,12 +42,16 @@ export const UserTab = ({ users, groupId }: Props) => {
           gap: 1,
         }}
       >
-        {users.map((item) => (
-          <Box key={item.userID}>
-            <GroupUserCard user={item} groupId={groupId} />
-            <Divider />
-          </Box>
-        ))}
+        {users
+          .filter((a) =>
+            a.username.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+          )
+          .map((item) => (
+            <Box key={item.userID}>
+              <GroupUserCard user={item} groupId={groupId} />
+              <Divider />
+            </Box>
+          ))}
       </List>
     </>
   );

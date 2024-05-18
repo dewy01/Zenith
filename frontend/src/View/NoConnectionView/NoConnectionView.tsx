@@ -16,7 +16,7 @@ export const NoConnectionView = () => {
       }}
     >
       <CloudOffIcon color="inherit" sx={{ fontSize: 128, opacity: '0.7' }} />
-      <Typography variant="h5">Connetion not established</Typography>
+      <Typography variant="h5">Connection not established</Typography>
       <Button component={NavLink} to="/home" variant="text">
         Retry
       </Button>

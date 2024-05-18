@@ -51,7 +51,14 @@ export const ProjectCard = ({ project }: Props) => {
       <Box display="flex" gap={2}>
         <Stack alignItems={'end'}>
           <Typography color="text.secondary">{project.status}</Typography>
-          <Typography color="text.secondary" variant="caption">
+          <Typography
+            sx={(theme) => ({
+              color: project.isOutdated
+                ? theme.palette.error.light
+                : 'text.secondary',
+            })}
+            variant="caption"
+          >
             {formatDate(project.deadline)}
           </Typography>
         </Stack>

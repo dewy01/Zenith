@@ -14,6 +14,8 @@ import { getGroupProjectById } from '~/api/GroupProjects/query';
 import { DialogCreate } from './DialogCreate';
 import { GroupProjectTaskCard } from '~/component/GroupProjectTaskCard';
 import { mutateChangeGroupTaskStatus } from '~/api/GroupProjectTask/query';
+import { useGroupContext } from '~/context/GroupRole';
+import { GroupRole } from '~/api/Group/api';
 
 type Params = {
   id: string;
@@ -21,6 +23,7 @@ type Params = {
 
 export const GroupProjectTaskView = () => {
   const theme = useTheme();
+  const { userRole } = useGroupContext();
 
   const data = useParams<Params>();
   if (data.id === undefined) return;
@@ -85,7 +88,7 @@ export const GroupProjectTaskView = () => {
           <Column
             name={'Closed'}
             color={theme.palette.success.main}
-            mutateStatus={mutateAsync}
+            mutateStatus={userRole !== GroupRole.User ? mutateAsync : () => {}}
           >
             {project.closed.map((task) => (
               <GroupProjectTaskCard task={task} key={JSON.stringify(task)} />

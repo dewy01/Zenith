@@ -5,7 +5,7 @@ import {
   InputAdornment,
   TextFieldProps,
 } from '@mui/material';
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 export const SearchField = forwardRef<HTMLInputElement, TextFieldProps>(
   ({ InputProps, ...rest }, ref) => {
@@ -15,7 +15,6 @@ export const SearchField = forwardRef<HTMLInputElement, TextFieldProps>(
         {...rest}
         sx={[
           (theme) => ({
-            color: 'white',
             '.MuiInputBase-root': {
               color: 'inherit',
               backgroundColor: alpha(theme.palette.common.white, 0.15),

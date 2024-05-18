@@ -135,7 +135,7 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
               inputRef={userId.field.ref}
             >
               {users.map((item) => (
-                <MenuItem value={item.userID}>
+                <MenuItem value={item.userID} key={item.userID}>
                   <Box
                     display="flex"
                     justifyContent="start"

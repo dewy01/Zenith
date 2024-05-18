@@ -29,7 +29,7 @@ export const ProjectTab = () => {
       >
         <Typography variant="h5">Explore projects</Typography>
         <Box display={'flex'} gap={2}>
-          <SearchField />
+          <SearchField placeholder="Search projects" />
         </Box>
       </Box>
       <List

@@ -53,7 +53,14 @@ export const GroupProjectCard = ({ project }: Props) => {
       <ListSubheader>
         <Stack alignItems={'end'}>
           <Typography>{project.status}</Typography>
-          <Typography variant="caption">
+          <Typography
+            variant="caption"
+            sx={(theme) => ({
+              color: project.isOutdated
+                ? theme.palette.error.light
+                : 'text.secondary',
+            })}
+          >
             {formatDate(project.deadline)}
           </Typography>
         </Stack>

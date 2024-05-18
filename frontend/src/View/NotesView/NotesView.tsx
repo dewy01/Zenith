@@ -61,7 +61,7 @@ export const NotesView = () => {
             <Typography fontSize={24}>Notes</Typography>
             <DialogDelete noteId={selectedNote} />
           </Box>
-          <SearchField onChange={handleFilter} />
+          <SearchField onChange={handleFilter} placeholder="Search notes" />
           <List
             sx={{
               maxHeight: '90vh',

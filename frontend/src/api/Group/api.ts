@@ -21,6 +21,7 @@ export interface GroupProject {
   deadline: string;
   status: string;
   completion: number;
+  isOutdated: boolean;
 }
 
 export interface Group {

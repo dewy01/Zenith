@@ -8,5 +8,6 @@
         public DateTime Deadline { get; set; }
         public string Status { get; set; }
         public float Completion { get; set; }
+        public bool isOutdated { get; set; }
     }
 }

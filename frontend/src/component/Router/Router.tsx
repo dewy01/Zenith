@@ -27,7 +27,7 @@ const PrivateRoute = ({ children }: Props) => {
   return isAuthenticated ? (
     <Box>{children}</Box>
   ) : (
-    <Navigate to={'/register'} replace={true} />
+    <Navigate to={'/login'} replace={true} />
   );
 };
 

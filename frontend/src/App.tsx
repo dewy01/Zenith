@@ -8,6 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { enGB } from 'date-fns/locale';
 import { handleSettings } from './Theme';
 import { makeStyles } from '@mui/styles';
+import { GroupProvider } from './context/GroupRole';
 
 const useStyles = makeStyles({
   root: {
@@ -41,7 +42,9 @@ const App = () => {
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
-            <Router routes={routes} />
+            <GroupProvider>
+              <Router routes={routes} />
+            </GroupProvider>
             <CssBaseline />
             <GlobalStyles styles={{ ...darkScrollbar() }} />
           </BrowserRouter>

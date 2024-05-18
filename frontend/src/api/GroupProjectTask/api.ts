@@ -7,6 +7,7 @@ export interface GroupProjectTask {
   category: string;
   status: string;
   user:string;
+  canEdit:boolean;
 }
 
 export interface EditProjectTask {

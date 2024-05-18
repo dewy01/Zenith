@@ -75,6 +75,7 @@ namespace backend.Repository
                     Description = project.Description,
                     Status = project.Status,
                     Completion = project.ProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.ProjectTasks.Count()) * 100) : 0,
+                    isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
                 });
             }
 
