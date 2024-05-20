@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.UserPreferences;
 using backend.Interface;
 using backend.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +22,7 @@ namespace backend.Controllers
         public async Task<ActionResult<UserPreferencesDto>> getSettings()
         {
             var project = await _projectService.GetSettings();
-            return await Task.FromResult(Ok(project));
+            return Ok(project);
         }
 
         [HttpPatch("updateSettings")]
@@ -30,7 +30,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateSettings(UserPreferencesDto dto)
         {
             await _projectService.UpdateUserPreferences(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
     }

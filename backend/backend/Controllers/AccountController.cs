@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Users;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,7 @@ namespace backend.Controllers
         public async Task<ActionResult> RegisterUser([FromBody] RegisterUserDto dto)
         {
             await _accountService.AddUser(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
         [HttpGet("verifyemail/{token}")]
         public async Task<IActionResult> VerifyEmail([FromRoute] string token)
@@ -29,25 +29,25 @@ namespace backend.Controllers
             {
                 return await Task.FromResult(Ok("Verification completed"));
             }
-            return await Task.FromResult(NotFound("Error while trying to verify email, please try again"));
+            return NotFound("Error while trying to verify email, please try again");
         }
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginUserDto dto)
         {
             string token = await _accountService.GenerateJwt(dto);
-            return await Task.FromResult(Ok(token));
+            return Ok(token);
         }
         [HttpPost("forgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             await _accountService.ForgotPassword(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             await _accountService.ResetPassword(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpGet("getMyAccount")]
@@ -55,7 +55,7 @@ namespace backend.Controllers
         public async Task<ActionResult<UserDto>> GetUser()
         {
             var result = await _accountService.GetUserById();
-            return await Task.FromResult(Ok(result));
+            return Ok(result);
         }
 
 
@@ -64,7 +64,7 @@ namespace backend.Controllers
         public async Task<IActionResult> DeleteAccount()
         {
             await _accountService.DeleteUser();
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
     }

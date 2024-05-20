@@ -1,4 +1,5 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Groups;
+using backend.Dto.Users;
 using backend.Interface;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace backend.Controllers
         public async Task<ActionResult<GroupByIdDto>> getGroup()
         {
             var group = await _groupService.GetGroup();
-            return await Task.FromResult(Ok(group));
+            return Ok(group);
         }
 
         [HttpGet("isInGroup")]
@@ -29,7 +30,7 @@ namespace backend.Controllers
         public async Task<ActionResult<GroupByIdDto>> isInGroup()
         {
             var group = await _groupService.isInGroup();
-            return await Task.FromResult(Ok(group));
+            return Ok(group);
         }
 
         [HttpPost("addGroup")]
@@ -37,7 +38,7 @@ namespace backend.Controllers
         public async Task<ActionResult> addGroup(GroupEditDto dto)
         {
             await _groupService.AddGroup(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("updateGroup/{groupId}")]
@@ -45,7 +46,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateGroup(GroupEditDto dto, [FromRoute] int groupId)
         {
             await _groupService.UpdateGroup(dto, groupId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPost("leaveGroup")]
@@ -53,7 +54,7 @@ namespace backend.Controllers
         public async Task<ActionResult> leaveGroup([FromBody] LeaveGroupDto groupId)
         {
             await _groupService.LeaveGroup(groupId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpGet("getInviteToken/{groupId}")]
@@ -61,7 +62,7 @@ namespace backend.Controllers
         public async Task<ActionResult<string>> getShareToken([FromRoute] int groupId)
         {
             string token = await _groupService.GetInviteToken(groupId);
-            return await Task.FromResult(Ok(token));
+            return Ok(token);
         }
 
         [HttpPost("joinGroup")]
@@ -69,7 +70,7 @@ namespace backend.Controllers
         public async Task<ActionResult> joinGroup([FromBody] TokenDto token)
         {
             await _groupService.JoinGroup(token);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("changeRole")]
@@ -77,7 +78,7 @@ namespace backend.Controllers
         public async Task<ActionResult> changeRole(ChangeRoleDto dto)
         {
             await _groupService.ChangeRole(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("setAdmin")]
@@ -85,7 +86,7 @@ namespace backend.Controllers
         public async Task<ActionResult> setAdmin(ChangeRoleDto dto)
         {
             await _groupService.SetAdmin(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
 
@@ -94,7 +95,7 @@ namespace backend.Controllers
         public async Task<ActionResult<Enums.GroupRole>> getOwnRole()
         {
             var role = await _groupService.GetOwnRole();
-            return await Task.FromResult(Ok(role));
+            return Ok(role);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Notes;
 using backend.Models;
 using Task = System.Threading.Tasks.Task;
 

@@ -1,5 +1,13 @@
-﻿    using AutoMapper;
-using backend.Dto;
+﻿using AutoMapper;
+using backend.Dto.CalendarEvents;
+using backend.Dto.GroupProjects;
+using backend.Dto.GroupProjectTasks;
+using backend.Dto.Groups;
+using backend.Dto.Notes;
+using backend.Dto.Projects;
+using backend.Dto.ProjectTasks;
+using backend.Dto.ProjectTodo;
+using backend.Dto.Todos;
 using backend.Models;
 
 namespace backend

@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Users;
 using backend.Models;
 using Task = System.Threading.Tasks.Task;
 

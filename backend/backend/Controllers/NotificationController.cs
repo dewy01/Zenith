@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Notifications;
 using backend.Interface;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;

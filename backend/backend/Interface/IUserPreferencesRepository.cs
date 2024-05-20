@@ -1,5 +1,5 @@
 ﻿using backend.Models;
-using backend.Dto;
+using backend.Dto.UserPreferences;
 
 namespace backend.Interface
 {

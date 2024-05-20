@@ -3,11 +3,11 @@ using backend.Interface;
 using backend.Models;
 using backend.Exceptions;
 using AutoMapper;
-using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using Newtonsoft.Json;
+using backend.Dto.UserPreferences;
 
 namespace backend.Repository
 {

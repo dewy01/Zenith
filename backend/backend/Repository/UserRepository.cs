@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.Extensions.Hosting;
-using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using backend.Dto.Users;
 
 namespace backend.Repository
 {

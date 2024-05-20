@@ -1,5 +1,4 @@
 ﻿using backend.Data;
-using backend.Dto;
 using backend.Exceptions;
 using backend.Interface;
 using backend.Models;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.Extensions.Hosting;
+using backend.Dto.CalendarEvents;
 
 namespace backend.Repository
 {

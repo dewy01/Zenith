@@ -3,10 +3,11 @@ using backend.Interface;
 using backend.Models;
 using backend.Exceptions;
 using System.Linq;
-using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using AutoMapper;
+using backend.Dto.Users;
+using backend.Dto.Groups;
 
 namespace backend.Repository
 {

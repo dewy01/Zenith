@@ -1,4 +1,5 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Groups;
+using backend.Dto.Users;
 using backend.Models;
 
 namespace backend.Interface

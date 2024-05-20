@@ -1,4 +1,5 @@
-﻿using backend.Dto;
+﻿using backend.Dto.GroupProjects;
+using backend.Dto.Projects;
 using backend.Models;
 
 namespace backend.Interface

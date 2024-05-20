@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Data;
-using backend.Dto;
+using backend.Dto.GroupProjectTasks;
+using backend.Dto.ProjectTasks;
 using backend.Exceptions;
 using backend.Interface;
 using backend.Models;

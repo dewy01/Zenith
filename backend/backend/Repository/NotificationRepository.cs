@@ -1,5 +1,4 @@
 ﻿using backend.Data;
-using backend.Dto;
 using backend.Exceptions;
 using backend.Interface;
 using backend.Models;
@@ -9,6 +8,7 @@ using Task = System.Threading.Tasks.Task;
 using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
+using backend.Dto.Notifications;
 
 namespace backend.Repository
 {

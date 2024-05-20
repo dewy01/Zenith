@@ -1,4 +1,5 @@
-﻿using backend.Dto;
+﻿using backend.Dto.GroupProjectTasks;
+using backend.Dto.ProjectTasks;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<GroupProjectTaskDto>>> getTaskById([FromRoute] int projectTaskId)
         {
             var projectTask = await _projectTaskService.GetProjectTaskById(projectTaskId);
-            return await Task.FromResult(Ok(projectTask));
+            return Ok(projectTask);
         }
 
         [HttpPost("add")]
@@ -28,7 +29,7 @@ namespace backend.Controllers
         public async Task<ActionResult> addProjectTask(AddGroupProjectTaskDto dto)
         {
             await _projectTaskService.AddProjectTask(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("update/{projectTaskId}")]
@@ -36,7 +37,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateProject(AddGroupProjectTaskDto dto, [FromRoute] int projectTaskId)
         {
             await _projectTaskService.UpdateProjectTask(dto, projectTaskId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpDelete("delete/{projectTaskId}")]
@@ -44,7 +45,7 @@ namespace backend.Controllers
         public async Task<ActionResult> deleteProject([FromRoute] int projectTaskId)
         {
             await _projectTaskService.DeleteProjectTask(projectTaskId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("changeStatus/{projectTaskId}")]
@@ -52,7 +53,7 @@ namespace backend.Controllers
         public async Task<ActionResult> changeStatus(ProjectTaskStatusDto status,[FromRoute] int projectTaskId)
         {
             await _projectTaskService.ChangeProjectTaskStatus(status,projectTaskId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
     }

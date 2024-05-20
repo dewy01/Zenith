@@ -3,10 +3,12 @@ using backend.Interface;
 using backend.Models;
 using backend.Exceptions;
 using AutoMapper;
-using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore.Metadata;
+using backend.Dto.Projects;
+using backend.Dto.GroupProjects;
+using backend.Dto.GroupProjectTasks;
 
 namespace backend.Repository
 {

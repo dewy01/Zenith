@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.Dto.Users;
 using FluentValidation;
 using System;
 

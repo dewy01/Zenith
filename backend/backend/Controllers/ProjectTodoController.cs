@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.ProjectTodo;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<AllProjectsTodoDto>>> getAllProjects()
         {
             var project = await _projectService.GetAllProjects();
-            return await Task.FromResult(Ok(project));
+            return Ok(project);
         }
 
         [HttpGet("getById/{projectId}")]
@@ -28,7 +28,7 @@ namespace backend.Controllers
         public async Task<ActionResult<ProjectTodoDto>> getById([FromRoute] int projectId)
         {
             var project = await _projectService.GetProjectById(projectId);
-            return await Task.FromResult(Ok(project));
+            return Ok(project);
         }
 
         [HttpPost("addProject")]
@@ -36,7 +36,7 @@ namespace backend.Controllers
         public async Task<ActionResult> addProject(AddProjectTodoDto dto)
         {
             await _projectService.AddProject(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("updateProject/{projectId}")]
@@ -44,7 +44,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateProject(AddProjectTodoDto dto, [FromRoute] int projectId)
         {
             await _projectService.UpdateProject(dto,projectId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpDelete("deleteProject/{projectId}")]
@@ -52,7 +52,7 @@ namespace backend.Controllers
         public async Task<ActionResult> deleteProject([FromRoute] int projectId)
         {
             await _projectService.DeleteProject(projectId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
     }
 }

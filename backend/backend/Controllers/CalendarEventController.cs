@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.CalendarEvents;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<AllCalendarEventsDto>>> GetAllEvents([FromRoute]  string from, [FromRoute] string to)
         {
             var events = await _calendarService.GetAllEventsBetween(from, to);
-            return await Task.FromResult(Ok(events));
+            return Ok(events);
         }
 
         [HttpPost("addEvent")]
@@ -28,7 +28,7 @@ namespace backend.Controllers
         public async Task<ActionResult> addEvent(CalendarEventDto dto)
         {
             await _calendarService.AddEvent(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("updateEvent/{eventId}")]
@@ -36,7 +36,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateNote(CalendarEventDto dto, [FromRoute] int eventId)
         {
             await _calendarService.UpdateEvent(dto, eventId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpDelete("deleteEvent/{eventId}")]
@@ -44,7 +44,7 @@ namespace backend.Controllers
         public async Task<ActionResult> deleteNote([FromRoute] int eventId)
         {
             await _calendarService.DeleteEvent(eventId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
     }

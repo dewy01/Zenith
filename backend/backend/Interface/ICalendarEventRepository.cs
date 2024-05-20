@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.CalendarEvents;
 using backend.Models;
 
 namespace backend.Interface

@@ -3,9 +3,9 @@ using backend.Interface;
 using backend.Models;
 using backend.Exceptions;
 using AutoMapper;
-using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using backend.Dto.Todos;
 
 namespace backend.Repository
 {

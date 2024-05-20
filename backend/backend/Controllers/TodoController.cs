@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Todos;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<TodoDto>>> getAllTodos([FromRoute] int todoId)
         {
             var project = await _projectService.GetAllTodos(todoId);
-            return await Task.FromResult(Ok(project));
+            return Ok(project);
         }
 
         [HttpPost("addTodo")]
@@ -28,7 +28,7 @@ namespace backend.Controllers
         public async Task<ActionResult> addTodo(AddTodoDto dto)
         {
             await _projectService.AddTodo(dto);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("updateTodo/{todoId}")]
@@ -36,7 +36,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateTodo(AddTodoDto dto, [FromRoute] int todoId)
         {
             await _projectService.UpdateTodo(dto, todoId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("toggleStatus/{todoId}")]
@@ -44,7 +44,7 @@ namespace backend.Controllers
         public async Task<ActionResult> toggleTodo(ToggleTodoDto dto,[FromRoute] int todoId)
         {
             await _projectService.toggleDone(dto,todoId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpDelete("deleteTodo/{todoId}")]
@@ -52,7 +52,7 @@ namespace backend.Controllers
         public async Task<ActionResult> deleteTodo([FromRoute] int todoId)
         {
             await _projectService.DeleteTodo(todoId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
     }
 }

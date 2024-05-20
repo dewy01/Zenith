@@ -1,6 +1,6 @@
 using backend;
 using backend.Data;
-using backend.Dto;
+using backend.Dto.Users;
 using backend.Dto.Validators;
 using backend.Interface;
 using backend.Models;

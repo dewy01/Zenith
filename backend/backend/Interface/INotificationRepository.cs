@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Notifications;
 using backend.Models;
 
 namespace backend.Interface

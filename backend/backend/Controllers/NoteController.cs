@@ -1,4 +1,4 @@
-﻿using backend.Dto;
+﻿using backend.Dto.Notes;
 using backend.Interface;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -21,21 +21,21 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<AllNotesDto>>> GetAllNotes()
         {
             var notes = await _noteService.GetAllNotes();
-            return await Task.FromResult(Ok(notes));
+            return Ok(notes);
         }
         [HttpGet("getNoteById/{noteId}")]
         [Authorize]
         public async Task<ActionResult<EditNoteDto>> GetNoteById([FromRoute] int noteId)
         {
             var note = await _noteService.GetNoteById(noteId);
-            return await Task.FromResult(Ok(note));
+            return Ok(note);
         }
         [HttpPost("addNote")]
         [Authorize]
         public async Task<ActionResult> addNote()
         {
             await _noteService.AddNote();
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpPatch("updateNote/{noteId}")]
@@ -43,7 +43,7 @@ namespace backend.Controllers
         public async Task<ActionResult> updateNote(EditNoteDto dto, [FromRoute] int noteId)
         {
             await _noteService.UpdateNote(dto,noteId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpDelete("deleteNote/{noteId}")]
@@ -51,7 +51,7 @@ namespace backend.Controllers
         public async Task<ActionResult> deleteNote([FromRoute] int noteId)
         {
             await _noteService.DeleteNote(noteId);
-            return await Task.FromResult(Ok());
+            return Ok();
         }
 
         [HttpGet("getShareToken/{noteId}")]
@@ -59,7 +59,7 @@ namespace backend.Controllers
         public async Task<ActionResult<string>> getShareToken([FromRoute] int noteId)
         {
             string token = await _noteService.GetShareToken(noteId);
-            return await Task.FromResult(Ok(token));
+            return Ok(token);
         }
 
         [HttpGet("getNoteFromToken/{token}")]
@@ -67,7 +67,7 @@ namespace backend.Controllers
         public async Task<ActionResult<EditNoteDto>> getNoteFromToken([FromRoute] string token)
         {
             var note = await _noteService.GetNoteFromToken(token);
-            return await Task.FromResult(Ok(note));
+            return Ok(note);
         }
 
     }
