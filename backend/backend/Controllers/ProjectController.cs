@@ -20,7 +20,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<AllProjectsDto>>> getAllProjects()
         {
             var project = await _projectService.GetAllProjects();
-            return await Task.FromResult(Ok(project));
+            return Ok(project); //TODO: CHANGE EVERYWHERE
         }
 
         [HttpGet("getProjectById/{projectId}")]

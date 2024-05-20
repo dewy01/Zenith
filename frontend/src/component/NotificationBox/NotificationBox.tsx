@@ -4,11 +4,21 @@ import {
   Box,
   Typography,
   AccordionDetails,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import {
+  getAllNotifications,
+  mutateMarkAsRead,
+} from '~/api/Notifications/query';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 export const NotificationBox = () => {
+  const { data } = getAllNotifications();
+  const { mutateAsync } = mutateMarkAsRead();
+
   return (
     <>
       <Accordion>
@@ -31,13 +41,49 @@ export const NotificationBox = () => {
             </Typography>
           </Box>
         </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
+        <AccordionDetails
+          sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+        >
+          {data?.calendarEventNotifications.map((item) => (
+            <NotificationRow item={item} markAsRead={mutateAsync} />
+          ))}
+          {data?.projectNotifications.map((item) => (
+            <NotificationRow item={item} markAsRead={mutateAsync} />
+          ))}
+          {data?.groupProjectNotifications.map((item) => (
+            <NotificationRow item={item} markAsRead={mutateAsync} />
+          ))}
         </AccordionDetails>
       </Accordion>
     </>
+  );
+};
+
+type NotificationRowProps = {
+  notificationID: number;
+  message: string;
+  dateTime: Date;
+  isActive: boolean;
+  isRead: boolean;
+};
+
+type Props = {
+  item: NotificationRowProps;
+  markAsRead: (id: number) => void;
+};
+
+const NotificationRow = ({ item, markAsRead }: Props) => {
+  return (
+    <Box display={'flex'} justifyContent="space-between" alignItems={'center'}>
+      <Box display="flex" flexDirection="column">
+        <Typography>{item.message}</Typography>
+        <Typography variant="caption">{item.dateTime.toString()}</Typography>
+      </Box>
+      <Tooltip title="Mark as read" placement="right">
+        <IconButton onClick={() => markAsRead(item.notificationID)}>
+          <CheckOutlinedIcon />
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 };

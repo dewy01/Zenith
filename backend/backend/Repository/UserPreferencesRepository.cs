@@ -5,7 +5,6 @@ using backend.Exceptions;
 using AutoMapper;
 using backend.Dto;
 using Microsoft.EntityFrameworkCore;
-using backend.Migrations;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using Newtonsoft.Json;

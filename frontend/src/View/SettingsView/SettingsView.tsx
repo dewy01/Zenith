@@ -190,7 +190,16 @@ export const SettingsView = () => {
             </ToggleButtonGroup>
           </Box>
         </Paper>
-        <Paper sx={{ maxWidth: '370px', padding: 3 }}>
+        <Paper
+          sx={{
+            maxWidth: '370px',
+            display: 'flex',
+            flexDirection: 'column',
+            paddingX: 3,
+            paddingY: 2,
+            gap: 2,
+          }}
+        >
           <Box display="flex" gap={2} alignItems="center">
             <Typography fontWeight={'medium'}>Reminder:</Typography>
             <ToggleButtonGroup value={settings?.reminder}>
@@ -214,6 +223,9 @@ export const SettingsView = () => {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
+          <Typography variant="caption" color="text.secondary">
+            Applied changes will be visible tomorrow
+          </Typography>
         </Paper>
 
         <Paper sx={{ maxWidth: '350px', padding: 3 }}>

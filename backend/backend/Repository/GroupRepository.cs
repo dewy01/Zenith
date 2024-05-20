@@ -7,7 +7,6 @@ using backend.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using AutoMapper;
-using backend.Migrations;
 
 namespace backend.Repository
 {

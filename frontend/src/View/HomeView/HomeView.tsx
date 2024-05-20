@@ -36,7 +36,7 @@ export const HomeView = () => {
         <UserBox user={user} />
       </Box>
       <Box display={'flex'} gap={8} sx={{ flexGrow: 1 }}>
-        <Box sx={{ minWidth: '40vw' }}>
+        <Box sx={{ minWidth: '50vw' }}>
           <NotificationBox />
         </Box>
 

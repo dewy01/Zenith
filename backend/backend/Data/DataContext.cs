@@ -176,6 +176,26 @@ namespace backend.Data
                 .WithMany()
                 .HasForeignKey(gr => gr.GroupId);
 
+            modelBuilder.Entity<Notification>().HasDiscriminator(x => x.Discriminator);
+
+            modelBuilder.Entity<CalendarEventNotification>()
+                 .HasOne(x => x.CalendarEvent)
+                 .WithOne(x => x.Notification)
+                 .HasForeignKey<CalendarEvent>(x => x.NotificationID)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GroupProjectNotification>()
+                .HasOne(x => x.GroupProject)
+                .WithOne(x => x.Notification)
+                .HasForeignKey<GroupProject>(x => x.NotificationID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ProjectNotification>()
+                .HasOne(x => x.Project)
+                .WithOne(x => x.Notification)
+                .HasForeignKey<Project>(x => x.NotificationID)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
 
         }

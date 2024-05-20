@@ -5,7 +5,6 @@ using backend.Exceptions;
 using AutoMapper;
 using backend.Dto;
 using Microsoft.EntityFrameworkCore;
-using backend.Migrations;
 using System.Collections.ObjectModel;
 
 namespace backend.Repository
@@ -105,6 +104,19 @@ namespace backend.Repository
 
             await _context.Projects.AddAsync(newProject);
             await _context.SaveChangesAsync();
+
+            var notification = new ProjectNotification
+            {
+                UserID = userId.Value,
+                Message = $"{dto.Title} deadline is approaching on {dto.Deadline:MMMM dd, yyyy}.",
+                DateTime = dto.Deadline,
+                Project = newProject,
+                ProjectID = newProject.ProjectID
+            };
+
+            await _context.Notifications.AddAsync(notification);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateProject(EditProjectDto dto , int projectId)
@@ -125,6 +137,17 @@ namespace backend.Repository
             project.Deadline = dto.Deadline;
             project.Description = dto.Description;
 
+            var notification = await _context.Notifications
+                .SingleOrDefaultAsync(notification => notification.NotificationID == project.NotificationID);
+
+            if (notification != null)
+            {
+                notification.Message = $"{project.Title} deadline is approaching on {project.Deadline:MMMM dd, yyyy}.";
+                notification.DateTime = dto.Deadline;
+                _context.Notifications.Update(notification);
+                await _context.SaveChangesAsync();
+            }
+
             _context.Projects.Update(project);
             await _context.SaveChangesAsync();
         }
@@ -137,7 +160,15 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var project = await _context.Projects.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
-            _context.Remove(project);
+            _context.Projects.Remove(project);
+
+            var notification = await _context.Notifications
+                .SingleOrDefaultAsync(notification => notification.NotificationID == project.NotificationID);
+
+            if (notification != null)
+            {
+                _context.Notifications.Remove(notification);
+            }
             await _context.SaveChangesAsync();
         }
     }

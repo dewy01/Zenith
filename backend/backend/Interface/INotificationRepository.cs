@@ -1,13 +1,12 @@
-﻿using backend.Models;
+﻿using backend.Dto;
+using backend.Models;
 
 namespace backend.Interface
 {
     public interface INotificationRepository
     {
-        Notification GetNotificationById(int notificationId);
-        List<Notification> GetAllNotifications();
-        void AddNotification(Notification notification);
-        void UpdateNotification(Notification notification);
-        void DeleteNotification(int notificationId);
+        Task<NotificationDto> GetNotifications();
+        Task UpdateNotifications();
+        Task MarkAsRead(int id);
     }
 }

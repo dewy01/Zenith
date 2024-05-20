@@ -43,6 +43,20 @@ namespace backend.Repository
 
             await _context.CalendarEvents.AddAsync(newEvent);
             await _context.SaveChangesAsync();
+
+            var notification = new CalendarEventNotification
+            {
+                UserID = userId.Value,
+                Message = $"{dto.Title} is scheduled on {newEvent.DateTime:MMMM dd, yyyy}",
+                DateTime = newEvent.DateTime,
+                CalendarEvent = newEvent,
+                CalendarEventID = newEvent.EventID
+
+            };
+
+            await _context.Notifications.AddAsync(notification);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteEvent(int eventId)
@@ -53,7 +67,13 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
-            _context.Remove(ev);
+            _context.CalendarEvents.Remove(ev);
+            var notification = await _context.Notifications
+                .SingleOrDefaultAsync(notification => notification.NotificationID == ev.NotificationID);
+            if (notification != null)
+            {
+                _context.Notifications.Remove(notification);
+            }
             await _context.SaveChangesAsync();
         }
 
@@ -87,6 +107,16 @@ namespace backend.Repository
             _context.CalendarEvents.Update(ev);
             await _context.SaveChangesAsync();
 
+            var notification = await _context.Notifications
+                .SingleOrDefaultAsync(notification => notification.NotificationID == ev.NotificationID);
+
+            if (notification != null)
+            {
+                notification.Message = $"{ev.Title} is rescheduled on {ev.DateTime:MMMM dd, yyyy}";
+                notification.DateTime = DateTime.Parse(dto.DateTime);
+                _context.Notifications.Update(notification);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

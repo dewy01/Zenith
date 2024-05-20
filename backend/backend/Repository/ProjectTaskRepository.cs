@@ -3,7 +3,6 @@ using backend.Data;
 using backend.Dto;
 using backend.Exceptions;
 using backend.Interface;
-using backend.Migrations;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

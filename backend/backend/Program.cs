@@ -6,6 +6,8 @@ using backend.Interface;
 using backend.Models;
 using backend.Repository;
 using FluentValidation;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -44,6 +46,7 @@ builder.Services.AddScoped<ICalendarEventRepository, CalendarEventRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddScoped<IGroupProjectRepository, GroupProjectRepository>();
 builder.Services.AddScoped<IGroupProjectTaskRepository, GroupProjectTaskRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -83,6 +86,21 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Hangfire implementation
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        DisableGlobalLocks = true
+    }));
+
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -114,5 +132,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Hangfire execution
+app.UseHangfireDashboard("/hangfire", new DashboardOptions
+{
+    DashboardTitle = "Hangfire Dashboard"
+});
+RecurringJob.AddOrUpdate<NotificationRepository>("update-notifications", service => service.UpdateNotifications(), Cron.Daily);
 
 app.Run();

@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240323165440_delete-groupmembers")]
-    partial class deletegroupmembers
+    [Migration("20240519174238_nullable-notifications")]
+    partial class nullablenotifications
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NotificationID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -52,6 +55,10 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("EventID");
+
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.HasIndex("UserID");
 
@@ -99,6 +106,9 @@ namespace backend.Migrations
                     b.Property<int>("GroupID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("NotificationID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -110,6 +120,10 @@ namespace backend.Migrations
                     b.HasKey("GroupProjectID");
 
                     b.HasIndex("GroupID");
+
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.ToTable("GroupProjects");
                 });
@@ -126,17 +140,14 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupProjectID")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EditTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Priority")
+                    b.Property<int>("GroupProjectID")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -157,6 +168,24 @@ namespace backend.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("GroupProjectTasks");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupRole", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupRoles");
                 });
 
             modelBuilder.Entity("backend.Models.KanbanTask", b =>
@@ -245,6 +274,11 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(34)
+                        .HasColumnType("nvarchar(34)");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -260,6 +294,10 @@ namespace backend.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Notifications");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Notification");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("backend.Models.Project", b =>
@@ -277,6 +315,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NotificationID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -289,6 +330,10 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProjectID");
+
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.HasIndex("UserID");
 
@@ -310,6 +355,9 @@ namespace backend.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EditTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
@@ -488,13 +536,50 @@ namespace backend.Migrations
                     b.ToTable("UserPreferences");
                 });
 
+            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("CalendarEventID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CalendarEventNotification");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("GroupProjectID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("GroupProjectNotification");
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("ProjectNotification");
+                });
+
             modelBuilder.Entity("backend.Models.CalendarEvent", b =>
                 {
+                    b.HasOne("backend.Models.CalendarEventNotification", "Notification")
+                        .WithOne("CalendarEvent")
+                        .HasForeignKey("backend.Models.CalendarEvent", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("CalendarEvents")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -507,7 +592,14 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Models.GroupProjectNotification", "Notification")
+                        .WithOne("GroupProject")
+                        .HasForeignKey("backend.Models.GroupProject", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Group");
+
+                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProjectTask", b =>
@@ -525,6 +617,25 @@ namespace backend.Migrations
                         .IsRequired();
 
                     b.Navigation("GroupProject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupRole", b =>
+                {
+                    b.HasOne("backend.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -564,11 +675,18 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Project", b =>
                 {
+                    b.HasOne("backend.Models.ProjectNotification", "Notification")
+                        .WithOne("Project")
+                        .HasForeignKey("backend.Models.Project", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -678,6 +796,24 @@ namespace backend.Migrations
                     b.Navigation("ProjectTodos");
 
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
+                {
+                    b.Navigation("CalendarEvent")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
+                {
+                    b.Navigation("GroupProject")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
+                {
+                    b.Navigation("Project")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

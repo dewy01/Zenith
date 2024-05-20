@@ -5,7 +5,6 @@ using backend.Exceptions;
 using AutoMapper;
 using backend.Dto;
 using Microsoft.EntityFrameworkCore;
-using backend.Migrations;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -109,8 +108,9 @@ namespace backend.Repository
         public async Task AddGroupProject(AddGroupProjectDto dto)
         {
             var userId = _userContextRepository.GetUserId;
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserID == userId);
 
-            if (userId == null)
+            if (userId == null || user == null)
             {
                 throw new NotFoundException("User not found");
             }
@@ -125,6 +125,19 @@ namespace backend.Repository
             };
 
             await _context.GroupProjects.AddAsync(newProject);
+            await _context.SaveChangesAsync();
+
+            var notification = new GroupProjectNotification
+            {
+                UserID = user.UserID,
+                Message = $"{dto.Title} deadline is approaching on {dto.Deadline:MMMM dd, yyyy}.",
+                DateTime = dto.Deadline,
+                GroupProject = newProject,
+                GroupProjectID = newProject.GroupProjectID
+            };
+
+            await _context.Notifications.AddAsync(notification);
+
             await _context.SaveChangesAsync();
         }
 
@@ -145,7 +158,12 @@ namespace backend.Repository
             project.Deadline = dto.Deadline;
             project.Description = dto.Description;
 
+            var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
+            notification.Message = $"{dto.Title} deadline is approaching on {dto.Deadline:MMMM dd, yyyy}.";
+            notification.DateTime = dto.Deadline;
+
             _context.GroupProjects.Update(project);
+            _context.Notifications.Update(notification);
             await _context.SaveChangesAsync();
         }
 
@@ -158,7 +176,12 @@ namespace backend.Repository
             }
             var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
-            _context.Remove(project);
+            _context.GroupProjects.Remove(project);
+            var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
+            if (notification != null)
+            {
+                _context.Notifications.Remove(notification);
+            }
             await _context.SaveChangesAsync();
         }
     }

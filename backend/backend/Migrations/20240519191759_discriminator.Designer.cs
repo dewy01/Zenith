@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240213162507_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240519191759_discriminator")]
+    partial class discriminator
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,8 +40,12 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Reminder")
-                        .HasColumnType("bit");
+                    b.Property<string>("EventColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NotificationID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -51,6 +55,10 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("EventID");
+
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.HasIndex("UserID");
 
@@ -69,32 +77,15 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InviteToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TokenResetTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("GroupID");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("backend.Models.GroupMember", b =>
-                {
-                    b.Property<int>("GroupMemberID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupMemberID"));
-
-                    b.Property<int>("GroupID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("GroupMemberID");
-
-                    b.HasIndex("GroupID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("GroupMembers");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -105,17 +96,34 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupProjectID"));
 
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("GroupID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectID")
+                    b.Property<int?>("NotificationID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GroupProjectID");
 
                     b.HasIndex("GroupID");
 
-                    b.HasIndex("ProjectID");
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.ToTable("GroupProjects");
                 });
@@ -132,17 +140,14 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GroupProjectID")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EditTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Priority")
+                    b.Property<int>("GroupProjectID")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -160,34 +165,27 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupProjectID");
 
+                    b.HasIndex("UserID");
+
                     b.ToTable("GroupProjectTasks");
                 });
 
-            modelBuilder.Entity("backend.Models.GroupProjectTaskAsignee", b =>
+            modelBuilder.Entity("backend.Models.GroupRole", b =>
                 {
-                    b.Property<int>("AssignmentID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssignmentID"));
-
-                    b.Property<int>("GroupProjectTaskID")
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.HasKey("AssignmentID");
+                    b.HasKey("UserId", "GroupId");
 
-                    b.HasIndex("GroupProjectTaskID");
+                    b.HasIndex("GroupId");
 
-                    b.HasIndex("UserID");
-
-                    b.ToTable("GroupProjectTaskAssignees");
+                    b.ToTable("GroupRoles");
                 });
 
             modelBuilder.Entity("backend.Models.KanbanTask", b =>
@@ -238,17 +236,22 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NoteID"));
 
-                    b.Property<string>("Category")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Content")
-                        .IsRequired()
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShareToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TokenResetTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
@@ -271,21 +274,33 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(34)
+                        .HasColumnType("nvarchar(34)");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isRead")
+                        .HasColumnType("bit");
 
                     b.HasKey("NotificationID");
 
                     b.HasIndex("UserID");
 
                     b.ToTable("Notifications");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Notification");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("backend.Models.Project", b =>
@@ -303,6 +318,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("NotificationID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -315,6 +333,10 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProjectID");
+
+                    b.HasIndex("NotificationID")
+                        .IsUnique()
+                        .HasFilter("[NotificationID] IS NOT NULL");
 
                     b.HasIndex("UserID");
 
@@ -329,19 +351,63 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectTaskID"));
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EditTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TaskID")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProjectTaskID");
 
                     b.HasIndex("ProjectID");
 
-                    b.HasIndex("TaskID");
-
                     b.ToTable("ProjectTasks");
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectTodo", b =>
+                {
+                    b.Property<int>("ProjectTodoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectTodoID"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectTodoID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("ProjectTodos");
                 });
 
             modelBuilder.Entity("backend.Models.Role", b =>
@@ -361,66 +427,33 @@ namespace backend.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("backend.Models.Task", b =>
+            modelBuilder.Entity("backend.Models.Todo", b =>
                 {
-                    b.Property<int>("TaskID")
+                    b.Property<int>("TodoID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaskID"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TodoID"));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProjectTodoID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.HasKey("TodoID");
 
-                    b.HasKey("TaskID");
+                    b.HasIndex("ProjectTodoID");
 
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("backend.Models.TaskCategory", b =>
-                {
-                    b.Property<int>("CategoryID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
-
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("TaskCategories");
+                    b.ToTable("Todos");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -435,8 +468,17 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GroupID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordResetToken")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
@@ -446,7 +488,13 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VerificationToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserID");
+
+                    b.HasIndex("GroupID");
 
                     b.HasIndex("RoleId");
 
@@ -460,6 +508,21 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PreferencesID"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Reminder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Routes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Theme")
                         .IsRequired()
@@ -476,32 +539,50 @@ namespace backend.Migrations
                     b.ToTable("UserPreferences");
                 });
 
+            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("CalendarEventID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("CalendarEventNotification");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("GroupProjectID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("GroupProjectNotification");
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
+                {
+                    b.HasBaseType("backend.Models.Notification");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("ProjectNotification");
+                });
+
             modelBuilder.Entity("backend.Models.CalendarEvent", b =>
                 {
+                    b.HasOne("backend.Models.CalendarEventNotification", "Notification")
+                        .WithOne("CalendarEvent")
+                        .HasForeignKey("backend.Models.CalendarEvent", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("CalendarEvents")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("backend.Models.GroupMember", b =>
-                {
-                    b.HasOne("backend.Models.Group", "Group")
-                        .WithMany("GroupMembers")
-                        .HasForeignKey("GroupID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany("GroupMembers")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
+                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -514,15 +595,14 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.Project", "Project")
-                        .WithMany("GroupProjects")
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("backend.Models.GroupProjectNotification", "Notification")
+                        .WithOne("GroupProject")
+                        .HasForeignKey("backend.Models.GroupProject", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Group");
 
-                    b.Navigation("Project");
+                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProjectTask", b =>
@@ -533,24 +613,32 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GroupProject");
-                });
-
-            modelBuilder.Entity("backend.Models.GroupProjectTaskAsignee", b =>
-                {
-                    b.HasOne("backend.Models.GroupProjectTask", "GroupProjectTask")
-                        .WithMany()
-                        .HasForeignKey("GroupProjectTaskID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GroupProjectTask");
+                    b.Navigation("GroupProject");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupRole", b =>
+                {
+                    b.HasOne("backend.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -590,11 +678,18 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Project", b =>
                 {
+                    b.HasOne("backend.Models.ProjectNotification", "Notification")
+                        .WithOne("Project")
+                        .HasForeignKey("backend.Models.Project", "NotificationID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -604,24 +699,16 @@ namespace backend.Migrations
                     b.HasOne("backend.Models.Project", "Project")
                         .WithMany("ProjectTasks")
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("backend.Models.Task", "Task")
-                        .WithMany("ProjectTasks")
-                        .HasForeignKey("TaskID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
-
-                    b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("backend.Models.Task", b =>
+            modelBuilder.Entity("backend.Models.ProjectTodo", b =>
                 {
                     b.HasOne("backend.Models.User", "User")
-                        .WithMany("Tasks")
+                        .WithMany("ProjectTodos")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -629,24 +716,33 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Models.TaskCategory", b =>
+            modelBuilder.Entity("backend.Models.Todo", b =>
                 {
-                    b.HasOne("backend.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
+                    b.HasOne("backend.Models.ProjectTodo", "ProjectTodo")
+                        .WithMany("Todos")
+                        .HasForeignKey("ProjectTodoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("ProjectTodo");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
                 {
-                    b.HasOne("backend.Models.Role", null)
+                    b.HasOne("backend.Models.Group", "Group")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("backend.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("backend.Models.UserPreferences", b =>
@@ -662,9 +758,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Group", b =>
                 {
-                    b.Navigation("GroupMembers");
-
                     b.Navigation("GroupProjects");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -674,9 +770,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Project", b =>
                 {
-                    b.Navigation("GroupProjects");
-
                     b.Navigation("ProjectTasks");
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectTodo", b =>
+                {
+                    b.Navigation("Todos");
                 });
 
             modelBuilder.Entity("backend.Models.Role", b =>
@@ -684,16 +783,9 @@ namespace backend.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("backend.Models.Task", b =>
-                {
-                    b.Navigation("ProjectTasks");
-                });
-
             modelBuilder.Entity("backend.Models.User", b =>
                 {
                     b.Navigation("CalendarEvents");
-
-                    b.Navigation("GroupMembers");
 
                     b.Navigation("KanbanTasks");
 
@@ -704,9 +796,27 @@ namespace backend.Migrations
                     b.Navigation("Preferences")
                         .IsRequired();
 
-                    b.Navigation("Projects");
+                    b.Navigation("ProjectTodos");
 
-                    b.Navigation("Tasks");
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
+                {
+                    b.Navigation("CalendarEvent")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
+                {
+                    b.Navigation("GroupProject")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
+                {
+                    b.Navigation("Project")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
