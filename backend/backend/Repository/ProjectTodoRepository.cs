@@ -30,8 +30,17 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projects = await _context.ProjectTodos.Where(x => x.UserID == userId).ToListAsync();
-            if (projects.Count == 0) { return new List<AllProjectsTodoDto>(); }
+
+            var projects = await _context.ProjectTodos
+                .AsNoTracking()
+                .Where(x => x.UserID == userId)
+                .ToListAsync();
+
+            if (projects.Count == 0)
+            {
+                return new List<AllProjectsTodoDto>();
+            }
+
             var projectDtos = _mapper.Map<List<AllProjectsTodoDto>>(projects);
             return projectDtos;
         }
@@ -44,7 +53,11 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var project = await _context.ProjectTodos.Include(p => p.Todos).SingleOrDefaultAsync(x => x.UserID == userId && x.ProjectTodoID == projectId);
+            var project = await _context.ProjectTodos
+                .Include(p => p.Todos)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserID == userId && x.ProjectTodoID == projectId);
+
             var projectDto = new ProjectTodoDto
             {
                 Title = project.Title,
@@ -70,14 +83,14 @@ namespace backend.Repository
                 UserID = userId.Value,
                 Title = dto.Title,
                 Description = dto.Description,
-                Color= dto.Color,
+                Color = dto.Color,
             };
 
             await _context.ProjectTodos.AddAsync(newProject);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProject(AddProjectTodoDto dto , int projectId)
+        public async Task UpdateProject(AddProjectTodoDto dto, int projectId)
         {
             var userId = _userContextRepository.GetUserId;
 
@@ -85,8 +98,9 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.ProjectTodos.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
 
+            var project = await _context.ProjectTodos
+                .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
 
             project.Title = dto.Title;
             project.Color = dto.Color;
@@ -103,7 +117,10 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.ProjectTodos.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
+
+            var project = await _context.ProjectTodos
+                .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
+
             _context.Remove(project);
             await _context.SaveChangesAsync();
         }

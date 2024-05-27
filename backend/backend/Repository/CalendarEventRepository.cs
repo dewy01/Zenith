@@ -82,6 +82,7 @@ namespace backend.Repository
             List<CalendarEvent> userEvents;
             var userId = _userContextRepository.GetUserId;
             userEvents = await _context.CalendarEvents
+                .AsNoTracking()
                 .Where(ev => ev.UserID == userId && ev.DateTime >= DateTime.Parse(from) && ev.DateTime <= DateTime.Parse(to)) 
                 .ToListAsync();
             if (userEvents.Count == 0) { return new List<AllCalendarEventsDto>(); }

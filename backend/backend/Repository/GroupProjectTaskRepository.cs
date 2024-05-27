@@ -30,13 +30,18 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+            var group = await _context.Groups
+                .Include(g => g.Users)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
 
-            var projectTask = await _context.GroupProjectTasks.SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
+            var projectTask = await _context.GroupProjectTasks
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
 
             if (projectTask == null)
             {
@@ -55,7 +60,6 @@ namespace backend.Repository
             return projectTaskDto;
         }
 
-
         public async Task AddProjectTask(AddGroupProjectTaskDto dto)
         {
             var userId = _userContextRepository.GetUserId;
@@ -65,7 +69,9 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var taskUser = await _context.Users.SingleOrDefaultAsync(x => x.UserID == dto.UserId);
+            var taskUser = await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserID == dto.UserId);
 
             if (taskUser == null)
             {
@@ -95,14 +101,17 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+            var group = await _context.Groups
+                .Include(g => g.Users)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
 
-            var projectTask = await _context.GroupProjectTasks.SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
-
+            var projectTask = await _context.GroupProjectTasks
+                .SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
 
             if (projectTask == null)
             {
@@ -127,21 +136,26 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var group = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+            var group = await _context.Groups
+                .Include(g => g.Users)
+                .AsNoTracking() 
+                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             if (group == null)
             {
                 throw new NotFoundException("Group not found");
             }
 
-            var projectTask = await _context.GroupProjectTasks.SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
-
+            var projectTask = await _context.GroupProjectTasks
+                .SingleOrDefaultAsync(x => x.GroupProject.GroupID == group.GroupID && x.GroupProjectTaskID == groupProjectTaskId);
 
             if (projectTask == null)
             {
                 throw new NotFoundException("Task not found");
             }
 
-            var taskUser = await _context.Users.SingleOrDefaultAsync(x => x.UserID == dto.UserId);
+            var taskUser = await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserID == dto.UserId);
 
             if (taskUser == null)
             {
@@ -174,6 +188,7 @@ namespace backend.Repository
 
             var group = await _context.Groups
                 .Include(g => g.Users)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Users.Any(u => u.UserID == userId));
 
             if (group == null)
@@ -216,6 +231,5 @@ namespace backend.Repository
                 await _context.SaveChangesAsync();
             }
         }
-
     }
 }

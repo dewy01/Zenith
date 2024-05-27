@@ -42,7 +42,7 @@ export const NotificationBox = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails
-          sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+          sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
         >
           {data?.calendarEventNotifications.map((item) => (
             <NotificationRow item={item} markAsRead={mutateAsync} />
@@ -74,10 +74,21 @@ type Props = {
 
 const NotificationRow = ({ item, markAsRead }: Props) => {
   return (
-    <Box display={'flex'} justifyContent="space-between" alignItems={'center'}>
+    <Box
+      display={'flex'}
+      justifyContent="space-between"
+      alignItems={'center'}
+      sx={(theme) => ({
+        padding: 2,
+        backgroundColor: theme.palette.action.hover,
+        borderRadius: 1,
+      })}
+    >
       <Box display="flex" flexDirection="column">
         <Typography>{item.message}</Typography>
-        <Typography variant="caption">{item.dateTime.toString()}</Typography>
+        <Typography variant="caption">
+          {item.dateTime.toString().split('T')[0]}
+        </Typography>
       </Box>
       <Tooltip title="Mark as read" placement="right">
         <IconButton onClick={() => markAsRead(item.notificationID)}>

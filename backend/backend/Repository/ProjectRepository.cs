@@ -30,14 +30,16 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            
-            var project = await _context.Projects.Include(p => p.ProjectTasks).SingleOrDefaultAsync(x=>x.UserID == userId && x.ProjectID == projectId);
 
-            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x=>x.EditTime);
+            var project = await _context.Projects
+                .Include(p => p.ProjectTasks)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserID == userId && x.ProjectID == projectId);
+
+            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x => x.EditTime);
             var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
             var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderBy(x => x.EditTime);
             var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed").OrderBy(x => x.EditTime);
-
 
             var projectDto = new ProjectByStatusDto
             {
@@ -62,10 +64,20 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projects = await _context.Projects.Include(p=>p.ProjectTasks).Where(x => x.UserID == userId).ToListAsync();
-            if (projects.Count == 0) { return new List<AllProjectsDto>(); }
+
+            var projects = await _context.Projects
+                .Include(p => p.ProjectTasks)
+                .Where(x => x.UserID == userId)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (projects.Count == 0)
+            {
+                return new List<AllProjectsDto>();
+            }
+
             var projectDtos = new List<AllProjectsDto>();
-            foreach (Project project in projects)
+            foreach (var project in projects)
             {
                 projectDtos.Add(new AllProjectsDto
                 {
@@ -74,13 +86,12 @@ namespace backend.Repository
                     Deadline = project.Deadline,
                     Description = project.Description,
                     Status = project.Status,
-                    Completion = project.ProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.ProjectTasks.Count()) * 100) : 0,
+                    Completion = project.ProjectTasks.Count() != 0
+                        ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.ProjectTasks.Count()) * 100)
+                        : 0,
                     isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
                 });
             }
-
-           // Old mapping, without completion progress
-           // var projectDtos = _mapper.Map<List<AllProjectsDto>>(projects);
 
             return projectDtos;
         }
@@ -99,8 +110,8 @@ namespace backend.Repository
                 UserID = userId.Value,
                 Title = dto.Title,
                 Status = dto.Status,
-                Deadline= dto.Deadline,
-                Description= dto.Description,
+                Deadline = dto.Deadline,
+                Description = dto.Description,
             };
 
             await _context.Projects.AddAsync(newProject);
@@ -116,11 +127,10 @@ namespace backend.Repository
             };
 
             await _context.Notifications.AddAsync(notification);
-
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProject(EditProjectDto dto , int projectId)
+        public async Task UpdateProject(EditProjectDto dto, int projectId)
         {
             var userId = _userContextRepository.GetUserId;
 
@@ -128,9 +138,11 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.Projects.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
 
-            if(dto.Title != null || dto.Title != "")
+            var project = await _context.Projects
+                .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
+
+            if (dto.Title != null || dto.Title != "")
             {
                 project.Title = dto.Title;
             }
@@ -160,7 +172,10 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var project = await _context.Projects.SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
+
+            var project = await _context.Projects
+                .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
+
             _context.Projects.Remove(project);
 
             var notification = await _context.Notifications
@@ -170,6 +185,7 @@ namespace backend.Repository
             {
                 _context.Notifications.Remove(notification);
             }
+
             await _context.SaveChangesAsync();
         }
     }

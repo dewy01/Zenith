@@ -32,18 +32,20 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var notification = await _context.Notifications.SingleOrDefaultAsync(x=>x.NotificationID == id);
+
+            var notification = await _context.Notifications
+                .SingleOrDefaultAsync(x => x.NotificationID == id);
+
             if (notification == null)
             {
                 throw new Exception("Notification not found");
             }
-            
+
             notification.isRead = true;
             _context.Notifications.Update(notification);
 
             await _context.SaveChangesAsync();
         }
-
 
         public async Task<NotificationDto> GetNotifications()
         {
@@ -52,12 +54,18 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            
-            var userRole = await _context.GroupRoles.SingleOrDefaultAsync(x=>x.UserId == userId);
 
-            var notifications = await _context.Notifications.Where(x => x.UserID == userId && x.isActive == true && x.isRead==false).ToListAsync();
+            var userRole = await _context.GroupRoles
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.UserId == userId);
 
-            var notificationList = new NotificationDto() {
+            var notifications = await _context.Notifications
+                .Where(x => x.UserID == userId && x.isActive == true && x.isRead == false)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var notificationList = new NotificationDto
+            {
                 GroupProjectNotifications = new List<GroupProjectNotificationDto>(),
                 ProjectNotifications = new List<ProjectNotificationDto>(),
                 CalendarEventNotifications = new List<CalendarEventNotificationDto>(),
@@ -68,7 +76,7 @@ namespace backend.Repository
                 switch (notification)
                 {
                     case GroupProjectNotification groupProjectNotification:
-                        if(userRole.Role == Enums.GroupRole.Admin)
+                        if (userRole.Role == Enums.GroupRole.Admin)
                         {
                             var groupProjectDto = new GroupProjectNotificationDto
                             {
@@ -111,7 +119,6 @@ namespace backend.Repository
                 }
             }
 
-
             return notificationList;
         }
 
@@ -119,7 +126,10 @@ namespace backend.Repository
         {
             var currentDate = DateTime.Now;
 
-            var users = await _context.Users.Include(u => u.Preferences).ToListAsync();
+            var users = await _context.Users
+                .Include(u => u.Preferences)
+                .AsNoTracking()
+                .ToListAsync();
 
             foreach (var user in users)
             {
@@ -127,22 +137,33 @@ namespace backend.Repository
                 if (preferences != null && preferences.Reminder != 0)
                 {
                     var notifications = await _context.Notifications
-                                                      .Where(x => x.UserID == user.UserID && !x.isActive)
-                                                      .ToListAsync();
+                        .Where(x => x.UserID == user.UserID && !x.isActive)
+                        .ToListAsync();
+
+                    var notificationsToUpdate = new List<Notification>(); 
+
                     foreach (var notification in notifications)
                     {
-                        if (notification.DateTime <= currentDate.AddDays(preferences.Reminder))
+                        if (notification.DateTime <= currentDate.AddDays(preferences.Reminder) && notification.DateTime >= currentDate)
                         {
                             notification.isActive = true;
-                            _context.Notifications.Update(notification);
                         }
+                        else
+                        {
+                            notification.isActive = false;
+                        }
+
+                        notificationsToUpdate.Add(notification); 
                     }
+
+                    _context.Notifications.UpdateRange(notificationsToUpdate);
                 }
-                if(preferences != null && preferences.Reminder == 0)
+                if (preferences != null && preferences.Reminder == 0)
                 {
                     var notifications = await _context.Notifications
-                                                     .Where(x => x.UserID == user.UserID)
-                                                     .ToListAsync();
+                        .Where(x => x.UserID == user.UserID)
+                        .ToListAsync();
+
                     foreach (var notification in notifications)
                     {
                         notification.isActive = false;
@@ -153,7 +174,5 @@ namespace backend.Repository
 
             await _context.SaveChangesAsync();
         }
-
-
     }
 }

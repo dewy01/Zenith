@@ -30,9 +30,12 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var settings = await _context.UserPreferences.SingleOrDefaultAsync(settings => settings.UserID == userId);
 
-            var routes =  JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes);
+            var settings = await _context.UserPreferences
+                .AsNoTracking()
+                .SingleOrDefaultAsync(settings => settings.UserID == userId);
+
+            var routes = JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes);
 
             var dto = new UserPreferencesDto
             {
@@ -55,7 +58,9 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var settings = await _context.UserPreferences.SingleOrDefaultAsync(settings => settings.UserID == userId);
+
+            var settings = await _context.UserPreferences
+                .SingleOrDefaultAsync(settings => settings.UserID == userId);
 
             settings.Theme = dto.Theme;
             settings.Color = dto.Color;

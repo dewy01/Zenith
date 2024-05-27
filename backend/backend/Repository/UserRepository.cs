@@ -42,15 +42,18 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var user = await _context.Users.SingleOrDefaultAsync(user => user.UserID == userId);
+            var user = await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(user => user.UserID == userId);
             if (user == null)
             {
                 throw new NotFoundException("User not found");
             }
 
             var group = await _context.Groups
-            .Where(g => g.Users.Any(u => u.UserID == userId))
-            .SingleOrDefaultAsync();
+                .AsNoTracking()
+                .Where(g => g.Users.Any(u => u.UserID == userId))
+                .SingleOrDefaultAsync();
 
             if (group == null)
             {
@@ -131,7 +134,10 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var user = await _context.Users.SingleOrDefaultAsync(user => user.UserID == userId);
+            var user = await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(user => user.UserID == userId);
+
             if (user == null)
             {
                 throw new NotFoundException("User not found");
@@ -149,6 +155,7 @@ namespace backend.Repository
         public async Task<string> GenerateJwt(LoginUserDto dto)
         {
             var user = await _context.Users
+                .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.Email == dto.Email && x.Role.RoleName != "Unverified");
             if (user is null)
             {

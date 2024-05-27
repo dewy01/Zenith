@@ -33,6 +33,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var currentUserRole = await _context.GroupRoles
+                .AsNoTracking()
                 .SingleOrDefaultAsync(g => g.UserId == userId);
 
             if (currentUserRole == null)
@@ -41,8 +42,13 @@ namespace backend.Repository
             }
 
 
-            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
-            var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
+            var userGroup = await _context.Groups
+                .Include(g => g.Users)
+                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+
+            var project = await _context.GroupProjects
+                .Include(p => p.GroupProjectTasks)
+                .SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
             var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x=>x.EditTime);
             var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
@@ -85,8 +91,17 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
-            var projects = await _context.GroupProjects.Include(p=>p.GroupProjectTasks).Where(x => x.GroupID == userGroup.GroupID).ToListAsync();
+            var userGroup = await _context.Groups
+                .AsNoTracking()
+                .Include(g => g.Users)
+                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+
+            var projects = await _context.GroupProjects
+                .AsNoTracking()
+                .Include(p => p.GroupProjectTasks)
+                .Where(x => x.GroupID == userGroup.GroupID)
+                .ToListAsync();
+
             if (projects.Count == 0) { return new List<AllGroupProjectsDto>(); }
             var projectDtos = new List<AllGroupProjectsDto>();
             foreach (GroupProject project in projects)

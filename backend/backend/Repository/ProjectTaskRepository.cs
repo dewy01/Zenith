@@ -30,7 +30,10 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+            var projectTask = await _context.ProjectTasks
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+
             var projectTaskDto = new ProjectTaskDto
             {
                 Title = projectTask.Title,
@@ -53,7 +56,7 @@ namespace backend.Repository
             }
 
             var newProjectTask = new ProjectTask
-            {  
+            {
                 ProjectID = dto.ProjectID,
                 Title = dto.Title,
                 Status = dto.Status,
@@ -73,7 +76,9 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+
+            var projectTask = await _context.ProjectTasks
+                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
             projectTask.Status = status.Status;
             projectTask.EditTime = DateTime.UtcNow;
@@ -93,13 +98,17 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+
+            var projectTask = await _context.ProjectTasks
+                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
 
             projectTask.Title = dto.Title;
+
             if (projectTask.Status != dto.Status)
             {
                 projectTask.EditTime = DateTime.UtcNow;
             }
+
             projectTask.Status = dto.Status;
             projectTask.Description = dto.Description;
             projectTask.Category = dto.Category;
@@ -113,11 +122,15 @@ namespace backend.Repository
         public async Task DeleteProjectTask(int projectTaskId)
         {
             var userId = _userContextRepository.GetUserId;
+
             if (userId == null)
             {
                 throw new NotFoundException("User not found");
             }
-            var projectTask = await _context.ProjectTasks.SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+
+            var projectTask = await _context.ProjectTasks
+                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+
             _context.Remove(projectTask);
             await _context.SaveChangesAsync();
         }
