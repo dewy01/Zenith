@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './component/Router';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
@@ -9,6 +10,8 @@ import { enGB } from 'date-fns/locale';
 import { handleSettings } from './Theme';
 import { makeStyles } from '@mui/styles';
 import { GroupProvider } from './context/GroupRole';
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 
 const useStyles = makeStyles({
   root: {
@@ -29,28 +32,44 @@ document.addEventListener(
   true,
 );
 
+async function dynamicActivate(locale: string) {
+  try {
+    const { messages } = await import(`./locales/${locale}.po`);
+    i18n.load(locale, messages);
+    i18n.activate(locale);
+  } catch (error) {
+    console.error('Error loading messages:', error);
+  }
+}
+
 const App = () => {
   const { theme, routes, language } = handleSettings();
   const classes = useStyles();
 
+  useEffect(() => {
+    dynamicActivate(language);
+  }, [language]);
+
   return (
-    <SnackbarProvider
-      preventDuplicate
-      anchorOrigin={snackbarOptions}
-      classes={{ containerRoot: classes.root }}
-    >
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-        <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <GroupProvider>
-              <Router routes={routes} />
-            </GroupProvider>
-            <CssBaseline />
-            <GlobalStyles styles={{ ...darkScrollbar() }} />
-          </BrowserRouter>
-        </ThemeProvider>
-      </LocalizationProvider>
-    </SnackbarProvider>
+    <I18nProvider i18n={i18n}>
+      <SnackbarProvider
+        preventDuplicate
+        anchorOrigin={snackbarOptions}
+        classes={{ containerRoot: classes.root }}
+      >
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+          <ThemeProvider theme={theme}>
+            <BrowserRouter>
+              <GroupProvider>
+                <Router routes={routes} />
+              </GroupProvider>
+              <CssBaseline />
+              <GlobalStyles styles={{ ...darkScrollbar() }} />
+            </BrowserRouter>
+          </ThemeProvider>
+        </LocalizationProvider>
+      </SnackbarProvider>
+    </I18nProvider>
   );
 };
 

@@ -20,6 +20,7 @@ import {
   deleteGroupProjectTask,
   mutateEditGroupProjectTask,
 } from '~/api/GroupProjectTask/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   task: GroupProjectTask;
@@ -119,7 +120,7 @@ export const DialogEdit = ({ task }: Props) => {
             alignItems: 'center',
           }}
         >
-          Edit {task.title}
+          <Trans id="Edit">Edit</Trans> {task.title}
           <IconButton onClick={handleDelete}>
             <DeleteOutlineIcon />
           </IconButton>
@@ -138,10 +139,10 @@ export const DialogEdit = ({ task }: Props) => {
               handleClose();
             }}
           >
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button type="submit" form="createtaskForm" color="info" autoFocus>
-            Edit
+            <Trans id="Edit">Edit</Trans>
           </Button>
         </DialogActions>
       </Dialog>

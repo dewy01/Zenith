@@ -12,6 +12,7 @@ import TitleIcon from '@mui/icons-material/Title';
 import TocIcon from '@mui/icons-material/Toc';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import { Trans } from '@lingui/react';
 
 type toggleProps = {
   value: string;
@@ -76,7 +77,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
           <TitleIcon />
           <TextField
             sx={{ flex: 1 }}
-            label="Title"
+            label={<Trans id="Title">Title</Trans>}
             ref={title.field.ref}
             value={title.field.value}
             onChange={title.field.onChange}
@@ -91,7 +92,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
           <TocIcon />
           <TextField
             sx={{ flex: 1 }}
-            label="Description"
+            label={<Trans id="Description">Description</Trans>}
             ref={desc.field.ref}
             value={desc.field.value}
             onChange={desc.field.onChange}

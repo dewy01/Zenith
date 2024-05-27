@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteNote } from '~/api/Notes/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   noteId: number | null;
@@ -42,17 +43,21 @@ export const DialogDelete = ({ noteId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Delete note?</DialogTitle>
+        <DialogTitle>
+          <Trans id="Delete note">Delete note</Trans>?
+        </DialogTitle>
         <DialogContent>
           <Alert severity="error">
-            Deleting this note means that all provided data will be lost.
+            <Trans id="Deleting this note means that all provided data will be lost.">
+              Deleting this note means that all provided data will be lost.
+            </Trans>
             <br />
-            Are you sure?
+            <Trans id="Are you sure">Are you sure</Trans>?
           </Alert>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             color="error"
@@ -62,7 +67,7 @@ export const DialogDelete = ({ noteId }: Props) => {
             }}
             autoFocus
           >
-            Delete
+            <Trans id="Delete">Delete</Trans>
           </Button>
         </DialogActions>
       </Dialog>

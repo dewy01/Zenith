@@ -11,6 +11,7 @@ import { groupProjectModel, groupProjectSchema } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateAddGroupProject } from '~/api/GroupProjects/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   groupId: number;
@@ -47,7 +48,7 @@ export const DialogCreate = ({ groupId }: Props) => {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + project
+        + <Trans id="Project">Project</Trans>
       </Button>
       <Dialog
         open={open}
@@ -59,13 +60,15 @@ export const DialogCreate = ({ groupId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create project</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Project">Create Project</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -73,7 +76,7 @@ export const DialogCreate = ({ groupId }: Props) => {
             color="success"
             autoFocus
           >
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

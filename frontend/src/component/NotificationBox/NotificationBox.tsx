@@ -14,6 +14,7 @@ import {
   mutateMarkAsRead,
 } from '~/api/Notifications/query';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import { Trans } from '@lingui/react';
 
 export const NotificationBox = () => {
   const { data } = getAllNotifications();
@@ -37,7 +38,7 @@ export const NotificationBox = () => {
               fontSize={20}
               sx={{ width: '33%', flexShrink: 0 }}
             >
-              Notifications
+              <Trans id="Notifications">Notifications</Trans>
             </Typography>
           </Box>
         </AccordionSummary>
@@ -90,7 +91,10 @@ const NotificationRow = ({ item, markAsRead }: Props) => {
           {item.dateTime.toString().split('T')[0]}
         </Typography>
       </Box>
-      <Tooltip title="Mark as read" placement="right">
+      <Tooltip
+        title={<Trans id="Mark as read">Mark as read</Trans>}
+        placement="right"
+      >
         <IconButton onClick={() => markAsRead(item.notificationID)}>
           <CheckOutlinedIcon />
         </IconButton>

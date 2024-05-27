@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react';
 import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { mutateAddGroup, mutateJoinGroup } from '~/api/Group/query';
@@ -34,7 +35,9 @@ export const NoGroupView = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography variant="h5">No group found</Typography>
+        <Typography variant="h5">
+          <Trans id="No group found">No group found</Trans>
+        </Typography>
         <Box display="flex" gap={5}>
           <Box display="flex" flexDirection="column" gap={2}>
             <Typography>Join a group</Typography>
@@ -43,18 +46,20 @@ export const NoGroupView = () => {
               onClick={() => JoinGroup({ token: token })}
               variant="contained"
             >
-              Join
+              <Trans id="Join">Join</Trans>
             </Button>
           </Box>
           <Divider orientation="vertical" />
           <Box display="flex" flexDirection="column" gap={2}>
-            <Typography>Create a group</Typography>
+            <Typography>
+              <Trans id="Create a group">Create a group</Trans>
+            </Typography>
             <TextField onChange={handleGroupChange} label="Name"></TextField>
             <Button
               onClick={() => AddGroup({ groupName: group })}
               variant="contained"
             >
-              Create
+              <Trans id="Create">Create</Trans>
             </Button>
           </Box>
         </Box>

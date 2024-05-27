@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import EditIcon from '@mui/icons-material/Edit';
 import { mutateEditProjectTodo } from '~/api/ProjectTodos/query';
 import { ProjectTodo } from '~/api/ProjectTodos/api';
+import { Trans } from '@lingui/react';
 
 type Props = {
   project: ProjectTodo;
@@ -76,13 +77,15 @@ export const DialogEdit = ({ project }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create Todo</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Todo">Create Todo</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -90,7 +93,7 @@ export const DialogEdit = ({ project }: Props) => {
             color="info"
             autoFocus
           >
-            Edit
+            <Trans id="Edit">Edit</Trans>
           </Button>
         </DialogActions>
       </Dialog>

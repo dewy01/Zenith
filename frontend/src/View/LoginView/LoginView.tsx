@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { NavLink } from 'react-router-dom';
 import { mutateUserLogin } from '~/api/User/query';
 import { DialogPassword } from '../RegisterView/PasswordRenew';
+import { Trans } from '@lingui/react';
 
 export const LoginView = () => {
   const form = useForm<loginFormSchema>({
@@ -39,11 +40,13 @@ export const LoginView = () => {
         <Stack gap={3}>
           <Box display={'flex'} gap={2} justifyContent={'center'}>
             <Avatar variant="square" alt="Omnify logo" src={Logo} />
-            <Typography variant="h4">Login</Typography>
+            <Typography variant="h4">
+              <Trans id="Login">Login</Trans>
+            </Typography>
           </Box>
           <LoginForm onSubmit={handleSubmit} formContext={form} />
           <Button type="submit" form={FORM_ID} variant="contained">
-            Login
+            <Trans id="Login">Login</Trans>
           </Button>
           <Box display={'flex'}>
             <DialogPassword />
@@ -53,7 +56,7 @@ export const LoginView = () => {
               component={NavLink}
               to={'/register'}
             >
-              Go to register
+              <Trans id="Go to register">Go to register</Trans>
             </Button>
           </Box>
         </Stack>

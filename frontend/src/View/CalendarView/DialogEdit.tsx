@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { mutateDeleteEvent, mutateEditEvent } from '~/api/Calendar/query';
 import { CalendarEvent } from '~/api/Calendar/api';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Trans } from '@lingui/react';
 
 type Props = {
   open: boolean;
@@ -72,7 +73,7 @@ export const DialogEdit = ({ open, setOpen, event }: Props) => {
           alignItems: 'center',
         }}
       >
-        Edit Event
+        <Trans id="Edit Event">Edit Event</Trans>
         <IconButton onClick={handleDelete}>
           <DeleteOutlineIcon />
         </IconButton>
@@ -82,10 +83,10 @@ export const DialogEdit = ({ open, setOpen, event }: Props) => {
       </DialogContent>
       <DialogActions>
         <Button color="inherit" onClick={handleClose}>
-          Cancel
+          <Trans id="Cancel">Cancel</Trans>
         </Button>
         <Button type="submit" form="createEventForm" color="info" autoFocus>
-          Edit
+          <Trans id="Edit">Edit</Trans>
         </Button>
       </DialogActions>
     </Dialog>

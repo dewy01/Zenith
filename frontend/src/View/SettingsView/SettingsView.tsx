@@ -14,6 +14,7 @@ import { LoadingView } from '../LoadingView/LoadingView';
 import CheckIcon from '@mui/icons-material/Check';
 import { makeStyles } from '@mui/styles';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
+import { Trans } from '@lingui/react';
 
 const routes: { [routeName: string]: boolean } = {
   ['Notes']: true,
@@ -94,7 +95,9 @@ export const SettingsView = () => {
     <>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h6">Settings</Typography>
+          <Typography variant="h6">
+            <Trans id="Settings">Settings</Trans>
+          </Typography>
         </Toolbar>
       </AppBar>
       <Box
@@ -111,7 +114,9 @@ export const SettingsView = () => {
       >
         <Paper sx={{ maxWidth: '370px', padding: 3 }}>
           <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>Primary color:</Typography>
+            <Typography fontWeight={'medium'}>
+              <Trans id="Primary color">Primary color</Trans>:
+            </Typography>
             <Box display="flex" gap={1}>
               {colors.map((item) => (
                 <Paper key={item.name} className={classes.paper} elevation={8}>
@@ -141,7 +146,9 @@ export const SettingsView = () => {
         </Paper>
         <Paper sx={{ maxWidth: '320px', padding: 3 }}>
           <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>Background color:</Typography>
+            <Typography fontWeight={'medium'}>
+              <Trans id="Background color">Background color</Trans>:
+            </Typography>
             <Box display="flex" gap={1}>
               {themeColor.map((item) => (
                 <Paper key={item.name} className={classes.paper} elevation={8}>
@@ -173,19 +180,21 @@ export const SettingsView = () => {
         </Paper>
         <Paper sx={{ maxWidth: '320px', padding: 3 }}>
           <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>Language:</Typography>
+            <Typography fontWeight={'medium'}>
+              <Trans id="Language">Language</Trans>:
+            </Typography>
             <ToggleButtonGroup value={settings?.language}>
               <ToggleButton
                 value={'en'}
                 onClick={() => handleClick({ language: 'en' })}
               >
-                English
+                <Trans id="English">English</Trans>
               </ToggleButton>
               <ToggleButton
                 value={'pl'}
                 onClick={() => handleClick({ language: 'pl' })}
               >
-                Polish
+                <Trans id="Polish">Polish</Trans>
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -201,35 +210,41 @@ export const SettingsView = () => {
           }}
         >
           <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>Reminder:</Typography>
+            <Typography fontWeight={'medium'}>
+              <Trans id="Reminder">Reminder</Trans>:
+            </Typography>
             <ToggleButtonGroup value={settings?.reminder}>
               <ToggleButton
                 value={3}
                 onClick={() => handleClick({ reminder: 3 })}
               >
-                3 Days
+                3 <Trans id="Days">Days</Trans>
               </ToggleButton>
               <ToggleButton
                 value={1}
                 onClick={() => handleClick({ reminder: 1 })}
               >
-                1 Day
+                1 <Trans id="Day">Day</Trans>
               </ToggleButton>
               <ToggleButton
                 value={0}
                 onClick={() => handleClick({ reminder: 0 })}
               >
-                None
+                <Trans id="None">None</Trans>
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
           <Typography variant="caption" color="text.secondary">
-            Applied changes will be visible tomorrow
+            <Trans id="Applied changes will be visible tomorrow">
+              Applied changes will be visible tomorrow
+            </Trans>
           </Typography>
         </Paper>
 
         <Paper sx={{ maxWidth: '350px', padding: 3 }}>
-          <Typography fontWeight={'medium'}>Routes:</Typography>
+          <Typography fontWeight={'medium'}>
+            <Trans id="Routes">Routes</Trans>:
+          </Typography>
           {Object.entries(settings!.routes).map(([routeName, isChecked]) => (
             <CheckboxOption
               key={routeName}
@@ -253,7 +268,9 @@ export const SettingsView = () => {
             alignItems: 'center',
           }}
         >
-          <Typography fontWeight={'medium'}>Delete account:</Typography>
+          <Typography fontWeight={'medium'}>
+            <Trans id="Delete account">Delete account</Trans>:
+          </Typography>
           <DeleteAccountDialog />
         </Paper>
       </Box>

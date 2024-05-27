@@ -9,6 +9,7 @@ import {
 import { groupProjectModel } from './schema';
 import { Controller, UseFormReturn, useController } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Trans } from '@lingui/react';
 
 type Props = {
   onSubmit: (value: groupProjectModel) => void;
@@ -52,7 +53,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
       <Box display={'flex'} flexDirection={'column'} gap={2}>
         <Box display={'flex'} gap={1}>
           <TextField
-            label="Title"
+            label={<Trans id="Title">Title</Trans>}
             ref={title.field.ref}
             value={title.field.value}
             onChange={title.field.onChange}
@@ -62,23 +63,31 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
             helperText={errors.title?.message}
           />
           <FormControl sx={{ width: '240px' }}>
-            <InputLabel>Status</InputLabel>
+            <InputLabel>
+              <Trans id="Status">Status</Trans>
+            </InputLabel>
             <Select
-              label="Status"
+              label={<Trans id="Status">Status</Trans>}
               name={status.field.name}
               value={status.field.value}
               onChange={status.field.onChange}
               onBlur={status.field.onBlur}
               inputRef={status.field.ref}
             >
-              <MenuItem value="on Hold">on Hold</MenuItem>
-              <MenuItem value="in Progress">in Progress</MenuItem>
-              <MenuItem value="Done">Done</MenuItem>
+              <MenuItem value="on Hold">
+                <Trans id="on Hold">on Hold</Trans>
+              </MenuItem>
+              <MenuItem value="in Progress">
+                <Trans id="in Progress">in Progress</Trans>
+              </MenuItem>
+              <MenuItem value="Done">
+                <Trans id="Done">Done</Trans>
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
         <TextField
-          label="Description"
+          label={<Trans id="Description">Description</Trans>}
           ref={desc.field.ref}
           value={desc.field.value}
           onChange={desc.field.onChange}
@@ -98,7 +107,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
                   helperText: errors.deadline?.message ?? undefined,
                 },
               }}
-              label="Deadline"
+              label={<Trans id="Deadline">Deadline</Trans>}
               value={deadline.field.value}
               onChange={deadline.field.onChange}
               disablePast

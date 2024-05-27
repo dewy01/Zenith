@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AddIcon from '@mui/icons-material/Add';
 import { mutateAddProjectTodo } from '~/api/ProjectTodos/query';
+import { Trans } from '@lingui/react';
 
 export const DialogCreate = () => {
   const [open, setOpen] = useState(false);
@@ -55,13 +56,15 @@ export const DialogCreate = () => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create Todo</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Todo">Create Todo</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -69,7 +72,7 @@ export const DialogCreate = () => {
             color="success"
             autoFocus
           >
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

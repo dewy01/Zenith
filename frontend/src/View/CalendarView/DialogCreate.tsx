@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { eventModel, eventSchema } from './schema';
 import { useForm } from 'react-hook-form';
 import { mutateAddEvent } from '~/api/Calendar/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   open: boolean;
@@ -54,16 +55,18 @@ export const DialogCreate = ({ open, setOpen, day }: Props) => {
         alignItems: 'center',
       }}
     >
-      <DialogTitle>New Event</DialogTitle>
+      <DialogTitle>
+        <Trans id="New Event">New Event</Trans>
+      </DialogTitle>
       <DialogContent>
         <CreateForm formContext={eventForm} onSubmit={handleSubmit} />
       </DialogContent>
       <DialogActions>
         <Button color="inherit" onClick={handleClose}>
-          Cancel
+          <Trans id="Cancel">Cancel</Trans>
         </Button>
         <Button type="submit" form="createEventForm" color="success" autoFocus>
-          Create
+          <Trans id="Create">Create</Trans>
         </Button>
       </DialogActions>
     </Dialog>

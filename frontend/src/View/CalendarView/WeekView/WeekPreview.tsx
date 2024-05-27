@@ -1,6 +1,5 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { DayCard } from '../MonthView/DayCard';
 import { useCalendar } from '~/context/CalendarContext';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';

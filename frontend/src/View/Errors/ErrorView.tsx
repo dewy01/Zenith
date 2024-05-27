@@ -1,6 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useRouteError } from "react-router-dom";
-import BlockIcon from "@mui/icons-material/Block";
+import { Box, Button, Typography } from '@mui/material';
+import { useRouteError } from 'react-router-dom';
+import BlockIcon from '@mui/icons-material/Block';
+import { Trans } from '@lingui/react';
 
 const handleError = (error: Error | string) => {
   if (error instanceof Error) {
@@ -18,19 +19,23 @@ export const ErrorView = () => {
   return (
     <Box
       sx={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
-      <BlockIcon color="error" sx={{ fontSize: 128, opacity: "0.7" }} />
-      <Typography variant="h5">Unexpected Error:</Typography>
+      <BlockIcon color="error" sx={{ fontSize: 128, opacity: '0.7' }} />
+      <Typography variant="h5">
+        <Trans id="Unexpected Error">Unexpected Error</Trans>:
+      </Typography>
       <Typography variant="h6">{handleError(error)}</Typography>
-      <Button onClick={refresh}>Try again</Button>
+      <Button onClick={refresh}>
+        <Trans id="Try again">Try again</Trans>
+      </Button>
     </Box>
   );
 };

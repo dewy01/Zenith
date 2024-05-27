@@ -8,6 +8,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EmailSection } from './EmailSection';
 import { mutateForgotPassword } from '~/api/User/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   onSubmit: (value: resetPasswordModel) => void;
@@ -54,11 +55,13 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
           onSubmit={handleSubmitPassword}
         />
         <Button variant="contained" type="submit" form="forgotForm">
-          Send Code
+          <Trans id="Send Code">Send Code</Trans>
         </Button>
       </Box>
       <Box display="flex" flexDirection="column" gap={2}>
-        <Typography>Input new data</Typography>
+        <Typography>
+          <Trans id="Input new data">Input new data</Trans>
+        </Typography>
         <Box
           display="flex"
           flexDirection="column"
@@ -70,7 +73,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
           })}
         >
           <TextField
-            label="Token"
+            label={<Trans id="Token">Token</Trans>}
             ref={resetToken.field.ref}
             onChange={resetToken.field.onChange}
             onBlur={resetToken.field.onBlur}
@@ -79,7 +82,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             helperText={errors.resetToken?.message}
           />
           <TextField
-            label="Password"
+            label={<Trans id="Password">Password</Trans>}
             type="password"
             ref={password.field.ref}
             onChange={password.field.onChange}
@@ -89,7 +92,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             helperText={errors.password?.message}
           />
           <TextField
-            label="Confirm Password"
+            label={<Trans id="Confirm Password">Confirm Password</Trans>}
             type="password"
             ref={passwordConfirm.field.ref}
             onChange={passwordConfirm.field.onChange}

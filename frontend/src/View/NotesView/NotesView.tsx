@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { formatDate } from '~/utils/dateTime';
 import { DialogDelete } from './DialogDelete';
 import { debounce } from 'lodash';
+import { Trans } from '@lingui/react';
 
 export const NotesView = () => {
   const [selectedNote, setSelectedNote] = useState<number | null>(null);
@@ -58,7 +59,9 @@ export const NotesView = () => {
             <IconButton onClick={() => mutateAsync()}>
               <AddIcon />
             </IconButton>
-            <Typography fontSize={24}>Notes</Typography>
+            <Typography fontSize={24}>
+              <Trans id="Notes">Notes</Trans>
+            </Typography>
             <DialogDelete noteId={selectedNote} />
           </Box>
           <SearchField onChange={handleFilter} placeholder="Search notes" />

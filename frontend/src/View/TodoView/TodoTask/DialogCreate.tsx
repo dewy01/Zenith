@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { CreateForm } from './CreateForm';
 import { mutateAddTodo } from '~/api/Todos/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   color: string;
@@ -63,7 +64,7 @@ export const DialogCreate = ({ color, projectId }: Props) => {
           color: theme.palette.getContrastText(color),
         })}
       >
-        Add new Task
+        <Trans id="Add new Task">Add new Task</Trans>
       </Button>
 
       <Dialog
@@ -76,16 +77,18 @@ export const DialogCreate = ({ color, projectId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create Task</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Task">Create Task</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={todoForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button type="submit" form="createTodoForm" color="success" autoFocus>
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

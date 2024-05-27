@@ -11,6 +11,7 @@ import { projectModel, projectSchema } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateAddProject } from '~/api/Projects/query';
+import { Trans } from '@lingui/react';
 
 export const DialogCreate = () => {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ export const DialogCreate = () => {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + project
+        + <Trans id="Project">Project</Trans>
       </Button>
       <Dialog
         open={open}
@@ -54,13 +55,15 @@ export const DialogCreate = () => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create project</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Project">Create Project</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -68,7 +71,7 @@ export const DialogCreate = () => {
             color="success"
             autoFocus
           >
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

@@ -11,6 +11,7 @@ import { TodoPreview } from './TodoPreview';
 import { ProjectTodo } from '~/api/ProjectTodos/api';
 import { DialogEdit } from './DialogEdit';
 import { debounce } from 'lodash';
+import { Trans } from '@lingui/react';
 
 export const TodoView = () => {
   const [selectedProject, setSelectedProject] = useState<
@@ -58,7 +59,9 @@ export const TodoView = () => {
             sx={{ maxHeight: '10vh' }}
           >
             <DialogCreate />
-            <Typography fontSize={24}>Todos</Typography>
+            <Typography fontSize={24}>
+              <Trans id="Todos">Todos</Trans>
+            </Typography>
             <DialogDelete todoId={selectedProject?.projectTodoID} />
           </Box>
           <SearchField onChange={handleFilter} placeholder="Search todos" />

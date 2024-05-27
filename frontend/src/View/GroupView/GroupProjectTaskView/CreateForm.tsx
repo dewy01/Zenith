@@ -11,6 +11,7 @@ import { taskModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
 import { GroupUser } from '~/api/Group/api';
 import { stringAvatar } from '~/utils/userAvatar';
+import { Trans } from '@lingui/react';
 
 const categories = [
   'Note',
@@ -70,7 +71,7 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
       <Box display={'flex'} flexDirection={'column'} gap={2}>
         <Box display={'flex'} gap={1}>
           <TextField
-            label="Title"
+            label={<Trans id="Title">Title</Trans>}
             ref={title.field.ref}
             value={title.field.value}
             onChange={title.field.onChange}
@@ -80,26 +81,36 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
             helperText={errors.title?.message}
           />
           <FormControl sx={{ width: '240px' }}>
-            <InputLabel>Status</InputLabel>
+            <InputLabel>
+              <Trans id="Status">Status</Trans>
+            </InputLabel>
             <Select
-              label="Status"
+              label={<Trans id="Status">Status</Trans>}
               name={status.field.name}
               value={status.field.value}
               onChange={status.field.onChange}
               onBlur={status.field.onBlur}
               inputRef={status.field.ref}
             >
-              <MenuItem value="Backlog">Backlog</MenuItem>
-              <MenuItem value="in Progress">in Progress</MenuItem>
-              <MenuItem value="For Review">For Review</MenuItem>
-              <MenuItem value="Closed">Closed</MenuItem>
+              <MenuItem value="Backlog">
+                <Trans id="Backlog">Backlog</Trans>
+              </MenuItem>
+              <MenuItem value="in Progress">
+                <Trans id="InProgress">In Progress</Trans>
+              </MenuItem>
+              <MenuItem value="For Review">
+                <Trans id="ForReview">For Review</Trans>
+              </MenuItem>
+              <MenuItem value="Closed">
+                <Trans id="Closed">Closed</Trans>
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
         <TextField
           rows={8}
           multiline
-          label="Description"
+          label={<Trans id="Description">Description</Trans>}
           ref={desc.field.ref}
           value={desc.field.value}
           onChange={desc.field.onChange}
@@ -110,9 +121,11 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
         />
         <Box display={'flex'} gap={1}>
           <FormControl sx={{ width: '240px' }}>
-            <InputLabel>Category</InputLabel>
+            <InputLabel>
+              <Trans id="Category">Category</Trans>
+            </InputLabel>
             <Select
-              label="Category"
+              label={<Trans id="Category">Category</Trans>}
               name={category.field.name}
               value={category.field.value}
               onChange={category.field.onChange}
@@ -120,14 +133,18 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
               inputRef={category.field.ref}
             >
               {categories.map((item) => (
-                <MenuItem value={item}>{item}</MenuItem>
+                <MenuItem value={item} key={item}>
+                  <Trans id={item}>{item}</Trans>
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl sx={{ width: '240px' }}>
-            <InputLabel>User</InputLabel>
+            <InputLabel>
+              <Trans id="User">User</Trans>
+            </InputLabel>
             <Select
-              label="User"
+              label={<Trans id="User">User</Trans>}
               name={userId.field.name}
               value={userId.field.value}
               onChange={userId.field.onChange}

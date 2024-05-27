@@ -10,12 +10,17 @@
     "tauri": "tauri",
     "lint": "eslint ./src/*",
     "lint:fix": "eslint --fix ",
-    "prepare": "husky"
+    "prepare": "husky",
+    "extract": "lingui extract"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.4",
+    "@lingui/conf": "^4.11.0",
+    "@lingui/core": "^4.11.0",
+    "@lingui/macro": "^4.11.0",
+    "@lingui/react": "^4.11.0",
     "@mdxeditor/editor": "^2.9.1",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
@@ -37,6 +42,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@lingui/cli": "^4.11.0",
+    "@lingui/vite-plugin": "^4.11.0",
     "@pnpm/eslint-config": "^1.1.0",
     "@tauri-apps/cli": "^1.5.8",
     "@types/lodash": "^4.14.202",
@@ -44,6 +51,7 @@
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "babel-plugin-macros": "^3.1.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",

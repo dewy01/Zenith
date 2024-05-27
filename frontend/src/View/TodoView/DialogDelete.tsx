@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteProjectTodo } from '~/api/ProjectTodos/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   todoId: number | undefined;
@@ -42,17 +43,21 @@ export const DialogDelete = ({ todoId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Delete Todo?</DialogTitle>
+        <DialogTitle>
+          <Trans id="Delete Todo">Delete Todo</Trans>?
+        </DialogTitle>
         <DialogContent>
           <Alert severity="error">
-            Deleting this Todo means that all provided data will be lost.
+            <Trans id="Deleting this Todo means that all provided data will be lost.">
+              Deleting this Todo means that all provided data will be lost.
+            </Trans>
             <br />
-            Are you sure?
+            <Trans id="Are you sure">Are you sure</Trans>?
           </Alert>
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             color="error"
@@ -62,7 +67,7 @@ export const DialogDelete = ({ todoId }: Props) => {
             }}
             autoFocus
           >
-            Delete
+            <Trans id="Delete">Delete</Trans>
           </Button>
         </DialogActions>
       </Dialog>

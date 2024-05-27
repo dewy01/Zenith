@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { mutateDeleteAccount } from '~/api/User/query';
+import { Trans } from '@lingui/react';
 
 export const DeleteAccountDialog = () => {
   const { mutateAsync: deleteAccount } = mutateDeleteAccount();
@@ -49,13 +50,17 @@ export const DeleteAccountDialog = () => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Delete account</DialogTitle>
+        <DialogTitle>
+          <Trans id=">Delete Account">Delete Account</Trans>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <Alert severity="error">
-              This action will remove your account and its whole data.
+              <Trans id="This action will remove your account and its whole data.">
+                This action will remove your account and its whole data.
+              </Trans>
               <br />
-              Are you sure?
+              <Trans id="Are you sure">Are you sure</Trans>?
             </Alert>
           </DialogContentText>
           <FormControlLabel
@@ -66,12 +71,12 @@ export const DeleteAccountDialog = () => {
                 onChange={handleCheckboxChange}
               />
             }
-            label="I'm sure"
+            label={<Trans id="Im sure">Im sure</Trans>}
           />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             color="error"
@@ -82,7 +87,7 @@ export const DeleteAccountDialog = () => {
             disabled={!confirmed}
             autoFocus
           >
-            Delete
+            <Trans id="Delete">Delete</Trans>
           </Button>
         </DialogActions>
       </Dialog>

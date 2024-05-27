@@ -13,6 +13,7 @@ import { CreateForm } from './CreateForm';
 import { getGroup } from '~/api/Group/query';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
 import { mutateAddGroupProjectTask } from '~/api/GroupProjectTask/query';
+import { Trans } from '@lingui/react';
 
 type Props = {
   projectId: number;
@@ -55,7 +56,7 @@ export const DialogCreate = ({ projectId }: Props) => {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + Project Task
+        + <Trans id="ProjectTask">Project Task</Trans>
       </Button>
       <Dialog
         open={open}
@@ -67,7 +68,9 @@ export const DialogCreate = ({ projectId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create project Task</DialogTitle>
+        <DialogTitle>
+          <Trans id="CreateProjectTask">Create Project Task</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm
             formContext={taskForm}
@@ -77,10 +80,10 @@ export const DialogCreate = ({ projectId }: Props) => {
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button type="submit" form="createtaskForm" color="success" autoFocus>
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Trans } from '@lingui/react';
 
 type Props = {
   projectId: number;
@@ -42,13 +43,20 @@ export const ProjectDelete = ({ projectId, onSubmit, mutateDelete }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Delete project?</DialogTitle>
+        <DialogTitle>
+          <Trans id="Delete project">Delete project</Trans>?
+        </DialogTitle>
         <DialogContent>
           <Alert severity="error">
-            Deleting this project means that all provided data and it's Tasks
-            will be lost.
+            <Trans
+              id="Deleting this project means that all provided data and it's Tasks
+            will be lost."
+            >
+              Deleting this project means that all provided data and it's Tasks
+              will be lost.
+            </Trans>
             <br />
-            Are you sure?
+            <Trans id="Are you sure">Are you sure</Trans>?
           </Alert>
         </DialogContent>
         <DialogActions>
@@ -59,7 +67,7 @@ export const ProjectDelete = ({ projectId, onSubmit, mutateDelete }: Props) => {
               onSubmit();
             }}
           >
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button
             color="error"
@@ -70,7 +78,7 @@ export const ProjectDelete = ({ projectId, onSubmit, mutateDelete }: Props) => {
             }}
             autoFocus
           >
-            Delete
+            <Trans id="Delete">Delete</Trans>
           </Button>
         </DialogActions>
       </Dialog>

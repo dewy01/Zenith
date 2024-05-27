@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { taskModel, taskSchema } from './schema';
 import { mutateAddProjectTask } from '~/api/ProjectTask/query';
 import { CreateForm } from './CreateForm';
+import { Trans } from '@lingui/react';
 
 type Props = {
   projectId: number;
@@ -47,7 +48,7 @@ export const DialogCreate = ({ projectId }: Props) => {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + Project Task
+        + <Trans id="Project Task">Project Task</Trans>
       </Button>
       <Dialog
         open={open}
@@ -59,16 +60,18 @@ export const DialogCreate = ({ projectId }: Props) => {
           alignItems: 'center',
         }}
       >
-        <DialogTitle>Create project Task</DialogTitle>
+        <DialogTitle>
+          <Trans id="Create Project Task">Create Project Task</Trans>
+        </DialogTitle>
         <DialogContent>
           <CreateForm formContext={taskForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            Cancel
+            <Trans id="Cancel">Cancel</Trans>
           </Button>
           <Button type="submit" form="createtaskForm" color="success" autoFocus>
-            Create
+            <Trans id="Create">Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

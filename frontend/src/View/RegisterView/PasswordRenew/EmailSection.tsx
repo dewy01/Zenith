@@ -1,6 +1,7 @@
 import { UseFormReturn, useController } from 'react-hook-form';
 import { forgotPasswordModel } from './schema';
 import { Box, TextField } from '@mui/material';
+import { Trans } from '@lingui/react';
 
 type Props = {
   onSubmit: (value: forgotPasswordModel) => void;
@@ -28,7 +29,7 @@ export const EmailSection = ({ onSubmit, formContext }: Props) => {
       })}
     >
       <TextField
-        label="Email"
+        label={<Trans id="Email">Email</Trans>}
         ref={email.field.ref}
         onChange={email.field.onChange}
         onBlur={email.field.onBlur}

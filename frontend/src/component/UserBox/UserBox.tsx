@@ -1,6 +1,7 @@
 import { Avatar, Box, Paper, Typography } from '@mui/material';
 import { MyAccount } from '~/api/User/api';
 import { stringAvatar } from '~/utils/userAvatar';
+import { Trans } from '@lingui/react';
 
 type Props = {
   user: MyAccount;
@@ -22,7 +23,9 @@ export const UserBox = ({ user }: Props) => {
         }}
         elevation={2}
       >
-        <Typography variant="h5">Account</Typography>
+        <Typography variant="h5">
+          <Trans id="Account">Account</Trans>
+        </Typography>
         <Box display="flex" gap={1} alignItems="center">
           <Typography
             sx={(theme) => ({
@@ -32,7 +35,7 @@ export const UserBox = ({ user }: Props) => {
             })}
             fontWeight={500}
           >
-            Username:
+            <Trans id="Username">Username</Trans>:
           </Typography>
           <Typography>{user?.username}</Typography>
         </Box>
@@ -45,7 +48,7 @@ export const UserBox = ({ user }: Props) => {
             })}
             fontWeight={500}
           >
-            Email:
+            <Trans id="Email">Email</Trans>:
           </Typography>
           <Typography>{user?.email}</Typography>
         </Box>
@@ -65,7 +68,9 @@ export const UserBox = ({ user }: Props) => {
           }}
           elevation={2}
         >
-          <Typography variant="h5">Group</Typography>
+          <Typography variant="h5">
+            <Trans id="Group">Group</Trans>
+          </Typography>
           <Box display="flex" gap={1} alignItems="center">
             <Typography
               sx={(theme) => ({
@@ -75,7 +80,7 @@ export const UserBox = ({ user }: Props) => {
               })}
               fontWeight={500}
             >
-              Name:
+              <Trans id="Name">Name</Trans>:
             </Typography>
             <Typography>{user?.groupName}</Typography>
           </Box>
@@ -88,7 +93,7 @@ export const UserBox = ({ user }: Props) => {
               })}
               fontWeight={500}
             >
-              Avatar:
+              <Trans id="Avatar">Avatar</Trans>:
             </Typography>
             <Avatar
               {...stringAvatar(user.username)}

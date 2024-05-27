@@ -1,6 +1,7 @@
 import { Box, Stack, TextField } from '@mui/material';
 import { UseFormReturn, useController } from 'react-hook-form';
 import { registerFormSchema } from './schema';
+import { Trans } from '@lingui/react';
 
 type registerFormProps = {
   onSubmit: (value: registerFormSchema) => void;
@@ -44,7 +45,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
       <Stack gap={2}>
         <TextField
           sx={{ width: '300px' }}
-          label="Username"
+          label={<Trans id="Username">Username</Trans>}
           autoFocus
           autoComplete="off"
           name={username.field.name}
@@ -58,7 +59,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
 
         <TextField
           sx={{ width: '300px' }}
-          label="Email"
+          label={<Trans id="Email">Email</Trans>}
           type="text"
           autoComplete="off"
           name={email.field.name}
@@ -72,7 +73,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
 
         <TextField
           sx={{ width: '300px' }}
-          label="Password"
+          label={<Trans id="Password">Password</Trans>}
           type="password"
           autoComplete="off"
           name={password.field.name}
@@ -86,7 +87,7 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
 
         <TextField
           sx={{ width: '300px' }}
-          label="Confirm Password"
+          label={<Trans id="Confirm Password">Confirm Password</Trans>}
           type="password"
           autoComplete="off"
           name={passwordConfirm.field.name}

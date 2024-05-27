@@ -1,0 +1,605 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-05-27 17:58+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/GroupUserCard.tsx:64
+msgid "Leave group"
+msgstr "Leave group"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/GroupUserCard.tsx:78
+msgid "Switch role ( User / Moderator )"
+msgstr "Switch role ( User / Moderator )"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:43
+#: src/component/GroupUserCard/SetAdminDialog.tsx:59
+msgid "Grant admin"
+msgstr "Grant admin"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:64
+msgid "Setting another user as admin will remove your current role."
+msgstr "Setting another user as admin will remove your current role."
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:68
+#: src/component/ProjectDeleteDialog/ProjectDelete.tsx:59
+#: src/View/NotesView/DialogDelete.tsx:55
+#: src/View/SettingsView/DeleteAccountDialog.tsx:63
+#: src/View/TodoView/DialogDelete.tsx:55
+msgid "Are you sure"
+msgstr "Are you sure"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:78
+#: src/View/SettingsView/DeleteAccountDialog.tsx:74
+msgid "Im sure"
+msgstr "Im sure"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:89
+#: src/component/ProjectDeleteDialog/ProjectDelete.tsx:70
+#: src/View/CalendarView/DialogCreate.tsx:66
+#: src/View/CalendarView/DialogEdit.tsx:86
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:83
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:142
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:71
+#: src/View/GroupView/GroupProjectView/DialogEdit.tsx:88
+#: src/View/NotesView/DialogCopy.tsx:78
+#: src/View/NotesView/DialogDelete.tsx:60
+#: src/View/ProjectTask/DialogCreate.tsx:71
+#: src/View/ProjectTask/DialogEdit.tsx:127
+#: src/View/ProjectView/DialogCreate.tsx:66
+#: src/View/ProjectView/DialogEdit.tsx:88
+#: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:73
+#: src/View/SettingsView/DeleteAccountDialog.tsx:79
+#: src/View/TodoView/DialogCreate.tsx:67
+#: src/View/TodoView/DialogDelete.tsx:60
+#: src/View/TodoView/DialogEdit.tsx:88
+#: src/View/TodoView/TodoTask/DialogCreate.tsx:88
+msgid "Cancel"
+msgstr "Cancel"
+
+#. js-lingui-explicit-id
+#: src/component/GroupUserCard/SetAdminDialog.tsx:100
+msgid "Grant"
+msgstr "Grant"
+
+#. js-lingui-explicit-id
+#: src/component/NotificationBox/NotificationBox.tsx:41
+msgid "Notifications"
+msgstr "Notifications"
+
+#. js-lingui-explicit-id
+#: src/component/NotificationBox/NotificationBox.tsx:95
+msgid "Mark as read"
+msgstr "Mark as read"
+
+#. js-lingui-explicit-id
+#: src/component/ProjectDeleteDialog/ProjectDelete.tsx:47
+msgid "Delete project"
+msgstr "Delete project"
+
+#. js-lingui-explicit-id
+#: src/component/ProjectDeleteDialog/ProjectDelete.tsx:51
+msgid ""
+"Deleting this project means that all provided data and it's Tasks\r\n"
+"            will be lost."
+msgstr ""
+"Deleting this project means that all provided data and it's Tasks\r\n"
+"            will be lost."
+
+#. js-lingui-explicit-id
+#: src/component/ProjectDeleteDialog/ProjectDelete.tsx:81
+#: src/View/NotesView/DialogDelete.tsx:70
+#: src/View/SettingsView/DeleteAccountDialog.tsx:90
+#: src/View/TodoView/DialogDelete.tsx:70
+msgid "Delete"
+msgstr "Delete"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:91
+#: src/View/NotesView/NotesView.tsx:63
+msgid "Notes"
+msgstr "Notes"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:99
+#: src/View/CalendarView/CalendarView.tsx:76
+msgid "Calendar"
+msgstr "Calendar"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:106
+msgid "To Do"
+msgstr "To Do"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:114
+#: src/View/ProjectView/ProjectView.tsx:31
+msgid "Projects"
+msgstr "Projects"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:126
+msgid "Group Projects"
+msgstr "Group Projects"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:138
+#: src/View/SettingsView/SettingsView.tsx:99
+msgid "Settings"
+msgstr "Settings"
+
+#. js-lingui-explicit-id
+#: src/component/Sidebar/Sidebar.tsx:142
+#: src/View/NoConnectionView/NoConnectionView.tsx:29
+msgid "Logout"
+msgstr "Logout"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/CalendarView.tsx:35
+msgid "Month reset"
+msgstr "Month reset"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/CalendarView.tsx:88
+msgid "Month"
+msgstr "Month"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/CalendarView.tsx:95
+msgid "Week"
+msgstr "Week"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/CreateForm.tsx:80
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:74
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:56
+#: src/View/ProjectTask/CreateForm.tsx:65
+#: src/View/ProjectView/CreateForm.tsx:56
+#: src/View/TodoView/CreateForm.tsx:43
+#: src/View/TodoView/TodoTask/CreateForm.tsx:43
+msgid "Title"
+msgstr "Title"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/CreateForm.tsx:95
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:113
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:90
+#: src/View/ProjectTask/CreateForm.tsx:104
+#: src/View/ProjectView/CreateForm.tsx:88
+#: src/View/TodoView/CreateForm.tsx:54
+#: src/View/TodoView/TodoTask/CreateForm.tsx:55
+msgid "Description"
+msgstr "Description"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/DialogCreate.tsx:59
+msgid "New Event"
+msgstr "New Event"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/DialogCreate.tsx:69
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:86
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:79
+#: src/View/GroupView/NoGroupView.tsx:62
+#: src/View/ProjectTask/DialogCreate.tsx:74
+#: src/View/ProjectView/DialogCreate.tsx:74
+#: src/View/TodoView/DialogCreate.tsx:75
+#: src/View/TodoView/TodoTask/DialogCreate.tsx:91
+msgid "Create"
+msgstr "Create"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/DialogEdit.tsx:76
+msgid "Edit Event"
+msgstr "Edit Event"
+
+#. js-lingui-explicit-id
+#: src/View/CalendarView/DialogEdit.tsx:89
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:123
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:145
+#: src/View/GroupView/GroupProjectView/DialogEdit.tsx:97
+#: src/View/ProjectTask/DialogEdit.tsx:112
+#: src/View/ProjectTask/DialogEdit.tsx:130
+#: src/View/ProjectView/DialogEdit.tsx:97
+#: src/View/TodoView/DialogEdit.tsx:96
+msgid "Edit"
+msgstr "Edit"
+
+#. js-lingui-explicit-id
+#: src/View/Errors/ErrorView.tsx:33
+msgid "Unexpected Error"
+msgstr "Unexpected Error"
+
+#. js-lingui-explicit-id
+#: src/View/Errors/ErrorView.tsx:37
+msgid "Try again"
+msgstr "Try again"
+
+#. js-lingui-explicit-id
+#: src/View/Errors/NotFoundView.tsx:21
+msgid "View not found"
+msgstr "View not found"
+
+#. js-lingui-explicit-id
+#: src/View/Errors/NotFoundView.tsx:24
+msgid "Return"
+msgstr "Return"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:85
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:88
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:67
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:70
+#: src/View/ProjectTask/CreateForm.tsx:76
+#: src/View/ProjectTask/CreateForm.tsx:79
+#: src/View/ProjectView/CreateForm.tsx:68
+msgid "Status"
+msgstr "Status"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:96
+#: src/View/ProjectTask/CreateForm.tsx:87
+msgid "Backlog"
+msgstr "Backlog"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:99
+#: src/View/ProjectTask/CreateForm.tsx:90
+msgid "InProgress"
+msgstr "InProgress"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:102
+#: src/View/ProjectTask/CreateForm.tsx:93
+msgid "ForReview"
+msgstr "ForReview"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:105
+#: src/View/ProjectTask/CreateForm.tsx:96
+msgid "Closed"
+msgstr "Closed"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:125
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:128
+#: src/View/ProjectTask/CreateForm.tsx:115
+#: src/View/ProjectTask/CreateForm.tsx:118
+msgid "Category"
+msgstr "Category"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:144
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:147
+msgid "User"
+msgstr "User"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:59
+msgid "ProjectTask"
+msgstr "ProjectTask"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:72
+msgid "CreateProjectTask"
+msgstr "CreateProjectTask"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:78
+#: src/View/ProjectView/CreateForm.tsx:76
+msgid "on Hold"
+msgstr "on Hold"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:81
+#: src/View/ProjectView/CreateForm.tsx:79
+msgid "in Progress"
+msgstr "in Progress"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:84
+#: src/View/ProjectView/CreateForm.tsx:82
+msgid "Done"
+msgstr "Done"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:110
+#: src/View/ProjectView/CreateForm.tsx:108
+msgid "Deadline"
+msgstr "Deadline"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:51
+#: src/View/ProjectView/DialogCreate.tsx:46
+msgid "Project"
+msgstr "Project"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:64
+#: src/View/ProjectView/DialogCreate.tsx:59
+msgid "Create Project"
+msgstr "Create Project"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/GroupProjectView/DialogEdit.tsx:75
+#: src/View/ProjectView/DialogEdit.tsx:75
+msgid "Edit Project"
+msgstr "Edit Project"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/NoGroupView.tsx:39
+msgid "No group found"
+msgstr "No group found"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/NoGroupView.tsx:49
+msgid "Join"
+msgstr "Join"
+
+#. js-lingui-explicit-id
+#: src/View/GroupView/NoGroupView.tsx:55
+msgid "Create a group"
+msgstr "Create a group"
+
+#. js-lingui-explicit-id
+#: src/View/LoginView/LoginForm.tsx:55
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:85
+#: src/View/RegisterView/RegisterForm.tsx:76
+msgid "Password"
+msgstr "Password"
+
+#. js-lingui-explicit-id
+#: src/View/LoginView/LoginView.tsx:44
+#: src/View/LoginView/LoginView.tsx:49
+msgid "Login"
+msgstr "Login"
+
+#. js-lingui-explicit-id
+#: src/View/LoginView/LoginView.tsx:59
+msgid "Go to register"
+msgstr "Go to register"
+
+#. js-lingui-explicit-id
+#: src/View/NoConnectionView/NoConnectionView.tsx:21
+msgid "Connection not established"
+msgstr "Connection not established"
+
+#. js-lingui-explicit-id
+#: src/View/NoConnectionView/NoConnectionView.tsx:26
+msgid "Retry"
+msgstr "Retry"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogCopy.tsx:43
+msgid "Copy from code"
+msgstr "Copy from code"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogCopy.tsx:59
+msgid "Copy note"
+msgstr "Copy note"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogCopy.tsx:65
+msgid "Action will create a new note"
+msgstr "Action will create a new note"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogCopy.tsx:73
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:76
+msgid "Token"
+msgstr "Token"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogCopy.tsx:90
+msgid "Copy"
+msgstr "Copy"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogDelete.tsx:47
+msgid "Delete note"
+msgstr "Delete note"
+
+#. js-lingui-explicit-id
+#: src/View/NotesView/DialogDelete.tsx:51
+msgid "Deleting this note means that all provided data will be lost."
+msgstr "Deleting this note means that all provided data will be lost."
+
+#. js-lingui-explicit-id
+#: src/View/ProjectTask/DialogCreate.tsx:51
+msgid "Project Task"
+msgstr "Project Task"
+
+#. js-lingui-explicit-id
+#: src/View/ProjectTask/DialogCreate.tsx:64
+msgid "Create Project Task"
+msgstr "Create Project Task"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:47
+#: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:63
+msgid "Renew Password"
+msgstr "Renew Password"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:76
+msgid "Confirm"
+msgstr "Confirm"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:58
+msgid "Send Code"
+msgstr "Send Code"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:63
+msgid "Input new data"
+msgstr "Input new data"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:95
+#: src/View/RegisterView/RegisterForm.tsx:90
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/RegisterView.tsx:46
+#: src/View/RegisterView/RegisterView.tsx:51
+msgid "Register"
+msgstr "Register"
+
+#. js-lingui-explicit-id
+#: src/View/RegisterView/RegisterView.tsx:54
+msgid "Go to login"
+msgstr "Go to login"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/DeleteAccountDialog.tsx:54
+msgid ">Delete Account"
+msgstr "Delete Account"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/DeleteAccountDialog.tsx:59
+msgid "This action will remove your account and its whole data."
+msgstr "This action will remove your account and its whole data."
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:118
+msgid "Primary color"
+msgstr "Primary color"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:150
+msgid "Background color"
+msgstr "Background color"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:184
+msgid "Language"
+msgstr "Language"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:191
+msgid "English"
+msgstr "English"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:197
+msgid "Polish"
+msgstr "Polish"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:214
+msgid "Reminder"
+msgstr "Reminder"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:221
+msgid "Days"
+msgstr "Days"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:227
+msgid "Day"
+msgstr "Day"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:233
+msgid "None"
+msgstr "None"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:238
+msgid "Applied changes will be visible tomorrow"
+msgstr "Applied changes will be visible tomorrow"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:246
+msgid "Routes"
+msgstr "Routes"
+
+#. js-lingui-explicit-id
+#: src/View/SettingsView/SettingsView.tsx:272
+msgid "Delete account"
+msgstr "Delete account"
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/DialogCreate.tsx:60
+#: src/View/TodoView/DialogEdit.tsx:81
+msgid "Create Todo"
+msgstr "Create Todo"
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/DialogDelete.tsx:47
+msgid "Delete Todo"
+msgstr "Delete Todo"
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/DialogDelete.tsx:51
+msgid "Deleting this Todo means that all provided data will be lost."
+msgstr "Deleting this Todo means that all provided data will be lost."
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/TodoTask/DialogCreate.tsx:67
+msgid "Add new Task"
+msgstr "Add new Task"
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/TodoTask/DialogCreate.tsx:81
+msgid "Create Task"
+msgstr "Create Task"
+
+#. js-lingui-explicit-id
+#: src/View/TodoView/TodoView.tsx:63
+msgid "Todos"
+msgstr "Todos"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:27
+msgid "Account"
+msgstr "Account"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:38
+#: src/View/RegisterView/RegisterForm.tsx:48
+msgid "Username"
+msgstr "Username"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:51
+#: src/View/LoginView/LoginForm.tsx:41
+#: src/View/RegisterView/PasswordRenew/EmailSection.tsx:32
+#: src/View/RegisterView/RegisterForm.tsx:62
+msgid "Email"
+msgstr "Email"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:72
+msgid "Group"
+msgstr "Group"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:83
+msgid "Name"
+msgstr "Name"
+
+#. js-lingui-explicit-id
+#: src/component/UserBox/UserBox.tsx:96
+msgid "Avatar"
+msgstr "Avatar"
