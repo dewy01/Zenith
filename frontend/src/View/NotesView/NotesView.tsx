@@ -95,7 +95,7 @@ export const NotesView = () => {
                       >
                         {note.title}
                       </Typography>
-                      <Typography variant="caption">
+                      <Typography variant="caption" color="text.secondary">
                         {formatDate(note.createdAt)}
                       </Typography>
                     </DrawerLink>

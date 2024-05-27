@@ -43,7 +43,7 @@ namespace backend.Controllers
         [Authorize]
         public async Task<ActionResult> toggleTodo(ToggleTodoDto dto,[FromRoute] int todoId)
         {
-            await _projectService.toggleDone(dto,todoId);
+            await _projectService.ToggleDone(dto,todoId);
             return Ok();
         }
 

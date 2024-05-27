@@ -54,6 +54,9 @@ export const handleSettings = () => {
       },
       typography: {
         fontFamily: 'Montserrat, sans-serif',
+        fontWeightRegular: 450, // Regular font weight
+        fontWeightMedium: 500,  // Medium font weight
+        fontWeightBold: 600,    // Bold font weight
       },
     });
 

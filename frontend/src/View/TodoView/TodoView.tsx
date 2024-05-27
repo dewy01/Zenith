@@ -102,19 +102,29 @@ export const TodoView = () => {
                       >
                         <Box flexGrow={1}>
                           <Typography
-                            sx={{
+                            sx={(theme) => ({
                               textWrap: 'wrap',
                               wordBreak: 'break-word',
-                            }}
+                              textDecoration: project.isDone
+                                ? 'line-through'
+                                : '',
+                              color: project.isDone
+                                ? theme.palette.text.secondary
+                                : '',
+                            })}
                           >
                             {project.title}
                           </Typography>
                           <Typography
                             variant="caption"
-                            sx={{
+                            sx={(theme) => ({
                               textWrap: 'wrap',
                               wordBreak: 'break-word',
-                            }}
+                              color: theme.palette.text.secondary,
+                              textDecoration: project.isDone
+                                ? 'line-through'
+                                : '',
+                            })}
                           >
                             {project.description}
                           </Typography>

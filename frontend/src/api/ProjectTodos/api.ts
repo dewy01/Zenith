@@ -5,6 +5,7 @@ export interface ProjectTodo {
   title: string;
   description: string;
   color: string;
+  isDone: boolean;
 }
 
 export interface AddProjectTodo {

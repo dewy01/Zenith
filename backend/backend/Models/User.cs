@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
@@ -11,12 +12,11 @@ namespace backend.Models
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int RoleId { get; set; }
+        public Roles Role { get; set; }
         public int? GroupID { get; set; }
 
         public virtual UserPreferences Preferences { get; set; }
         public virtual Group Group { get; set; }
-        public virtual Role Role { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<CalendarEvent> CalendarEvents { get; set; }

@@ -28,6 +28,7 @@ export const mutateToggleTodo = () => {
     mutationFn: (todo: ToggleTodo) => patchToggleTodo(todo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
+      queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
     },
   });
 };

@@ -23,13 +23,31 @@ export const UserBox = ({ user }: Props) => {
         elevation={2}
       >
         <Typography variant="h5">Account</Typography>
-        <Box display="flex" gap={1}>
-          <Typography fontWeight={500}>Username:</Typography>
-          <Typography fontWeight={300}>{user?.username}</Typography>
+        <Box display="flex" gap={1} alignItems="center">
+          <Typography
+            sx={(theme) => ({
+              backgroundColor: theme.palette.action.focus,
+              padding: 0.5,
+              borderRadius: 1,
+            })}
+            fontWeight={500}
+          >
+            Username:
+          </Typography>
+          <Typography>{user?.username}</Typography>
         </Box>
-        <Box display="flex" gap={1}>
-          <Typography fontWeight={500}>Email:</Typography>
-          <Typography fontWeight={300}>{user?.email}</Typography>
+        <Box display="flex" gap={1} alignItems="center">
+          <Typography
+            sx={(theme) => ({
+              backgroundColor: theme.palette.action.focus,
+              padding: 0.5,
+              borderRadius: 1,
+            })}
+            fontWeight={500}
+          >
+            Email:
+          </Typography>
+          <Typography>{user?.email}</Typography>
         </Box>
       </Paper>
       {user.groupName && (
@@ -48,12 +66,30 @@ export const UserBox = ({ user }: Props) => {
           elevation={2}
         >
           <Typography variant="h5">Group</Typography>
-          <Box display="flex" gap={1}>
-            <Typography fontWeight={500}>Name:</Typography>
-            <Typography fontWeight={300}>{user?.groupName}</Typography>
+          <Box display="flex" gap={1} alignItems="center">
+            <Typography
+              sx={(theme) => ({
+                backgroundColor: theme.palette.action.focus,
+                padding: 0.5,
+                borderRadius: 1,
+              })}
+              fontWeight={500}
+            >
+              Name:
+            </Typography>
+            <Typography>{user?.groupName}</Typography>
           </Box>
           <Box display="flex" gap={1} alignItems={'center'}>
-            <Typography fontWeight={500}>Avatar:</Typography>
+            <Typography
+              sx={(theme) => ({
+                backgroundColor: theme.palette.action.focus,
+                padding: 0.5,
+                borderRadius: 1,
+              })}
+              fontWeight={500}
+            >
+              Avatar:
+            </Typography>
             <Avatar
               {...stringAvatar(user.username)}
               style={{ width: 35, height: 35 }}

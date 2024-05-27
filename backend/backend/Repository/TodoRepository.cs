@@ -4,7 +4,6 @@ using backend.Models;
 using backend.Exceptions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 using backend.Dto.Todos;
 
 namespace backend.Repository
@@ -22,7 +21,6 @@ namespace backend.Repository
             _mapper = mapper;
         }
 
-
         public async Task<IEnumerable<TodoDto>> GetAllTodos(int projectId)
         {
             var userId = _userContextRepository.GetUserId;
@@ -36,11 +34,6 @@ namespace backend.Repository
                 .Where(x => x.ProjectTodo.UserID == userId && x.ProjectTodoID == projectId)
                 .ToListAsync();
 
-            if (todos.Count == 0)
-            {
-                return new List<TodoDto>();
-            }
-
             var todoDtos = _mapper.Map<List<TodoDto>>(todos);
             return todoDtos;
         }
@@ -48,7 +41,6 @@ namespace backend.Repository
         public async Task AddTodo(AddTodoDto dto)
         {
             var userId = _userContextRepository.GetUserId;
-
             if (userId == null)
             {
                 throw new NotFoundException("User not found");
@@ -64,50 +56,73 @@ namespace backend.Repository
 
             await _context.Todos.AddAsync(newTodo);
             await _context.SaveChangesAsync();
+
+            // Ensure project status is updated after adding a new todo
+            await ToggleProject(dto.ProjectTodoID);
         }
 
-        public async Task UpdateTodo(AddTodoDto dto, int projectId)
+        public async Task UpdateTodo(AddTodoDto dto, int todoId)
         {
             var userId = _userContextRepository.GetUserId;
-
             if (userId == null)
             {
                 throw new NotFoundException("User not found");
             }
 
             var todo = await _context.Todos
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == projectId);
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
 
-            if (dto.Title != null && dto.Title != "")
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo not found");
+            }
+
+            if (!string.IsNullOrEmpty(dto.Title))
             {
                 todo.Title = dto.Title;
+            }
+
+            if (!string.IsNullOrEmpty(dto.Description))
+            {
                 todo.Description = dto.Description;
             }
+
             todo.ProjectTodoID = dto.ProjectTodoID;
 
             _context.Todos.Update(todo);
             await _context.SaveChangesAsync();
+
+            // Ensure project status is updated after updating a todo
+            await ToggleProject(todo.ProjectTodoID);
         }
 
-        public async Task toggleDone(ToggleTodoDto dto, int projectId)
+        public async Task ToggleDone(ToggleTodoDto dto, int todoId)
         {
             var userId = _userContextRepository.GetUserId;
-
             if (userId == null)
             {
                 throw new NotFoundException("User not found");
             }
 
             var todo = await _context.Todos
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == projectId);
+                .Include(x => x.ProjectTodo)
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
+
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo not found");
+            }
 
             todo.IsDone = dto.isDone;
 
             _context.Todos.Update(todo);
             await _context.SaveChangesAsync();
+
+            // Ensure project status is updated after toggling todo completion
+            await ToggleProject(todo.ProjectTodoID);
         }
 
-        public async Task DeleteTodo(int projectId)
+        public async Task DeleteTodo(int todoId)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -116,10 +131,43 @@ namespace backend.Repository
             }
 
             var todo = await _context.Todos
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == projectId);
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
+
+            if (todo == null)
+            {
+                throw new NotFoundException("Todo not found");
+            }
+
+            var projectTodoId = todo.ProjectTodoID;
 
             _context.Remove(todo);
             await _context.SaveChangesAsync();
+
+            // Ensure project status is updated after deleting a todo
+            await ToggleProject(projectTodoId);
+        }
+
+        public async Task ToggleProject(int projectId)
+        {
+            var project = await _context.ProjectTodos
+                .Include(p => p.Todos)
+                .SingleOrDefaultAsync(x => x.ProjectTodoID == projectId);
+
+            if (project != null)
+            {
+                if (project.Todos.Count == 0)
+                {
+                    project.IsDone = false;
+                }
+                else
+                {
+                    var allTasksDone = project.Todos.All(x => x.IsDone);
+                    project.IsDone = allTasksDone;
+                }
+
+                _context.ProjectTodos.Update(project);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

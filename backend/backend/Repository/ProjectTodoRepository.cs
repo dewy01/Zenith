@@ -34,6 +34,8 @@ namespace backend.Repository
             var projects = await _context.ProjectTodos
                 .AsNoTracking()
                 .Where(x => x.UserID == userId)
+                .OrderBy(x => x.IsDone)
+                .ThenBy(x => x.ProjectTodoID)
                 .ToListAsync();
 
             if (projects.Count == 0)

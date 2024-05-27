@@ -53,13 +53,9 @@ namespace backend.Migrations
 
                     b.HasKey("EventID");
 
-                    b.HasIndex("NotificationID")
-                        .IsUnique()
-                        .HasFilter("[NotificationID] IS NOT NULL");
-
                     b.HasIndex("UserID");
 
-                    b.ToTable("CalendarEvents", (string)null);
+                    b.ToTable("CalendarEvents");
                 });
 
             modelBuilder.Entity("backend.Models.Group", b =>
@@ -82,7 +78,7 @@ namespace backend.Migrations
 
                     b.HasKey("GroupID");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProject", b =>
@@ -118,11 +114,7 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupID");
 
-                    b.HasIndex("NotificationID")
-                        .IsUnique()
-                        .HasFilter("[NotificationID] IS NOT NULL");
-
-                    b.ToTable("GroupProjects", (string)null);
+                    b.ToTable("GroupProjects");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProjectTask", b =>
@@ -164,7 +156,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("GroupProjectTasks", (string)null);
+                    b.ToTable("GroupProjectTasks");
                 });
 
             modelBuilder.Entity("backend.Models.GroupRole", b =>
@@ -182,7 +174,7 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("GroupRoles", (string)null);
+                    b.ToTable("GroupRoles");
                 });
 
             modelBuilder.Entity("backend.Models.KanbanTask", b =>
@@ -222,7 +214,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("KanbanTasks", (string)null);
+                    b.ToTable("KanbanTasks");
                 });
 
             modelBuilder.Entity("backend.Models.Note", b =>
@@ -257,7 +249,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Notes", (string)null);
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("backend.Models.Notification", b =>
@@ -293,7 +285,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Notification");
 
@@ -331,13 +323,9 @@ namespace backend.Migrations
 
                     b.HasKey("ProjectID");
 
-                    b.HasIndex("NotificationID")
-                        .IsUnique()
-                        .HasFilter("[NotificationID] IS NOT NULL");
-
                     b.HasIndex("UserID");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("backend.Models.ProjectTask", b =>
@@ -374,7 +362,7 @@ namespace backend.Migrations
 
                     b.HasIndex("ProjectID");
 
-                    b.ToTable("ProjectTasks", (string)null);
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("backend.Models.ProjectTodo", b =>
@@ -393,6 +381,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -404,24 +395,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("ProjectTodos", (string)null);
-                });
-
-            modelBuilder.Entity("backend.Models.Role", b =>
-                {
-                    b.Property<int>("RoleID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleID");
-
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("ProjectTodos");
                 });
 
             modelBuilder.Entity("backend.Models.Todo", b =>
@@ -450,7 +424,7 @@ namespace backend.Migrations
 
                     b.HasIndex("ProjectTodoID");
 
-                    b.ToTable("Todos", (string)null);
+                    b.ToTable("Todos");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -478,7 +452,7 @@ namespace backend.Migrations
                     b.Property<string>("PasswordResetToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -493,9 +467,7 @@ namespace backend.Migrations
 
                     b.HasIndex("GroupID");
 
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("backend.Models.UserPreferences", b =>
@@ -533,7 +505,7 @@ namespace backend.Migrations
                     b.HasIndex("UserID")
                         .IsUnique();
 
-                    b.ToTable("UserPreferences", (string)null);
+                    b.ToTable("UserPreferences");
                 });
 
             modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
@@ -542,6 +514,10 @@ namespace backend.Migrations
 
                     b.Property<int>("CalendarEventID")
                         .HasColumnType("int");
+
+                    b.HasIndex("CalendarEventID")
+                        .IsUnique()
+                        .HasFilter("[CalendarEventID] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("CalendarEventNotification");
                 });
@@ -553,6 +529,10 @@ namespace backend.Migrations
                     b.Property<int>("GroupProjectID")
                         .HasColumnType("int");
 
+                    b.HasIndex("GroupProjectID")
+                        .IsUnique()
+                        .HasFilter("[GroupProjectID] IS NOT NULL");
+
                     b.HasDiscriminator().HasValue("GroupProjectNotification");
                 });
 
@@ -563,23 +543,20 @@ namespace backend.Migrations
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
 
+                    b.HasIndex("ProjectID")
+                        .IsUnique()
+                        .HasFilter("[ProjectID] IS NOT NULL");
+
                     b.HasDiscriminator().HasValue("ProjectNotification");
                 });
 
             modelBuilder.Entity("backend.Models.CalendarEvent", b =>
                 {
-                    b.HasOne("backend.Models.CalendarEventNotification", "Notification")
-                        .WithOne("CalendarEvent")
-                        .HasForeignKey("backend.Models.CalendarEvent", "NotificationID")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("CalendarEvents")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -592,14 +569,7 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Models.GroupProjectNotification", "Notification")
-                        .WithOne("GroupProject")
-                        .HasForeignKey("backend.Models.GroupProject", "NotificationID")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Group");
-
-                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("backend.Models.GroupProjectTask", b =>
@@ -675,18 +645,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Project", b =>
                 {
-                    b.HasOne("backend.Models.ProjectNotification", "Notification")
-                        .WithOne("Project")
-                        .HasForeignKey("backend.Models.Project", "NotificationID")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Notification");
 
                     b.Navigation("User");
                 });
@@ -731,15 +694,7 @@ namespace backend.Migrations
                         .HasForeignKey("GroupID")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("backend.Models.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Group");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("backend.Models.UserPreferences", b =>
@@ -753,6 +708,44 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
+                {
+                    b.HasOne("backend.Models.CalendarEvent", "CalendarEvent")
+                        .WithOne("Notification")
+                        .HasForeignKey("backend.Models.CalendarEventNotification", "CalendarEventID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CalendarEvent");
+                });
+
+            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
+                {
+                    b.HasOne("backend.Models.GroupProject", "GroupProject")
+                        .WithOne("Notification")
+                        .HasForeignKey("backend.Models.GroupProjectNotification", "GroupProjectID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("GroupProject");
+                });
+
+            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
+                {
+                    b.HasOne("backend.Models.Project", "Project")
+                        .WithOne("Notification")
+                        .HasForeignKey("backend.Models.ProjectNotification", "ProjectID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("backend.Models.CalendarEvent", b =>
+                {
+                    b.Navigation("Notification");
+                });
+
             modelBuilder.Entity("backend.Models.Group", b =>
                 {
                     b.Navigation("GroupProjects");
@@ -763,21 +756,20 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.GroupProject", b =>
                 {
                     b.Navigation("GroupProjectTasks");
+
+                    b.Navigation("Notification");
                 });
 
             modelBuilder.Entity("backend.Models.Project", b =>
                 {
+                    b.Navigation("Notification");
+
                     b.Navigation("ProjectTasks");
                 });
 
             modelBuilder.Entity("backend.Models.ProjectTodo", b =>
                 {
                     b.Navigation("Todos");
-                });
-
-            modelBuilder.Entity("backend.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -796,24 +788,6 @@ namespace backend.Migrations
                     b.Navigation("ProjectTodos");
 
                     b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("backend.Models.CalendarEventNotification", b =>
-                {
-                    b.Navigation("CalendarEvent")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("backend.Models.GroupProjectNotification", b =>
-                {
-                    b.Navigation("GroupProject")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("backend.Models.ProjectNotification", b =>
-                {
-                    b.Navigation("Project")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

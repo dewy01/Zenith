@@ -93,7 +93,7 @@ namespace backend.Repository
             {
                 Email = dto.Email,
                 Username = dto.Username,
-                RoleId = 1,
+                Role = Enums.Roles.Unverified,
                 VerificationToken = CreateRandomToken()
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
@@ -156,7 +156,7 @@ namespace backend.Repository
         {
             var user = await _context.Users
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Email == dto.Email && x.Role.RoleName != "Unverified");
+                .SingleOrDefaultAsync(x => x.Email == dto.Email && x.Role != Enums.Roles.Unverified);
             if (user is null)
             {
                 throw new Exception("This email is not verified");
@@ -190,13 +190,12 @@ namespace backend.Repository
 
         public async Task<bool> VerifyEmail(string token)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => token == x.VerificationToken && x.Role.RoleName == "Unverified");
+            var user = await _context.Users.SingleOrDefaultAsync(x => token == x.VerificationToken && x.Role == Enums.Roles.Unverified);
             if (user is null)
             {
                 throw new Exception("User not found");
             }
-            Role role = await _context.Roles.SingleOrDefaultAsync(x => x.RoleName == "User");
-            user.RoleId = role.RoleID;
+            user.Role = Enums.Roles.User;
             _context.Update(user);
             await _context.SaveChangesAsync();
             return await Task.FromResult(true);

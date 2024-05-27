@@ -39,31 +39,6 @@ export const HomeView = () => {
         <Box sx={{ minWidth: '50vw' }}>
           <NotificationBox />
         </Box>
-
-        {/* <Paper
-          elevation={2}
-          sx={{
-            padding: 2,
-            flexGrow: 1,
-            width: '25vw',
-            minWidth: '20vw',
-            maxHeight: '45vh',
-            maxWidth: '25vw',
-          }}
-        >
-          <Box
-            textAlign={'center'}
-            sx={{ paddingBottom: 1.5, borderBottom: '1px solid' }}
-          >
-            <Typography fontWeight={500} fontSize={18}>
-              Scratch pad
-            </Typography>
-          </Box>
-          <Box padding={2}>
-            dsa sdasda sd
-            <samp>sdasda</samp>
-          </Box>
-        </Paper> */}
       </Box>
     </Box>
   );

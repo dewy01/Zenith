@@ -12,7 +12,6 @@ namespace backend.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTask> ProjectTasks { get; set; }
         public DbSet<Note> Notes { get; set; }
@@ -32,8 +31,6 @@ namespace backend.Data
             modelBuilder.Entity<User>()
                .HasKey(u => u.UserID);
 
-            modelBuilder.Entity<Role>()
-                .HasKey(r => r.RoleID);
 
             modelBuilder.Entity<Project>()
                 .HasKey(p => p.ProjectID);
@@ -182,19 +179,37 @@ namespace backend.Data
                  .HasOne(x => x.CalendarEvent)
                  .WithOne(x => x.Notification)
                  .HasForeignKey<CalendarEvent>(x => x.NotificationID)
-                 .OnDelete(DeleteBehavior.Cascade);
+                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GroupProjectNotification>()
                 .HasOne(x => x.GroupProject)
                 .WithOne(x => x.Notification)
                 .HasForeignKey<GroupProject>(x => x.NotificationID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<ProjectNotification>()
                 .HasOne(x => x.Project)
                 .WithOne(x => x.Notification)
                 .HasForeignKey<Project>(x => x.NotificationID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CalendarEvent>()
+                 .HasOne(x => x.Notification)
+                 .WithOne(x => x.CalendarEvent)
+                 .HasForeignKey<CalendarEventNotification>(x => x.CalendarEventID)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GroupProject>()
+                .HasOne(x => x.Notification)
+                .WithOne(x => x.GroupProject)
+                .HasForeignKey<GroupProjectNotification>(x => x.GroupProjectID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Project>()
+                .HasOne(x => x.Notification)
+                .WithOne(x => x.Project)
+                .HasForeignKey<ProjectNotification>(x => x.ProjectID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
 
