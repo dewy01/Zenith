@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { getNoteFromToken } from '~/api/Notes/query';
 import { queryClient } from '~/api/api';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const DialogCopy = () => {
   const [token, setToken] = useState<string>('');
@@ -40,7 +40,7 @@ export const DialogCopy = () => {
 
   return (
     <>
-      <Tooltip title={<Trans id="Copy from code">Copy from code</Trans>}>
+      <Tooltip title={<Trans>Copy from code</Trans>}>
         <IconButton onClick={handleClickOpen}>
           <ContentCopyIcon sx={{ height: 15, width: 15, color: 'darkgrey' }} />
         </IconButton>
@@ -56,26 +56,24 @@ export const DialogCopy = () => {
         }}
       >
         <DialogTitle>
-          <Trans id="Copy note">Copy note</Trans>
+          <Trans>Copy note</Trans>
         </DialogTitle>
         <DialogContent
           sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         >
           <Alert severity="info">
-            <Trans id="Action will create a new note">
-              Action will create a new note
-            </Trans>
+            <Trans>Action will create a new note</Trans>
           </Alert>
           <TextField
             value={token}
             onChange={handleTokenChange}
             fullWidth
-            label={<Trans id="Token">Token</Trans>}
+            label={<Trans>Token</Trans>}
           />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             color="info"
@@ -87,7 +85,7 @@ export const DialogCopy = () => {
             autoFocus
             disabled={token === ''}
           >
-            <Trans id="Copy">Copy</Trans>
+            <Trans>Copy</Trans>
           </Button>
         </DialogActions>
       </Dialog>

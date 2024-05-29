@@ -17,6 +17,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
 import { useGroupContext } from '~/context/GroupRole';
+import { Trans, t } from '@lingui/macro';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -63,7 +64,9 @@ export const GroupProjectView = () => {
   useEffect(() => {
     if (token && shareButtonClicked) {
       navigator.clipboard.writeText(token);
-      enqueueSnackbar(`Copied '${token}' to clipboard`);
+      enqueueSnackbar(
+        `${t({ message: 'Copied' })} ${token} ${t({ message: 'to clipboard' })}`,
+      );
       setShareButtonClicked(false);
     }
   }, [token, shareButtonClicked]);
@@ -88,7 +91,7 @@ export const GroupProjectView = () => {
           {isModerator && (
             <>
               <DialogCreate groupId={group.groupID} />
-              <Tooltip title="Invite users">
+              <Tooltip title={<Trans>Invite users</Trans>}>
                 <IconButton
                   onClick={() => {
                     getNewToken();
@@ -106,8 +109,8 @@ export const GroupProjectView = () => {
       </AppBar>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs variant="fullWidth" value={value} onChange={handleChange}>
-          <Tab label="Projects" />
-          <Tab label="Users" />
+          <Tab label={t({ message: 'Projects' })} />
+          <Tab label={t({ message: 'Users' })} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

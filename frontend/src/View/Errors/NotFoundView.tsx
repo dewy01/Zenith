@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const NotFoundView = () => {
   return (
@@ -18,10 +18,10 @@ export const NotFoundView = () => {
     >
       <HelpOutlineIcon color="error" sx={{ fontSize: 128, opacity: '0.7' }} />
       <Typography variant="h5">
-        <Trans id="View not found">View not found</Trans>
+        <Trans>View not found</Trans>
       </Typography>
       <Button component={NavLink} to="/home" variant="text">
-        <Trans id="Return">Return</Trans>
+        <Trans>Return</Trans>
       </Button>
     </Box>
   );

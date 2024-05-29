@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NavLink } from 'react-router-dom';
 import { mutateUserRegister } from '~/api/User/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const RegisterView = () => {
   const form = useForm<registerFormSchema>({
@@ -41,17 +41,17 @@ export const RegisterView = () => {
       <Paper sx={{ paddingY: 6, paddingX: 8 }} elevation={2}>
         <Stack gap={3}>
           <Box display={'flex'} gap={2} justifyContent={'center'}>
-            <Avatar variant="square" alt="Omnify logo" src={Logo} />
+            <Avatar variant="square" alt="Zenith logo" src={Logo} />
             <Typography variant="h4">
-              <Trans id="Register">Register</Trans>
+              <Trans>Register</Trans>
             </Typography>
           </Box>
           <RegisterForm onSubmit={handleSubmit} formContext={form} />
           <Button type="submit" form={FORM_ID} variant="contained">
-            <Trans id="Register">Register</Trans>
+            <Trans>Register</Trans>
           </Button>
           <Button color="inherit" component={NavLink} to={'/login'}>
-            <Trans id="Go to login">Go to login</Trans>
+            <Trans>Go to login</Trans>
           </Button>
         </Stack>
       </Paper>

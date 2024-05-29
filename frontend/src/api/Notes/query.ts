@@ -9,6 +9,7 @@ import {
   queryNoteFromToken,
   queryShareToken,
 } from './api';
+import { t } from '@lingui/macro';
 
 export const getAllNotes = () => {
   return useQuery({
@@ -31,7 +32,7 @@ export const mutateAddNote = () => {
     mutationKey: ['addNote'],
     mutationFn: postAddNote,
     onSuccess: () => {
-      enqueueSnackbar('Note added');
+      enqueueSnackbar(t({message:'Note added'}));
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
   });
@@ -66,7 +67,7 @@ export const deleteNote = () => {
     mutationKey: ['deleteNote'],
     mutationFn: (noteId: number) => deleteNoteById(noteId),
     onSuccess: () => {
-      enqueueSnackbar('Note deleted');
+      enqueueSnackbar(t({message:'Note deleted'}));
       queryClient.invalidateQueries({ queryKey: ['allNotes'] });
     },
   });

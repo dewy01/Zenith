@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { mutateDeleteAccount } from '~/api/User/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const DeleteAccountDialog = () => {
   const { mutateAsync: deleteAccount } = mutateDeleteAccount();
@@ -35,7 +35,7 @@ export const DeleteAccountDialog = () => {
 
   return (
     <>
-      <Tooltip title={'Delete account'}>
+      <Tooltip title={<Trans>Delete account</Trans>}>
         <Button color="error" variant="contained" onClick={handleClickOpen}>
           <PersonRemoveIcon />
         </Button>
@@ -51,16 +51,16 @@ export const DeleteAccountDialog = () => {
         }}
       >
         <DialogTitle>
-          <Trans id=">Delete Account">Delete Account</Trans>
+          <Trans>Delete Account</Trans>
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <Alert severity="error">
-              <Trans id="This action will remove your account and its whole data.">
+              <Trans>
                 This action will remove your account and its whole data.
               </Trans>
               <br />
-              <Trans id="Are you sure">Are you sure</Trans>?
+              <Trans>Are you sure </Trans>?
             </Alert>
           </DialogContentText>
           <FormControlLabel
@@ -71,12 +71,12 @@ export const DeleteAccountDialog = () => {
                 onChange={handleCheckboxChange}
               />
             }
-            label={<Trans id="Im sure">Im sure</Trans>}
+            label={<Trans>Im sure</Trans>}
           />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             color="error"
@@ -87,7 +87,7 @@ export const DeleteAccountDialog = () => {
             disabled={!confirmed}
             autoFocus
           >
-            <Trans id="Delete">Delete</Trans>
+            <Trans>Delete</Trans>
           </Button>
         </DialogActions>
       </Dialog>

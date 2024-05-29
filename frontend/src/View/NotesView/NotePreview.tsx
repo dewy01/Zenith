@@ -20,6 +20,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { enqueueSnackbar } from 'notistack';
 import { DialogCopy } from './DialogCopy';
+import { Trans, t } from '@lingui/macro';
 
 const useStyles = makeStyles({
   root: {
@@ -100,7 +101,9 @@ export const NotePreview = ({ noteId }: Props) => {
   useEffect(() => {
     if (token && shareButtonClicked) {
       navigator.clipboard.writeText(token);
-      enqueueSnackbar(`Copied '${token}' to clipboard`);
+      enqueueSnackbar(
+        `${t({ message: 'Copied' })} ${token} ${t({ message: 'to clipboard' })}`,
+      );
       setShareButtonClicked(false);
     }
   }, [token, shareButtonClicked]);
@@ -123,7 +126,7 @@ export const NotePreview = ({ noteId }: Props) => {
         </Typography>
       ) : (
         <TextField
-          placeholder="Note title"
+          placeholder={t({ message: 'Note title' })}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -181,7 +184,7 @@ export const NotePreview = ({ noteId }: Props) => {
           gap: 2,
         })}
       >
-        <Tooltip title="Share note">
+        <Tooltip title={<Trans>Share note</Trans>}>
           <IconButton
             onClick={() => {
               getNewToken();
@@ -199,7 +202,7 @@ export const NotePreview = ({ noteId }: Props) => {
               color="darkgrey"
               sx={{ userSelect: 'none' }}
             >
-              Saving
+              <Trans>Saving</Trans>
             </Typography>
             <AutorenewIcon sx={{ height: 15, width: 15, color: 'darkgrey' }} />
           </Box>
@@ -210,7 +213,7 @@ export const NotePreview = ({ noteId }: Props) => {
               color="darkgrey"
               sx={{ userSelect: 'none' }}
             >
-              Saved
+              {<Trans>Saved</Trans>}
             </Typography>
             <DoneAllIcon sx={{ height: 15, width: 15, color: 'darkgrey' }} />
           </Box>

@@ -17,7 +17,7 @@ import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
 import { WeekPreview } from './WeekView/WeekPreview';
 import { MonthsSection } from './MonthsSection';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 enum ViewMode {
   month,
@@ -32,7 +32,7 @@ export const CalendarView = () => {
   const handleReset = () => {
     setMonthAsNumber(dayjs().month());
     setWeekAsNumber(dayjs().diff(dayjs().startOf('month'), 'week'));
-    enqueueSnackbar(<Trans id="Month reset">Month reset</Trans>, {
+    enqueueSnackbar(<Trans>Month reset</Trans>, {
       autoHideDuration: 1000,
     });
   };
@@ -73,7 +73,7 @@ export const CalendarView = () => {
               <AddIcon />
             </IconButton>
             <Typography fontSize={24}>
-              <Trans id="Calendar">Calendar</Trans>
+              <Trans>Calendar</Trans>
             </Typography>
             <IconButton disabled={isSameMonth} onClick={handleReset}>
               <RestartAltIcon />
@@ -85,14 +85,14 @@ export const CalendarView = () => {
               value={ViewMode.month}
               onClick={() => setViewMode(ViewMode.month)}
             >
-              <Trans id="Month">Month</Trans>
+              <Trans>Month</Trans>
             </ToggleButton>
             <ToggleButton
               sx={{ width: '50%' }}
               value={ViewMode.week}
               onClick={() => setViewMode(ViewMode.week)}
             >
-              <Trans id="Week">Week</Trans>
+              <Trans>Week</Trans>
             </ToggleButton>
           </ToggleButtonGroup>
           <MonthsSection />

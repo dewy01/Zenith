@@ -18,6 +18,7 @@ import { useAuth } from '~/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { STATUS_CODE } from '../api';
 import { AxiosError } from 'axios';
+import { t } from '@lingui/macro';
 
 export const mutateUserRegister = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -26,7 +27,7 @@ export const mutateUserRegister = () => {
     mutationKey: ['register'],
     mutationFn: (userData: registerFormSchema) => postUserRegister(userData),
     onSuccess: () => {
-      enqueueSnackbar('Registration completed, now verify your email');
+      enqueueSnackbar(t({message:'Registration completed, now verify your email'}));
       navigate('/login', { replace: true });
     },
     onError: (err) => {
@@ -34,7 +35,7 @@ export const mutateUserRegister = () => {
         if (err.response?.status === STATUS_CODE.INTERNAL_SERVER_ERROR) {
           enqueueSnackbar({
             variant: 'error',
-            message: 'Email or username already in use',
+            message: t({message:'Email or username already in use'}),
           });
         }
       }
@@ -57,7 +58,7 @@ export const mutateUserLogin = () => {
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === STATUS_CODE.INTERNAL_SERVER_ERROR) {
-          enqueueSnackbar({ variant: 'error', message: 'Invalid credentials' });
+          enqueueSnackbar({ variant: 'error', message: t({message:'Invalid credentials'}) });
         }
       }
     },
@@ -70,7 +71,7 @@ export const mutateForgotPassword = () => {
     mutationKey: ['forgotPassword'],
     mutationFn: (userData: forgotPasswordModel) => postForgotPassword(userData),
     onSuccess: () => {
-      enqueueSnackbar('Reset token sent to email');
+      enqueueSnackbar(t({message:'Reset token sent to email'}));
     },
   });
 };
@@ -81,7 +82,7 @@ export const mutateResetPassword = () => {
     mutationKey: ['resetPassword'],
     mutationFn: (userData: resetPasswordModel) => postResetPassword(userData),
     onSuccess: () => {
-      enqueueSnackbar('Password renewed');
+      enqueueSnackbar(t({message:'Password renewed'}));
     },
   });
 };
@@ -93,7 +94,7 @@ export const mutateDeleteAccount = () => {
     mutationKey: ['deleteAccout'],
     mutationFn: () => postDeleteAccount(),
     onSuccess: () => {
-      enqueueSnackbar('Account deleted');
+      enqueueSnackbar(t({message:'Account deleted'}));
       logout();
     },
   });

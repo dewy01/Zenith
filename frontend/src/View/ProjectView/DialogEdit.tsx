@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateEditProject } from '~/api/Projects/query';
 import EditIcon from '@mui/icons-material/Edit';
 import { Project } from '~/api/Projects/api';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   project: Project;
@@ -72,7 +72,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
         }}
       >
         <DialogTitle>
-          <Trans id="Edit Project">Edit Project</Trans>
+          <Trans>Edit Project</Trans>
         </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
@@ -85,7 +85,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
               onSubmit();
             }}
           >
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -94,7 +94,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
             autoFocus
             onClick={onSubmit}
           >
-            <Trans id="Edit">Edit</Trans>
+            <Trans>Edit</Trans>
           </Button>
         </DialogActions>
       </Dialog>

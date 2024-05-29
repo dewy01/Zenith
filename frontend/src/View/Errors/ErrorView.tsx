@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useRouteError } from 'react-router-dom';
 import BlockIcon from '@mui/icons-material/Block';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 const handleError = (error: Error | string) => {
   if (error instanceof Error) {
@@ -30,11 +30,11 @@ export const ErrorView = () => {
     >
       <BlockIcon color="error" sx={{ fontSize: 128, opacity: '0.7' }} />
       <Typography variant="h5">
-        <Trans id="Unexpected Error">Unexpected Error</Trans>:
+        <Trans>Unexpected Error</Trans>:
       </Typography>
       <Typography variant="h6">{handleError(error)}</Typography>
       <Button onClick={refresh}>
-        <Trans id="Try again">Try again</Trans>
+        <Trans>Try again</Trans>
       </Button>
     </Box>
   );

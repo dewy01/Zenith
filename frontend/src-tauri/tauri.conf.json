@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Omnify",
+    "productName": "Zenith",
     "version": "0.0.1"
   },
   "tauri": {
@@ -21,7 +21,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Omnify",
+        "title": "Zenith",
         "label": "main",
         "width": 1150,
         "height": 750,

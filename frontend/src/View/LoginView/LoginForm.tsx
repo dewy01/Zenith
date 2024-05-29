@@ -1,7 +1,7 @@
 import { Box, Stack, TextField } from '@mui/material';
 import { UseFormReturn, useController } from 'react-hook-form';
 import { loginFormSchema } from './schema';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro'; // Changed import here
 
 type loginFormProps = {
   onSubmit: (value: loginFormSchema) => void;
@@ -38,7 +38,7 @@ export const LoginForm = ({ onSubmit, formContext }: loginFormProps) => {
         <TextField
           sx={{ width: '300px' }}
           autoFocus
-          label={<Trans id="Email">Email</Trans>}
+          label={<Trans>Email</Trans>}
           type="text"
           autoComplete="off"
           name={email.field.name}
@@ -52,7 +52,7 @@ export const LoginForm = ({ onSubmit, formContext }: loginFormProps) => {
 
         <TextField
           sx={{ width: '300px' }}
-          label={<Trans id="Password">Password</Trans>}
+          label={<Trans>Password</Trans>}
           type="password"
           autoComplete="off"
           name={password.field.name}

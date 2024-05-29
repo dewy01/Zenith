@@ -8,6 +8,7 @@ import {
   postAddEvent,
   queryEventBetween,
 } from './api';
+import { t } from "@lingui/macro" 
 
 export const getEventBetween = (pagination: EventPagination) => {
   return useQuery({
@@ -23,7 +24,7 @@ export const mutateAddEvent = () => {
     mutationKey: ['addEvent'],
     mutationFn: postAddEvent,
     onSuccess: () => {
-      enqueueSnackbar('Event added');
+      enqueueSnackbar(t({message:'Event added'}));
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
     },
   });
@@ -36,7 +37,7 @@ export const mutateEditEvent = () => {
     mutationKey: ['editEvent'],
     mutationFn: (event: EditEvent) => patchEditEvent(event),
     onSuccess: () => {
-      enqueueSnackbar('Event edited');
+      enqueueSnackbar(t({message:'Event edited'}));
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
     },
   });
@@ -49,7 +50,7 @@ export const mutateDeleteEvent = () => {
     mutationKey: ['deleteEvent'],
     mutationFn: (eventId: number) => deleteEvent(eventId),
     onSuccess: () => {
-      enqueueSnackbar('Event deleted');
+      enqueueSnackbar(t({message:'Event deleted'}));
       queryClient.invalidateQueries({ queryKey: ['eventBetween'] });
     },
   });

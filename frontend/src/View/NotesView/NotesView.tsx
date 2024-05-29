@@ -5,12 +5,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { SearchField } from '~/component/SearchField';
 import { DrawerLink } from './DrawerLink';
 import { getAllNotes, mutateAddNote } from '~/api/Notes/query';
-import { NotePreview } from './NotePreview';
 import { useEffect, useRef, useState } from 'react';
 import { formatDate } from '~/utils/dateTime';
 import { DialogDelete } from './DialogDelete';
 import { debounce } from 'lodash';
-import { Trans } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
+import { NotePreview } from './NotePreview';
 
 export const NotesView = () => {
   const [selectedNote, setSelectedNote] = useState<number | null>(null);
@@ -60,11 +60,14 @@ export const NotesView = () => {
               <AddIcon />
             </IconButton>
             <Typography fontSize={24}>
-              <Trans id="Notes">Notes</Trans>
+              <Trans>Notes</Trans>
             </Typography>
             <DialogDelete noteId={selectedNote} />
           </Box>
-          <SearchField onChange={handleFilter} placeholder="Search notes" />
+          <SearchField
+            onChange={handleFilter}
+            placeholder={t({ message: 'Search note' })}
+          />
           <List
             sx={{
               maxHeight: '90vh',

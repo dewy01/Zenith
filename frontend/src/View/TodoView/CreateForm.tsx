@@ -2,7 +2,7 @@ import { Box, TextField } from '@mui/material';
 import { projectModel } from './schema';
 import { Controller, UseFormReturn, useController } from 'react-hook-form';
 import { HexColorPicker } from 'react-colorful';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   onSubmit: (value: projectModel) => void;
@@ -40,7 +40,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
     >
       <Box display={'flex'} flexDirection={'column'} gap={2}>
         <TextField
-          label={<Trans id="Title">Title</Trans>}
+          label={<Trans>Title</Trans>}
           ref={title.field.ref}
           value={title.field.value}
           onChange={title.field.onChange}
@@ -51,7 +51,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
         />
 
         <TextField
-          label={<Trans id="Description">Description</Trans>}
+          label={<Trans>Description</Trans>}
           ref={desc.field.ref}
           value={desc.field.value}
           onChange={desc.field.onChange}

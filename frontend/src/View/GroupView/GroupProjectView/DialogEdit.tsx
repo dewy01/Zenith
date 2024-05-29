@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import EditIcon from '@mui/icons-material/Edit';
 import { mutateEditGroupProject } from '~/api/GroupProjects/query';
 import { GroupProject } from '~/api/Group/api';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   project: GroupProject;
@@ -41,6 +41,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
     },
     resolver: zodResolver(groupProjectSchema),
   });
+
   const { mutateAsync } = mutateEditGroupProject();
   const handleSubmit = (data: groupProjectModel) => {
     mutateAsync({
@@ -54,6 +55,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
     });
     projectForm.reset();
     handleClose();
+    onSubmit();
   };
 
   return (
@@ -72,29 +74,17 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
         }}
       >
         <DialogTitle>
-          <Trans id="Edit Project">Edit Project</Trans>
+          <Trans>Edit Project</Trans>
         </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
-          <Button
-            color="inherit"
-            onClick={() => {
-              handleClose();
-              onSubmit();
-            }}
-          >
-            <Trans id="Cancel">Cancel</Trans>
+          <Button color="inherit" onClick={handleClose}>
+            <Trans>Cancel</Trans>
           </Button>
-          <Button
-            type="submit"
-            form="groupProjectForm"
-            color="info"
-            autoFocus
-            onClick={onSubmit}
-          >
-            <Trans id="Edit">Edit</Trans>
+          <Button type="submit" form="groupProjectForm" color="info" autoFocus>
+            <Trans>Edit</Trans>
           </Button>
         </DialogActions>
       </Dialog>

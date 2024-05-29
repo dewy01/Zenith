@@ -9,6 +9,7 @@ import {
   queryProjectTodo,
   queryProjectTodoById,
 } from './api';
+import { t } from '@lingui/macro';
 
 export const getProjectTodos = () => {
   return useQuery({
@@ -32,7 +33,7 @@ export const mutateAddProjectTodo = () => {
     mutationFn: (projectTask: AddProjectTodo) =>
       postAddProjectTodo(projectTask),
     onSuccess: () => {
-      enqueueSnackbar('Todo added');
+      enqueueSnackbar(t({message:'Todo added'}));
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
     },
   });
@@ -46,7 +47,7 @@ export const mutateEditProjectTodo = () => {
     mutationFn: (projectTask: EditProjectTodo) =>
       postEditProjectTodo(projectTask),
     onSuccess: () => {
-      enqueueSnackbar('Todo edited');
+      enqueueSnackbar(t({message:'Todo edited'}));
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
@@ -60,7 +61,7 @@ export const deleteProjectTodo = () => {
     mutationKey: ['deleteProjectTodo'],
     mutationFn: (projectTaskId: number) => postDeleteProjectTodo(projectTaskId),
     onSuccess: () => {
-      enqueueSnackbar('Todo deleted');
+      enqueueSnackbar(t({message:'Todo deleted'}));
       queryClient.invalidateQueries({ queryKey: ['projectTodos'] });
     },
   });

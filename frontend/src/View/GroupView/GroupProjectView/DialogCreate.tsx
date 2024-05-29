@@ -11,7 +11,7 @@ import { groupProjectModel, groupProjectSchema } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateAddGroupProject } from '~/api/GroupProjects/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   groupId: number;
@@ -38,6 +38,7 @@ export const DialogCreate = ({ groupId }: Props) => {
     },
     resolver: zodResolver(groupProjectSchema),
   });
+
   const { mutateAsync } = mutateAddGroupProject();
   const handleSubmit = (data: groupProjectModel) => {
     mutateAsync(data);
@@ -48,7 +49,7 @@ export const DialogCreate = ({ groupId }: Props) => {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>
-        + <Trans id="Project">Project</Trans>
+        + <Trans>Project</Trans>
       </Button>
       <Dialog
         open={open}
@@ -61,14 +62,14 @@ export const DialogCreate = ({ groupId }: Props) => {
         }}
       >
         <DialogTitle>
-          <Trans id="Create Project">Create Project</Trans>
+          <Trans>Create Project</Trans>
         </DialogTitle>
         <DialogContent>
           <CreateForm formContext={projectForm} onSubmit={handleSubmit} />
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             type="submit"
@@ -76,7 +77,7 @@ export const DialogCreate = ({ groupId }: Props) => {
             color="success"
             autoFocus
           >
-            <Trans id="Create">Create</Trans>
+            <Trans>Create</Trans>
           </Button>
         </DialogActions>
       </Dialog>

@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { mutateSetAdmin } from '~/api/Group/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   userId: number;
@@ -40,7 +40,7 @@ export const SetAdminDialog = ({ userId }: Props) => {
 
   return (
     <>
-      <Tooltip title={<Trans id="Grant admin">Grant admin</Trans>}>
+      <Tooltip title={<Trans>Grant admin</Trans>}>
         <IconButton onClick={handleClickOpen}>
           <VerifiedUserIcon />
         </IconButton>
@@ -56,16 +56,16 @@ export const SetAdminDialog = ({ userId }: Props) => {
         }}
       >
         <DialogTitle>
-          <Trans id="Grant admin">Grant admin</Trans>?
+          <Trans>Grant admin</Trans>?
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <Alert severity="warning">
-              <Trans id="Setting another user as admin will remove your current role.">
+              <Trans>
                 Setting another user as admin will remove your current role.
               </Trans>
               <br />
-              <Trans id="Are you sure">Are you sure</Trans>?
+              <Trans>Are you sure</Trans>?
             </Alert>
             <FormControlLabel
               control={
@@ -75,7 +75,7 @@ export const SetAdminDialog = ({ userId }: Props) => {
                   onChange={handleCheckboxChange}
                 />
               }
-              label={<Trans id="Im sure">Im sure</Trans>}
+              label={<Trans>Im sure</Trans>}
             />
           </DialogContentText>
         </DialogContent>
@@ -86,7 +86,7 @@ export const SetAdminDialog = ({ userId }: Props) => {
               handleClose();
             }}
           >
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             color="warning"
@@ -97,7 +97,7 @@ export const SetAdminDialog = ({ userId }: Props) => {
             disabled={!confirmed}
             autoFocus
           >
-            <Trans id="Grant">Grant</Trans>
+            <Trans>Grant</Trans>
           </Button>
         </DialogActions>
       </Dialog>

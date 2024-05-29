@@ -19,7 +19,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { NavLink, useLocation } from 'react-router-dom';
 import { SIDEBAR_WIDTH } from '~/config/constants';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type DrawerProps = {
   link: string;
@@ -88,31 +88,25 @@ export const Sidebar = ({ routes }: RouterProps) => {
           </DrawerLink>
 
           {routes['Notes'] && (
-            <DrawerLink link="/notes" tooltip={<Trans id="Notes">Notes</Trans>}>
+            <DrawerLink link="/notes" tooltip={<Trans>Notes</Trans>}>
               <InsertDriveFileIcon />
             </DrawerLink>
           )}
 
           {routes['Calendar'] && (
-            <DrawerLink
-              link="/calendar"
-              tooltip={<Trans id="Calendar">Calendar</Trans>}
-            >
+            <DrawerLink link="/calendar" tooltip={<Trans>Calendar</Trans>}>
               <CalendarMonthIcon />
             </DrawerLink>
           )}
 
           {routes['Todo'] && (
-            <DrawerLink link="/todo" tooltip={<Trans id="To Do">To Do</Trans>}>
+            <DrawerLink link="/todo" tooltip={<Trans>To Do</Trans>}>
               <CheckBoxOutlinedIcon />
             </DrawerLink>
           )}
 
           {routes['Projects'] && (
-            <DrawerLink
-              link="/projects"
-              tooltip={<Trans id="Projects">Projects</Trans>}
-            >
+            <DrawerLink link="/projects" tooltip={<Trans>Projects</Trans>}>
               <ViewKanbanIcon />
             </DrawerLink>
           )}
@@ -121,10 +115,7 @@ export const Sidebar = ({ routes }: RouterProps) => {
 
           {routes['Group Projects'] && (
             <>
-              <DrawerLink
-                link="/group"
-                tooltip={<Trans id="Group Projects">Group Projects</Trans>}
-              >
+              <DrawerLink link="/group" tooltip={<Trans>Group Projects</Trans>}>
                 <PersonIcon />
               </DrawerLink>
               <Divider />
@@ -133,13 +124,10 @@ export const Sidebar = ({ routes }: RouterProps) => {
         </List>
       </Box>
       <List sx={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
-        <DrawerLink
-          link="/settings"
-          tooltip={<Trans id="Settings">Settings</Trans>}
-        >
+        <DrawerLink link="/settings" tooltip={<Trans>Settings</Trans>}>
           <SettingsIcon />
         </DrawerLink>
-        <DrawerLink link="/logout" tooltip={<Trans id="Logout">Logout</Trans>}>
+        <DrawerLink link="/logout" tooltip={<Trans>Logout</Trans>}>
           <LogoutIcon />
         </DrawerLink>
       </List>

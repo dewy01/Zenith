@@ -14,7 +14,7 @@ import { DialogCreate } from './DialogCreate';
 import { ProjectCard } from '~/component/ProjectCard';
 import { SearchField } from '~/component/SearchField';
 import { deriveBarColor } from '~/utils/deriveBarColor';
-import { Trans } from '@lingui/react';
+import { Trans, t } from '@lingui/macro';
 
 export const ProjectView = () => {
   const { data: projects, isLoading } = getAllProjects();
@@ -28,9 +28,9 @@ export const ProjectView = () => {
       <AppBar position="sticky">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h6" component="div">
-            <Trans id="Projects">Projects</Trans>
+            <Trans>Projects</Trans>
           </Typography>
-          <SearchField placeholder="Search projects" />
+          <SearchField placeholder={t({ message: 'Search projects' })} />
           <DialogCreate />
         </Toolbar>
       </AppBar>

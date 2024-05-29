@@ -1,3 +1,4 @@
+import { Trans, t } from '@lingui/macro';
 import { Box, Typography, List, Divider } from '@mui/material';
 import { debounce } from 'lodash';
 import { useRef, useState } from 'react';
@@ -29,9 +30,14 @@ export const UserTab = ({ users, groupId }: Props) => {
         gap={2}
         sx={{ padding: 4 }}
       >
-        <Typography variant="h5">Explore Users</Typography>
+        <Typography variant="h5">
+          <Trans>Explore Users</Trans>
+        </Typography>
         <Box display={'flex'} gap={2}>
-          <SearchField onChange={handleFilter} placeholder="Search users" />
+          <SearchField
+            onChange={handleFilter}
+            placeholder={t({ message: 'Search users' })}
+          />
         </Box>
       </Box>
       <List

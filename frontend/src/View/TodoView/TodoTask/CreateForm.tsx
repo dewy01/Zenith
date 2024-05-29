@@ -1,7 +1,7 @@
 import { Box, TextField } from '@mui/material';
 import { todoModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   onSubmit: (value: todoModel) => void;
@@ -41,7 +41,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
       <TextField
         fullWidth
         label={<Trans id="Title">Title</Trans>}
-        ref={title.field.ref}
+        inputRef={title.field.ref}
         value={title.field.value}
         onChange={title.field.onChange}
         onBlur={title.field.onBlur}
@@ -53,7 +53,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
       <TextField
         fullWidth
         label={<Trans id="Description">Description</Trans>}
-        ref={desc.field.ref}
+        inputRef={desc.field.ref}
         value={desc.field.value}
         onChange={desc.field.onChange}
         onBlur={desc.field.onBlur}

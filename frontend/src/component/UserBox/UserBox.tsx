@@ -1,7 +1,7 @@
 import { Avatar, Box, Paper, Typography } from '@mui/material';
 import { MyAccount } from '~/api/User/api';
 import { stringAvatar } from '~/utils/userAvatar';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   user: MyAccount;
@@ -24,7 +24,7 @@ export const UserBox = ({ user }: Props) => {
         elevation={2}
       >
         <Typography variant="h5">
-          <Trans id="Account">Account</Trans>
+          <Trans>Account</Trans>
         </Typography>
         <Box display="flex" gap={1} alignItems="center">
           <Typography
@@ -35,7 +35,7 @@ export const UserBox = ({ user }: Props) => {
             })}
             fontWeight={500}
           >
-            <Trans id="Username">Username</Trans>:
+            <Trans>Username</Trans>:
           </Typography>
           <Typography>{user?.username}</Typography>
         </Box>
@@ -48,7 +48,7 @@ export const UserBox = ({ user }: Props) => {
             })}
             fontWeight={500}
           >
-            <Trans id="Email">Email</Trans>:
+            <Trans>Email</Trans>:
           </Typography>
           <Typography>{user?.email}</Typography>
         </Box>
@@ -69,7 +69,7 @@ export const UserBox = ({ user }: Props) => {
           elevation={2}
         >
           <Typography variant="h5">
-            <Trans id="Group">Group</Trans>
+            <Trans>Group</Trans>
           </Typography>
           <Box display="flex" gap={1} alignItems="center">
             <Typography
@@ -80,7 +80,7 @@ export const UserBox = ({ user }: Props) => {
               })}
               fontWeight={500}
             >
-              <Trans id="Name">Name</Trans>:
+              <Trans>Name</Trans>:
             </Typography>
             <Typography>{user?.groupName}</Typography>
           </Box>
@@ -93,7 +93,7 @@ export const UserBox = ({ user }: Props) => {
               })}
               fontWeight={500}
             >
-              <Trans id="Avatar">Avatar</Trans>:
+              <Trans>Avatar</Trans>:
             </Typography>
             <Avatar
               {...stringAvatar(user.username)}

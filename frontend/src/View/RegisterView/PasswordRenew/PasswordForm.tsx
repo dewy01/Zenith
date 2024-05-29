@@ -8,7 +8,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EmailSection } from './EmailSection';
 import { mutateForgotPassword } from '~/api/User/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   onSubmit: (value: resetPasswordModel) => void;
@@ -55,12 +55,12 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
           onSubmit={handleSubmitPassword}
         />
         <Button variant="contained" type="submit" form="forgotForm">
-          <Trans id="Send Code">Send Code</Trans>
+          <Trans>Send Code</Trans>
         </Button>
       </Box>
       <Box display="flex" flexDirection="column" gap={2}>
         <Typography>
-          <Trans id="Input new data">Input new data</Trans>
+          <Trans>Input new data</Trans>
         </Typography>
         <Box
           display="flex"
@@ -73,7 +73,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
           })}
         >
           <TextField
-            label={<Trans id="Token">Token</Trans>}
+            label={<Trans>Token</Trans>}
             ref={resetToken.field.ref}
             onChange={resetToken.field.onChange}
             onBlur={resetToken.field.onBlur}
@@ -82,7 +82,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             helperText={errors.resetToken?.message}
           />
           <TextField
-            label={<Trans id="Password">Password</Trans>}
+            label={<Trans>Password</Trans>}
             type="password"
             ref={password.field.ref}
             onChange={password.field.onChange}
@@ -92,7 +92,7 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             helperText={errors.password?.message}
           />
           <TextField
-            label={<Trans id="Confirm Password">Confirm Password</Trans>}
+            label={<Trans>Confirm Password</Trans>}
             type="password"
             ref={passwordConfirm.field.ref}
             onChange={passwordConfirm.field.onChange}

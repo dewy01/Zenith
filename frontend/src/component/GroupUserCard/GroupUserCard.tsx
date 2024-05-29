@@ -14,7 +14,7 @@ import { mutateChangeRole, mutateLeaveGroup } from '~/api/Group/query';
 import { getGroupRole } from '~/utils/useGroupRoles';
 import { useGroupContext } from '~/context/GroupRole';
 import { SetAdminDialog } from './SetAdminDialog';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   user: GroupUser;
@@ -61,7 +61,7 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
       </List>
 
       {user.isMe && (
-        <Tooltip title={<Trans id="Leave group">Leave group</Trans>}>
+        <Tooltip title={<Trans>Leave group</Trans>}>
           <IconButton
             disabled={isGranted}
             onClick={() => leaveGroup({ groupID: groupId })}
@@ -73,13 +73,7 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
       {!user.isMe && isGranted && (
         <>
           <SetAdminDialog userId={user.userID} />
-          <Tooltip
-            title={
-              <Trans id="Switch role ( User / Moderator )">
-                Switch role ( User / Moderator )
-              </Trans>
-            }
-          >
+          <Tooltip title={<Trans>Switch role ( User / Moderator )</Trans>}>
             <IconButton onClick={() => changeRole({ userId: user.userID })}>
               <CompareArrowsIcon />
             </IconButton>

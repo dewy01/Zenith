@@ -1,3 +1,4 @@
+import { Trans, t } from '@lingui/macro';
 import {
   Box,
   Typography,
@@ -27,9 +28,11 @@ export const ProjectTab = () => {
         gap={2}
         sx={{ padding: 4 }}
       >
-        <Typography variant="h5">Explore projects</Typography>
+        <Typography variant="h5">
+          <Trans>Explore projects</Trans>
+        </Typography>
         <Box display={'flex'} gap={2}>
-          <SearchField placeholder="Search projects" />
+          <SearchField placeholder={t({ message: 'Search projects' })} />
         </Box>
       </Box>
       <List

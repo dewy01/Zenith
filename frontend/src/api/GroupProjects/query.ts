@@ -9,6 +9,7 @@ import {
   queryAllGroupProjects,
   queryGroupProjectID,
 } from './api';
+import { t } from '@lingui/macro';
 
 export const getAllGroupProjects = () => {
   return useQuery({
@@ -31,7 +32,7 @@ export const mutateAddGroupProject = () => {
     mutationKey: ['addGroupProject'],
     mutationFn: (project : groupProjectModel) => postAddGroupProject(project),
     onSuccess: () => {
-      enqueueSnackbar('Project added');
+      enqueueSnackbar(t({message:'Project added'}));
       queryClient.invalidateQueries({ queryKey: ['allGroupProjects'] });
     },
   });
@@ -44,7 +45,7 @@ export const mutateEditGroupProject = () => {
     mutationKey: ['editGroupProject'],
     mutationFn: (project:mutateProject) => editGroupProjectById(project),
     onSuccess: () => {
-      enqueueSnackbar('Project edited');
+      enqueueSnackbar(t({message:'Project edited'}));
       queryClient.invalidateQueries({ queryKey: ['groupProjectById'] });
       queryClient.invalidateQueries({ queryKey: ['allGroupProjects'] });
     },
@@ -58,7 +59,7 @@ export const deleteGroupProject = () => {
     mutationKey: ['deleteGroupProject'],
     mutationFn: (projectId: number) => deleteGroupProjectById(projectId),
     onSuccess: () => {
-      enqueueSnackbar('Project deleted');
+      enqueueSnackbar(t({message:'Project deleted'}));
       queryClient.invalidateQueries({ queryKey: ['allGroupProjects'] });
     },
   });

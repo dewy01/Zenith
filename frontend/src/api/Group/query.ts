@@ -17,6 +17,7 @@ import {
   setAdmin,
 } from './api';
 import { useGroupContext } from '~/context/GroupRole';
+import { t } from '@lingui/macro';
 
 export const getGroup = () => {
   return useQuery({
@@ -56,7 +57,7 @@ export const mutateAddGroup = () => {
     mutationKey: ['addGroup'],
     mutationFn: (group: AddGroup) => postAddGroup(group),
     onSuccess: () => {
-      enqueueSnackbar('Group created');
+      enqueueSnackbar(t({message:'Group created'}));
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
     },
@@ -70,12 +71,12 @@ export const mutateJoinGroup = () => {
     mutationKey: ['joinGroup'],
     mutationFn: (token: TokenDto) => postJoinGroup(token),
     onSuccess: () => {
-      enqueueSnackbar('Group joined');
+      enqueueSnackbar(t({message:'Group joined'}));
       queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
     },
     onError: () => {
-      enqueueSnackbar({ variant: 'error', message: 'Invalid group code' });
+      enqueueSnackbar({ variant: 'error', message: t({message:'Invalid group code'}) });
     },
   });
 };
@@ -87,8 +88,8 @@ export const mutateLeaveGroup = () => {
     mutationKey: ['leaveGroup'],
     mutationFn: (groupId: LeaveGroup) => postLeaveGroup(groupId),
     onSuccess: () => {
-      enqueueSnackbar('Group left');
-      queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
+      enqueueSnackbar(t({message:'Group left'}));
+      queryClient.invalidateQueries({ queryKey: ['getIsInGy67roup'] });
     },
   });
 };
@@ -100,7 +101,7 @@ export const mutateChangeRole = () => {
     mutationKey: ['changeRole'],
     mutationFn: (item: ChangeRole) => changeRole(item),
     onSuccess: () => {
-      enqueueSnackbar('Role changed');
+      enqueueSnackbar(t({message:'Role changed'}));
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
     },
   });
@@ -114,7 +115,7 @@ export const mutateSetAdmin = () => {
     mutationKey: ['setAdmin'],
     mutationFn: (item: ChangeRole) => setAdmin(item),
     onSuccess: () => {
-      enqueueSnackbar('Admin user changed');
+      enqueueSnackbar(t({message:'Admin user changed'}));
       setUserRole(GroupRole.User);
       queryClient.invalidateQueries({ queryKey: ['getGroup'] });
       queryClient.invalidateQueries({ queryKey: ['getOwnRole'] });

@@ -7,6 +7,7 @@ import {
   postAddTodo,
   postDeleteTodo,
 } from './api';
+import { t } from '@lingui/macro';
 
 export const mutateAddTodo = () => {
   const queryClient = useQueryClient();
@@ -15,7 +16,7 @@ export const mutateAddTodo = () => {
     mutationKey: ['addTodo'],
     mutationFn: (todo: AddTodo) => postAddTodo(todo),
     onSuccess: () => {
-      enqueueSnackbar('Todo added');
+      enqueueSnackbar(t({message:'Task added'}));
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
   });
@@ -40,7 +41,7 @@ export const deleteTodo = () => {
     mutationKey: ['deleteTodo'],
     mutationFn: (todoID: number) => postDeleteTodo(todoID),
     onSuccess: () => {
-      enqueueSnackbar('Task deleted');
+      enqueueSnackbar(t({message:'Task deleted'}));
       queryClient.invalidateQueries({ queryKey: ['projectTodoById'] });
     },
   });

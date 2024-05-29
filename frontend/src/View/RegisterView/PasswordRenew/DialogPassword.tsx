@@ -14,7 +14,7 @@ import { resetPasswordModel, resetPasswordSchema } from './schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateResetPassword } from '~/api/User/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const DialogPassword = () => {
   const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ export const DialogPassword = () => {
 
   return (
     <>
-      <Tooltip title={<Trans id="Renew Password">Renew Password</Trans>} arrow>
+      <Tooltip title={<Trans>Renew Password</Trans>} arrow>
         <IconButton onClick={handleClickOpen}>
           <AutorenewIcon />
         </IconButton>
@@ -60,7 +60,7 @@ export const DialogPassword = () => {
         }}
       >
         <DialogTitle>
-          <Trans id="Renew Password">Renew Password</Trans>
+          <Trans>Renew Password</Trans>
         </DialogTitle>
         <DialogContent>
           <PasswordForm
@@ -70,10 +70,10 @@ export const DialogPassword = () => {
         </DialogContent>
         <DialogActions>
           <Button color="inherit" onClick={handleClose}>
-            <Trans id="Cancel">Cancel</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button type="submit" form="resetForm" color="success">
-            <Trans id="Confirm">Confirm</Trans>
+            <Trans>Confirm</Trans>
           </Button>
         </DialogActions>
       </Dialog>

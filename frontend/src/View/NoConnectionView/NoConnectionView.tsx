@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 export const NoConnectionView = () => {
   return (
@@ -18,15 +18,13 @@ export const NoConnectionView = () => {
     >
       <CloudOffIcon color="inherit" sx={{ fontSize: 128, opacity: '0.7' }} />
       <Typography variant="h5">
-        <Trans id="Connection not established">
-          Connection not established
-        </Trans>
+        <Trans>Connection not established</Trans>
       </Typography>
       <Button component={NavLink} to="/home" variant="text">
-        <Trans id="Retry">Retry</Trans>
+        <Trans>Retry</Trans>
       </Button>
       <Button component={NavLink} to="/logout" variant="text">
-        <Trans id="Logout">Logout</Trans>
+        <Trans>Logout</Trans>
       </Button>
     </Box>
   );

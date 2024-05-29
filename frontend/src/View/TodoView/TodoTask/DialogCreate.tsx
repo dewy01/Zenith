@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { CreateForm } from './CreateForm';
 import { mutateAddTodo } from '~/api/Todos/query';
-import { Trans } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 
 type Props = {
   color: string;
