@@ -12,10 +12,11 @@ import { makeStyles } from '@mui/styles';
 import { GroupProvider } from './context/GroupRole';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
+import { PdfProvider } from './context/PdfContext';
 
 const useStyles = makeStyles({
   root: {
-    bottom: 34,
+    bottom: 38,
   },
 });
 
@@ -61,7 +62,9 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <BrowserRouter>
               <GroupProvider>
-                <Router routes={routes} />
+                <PdfProvider>
+                  <Router routes={routes} />
+                </PdfProvider>
               </GroupProvider>
               <CssBaseline />
               <GlobalStyles styles={{ ...darkScrollbar() }} />

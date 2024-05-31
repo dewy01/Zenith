@@ -18,6 +18,7 @@ import { LogoutView } from '~/View/LogoutView';
 import { GroupProjectTaskView } from '~/View/GroupView/GroupProjectTaskView';
 import { HomeView } from '~/View/HomeView';
 import { NoConnectionView } from '~/View/NoConnectionView';
+import PdfPreview from '~/View/NotesView/PdfPreview';
 
 type Props = { children: ReactNode };
 
@@ -102,6 +103,15 @@ export const Router = ({ routes }: RouterProps) => {
             element={
               <PrivateRoute>
                 <NotesView />
+              </PrivateRoute>
+            }
+            errorElement={<ErrorView />}
+          />
+          <Route
+            path="/notes/preview"
+            element={
+              <PrivateRoute>
+                <PdfPreview />
               </PrivateRoute>
             }
             errorElement={<ErrorView />}

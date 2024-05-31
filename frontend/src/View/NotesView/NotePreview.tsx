@@ -9,7 +9,7 @@ import {
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { getNoteById, getShareToken, mutateEditNote } from '~/api/Notes/query';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { noteModel, noteSchema } from './schema';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,9 +18,13 @@ import { LoadingView } from '../LoadingView/LoadingView';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import IosShareIcon from '@mui/icons-material/IosShare';
+import PrintIcon from '@mui/icons-material/Print';
 import { enqueueSnackbar } from 'notistack';
 import { DialogCopy } from './DialogCopy';
 import { Trans, t } from '@lingui/macro';
+import { PdfContext } from '~/context/PdfContext';
+import { marked } from 'marked';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -39,6 +43,8 @@ type Props = {
 };
 
 export const NotePreview = ({ noteId }: Props) => {
+  const navigate = useNavigate();
+  const { setHtmlContent } = useContext(PdfContext);
   const { data: note, isLoading } = getNoteById(noteId);
   const { data: token, refetch: getNewToken } = getShareToken(noteId);
   const [shareButtonClicked, setShareButtonClicked] = useState(false);
@@ -110,6 +116,12 @@ export const NotePreview = ({ noteId }: Props) => {
 
   const classes = useStyles();
 
+  const handlePrint = async () => {
+    const html = await marked.parse(content.field.value);
+    setHtmlContent(html);
+    navigate('/notes/preview', { relative: 'path' });
+  };
+
   if (isLoading || note === undefined) {
     return <LoadingView />;
   }
@@ -170,8 +182,9 @@ export const NotePreview = ({ noteId }: Props) => {
           backgroundColor: theme.palette.background.default,
           boxSizing: 'border-box',
           marginLeft: -2.7,
-          // borderTop: '1px solid',
-          // borderColor: theme.palette.action.focus,
+          outline: '1px solid',
+          borderRadius: '5px 0 0 0',
+          outlineColor: theme.palette.action.focus,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'flex-end',
@@ -184,6 +197,11 @@ export const NotePreview = ({ noteId }: Props) => {
           gap: 2,
         })}
       >
+        <Tooltip title={<Trans>Print note</Trans>}>
+          <IconButton onClick={handlePrint}>
+            <PrintIcon sx={{ height: 15, width: 15, color: 'darkgrey' }} />
+          </IconButton>
+        </Tooltip>
         <Tooltip title={<Trans>Share note</Trans>}>
           <IconButton
             onClick={() => {
