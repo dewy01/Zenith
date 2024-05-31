@@ -10,6 +10,14 @@ export const dark = createTheme({
   palette: {
     mode: 'dark',
     primary: blue,
+    background: {
+      default: '#121212', 
+      paper: '#1D1D1D', 
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: grey[500],
+    },
   },
   typography: {
     fontFamily: 'Montserrat, sans-serif',
@@ -21,7 +29,12 @@ export const light = createTheme({
     mode: 'light',
     primary: blue,
     background: {
-      default: grey[50],
+      default: '#fafafa', 
+      paper: '#ffffff', 
+    },
+    text: {
+      primary: '#000000', 
+      secondary: grey[800], 
     },
   },
   typography: {
@@ -51,25 +64,39 @@ export const handleSettings = () => {
       palette: {
         mode: settings.theme as PaletteMode,
         primary: handleColor(settings.color),
+        background: settings.theme === 'dark' ? {
+          default: '#121212',
+          paper: '#1D1D1D',
+        } : {
+          default: '#fafafa',
+          paper: '#ffffff',
+        },
+        text: settings.theme === 'dark' ? {
+          primary: '#ffffff',
+          secondary: grey[500],
+        } : {
+          primary: '#000000',
+          secondary: grey[800],
+        },
       },
       typography: {
         fontFamily: 'Montserrat, sans-serif',
-        fontWeightRegular: 450, // Regular font weight
-        fontWeightMedium: 500,  // Medium font weight
-        fontWeightBold: 600,    // Bold font weight
+        fontWeightRegular: 450, 
+        fontWeightMedium: 500, 
+        fontWeightBold: 600,  
       },
     });
 
     return {
       theme: theme,
-      routes : settings.routes,
+      routes: settings.routes,
       language: settings.language
     };
   } else {
     return {
-      theme:dark,
-      routes:{},
+      theme: dark,
+      routes: {},
       language: 'en'
-    }
+    };
   }
 };

@@ -40,14 +40,20 @@ export const GroupProjectTaskView = () => {
       <Box>
         <AppBar position="sticky">
           <Toolbar>
-            <IconButton component={NavLink} to="/group">
+            <IconButton
+              sx={(theme) => ({
+                color: theme.palette.getContrastText(
+                  theme.palette.primary.main,
+                ),
+              })}
+              component={NavLink}
+              to="/group"
+            >
               <ArrowBackIcon />
             </IconButton>
             <Box sx={{ textDecoration: 'none', paddingLeft: 3, flexGrow: 1 }}>
-              <Typography variant="h6" color="text.primary">
-                {project.title}
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="h6">{project.title}</Typography>
+              <Typography variant="caption" sx={{ opacity: 0.8 }}>
                 {project.description}
               </Typography>
             </Box>

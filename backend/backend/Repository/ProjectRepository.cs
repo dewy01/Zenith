@@ -36,6 +36,11 @@ namespace backend.Repository
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserID == userId && x.ProjectID == projectId);
 
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
+
             var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x => x.EditTime);
             var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
             var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderBy(x => x.EditTime);

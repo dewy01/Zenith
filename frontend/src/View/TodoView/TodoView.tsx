@@ -12,6 +12,7 @@ import { ProjectTodo } from '~/api/ProjectTodos/api';
 import { DialogEdit } from './DialogEdit';
 import { debounce } from 'lodash';
 import { Trans, t } from '@lingui/macro';
+import { NoTodoView } from './NoTodoView';
 
 export const TodoView = () => {
   const [selectedProject, setSelectedProject] = useState<
@@ -156,7 +157,7 @@ export const TodoView = () => {
             projectId={selectedProject.projectTodoID}
           />
         ) : (
-          <></>
+          <NoTodoView />
         )}
       </Box>
     </Main>

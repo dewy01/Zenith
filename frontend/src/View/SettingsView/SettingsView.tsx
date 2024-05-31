@@ -2,6 +2,7 @@ import {
   AppBar,
   Box,
   Checkbox,
+  PaletteColorOptions,
   Paper,
   ToggleButton,
   ToggleButtonGroup,
@@ -14,7 +15,12 @@ import { LoadingView } from '../LoadingView/LoadingView';
 import CheckIcon from '@mui/icons-material/Check';
 import { makeStyles } from '@mui/styles';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
-import { Trans } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
+import { blue, green, purple, red } from '../../Theme/Color';
+
+type PaletteColorKey = keyof PaletteColorOptions;
+const getMainColor = (colorPalette: PaletteColorOptions) =>
+  colorPalette['500' as PaletteColorKey];
 
 const routes: { [routeName: string]: boolean } = {
   ['Notes']: true,
@@ -25,14 +31,14 @@ const routes: { [routeName: string]: boolean } = {
 };
 
 const colors = [
-  { name: 'blue', color: '#5AB4CF' },
-  { name: 'purple', color: '#B680BC' },
-  { name: 'green', color: '#5BD35B' },
-  { name: 'red', color: '#FD3C3C' },
+  { name: t({ message: 'blue' }), color: getMainColor(blue) },
+  { name: t({ message: 'purple' }), color: getMainColor(purple) },
+  { name: t({ message: 'green' }), color: getMainColor(green) },
+  { name: t({ message: 'red' }), color: getMainColor(red) },
 ];
 const themeColor = [
-  { name: 'light', color: '#f1f1f1' },
-  { name: 'dark', color: '#000000' },
+  { name: t({ message: 'light' }), color: '#f1f1f1' },
+  { name: t({ message: 'dark' }), color: '#000000' },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -201,7 +207,7 @@ export const SettingsView = () => {
         </Paper>
         <Paper
           sx={{
-            maxWidth: '370px',
+            maxWidth: '400px',
             display: 'flex',
             flexDirection: 'column',
             paddingX: 3,

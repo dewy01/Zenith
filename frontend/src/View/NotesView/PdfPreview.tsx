@@ -49,7 +49,13 @@ const PdfPreview: React.FC = () => {
     <Box>
       <AppBar position="relative">
         <Toolbar>
-          <IconButton component={NavLink} to="/notes">
+          <IconButton
+            sx={(theme) => ({
+              color: theme.palette.getContrastText(theme.palette.primary.main),
+            })}
+            component={NavLink}
+            to="/notes"
+          >
             <ArrowBackIcon />
           </IconButton>
           <Typography sx={{ paddingLeft: 3 }} variant="h6">

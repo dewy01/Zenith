@@ -11,6 +11,7 @@ import { DialogDelete } from './DialogDelete';
 import { debounce } from 'lodash';
 import { Trans, t } from '@lingui/macro';
 import { NotePreview } from './NotePreview';
+import { NoNoteView } from './NoNoteView';
 
 export const NotesView = () => {
   const [selectedNote, setSelectedNote] = useState<number | null>(null);
@@ -117,7 +118,7 @@ export const NotesView = () => {
         {selectedNote ? (
           <NotePreview key={selectedNote} noteId={selectedNote} />
         ) : (
-          <></>
+          <NoNoteView />
         )}
       </Box>
     </Main>

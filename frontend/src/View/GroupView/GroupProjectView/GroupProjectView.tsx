@@ -99,7 +99,14 @@ export const GroupProjectView = () => {
                   }}
                 >
                   <IosShareIcon
-                    sx={{ height: 20, width: 20, color: 'darkgrey' }}
+                    sx={(theme) => ({
+                      height: 20,
+                      width: 20,
+                      opacity: 0.5,
+                      color: theme.palette.getContrastText(
+                        theme.palette.primary.main,
+                      ),
+                    })}
                   />
                 </IconButton>
               </Tooltip>

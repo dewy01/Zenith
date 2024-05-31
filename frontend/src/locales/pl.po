@@ -34,7 +34,7 @@ msgstr "Dodaj zadanie"
 msgid "Admin user changed"
 msgstr "Zmiana admina"
 
-#: src/View/SettingsView/SettingsView.tsx:238
+#: src/View/SettingsView/SettingsView.tsx:244
 msgid "Applied changes will be visible tomorrow"
 msgstr "Wprowadzone zmiany będą widoczne jutro"
 
@@ -50,7 +50,7 @@ msgstr "Czy jesteś pewien"
 msgid "Avatar"
 msgstr "Awatar"
 
-#: src/View/SettingsView/SettingsView.tsx:150
+#: src/View/SettingsView/SettingsView.tsx:156
 msgid "Background color"
 msgstr "Kolor tła"
 
@@ -58,6 +58,10 @@ msgstr "Kolor tła"
 #: src/View/ProjectTask/CreateForm.tsx:87
 msgid "Backlog"
 msgstr "Backlog"
+
+#: src/View/SettingsView/SettingsView.tsx:34
+msgid "blue"
+msgstr "niebieski"
 
 #: src/component/Sidebar/Sidebar.tsx:97
 #: src/View/CalendarView/CalendarView.tsx:76
@@ -117,7 +121,7 @@ msgid "Connection not established"
 msgstr "Połączenie utracone"
 
 #: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:68
-#: src/View/NotesView/NotePreview.tsx:105
+#: src/View/NotesView/NotePreview.tsx:111
 msgid "Copied"
 msgstr "Skopiowano"
 
@@ -152,6 +156,14 @@ msgstr "Stwórz"
 msgid "Create a group"
 msgstr "Stwórz grupę"
 
+#: src/View/NotesView/NoNoteView.tsx:24
+msgid "Create a new note to see preview"
+msgstr "Stwórz nową notatkę aby zobaczyć podgląd"
+
+#: src/View/TodoView/NoTodoView.tsx:24
+msgid "Create a new todo to see preview"
+msgstr "Stwórz nowe todo aby zobaczyć podgląd"
+
 #: src/View/GroupView/GroupProjectView/DialogCreate.tsx:65
 #: src/View/ProjectView/DialogCreate.tsx:59
 msgid "Create Project"
@@ -172,11 +184,15 @@ msgstr "Stwórz zadanie"
 msgid "Create Todo"
 msgstr "Stwórz Todo"
 
-#: src/View/SettingsView/SettingsView.tsx:227
+#: src/View/SettingsView/SettingsView.tsx:41
+msgid "dark"
+msgstr "ciemny"
+
+#: src/View/SettingsView/SettingsView.tsx:233
 msgid "Day"
 msgstr "Dzień"
 
-#: src/View/SettingsView/SettingsView.tsx:221
+#: src/View/SettingsView/SettingsView.tsx:227
 msgid "Days"
 msgstr "Dni"
 
@@ -193,7 +209,7 @@ msgid "Delete"
 msgstr "Usuń"
 
 #: src/View/SettingsView/DeleteAccountDialog.tsx:38
-#: src/View/SettingsView/SettingsView.tsx:270
+#: src/View/SettingsView/SettingsView.tsx:276
 msgid "Delete account"
 msgstr "Usuń konto"
 
@@ -275,7 +291,7 @@ msgstr "Email"
 msgid "Email or username already in use"
 msgstr "Email lub nazwa w użyciu"
 
-#: src/View/SettingsView/SettingsView.tsx:191
+#: src/View/SettingsView/SettingsView.tsx:197
 msgid "English"
 msgstr "Angielski"
 
@@ -320,6 +336,10 @@ msgstr "Nadaj"
 #: src/component/GroupUserCard/SetAdminDialog.tsx:59
 msgid "Grant admin"
 msgstr "Nadaj admina"
+
+#: src/View/SettingsView/SettingsView.tsx:36
+msgid "green"
+msgstr "zielony"
 
 #: src/component/UserBox/UserBox.tsx:72
 msgid "Group"
@@ -376,13 +396,17 @@ msgstr "Zaproś użytkowników"
 msgid "Join"
 msgstr "Dołącz"
 
-#: src/View/SettingsView/SettingsView.tsx:184
+#: src/View/SettingsView/SettingsView.tsx:190
 msgid "Language"
 msgstr "Język"
 
 #: src/component/GroupUserCard/GroupUserCard.tsx:64
 msgid "Leave group"
 msgstr "Opuść grupę"
+
+#: src/View/SettingsView/SettingsView.tsx:40
+msgid "light"
+msgstr "jasny"
 
 #: src/View/LoginView/LoginView.tsx:44
 #: src/View/LoginView/LoginView.tsx:49
@@ -418,7 +442,15 @@ msgstr "Nowe wydarzenie"
 msgid "No group found"
 msgstr "Grupa nie znaleziona"
 
-#: src/View/SettingsView/SettingsView.tsx:233
+#: src/View/NotesView/NoNoteView.tsx:21
+msgid "No Note"
+msgstr "Brak notatki"
+
+#: src/View/TodoView/NoTodoView.tsx:21
+msgid "No Todo"
+msgstr "Brak Todo"
+
+#: src/View/SettingsView/SettingsView.tsx:239
 msgid "None"
 msgstr "Brak"
 
@@ -430,12 +462,12 @@ msgstr "Notatka dodana"
 msgid "Note deleted"
 msgstr "Notatka usunięta"
 
-#: src/View/NotesView/NotePreview.tsx:129
+#: src/View/NotesView/NotePreview.tsx:141
 msgid "Note title"
 msgstr "Tytuł notatki"
 
 #: src/component/Sidebar/Sidebar.tsx:91
-#: src/View/NotesView/NotesView.tsx:63
+#: src/View/NotesView/NotesView.tsx:64
 msgid "Notes"
 msgstr "Notatki"
 
@@ -462,13 +494,21 @@ msgstr "Hasło"
 msgid "Password renewed"
 msgstr "Hasło odnowione"
 
-#: src/View/SettingsView/SettingsView.tsx:197
+#: src/View/SettingsView/SettingsView.tsx:203
 msgid "Polish"
 msgstr "Polski"
 
-#: src/View/SettingsView/SettingsView.tsx:118
+#: src/View/NotesView/PdfPreview.tsx:62
+msgid "Preview"
+msgstr "Podgląd"
+
+#: src/View/SettingsView/SettingsView.tsx:124
 msgid "Primary color"
 msgstr "Kolor wiodący"
+
+#: src/View/NotesView/NotePreview.tsx:200
+msgid "Print note"
+msgstr "Wydrukuj"
 
 #: src/View/GroupView/GroupProjectView/DialogCreate.tsx:52
 #: src/View/ProjectView/DialogCreate.tsx:46
@@ -511,10 +551,22 @@ msgid "Project task edited"
 msgstr "Zadanie projektowe zedytowane"
 
 #: src/component/Sidebar/Sidebar.tsx:109
-#: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:112
+#: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:119
 #: src/View/ProjectView/ProjectView.tsx:31
 msgid "Projects"
 msgstr "Projekty"
+
+#: src/View/SettingsView/SettingsView.tsx:35
+#~ msgid "pruple"
+#~ msgstr "fioletowy"
+
+#: src/View/SettingsView/SettingsView.tsx:35
+msgid "purple"
+msgstr "fioletowy"
+
+#: src/View/SettingsView/SettingsView.tsx:37
+msgid "red"
+msgstr "czerwony"
 
 #: src/View/RegisterView/RegisterView.tsx:46
 #: src/View/RegisterView/RegisterView.tsx:51
@@ -525,7 +577,7 @@ msgstr "Zarejestruj"
 msgid "Registration completed, now verify your email"
 msgstr "Rejestracja pomyślna, teraz zweryfikuj email"
 
-#: src/View/SettingsView/SettingsView.tsx:214
+#: src/View/SettingsView/SettingsView.tsx:220
 msgid "Reminder"
 msgstr "Powiadomienie"
 
@@ -550,28 +602,28 @@ msgstr "Powrót"
 msgid "Role changed"
 msgstr "Rola zmieniona"
 
-#: src/View/SettingsView/SettingsView.tsx:244
+#: src/View/SettingsView/SettingsView.tsx:250
 msgid "Routes"
 msgstr "Ścieżki"
 
-#: src/View/NotesView/NotePreview.tsx:216
+#: src/View/NotesView/NotePreview.tsx:234
 msgid "Saved"
 msgstr "Zapisano"
 
-#: src/View/NotesView/NotePreview.tsx:205
+#: src/View/NotesView/NotePreview.tsx:223
 msgid "Saving"
 msgstr "Zapisywanie"
 
-#: src/View/NotesView/NotesView.tsx:69
+#: src/View/NotesView/NotesView.tsx:70
 msgid "Search note"
-msgstr "Szukaj notati"
+msgstr "Szukaj notatki"
 
 #: src/View/GroupView/GroupProjectView/ProjectTab.tsx:35
 #: src/View/ProjectView/ProjectView.tsx:33
 msgid "Search projects"
 msgstr "Szukaj projektu"
 
-#: src/View/TodoView/TodoView.tsx:69
+#: src/View/TodoView/TodoView.tsx:70
 msgid "Search todos"
 msgstr "Szukaj todo"
 
@@ -588,11 +640,11 @@ msgid "Setting another user as admin will remove your current role."
 msgstr "Ustawienie innego użytkownika jako admina usunie twoją rolę."
 
 #: src/component/Sidebar/Sidebar.tsx:127
-#: src/View/SettingsView/SettingsView.tsx:99
+#: src/View/SettingsView/SettingsView.tsx:105
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: src/View/NotesView/NotePreview.tsx:187
+#: src/View/NotesView/NotePreview.tsx:205
 msgid "Share note"
 msgstr "Udostępnij notatkę"
 
@@ -641,7 +693,7 @@ msgid "Title"
 msgstr "Tytuł"
 
 #: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:68
-#: src/View/NotesView/NotePreview.tsx:105
+#: src/View/NotesView/NotePreview.tsx:111
 msgid "to clipboard"
 msgstr "do schowka"
 
@@ -661,7 +713,7 @@ msgstr "Todo usunięte"
 msgid "Todo edited"
 msgstr "Todo zedytowane"
 
-#: src/View/TodoView/TodoView.tsx:63
+#: src/View/TodoView/TodoView.tsx:64
 msgid "Todos"
 msgstr "Todo"
 
@@ -688,7 +740,7 @@ msgstr "Użytkownik"
 msgid "Username"
 msgstr "Pseudonim"
 
-#: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:113
+#: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:120
 msgid "Users"
 msgstr "Użytkownicy"
 
