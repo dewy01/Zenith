@@ -5,7 +5,7 @@ namespace backend.Interface
 {
     public interface IProjectTodoRepository
     {
-        Task<IEnumerable<AllProjectsTodoDto>> GetAllProjects();
+        Task<ProjectsTodoDto> GetAllProjects();
         Task AddProject(AddProjectTodoDto project);
         Task UpdateProject(AddProjectTodoDto project, int projectId);
         Task DeleteProject(int projectId);

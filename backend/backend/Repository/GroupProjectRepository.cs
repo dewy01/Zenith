@@ -175,12 +175,16 @@ namespace backend.Repository
             project.Deadline = dto.Deadline;
             project.Description = dto.Description;
 
-            var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
-            notification.Message = $"{dto.Title} deadline is approaching on {dto.Deadline:MMMM dd, yyyy}.";
-            notification.DateTime = dto.Deadline;
-
             _context.GroupProjects.Update(project);
-            _context.Notifications.Update(notification);
+
+            var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
+            if (notification != null)
+            {
+                notification.Message = $"{dto.Title} deadline is approaching on {dto.Deadline:MMMM dd, yyyy}.";
+                notification.DateTime = dto.Deadline;
+                _context.Notifications.Update(notification);
+            }
+
             await _context.SaveChangesAsync();
         }
 
@@ -193,12 +197,14 @@ namespace backend.Repository
             }
             var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
             var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
-            _context.GroupProjects.Remove(project);
             var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
             if (notification != null)
             {
                 _context.Notifications.Remove(notification);
+  
             }
+
+            _context.GroupProjects.Remove(project);
             await _context.SaveChangesAsync();
         }
     }

@@ -1,38 +1,54 @@
-import { Box, List, Typography } from '@mui/material';
+import {
+  Box,
+  List,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import { getProjectTodos } from '~/api/ProjectTodos/query';
 import { Main } from '~/component/Main';
 import { SearchField } from '~/component/SearchField';
 import { SubDrawer } from '~/component/SubDrawer';
 import { useEffect, useRef, useState } from 'react';
-import { DrawerLink } from '../NotesView/DrawerLink';
 import { DialogCreate } from './DialogCreate';
 import { DialogDelete } from './DialogDelete';
 import { TodoPreview } from './TodoPreview';
 import { ProjectTodo } from '~/api/ProjectTodos/api';
-import { DialogEdit } from './DialogEdit';
 import { debounce } from 'lodash';
 import { Trans, t } from '@lingui/macro';
 import { NoTodoView } from './NoTodoView';
+import { TodoLink } from './TodoLink';
+
+enum ViewMode {
+  unfinished,
+  completed,
+}
 
 export const TodoView = () => {
+  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.unfinished);
   const [selectedProject, setSelectedProject] = useState<
     ProjectTodo | undefined
   >(undefined);
   const { data: projects } = getProjectTodos();
 
   useEffect(() => {
-    if (selectedProject && projects) {
-      const isStillPresent = projects.some(
+    const allProjects =
+      viewMode === ViewMode.unfinished
+        ? projects?.undoneProjects
+        : projects?.doneProjects;
+
+    if (selectedProject && allProjects) {
+      const isStillPresent = allProjects.some(
         (project) => project.projectTodoID === selectedProject.projectTodoID,
       );
       if (!isStillPresent) {
-        setSelectedProject(projects[0] ? projects[0] : undefined);
+        setSelectedProject(allProjects[0] ? allProjects[0] : undefined);
       }
     }
-    if (!selectedProject && projects) {
-      setSelectedProject(projects[0] ? projects[0] : undefined);
+    if (!selectedProject && allProjects) {
+      setSelectedProject(allProjects[0] ? allProjects[0] : undefined);
     }
-  }, [selectedProject, projects]);
+  }, [selectedProject, projects, viewMode]);
 
   const [filter, setFilter] = useState<string>('');
 
@@ -44,6 +60,12 @@ export const TodoView = () => {
     ),
   ).current;
 
+  const filteredProjects = projects
+    ? (viewMode === ViewMode.unfinished
+        ? projects.undoneProjects
+        : projects.doneProjects) || []
+    : [];
+
   return (
     <Main>
       <SubDrawer>
@@ -51,7 +73,7 @@ export const TodoView = () => {
           display={'flex'}
           flexDirection={'column'}
           gap={2}
-          sx={{ overflow: 'hidden' }}
+          sx={{ height: '100%', overflow: 'hidden' }}
         >
           <Box
             display={'flex'}
@@ -71,86 +93,55 @@ export const TodoView = () => {
           />
           <List
             sx={{
-              maxHeight: '90vh',
               overflowY: 'auto',
               display: 'flex',
               flexDirection: 'column',
               gap: 1,
+              flexGrow: 1,
             }}
           >
-            {projects ? (
-              projects
-                .filter((a) =>
-                  a.title
+            {filteredProjects.length > 0 ? (
+              filteredProjects
+                .filter((project) =>
+                  project.title
                     .toLocaleLowerCase()
                     .includes(filter.toLocaleLowerCase()),
                 )
                 .map((project) => (
-                  <Box
+                  <TodoLink
                     key={project.projectTodoID}
-                    onClick={() => setSelectedProject(project)}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    sx={{
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <DrawerLink
-                      key={project.projectTodoID}
-                      isActive={
-                        project.projectTodoID === selectedProject?.projectTodoID
-                      }
-                      color={project.color}
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Box flexGrow={1}>
-                          <Typography
-                            sx={(theme) => ({
-                              textWrap: 'wrap',
-                              wordBreak: 'break-word',
-                              textDecoration: project.isDone
-                                ? 'line-through'
-                                : '',
-                              color: project.isDone
-                                ? theme.palette.text.secondary
-                                : '',
-                            })}
-                          >
-                            {project.title}
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            sx={(theme) => ({
-                              textWrap: 'wrap',
-                              wordBreak: 'break-word',
-                              color: theme.palette.text.secondary,
-                              textDecoration: project.isDone
-                                ? 'line-through'
-                                : '',
-                            })}
-                          >
-                            {project.description}
-                          </Typography>
-                        </Box>
-                        {project.projectTodoID ===
-                          selectedProject?.projectTodoID && (
-                          <DialogEdit project={selectedProject} />
-                        )}
-                      </Box>
-                    </DrawerLink>
-                  </Box>
+                    project={project}
+                    selectedProject={selectedProject}
+                    setSelectedProject={setSelectedProject}
+                  />
                 ))
             ) : (
               <></>
             )}
           </List>
+          <ToggleButtonGroup value={viewMode}>
+            <ToggleButton
+              value={ViewMode.unfinished}
+              onClick={() => {
+                setViewMode(ViewMode.unfinished);
+              }}
+              sx={{ width: '50%' }}
+            >
+              Active
+            </ToggleButton>
+            <ToggleButton
+              value={ViewMode.completed}
+              onClick={() => {
+                setViewMode(ViewMode.completed);
+              }}
+              sx={{ width: '50%' }}
+            >
+              Done
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Box>
       </SubDrawer>
-      <Box>
+      <Box sx={{ flexGrow: 1 }}>
         {selectedProject ? (
           <TodoPreview
             key={selectedProject.projectTodoID}

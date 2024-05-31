@@ -179,7 +179,7 @@ export const NotePreview = ({ noteId }: Props) => {
       </Box>
       <Box
         sx={(theme) => ({
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: theme.palette.background.paper,
           boxSizing: 'border-box',
           marginLeft: -2.7,
           outline: '1px solid',
@@ -190,7 +190,6 @@ export const NotePreview = ({ noteId }: Props) => {
           justifyContent: 'flex-end',
           paddingX: 2,
           paddingY: 0.5,
-          //width: 'calc(100% - 310px);',
           position: 'fixed',
           bottom: 0,
           right: 0,

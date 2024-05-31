@@ -17,7 +17,7 @@ namespace backend.Controllers
 
         [HttpGet("getAllProjects")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllProjectsTodoDto>>> getAllProjects()
+        public async Task<ActionResult<ProjectsTodoDto>> getAllProjects()
         {
             var project = await _projectService.GetAllProjects();
             return Ok(project);

@@ -23,7 +23,7 @@ namespace backend.Repository
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AllProjectsTodoDto>> GetAllProjects()
+        public async Task<ProjectsTodoDto> GetAllProjects()
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -34,17 +34,27 @@ namespace backend.Repository
             var projects = await _context.ProjectTodos
                 .AsNoTracking()
                 .Where(x => x.UserID == userId)
-                .OrderBy(x => x.IsDone)
-                .ThenBy(x => x.ProjectTodoID)
+                .OrderBy(x => x.ProjectTodoID)
                 .ToListAsync();
 
             if (projects.Count == 0)
             {
-                return new List<AllProjectsTodoDto>();
+                return new ProjectsTodoDto();
             }
 
-            var projectDtos = _mapper.Map<List<AllProjectsTodoDto>>(projects);
-            return projectDtos;
+            var doneProjects = projects.Where(x => x.IsDone).ToList();
+            var undoneProjects = projects.Where(x => !x.IsDone).ToList();
+
+            var doneProjectsDto = _mapper.Map<List<AllProjectsTodoDto>>(doneProjects);
+            var undoneProjectsDto = _mapper.Map<List<AllProjectsTodoDto>>(undoneProjects);
+
+            var projectsDto = new ProjectsTodoDto
+            {
+                DoneProjects = doneProjectsDto,
+                UndoneProjects = undoneProjectsDto
+            };
+
+            return projectsDto;
         }
 
         public async Task<ProjectTodoDto> GetProjectById(int projectId)

@@ -3,7 +3,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListSubheader,
   Stack,
   Typography,
 } from '@mui/material';
@@ -50,22 +49,22 @@ export const GroupProjectCard = ({ project }: Props) => {
           />
         </Box>
       </List>
-      <ListSubheader>
+      <Box display="flex" gap={2}>
         <Stack alignItems={'end'}>
-          <Typography>{project.status}</Typography>
+          <Typography color="text.secondary">{project.status}</Typography>
           <Typography
-            variant="caption"
             sx={(theme) => ({
               color: project.isOutdated
                 ? theme.palette.error.light
                 : 'text.secondary',
             })}
+            variant="caption"
           >
             {formatDate(project.deadline)}
           </Typography>
         </Stack>
-      </ListSubheader>
-      {isModerator && <GroupProjectMenu project={project} />}
+        {isModerator && <GroupProjectMenu project={project} />}
+      </Box>
     </ListItem>
   );
 };

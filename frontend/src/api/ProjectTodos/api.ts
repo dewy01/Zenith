@@ -33,9 +33,14 @@ export interface Todo {
   isDone: boolean;
 }
 
+export interface TodoList {
+  doneProjects: ProjectTodo[];
+  undoneProjects: ProjectTodo[];
+}
+
 export const queryProjectTodo = async () => {
   const response = await axiosInstance.get(`/api/projectTodos/getAllProjects`);
-  return response.data as ProjectTodo[];
+  return response.data as TodoList;
 };
 
 export const queryProjectTodoById = async (projectId: number) => {

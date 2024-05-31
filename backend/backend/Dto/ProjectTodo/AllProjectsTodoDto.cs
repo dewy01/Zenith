@@ -1,5 +1,10 @@
 ﻿namespace backend.Dto.ProjectTodo
 {
+    public class ProjectsTodoDto
+    {
+        public List<AllProjectsTodoDto> DoneProjects { get; set; } = new List<AllProjectsTodoDto>();
+        public List<AllProjectsTodoDto> UndoneProjects { get; set; } = new List<AllProjectsTodoDto>();
+    }
     public class AllProjectsTodoDto
     {
         public int ProjectTodoID { get; set; }

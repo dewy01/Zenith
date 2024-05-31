@@ -193,24 +193,6 @@ namespace backend.Data
                 .HasForeignKey<Project>(x => x.NotificationID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<CalendarEvent>()
-                 .HasOne(x => x.Notification)
-                 .WithOne(x => x.CalendarEvent)
-                 .HasForeignKey<CalendarEventNotification>(x => x.CalendarEventID)
-                 .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<GroupProject>()
-                .HasOne(x => x.Notification)
-                .WithOne(x => x.GroupProject)
-                .HasForeignKey<GroupProjectNotification>(x => x.GroupProjectID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Project>()
-                .HasOne(x => x.Notification)
-                .WithOne(x => x.Project)
-                .HasForeignKey<ProjectNotification>(x => x.ProjectID)
-                .OnDelete(DeleteBehavior.NoAction);
-
             base.OnModelCreating(modelBuilder);
 
         }
