@@ -27,30 +27,6 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupProjects",
-                columns: table => new
-                {
-                    GroupProjectID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupID = table.Column<int>(type: "int", nullable: false),
-                    NotificationID = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupProjects", x => x.GroupProjectID);
-                    table.ForeignKey(
-                        name: "FK_GroupProjects_Groups_GroupID",
-                        column: x => x.GroupID,
-                        principalTable: "Groups",
-                        principalColumn: "GroupID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -74,61 +50,6 @@ namespace backend.Migrations
                         principalTable: "Groups",
                         principalColumn: "GroupID",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CalendarEvents",
-                columns: table => new
-                {
-                    EventID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    NotificationID = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EventColor = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CalendarEvents", x => x.EventID);
-                    table.ForeignKey(
-                        name: "FK_CalendarEvents_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GroupProjectTasks",
-                columns: table => new
-                {
-                    GroupProjectTaskID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupProjectID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EditTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupProjectTasks", x => x.GroupProjectTaskID);
-                    table.ForeignKey(
-                        name: "FK_GroupProjectTasks_GroupProjects_GroupProjectID",
-                        column: x => x.GroupProjectID,
-                        principalTable: "GroupProjects",
-                        principalColumn: "GroupProjectID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GroupProjectTasks_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,23 +127,26 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "Notifications",
                 columns: table => new
                 {
-                    ProjectID = table.Column<int>(type: "int", nullable: false)
+                    NotificationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    NotificationID = table.Column<int>(type: "int", nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
+                    isRead = table.Column<bool>(type: "bit", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
+                    CalendarEventID = table.Column<int>(type: "int", nullable: true),
+                    GroupProjectID = table.Column<int>(type: "int", nullable: true),
+                    ProjectID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.ProjectID);
+                    table.PrimaryKey("PK_Notifications", x => x.NotificationID);
                     table.ForeignKey(
-                        name: "FK_Projects_Users_UserID",
+                        name: "FK_Notifications_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID",
@@ -277,41 +201,139 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notifications",
+                name: "CalendarEvents",
                 columns: table => new
                 {
-                    NotificationID = table.Column<int>(type: "int", nullable: false)
+                    EventID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NotificationID = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    isActive = table.Column<bool>(type: "bit", nullable: false),
-                    isRead = table.Column<bool>(type: "bit", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(34)", maxLength: 34, nullable: false),
-                    CalendarEventID = table.Column<int>(type: "int", nullable: true),
-                    GroupProjectID = table.Column<int>(type: "int", nullable: true),
-                    ProjectID = table.Column<int>(type: "int", nullable: true)
+                    EventColor = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notifications", x => x.NotificationID);
+                    table.PrimaryKey("PK_CalendarEvents", x => x.EventID);
                     table.ForeignKey(
-                        name: "FK_Notifications_CalendarEvents_CalendarEventID",
-                        column: x => x.CalendarEventID,
-                        principalTable: "CalendarEvents",
-                        principalColumn: "EventID");
+                        name: "FK_CalendarEvents_Notifications_NotificationID",
+                        column: x => x.NotificationID,
+                        principalTable: "Notifications",
+                        principalColumn: "NotificationID");
                     table.ForeignKey(
-                        name: "FK_Notifications_GroupProjects_GroupProjectID",
+                        name: "FK_CalendarEvents_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupProjects",
+                columns: table => new
+                {
+                    GroupProjectID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GroupID = table.Column<int>(type: "int", nullable: false),
+                    NotificationID = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupProjects", x => x.GroupProjectID);
+                    table.ForeignKey(
+                        name: "FK_GroupProjects_Groups_GroupID",
+                        column: x => x.GroupID,
+                        principalTable: "Groups",
+                        principalColumn: "GroupID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupProjects_Notifications_NotificationID",
+                        column: x => x.NotificationID,
+                        principalTable: "Notifications",
+                        principalColumn: "NotificationID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    ProjectID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    NotificationID = table.Column<int>(type: "int", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.ProjectID);
+                    table.ForeignKey(
+                        name: "FK_Projects_Notifications_NotificationID",
+                        column: x => x.NotificationID,
+                        principalTable: "Notifications",
+                        principalColumn: "NotificationID");
+                    table.ForeignKey(
+                        name: "FK_Projects_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Todos",
+                columns: table => new
+                {
+                    TodoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectTodoID = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDone = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Todos", x => x.TodoID);
+                    table.ForeignKey(
+                        name: "FK_Todos_ProjectTodos_ProjectTodoID",
+                        column: x => x.ProjectTodoID,
+                        principalTable: "ProjectTodos",
+                        principalColumn: "ProjectTodoID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupProjectTasks",
+                columns: table => new
+                {
+                    GroupProjectTaskID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GroupProjectID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EditTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupProjectTasks", x => x.GroupProjectTaskID);
+                    table.ForeignKey(
+                        name: "FK_GroupProjectTasks_GroupProjects_GroupProjectID",
                         column: x => x.GroupProjectID,
                         principalTable: "GroupProjects",
-                        principalColumn: "GroupProjectID");
+                        principalColumn: "GroupProjectID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Notifications_Projects_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Projects",
-                        principalColumn: "ProjectID");
-                    table.ForeignKey(
-                        name: "FK_Notifications_Users_UserID",
+                        name: "FK_GroupProjectTasks_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID",
@@ -342,27 +364,12 @@ namespace backend.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Todos",
-                columns: table => new
-                {
-                    TodoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProjectTodoID = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsDone = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Todos", x => x.TodoID);
-                    table.ForeignKey(
-                        name: "FK_Todos_ProjectTodos_ProjectTodoID",
-                        column: x => x.ProjectTodoID,
-                        principalTable: "ProjectTodos",
-                        principalColumn: "ProjectTodoID",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_CalendarEvents_NotificationID",
+                table: "CalendarEvents",
+                column: "NotificationID",
+                unique: true,
+                filter: "[NotificationID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CalendarEvents_UserID",
@@ -373,6 +380,13 @@ namespace backend.Migrations
                 name: "IX_GroupProjects_GroupID",
                 table: "GroupProjects",
                 column: "GroupID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupProjects_NotificationID",
+                table: "GroupProjects",
+                column: "NotificationID",
+                unique: true,
+                filter: "[NotificationID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupProjectTasks_GroupProjectID",
@@ -400,30 +414,16 @@ namespace backend.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_CalendarEventID",
-                table: "Notifications",
-                column: "CalendarEventID",
-                unique: true,
-                filter: "[CalendarEventID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_GroupProjectID",
-                table: "Notifications",
-                column: "GroupProjectID",
-                unique: true,
-                filter: "[GroupProjectID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Notifications_ProjectID",
-                table: "Notifications",
-                column: "ProjectID",
-                unique: true,
-                filter: "[ProjectID] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserID",
                 table: "Notifications",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_NotificationID",
+                table: "Projects",
+                column: "NotificationID",
+                unique: true,
+                filter: "[NotificationID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_UserID",
@@ -461,6 +461,9 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CalendarEvents");
+
+            migrationBuilder.DropTable(
                 name: "GroupProjectTasks");
 
             migrationBuilder.DropTable(
@@ -473,9 +476,6 @@ namespace backend.Migrations
                 name: "Notes");
 
             migrationBuilder.DropTable(
-                name: "Notifications");
-
-            migrationBuilder.DropTable(
                 name: "ProjectTasks");
 
             migrationBuilder.DropTable(
@@ -485,9 +485,6 @@ namespace backend.Migrations
                 name: "UserPreferences");
 
             migrationBuilder.DropTable(
-                name: "CalendarEvents");
-
-            migrationBuilder.DropTable(
                 name: "GroupProjects");
 
             migrationBuilder.DropTable(
@@ -495,6 +492,9 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProjectTodos");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Users");

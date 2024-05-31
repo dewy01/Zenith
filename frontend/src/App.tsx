@@ -17,6 +17,7 @@ import { PdfProvider } from './context/PdfContext';
 const useStyles = makeStyles({
   root: {
     bottom: 38,
+    right: 5,
   },
 });
 
