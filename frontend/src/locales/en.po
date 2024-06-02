@@ -63,8 +63,12 @@ msgstr ""
 msgid "blue"
 msgstr ""
 
+#: src/View/CalendarView/LabelSection.tsx:25
+msgid "Blue"
+msgstr ""
+
 #: src/component/Sidebar/Sidebar.tsx:97
-#: src/View/CalendarView/CalendarView.tsx:76
+#: src/View/CalendarView/CalendarView.tsx:95
 msgid "Calendar"
 msgstr ""
 
@@ -315,6 +319,10 @@ msgstr ""
 msgid "Explore Users"
 msgstr ""
 
+#: src/View/CalendarView/LabelSection.tsx:39
+msgid "Filters"
+msgstr ""
+
 #: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:102
 #: src/View/ProjectTask/CreateForm.tsx:93
 msgid "For Review"
@@ -339,6 +347,10 @@ msgstr ""
 
 #: src/View/SettingsView/SettingsView.tsx:36
 msgid "green"
+msgstr ""
+
+#: src/View/CalendarView/LabelSection.tsx:24
+msgid "Green"
 msgstr ""
 
 #: src/component/UserBox/UserBox.tsx:72
@@ -422,11 +434,11 @@ msgstr ""
 msgid "Mark as read"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:88
+#: src/View/CalendarView/CalendarView.tsx:107
 msgid "Month"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:35
+#: src/View/CalendarView/CalendarView.tsx:54
 msgid "Month reset"
 msgstr ""
 
@@ -506,7 +518,7 @@ msgstr ""
 msgid "Primary color"
 msgstr ""
 
-#: src/View/NotesView/NotePreview.tsx:200
+#: src/View/NotesView/NotePreview.tsx:199
 msgid "Print note"
 msgstr ""
 
@@ -564,8 +576,16 @@ msgstr ""
 msgid "purple"
 msgstr ""
 
+#: src/View/CalendarView/LabelSection.tsx:22
+msgid "Purple"
+msgstr ""
+
 #: src/View/SettingsView/SettingsView.tsx:37
 msgid "red"
+msgstr ""
+
+#: src/View/CalendarView/LabelSection.tsx:23
+msgid "Red"
 msgstr ""
 
 #: src/View/RegisterView/RegisterView.tsx:46
@@ -606,11 +626,11 @@ msgstr ""
 msgid "Routes"
 msgstr ""
 
-#: src/View/NotesView/NotePreview.tsx:234
+#: src/View/NotesView/NotePreview.tsx:233
 msgid "Saved"
 msgstr ""
 
-#: src/View/NotesView/NotePreview.tsx:223
+#: src/View/NotesView/NotePreview.tsx:222
 msgid "Saving"
 msgstr ""
 
@@ -623,7 +643,7 @@ msgstr ""
 msgid "Search projects"
 msgstr ""
 
-#: src/View/TodoView/TodoView.tsx:70
+#: src/View/TodoView/TodoView.tsx:92
 msgid "Search todos"
 msgstr ""
 
@@ -644,7 +664,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/View/NotesView/NotePreview.tsx:205
+#: src/View/NotesView/NotePreview.tsx:204
 msgid "Share note"
 msgstr ""
 
@@ -713,7 +733,7 @@ msgstr ""
 msgid "Todo edited"
 msgstr ""
 
-#: src/View/TodoView/TodoView.tsx:64
+#: src/View/TodoView/TodoView.tsx:86
 msgid "Todos"
 msgstr ""
 
@@ -748,6 +768,10 @@ msgstr ""
 msgid "View not found"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:95
+#: src/View/CalendarView/CalendarView.tsx:114
 msgid "Week"
+msgstr ""
+
+#: src/View/CalendarView/LabelSection.tsx:26
+msgid "Yellow"
 msgstr ""

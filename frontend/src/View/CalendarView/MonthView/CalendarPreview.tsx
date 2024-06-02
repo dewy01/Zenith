@@ -8,6 +8,9 @@ import { makeStyles } from '@mui/styles';
 import { getEventBetween } from '~/api/Calendar/query';
 import { useCurrentDate } from '~/utils/useCurrentDate';
 import { useEffect, useState } from 'react';
+import { Control, useWatch } from 'react-hook-form';
+import { colorSchema } from '../schema';
+import { z } from 'zod';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,9 +19,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const CalendarPreview = () => {
+interface Props {
+  control: Control<z.infer<typeof colorSchema>>;
+}
+
+export const CalendarPreview = ({ control }: Props) => {
   const { monthAsNumber, setMonthAsNumber } = useCalendar();
   const [month, setMonth] = useState(useCurrentDate(monthAsNumber));
+
+  const selectedColors = useWatch({
+    control,
+    name: 'colors',
+  });
 
   useEffect(() => {
     setMonth(useCurrentDate(monthAsNumber));
@@ -27,6 +39,7 @@ export const CalendarPreview = () => {
   const { data: events } = getEventBetween({
     from: month[0][0].format('DD MM YYYY').toString(),
     to: month[4][6].format('DD MM YYYY').toString(),
+    colors: JSON.stringify(selectedColors),
   });
 
   const classes = useStyles();

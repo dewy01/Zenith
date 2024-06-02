@@ -2,6 +2,7 @@
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace backend.Controllers
 {
@@ -15,11 +16,15 @@ namespace backend.Controllers
             _calendarService = noteService;
         }
 
-        [HttpGet("getEventBetween/{from}/{to}")]
+        [HttpGet("getEventBetween")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllCalendarEventsDto>>> GetAllEvents([FromRoute]  string from, [FromRoute] string to)
+        public async Task<ActionResult<IEnumerable<AllCalendarEventsDto>>> GetAllEvents(
+            [FromQuery] string from,
+            [FromQuery] string to,
+            [FromQuery] string colors)
         {
-            var events = await _calendarService.GetAllEventsBetween(from, to);
+            var colorDict = JsonSerializer.Deserialize<Dictionary<string, bool>>(colors);
+            var events = await _calendarService.GetAllEventsBetween(from, to, colorDict);
             return Ok(events);
         }
 

@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DialogCreate } from '../DialogCreate';
 import { CalendarEvent } from '~/api/Calendar/api';
-import { EventChip } from '../MonthView/EventChip';
 import { WeekEventChip } from './WeekEventChip';
 
 type Props = {

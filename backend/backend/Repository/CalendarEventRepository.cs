@@ -15,6 +15,16 @@ namespace backend.Repository
         private readonly DataContext _context;
         private readonly IUserContextRepository _userContextRepository;
         private readonly IMapper _mapper;
+        // As long as colors in DB are just color codes, need to decode by static dictionary
+        private Dictionary<string,string> colorNameToCode = new Dictionary<string, string>
+        {
+            { "Yellow", "#f57c00" }, 
+            { "Red", "#d32f2f" }, 
+            { "Green", "#388e3c" },
+            { "Blue", "#0288d1" },
+            { "Purple", "#ab47bc" }
+        };
+
 
         public CalendarEventRepository(DataContext context, IUserContextRepository userContextRepository, IMapper mapper)
         {
@@ -77,18 +87,32 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<AllCalendarEventsDto>> GetAllEventsBetween(string from, string to)
+        public async Task<List<AllCalendarEventsDto>> GetAllEventsBetween(string from, string to, Dictionary<string, bool> colors)
         {
-            List<CalendarEvent> userEvents;
             var userId = _userContextRepository.GetUserId;
-            userEvents = await _context.CalendarEvents
+
+            var userEvents = await _context.CalendarEvents
                 .AsNoTracking()
-                .Where(ev => ev.UserID == userId && ev.DateTime >= DateTime.Parse(from) && ev.DateTime <= DateTime.Parse(to)) 
+                .Where(ev => ev.UserID == userId && ev.DateTime >= DateTime.Parse(from) && ev.DateTime <= DateTime.Parse(to))
                 .ToListAsync();
-            if (userEvents.Count == 0) { return new List<AllCalendarEventsDto>(); }
-            var eventsDto = _mapper.Map<List<AllCalendarEventsDto>>(userEvents);
+
+            if (userEvents.Count == 0)
+            {
+                return new List<AllCalendarEventsDto>();
+            }
+
+            var selectedColorCodes = colors
+                .Where(c => c.Value)
+                .Select(c => colorNameToCode[c.Key])
+                .ToHashSet();
+
+            var filteredEvents = userEvents.Where(ev => selectedColorCodes.Contains(ev.EventColor)).ToList();
+
+            var eventsDto = _mapper.Map<List<AllCalendarEventsDto>>(filteredEvents);
+
             return eventsDto;
         }
+
 
         public async Task UpdateEvent(CalendarEventDto dto, int eventId)
         {

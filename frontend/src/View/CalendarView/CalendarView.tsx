@@ -18,16 +18,35 @@ import { DialogCreate } from './DialogCreate';
 import { WeekPreview } from './WeekView/WeekPreview';
 import { MonthsSection } from './MonthsSection';
 import { Trans } from '@lingui/macro';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { colorSchema, ColorModel } from './schema';
+import { LabelSection } from './LabelSection';
 
 enum ViewMode {
   month,
   week,
 }
 
+const defaultValues: ColorModel = {
+  colors: {
+    Purple: true,
+    Red: true,
+    Green: true,
+    Blue: true,
+    Yellow: true,
+  },
+};
+
 export const CalendarView = () => {
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.month);
   const { monthAsNumber, setMonthAsNumber, setWeekAsNumber, weekAsNumber } =
     useCalendar();
+
+  const { control } = useForm({
+    resolver: zodResolver(colorSchema),
+    defaultValues,
+  });
 
   const handleReset = () => {
     setMonthAsNumber(dayjs().month());
@@ -96,10 +115,15 @@ export const CalendarView = () => {
             </ToggleButton>
           </ToggleButtonGroup>
           <MonthsSection />
+          <LabelSection control={control} />
         </Box>
       </SubDrawer>
 
-      {viewMode === ViewMode.month ? <CalendarPreview /> : <WeekPreview />}
+      {viewMode === ViewMode.month ? (
+        <CalendarPreview control={control} />
+      ) : (
+        <WeekPreview control={control} />
+      )}
 
       <DialogCreate open={open} setOpen={setOpen} day={dayjs()} />
     </Main>

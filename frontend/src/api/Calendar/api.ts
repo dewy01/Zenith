@@ -23,11 +23,18 @@ export interface CalendarEvent {
 export interface EventPagination {
   from: string;
   to: string;
+  colors: string
 }
 
 export const queryEventBetween = async (pagination: EventPagination) => {
   const response = await axiosInstance.get(
-    `/api/calendar/getEventBetween/${pagination.from}/${pagination.to}`,
+    `/api/calendar/getEventBetween`,{
+      params:{
+        from: pagination.from,
+        to: pagination.to,
+        colors: pagination.colors
+      }
+    }
   );
   return response.data as CalendarEvent[];
 };

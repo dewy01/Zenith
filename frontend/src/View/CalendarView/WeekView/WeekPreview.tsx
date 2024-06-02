@@ -8,6 +8,9 @@ import { getEventBetween } from '~/api/Calendar/query';
 import { useEffect, useState } from 'react';
 import { useCurrentWeek } from '~/utils/useCurrentWeek';
 import { WeekDayCard } from './WeekDayCard';
+import { Control, useWatch } from 'react-hook-form';
+import { colorSchema } from '../schema';
+import { z } from 'zod';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,12 +19,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const WeekPreview = () => {
+interface Props {
+  control: Control<z.infer<typeof colorSchema>>;
+}
+
+export const WeekPreview = ({ control }: Props) => {
   const { monthAsNumber, setMonthAsNumber, weekAsNumber, setWeekAsNumber } =
     useCalendar();
   const [week, setWeek] = useState(
     useCurrentWeek({ passedMonth: monthAsNumber, week: weekAsNumber }),
   );
+
+  const selectedColors = useWatch({
+    control,
+    name: 'colors',
+  });
 
   useEffect(() => {
     setWeek(useCurrentWeek({ passedMonth: monthAsNumber, week: weekAsNumber }));
@@ -30,6 +42,7 @@ export const WeekPreview = () => {
   const { data: events } = getEventBetween({
     from: week[0].format('DD MM YYYY').toString(),
     to: week[6].format('DD MM YYYY').toString(),
+    colors: JSON.stringify(selectedColors),
   });
 
   const classes = useStyles();

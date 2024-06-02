@@ -8,3 +8,16 @@ export const eventSchema = z.object({
 });
 
 export type eventModel = z.infer<typeof eventSchema>;
+
+
+export const colorSchema = z.object({
+  colors: z.object({
+    Purple: z.boolean(),
+    Red: z.boolean(),
+    Green: z.boolean(),
+    Blue: z.boolean(),
+    Yellow: z.boolean(),
+  }),
+});
+
+export type ColorModel = z.infer<typeof colorSchema>;

@@ -63,8 +63,12 @@ msgstr "Backlog"
 msgid "blue"
 msgstr "niebieski"
 
+#: src/View/CalendarView/LabelSection.tsx:25
+msgid "Blue"
+msgstr "Niebieski"
+
 #: src/component/Sidebar/Sidebar.tsx:97
-#: src/View/CalendarView/CalendarView.tsx:76
+#: src/View/CalendarView/CalendarView.tsx:95
 msgid "Calendar"
 msgstr "Kalendarz"
 
@@ -315,6 +319,10 @@ msgstr "Przeglądaj projekty"
 msgid "Explore Users"
 msgstr "Przeglądaj użytkowników"
 
+#: src/View/CalendarView/LabelSection.tsx:39
+msgid "Filters"
+msgstr "Filtry"
+
 #: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:102
 #: src/View/ProjectTask/CreateForm.tsx:93
 msgid "For Review"
@@ -340,6 +348,10 @@ msgstr "Nadaj admina"
 #: src/View/SettingsView/SettingsView.tsx:36
 msgid "green"
 msgstr "zielony"
+
+#: src/View/CalendarView/LabelSection.tsx:24
+msgid "Green"
+msgstr "Zielony"
 
 #: src/component/UserBox/UserBox.tsx:72
 msgid "Group"
@@ -422,11 +434,11 @@ msgstr "Wyloguj"
 msgid "Mark as read"
 msgstr "Oznacz jako przeczytane"
 
-#: src/View/CalendarView/CalendarView.tsx:88
+#: src/View/CalendarView/CalendarView.tsx:107
 msgid "Month"
 msgstr "Miesiąc"
 
-#: src/View/CalendarView/CalendarView.tsx:35
+#: src/View/CalendarView/CalendarView.tsx:54
 msgid "Month reset"
 msgstr "Miesiąc zresetowany"
 
@@ -506,7 +518,7 @@ msgstr "Podgląd"
 msgid "Primary color"
 msgstr "Kolor wiodący"
 
-#: src/View/NotesView/NotePreview.tsx:200
+#: src/View/NotesView/NotePreview.tsx:199
 msgid "Print note"
 msgstr "Wydrukuj"
 
@@ -564,9 +576,17 @@ msgstr "Projekty"
 msgid "purple"
 msgstr "fioletowy"
 
+#: src/View/CalendarView/LabelSection.tsx:22
+msgid "Purple"
+msgstr "Fioletowy"
+
 #: src/View/SettingsView/SettingsView.tsx:37
 msgid "red"
 msgstr "czerwony"
+
+#: src/View/CalendarView/LabelSection.tsx:23
+msgid "Red"
+msgstr "Czerwony"
 
 #: src/View/RegisterView/RegisterView.tsx:46
 #: src/View/RegisterView/RegisterView.tsx:51
@@ -606,11 +626,11 @@ msgstr "Rola zmieniona"
 msgid "Routes"
 msgstr "Ścieżki"
 
-#: src/View/NotesView/NotePreview.tsx:234
+#: src/View/NotesView/NotePreview.tsx:233
 msgid "Saved"
 msgstr "Zapisano"
 
-#: src/View/NotesView/NotePreview.tsx:223
+#: src/View/NotesView/NotePreview.tsx:222
 msgid "Saving"
 msgstr "Zapisywanie"
 
@@ -623,7 +643,7 @@ msgstr "Szukaj notatki"
 msgid "Search projects"
 msgstr "Szukaj projektu"
 
-#: src/View/TodoView/TodoView.tsx:70
+#: src/View/TodoView/TodoView.tsx:92
 msgid "Search todos"
 msgstr "Szukaj todo"
 
@@ -644,7 +664,7 @@ msgstr "Ustawienie innego użytkownika jako admina usunie twoją rolę."
 msgid "Settings"
 msgstr "Ustawienia"
 
-#: src/View/NotesView/NotePreview.tsx:205
+#: src/View/NotesView/NotePreview.tsx:204
 msgid "Share note"
 msgstr "Udostępnij notatkę"
 
@@ -713,7 +733,7 @@ msgstr "Todo usunięte"
 msgid "Todo edited"
 msgstr "Todo zedytowane"
 
-#: src/View/TodoView/TodoView.tsx:64
+#: src/View/TodoView/TodoView.tsx:86
 msgid "Todos"
 msgstr "Todo"
 
@@ -748,6 +768,10 @@ msgstr "Użytkownicy"
 msgid "View not found"
 msgstr "Widok nie znaleziony"
 
-#: src/View/CalendarView/CalendarView.tsx:95
+#: src/View/CalendarView/CalendarView.tsx:114
 msgid "Week"
 msgstr "Tydzień"
+
+#: src/View/CalendarView/LabelSection.tsx:26
+msgid "Yellow"
+msgstr "Żółty"
