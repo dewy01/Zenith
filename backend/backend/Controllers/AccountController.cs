@@ -58,6 +58,13 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [HttpPatch("updateAccount")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAccount([FromBody] UpdateUserDto dto)
+        {
+            await _accountService.UpdateUser(dto);
+            return Ok();
+        }
 
         [HttpDelete("deleteAccount")]
         [Authorize]

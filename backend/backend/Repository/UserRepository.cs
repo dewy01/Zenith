@@ -120,10 +120,48 @@ namespace backend.Repository
 
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(UpdateUserDto userDto)
         {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var user = await _context.Users
+                .SingleOrDefaultAsync(user => user.UserID == userId);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+            if (!string.IsNullOrEmpty(userDto.Password) && !string.IsNullOrEmpty(userDto.OldPassword))
+            {
+                var result = _passwordHasher.VerifyHashedPassword(user, user.Password, userDto.OldPassword);
+                if (result == PasswordVerificationResult.Failed)
+                {
+                    throw new Exception("Passwords don't match");
+                }
+                var hashedPassword = _passwordHasher.HashPassword(user, userDto.Password);
+                user.Password = hashedPassword;
+
+            }
+            if (!string.IsNullOrEmpty(userDto.Username) && userDto.Username != user.Username)
+            {
+                user.Username = userDto.Username;
+            }
+            if (!string.IsNullOrEmpty(userDto.Email) && userDto.Email != user.Email)
+            {
+                user.Email = userDto.Email;
+                user.Role = Enums.Roles.Unverified;
+                user.VerificationToken = CreateRandomToken();
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+                await _emailSettings.SendEmailAsync(user.Email, "Email Confirmation - " + $"{user.Username}", "https://localhost:7086/api/account/verifyemail/" + $"{user.VerificationToken}");
+            }
+
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUser()

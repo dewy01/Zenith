@@ -9,7 +9,7 @@ namespace backend.Interface
         Task<UserDto> GetUserById();
         List<User> GetAllUsers();
         Task AddUser(RegisterUserDto user);
-        void UpdateUser(User user);
+        Task UpdateUser(UpdateUserDto user);
         Task DeleteUser();
         Task<string> GenerateJwt(LoginUserDto dto);
         Task<bool> VerifyEmail(string token);
