@@ -46,6 +46,13 @@ export interface ChangeRole {
   userId: number;
 }
 
+export interface EditGroup {
+  groupID: number;
+  data:{
+    groupName: string;
+  }
+}
+
 export const postAddGroup = async (group: AddGroup) => {
   return await axiosInstance.post('/api/groups/addGroup', group);
 };
@@ -54,8 +61,16 @@ export const postJoinGroup = async (token: TokenDto) => {
   return await axiosInstance.post('/api/groups/joinGroup', token);
 };
 
+export const deleteGroup = async (groupId: number) => {
+  return await axiosInstance.delete(`/api/groups/deleteGroup/${groupId}`,);
+};
+
 export const postLeaveGroup = async (groupId: LeaveGroup) => {
   return await axiosInstance.post('/api/groups/leaveGroup', groupId);
+};
+
+export const updateGroup = async (group: EditGroup) => {
+  return await axiosInstance.patch(`/api/groups/updateGroup/${group.groupID}`, group.data);
 };
 
 export const queryGroup = async () => {

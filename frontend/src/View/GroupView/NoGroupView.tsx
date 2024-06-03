@@ -43,6 +43,7 @@ export const NoGroupView = () => {
             <Typography>Join a group</Typography>
             <TextField onChange={handleTokenChange} label="Code"></TextField>
             <Button
+              disabled={token.length !== 11}
               onClick={() => JoinGroup({ token: token })}
               variant="contained"
             >
@@ -56,6 +57,7 @@ export const NoGroupView = () => {
             </Typography>
             <TextField onChange={handleGroupChange} label="Name"></TextField>
             <Button
+              disabled={group.length === 0}
               onClick={() => AddGroup({ groupName: group })}
               variant="contained"
             >

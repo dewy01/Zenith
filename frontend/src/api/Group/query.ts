@@ -3,10 +3,12 @@ import { useSnackbar } from 'notistack';
 import {
   AddGroup,
   ChangeRole,
+  EditGroup,
   GroupRole,
   LeaveGroup,
   TokenDto,
   changeRole,
+  deleteGroup,
   postAddGroup,
   postJoinGroup,
   postLeaveGroup,
@@ -15,6 +17,7 @@ import {
   queryIsInGroup,
   queryOwnRole,
   setAdmin,
+  updateGroup,
 } from './api';
 import { useGroupContext } from '~/context/GroupRole';
 import { t } from '@lingui/macro';
@@ -64,6 +67,19 @@ export const mutateAddGroup = () => {
   });
 };
 
+export const mutateUpdateGroup = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['editGroup'],
+    mutationFn: (group: EditGroup) => updateGroup(group),
+    onSuccess: () => {
+      enqueueSnackbar(t({message:'Group updated'}));
+      queryClient.invalidateQueries({ queryKey: ['getGroup'] });
+    },
+  });
+};
+
 export const mutateJoinGroup = () => {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
@@ -89,7 +105,20 @@ export const mutateLeaveGroup = () => {
     mutationFn: (groupId: LeaveGroup) => postLeaveGroup(groupId),
     onSuccess: () => {
       enqueueSnackbar(t({message:'Group left'}));
-      queryClient.invalidateQueries({ queryKey: ['getIsInGy67roup'] });
+      queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
+    },
+  });
+};
+
+export const mutateDeleteGroup = () => {
+  const queryClient = useQueryClient();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['deleteGroup'],
+    mutationFn: (groupId: number) => deleteGroup(groupId),
+    onSuccess: () => {
+      enqueueSnackbar(t({message:'Group deleted'}));
+      queryClient.invalidateQueries({ queryKey: ['getIsInGroup'] });
     },
   });
 };

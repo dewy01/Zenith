@@ -15,6 +15,7 @@ import { getGroupRole } from '~/utils/useGroupRoles';
 import { useGroupContext } from '~/context/GroupRole';
 import { SetAdminDialog } from './SetAdminDialog';
 import { Trans } from '@lingui/macro';
+import { RemoveGroupDialog } from './RemoveGroupDialog';
 
 type Props = {
   user: GroupUser;
@@ -61,15 +62,18 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
       </List>
 
       {user.isMe && (
-        <Tooltip title={<Trans>Leave group</Trans>}>
-          <IconButton
-            disabled={isGranted}
-            onClick={() => leaveGroup({ groupID: groupId })}
-          >
-            <ExitToAppIcon />
-          </IconButton>
-        </Tooltip>
+        <>
+          <Tooltip title={<Trans>Leave group</Trans>}>
+            <IconButton
+              disabled={isGranted}
+              onClick={() => leaveGroup({ groupID: groupId })}
+            >
+              <ExitToAppIcon />
+            </IconButton>
+          </Tooltip>
+        </>
       )}
+      {user.isMe && isGranted && <RemoveGroupDialog groupId={groupId} />}
       {!user.isMe && isGranted && (
         <>
           <SetAdminDialog userId={user.userID} />

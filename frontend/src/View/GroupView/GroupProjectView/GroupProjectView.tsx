@@ -18,6 +18,7 @@ import { enqueueSnackbar } from 'notistack';
 import { DialogCreate } from './DialogCreate';
 import { useGroupContext } from '~/context/GroupRole';
 import { Trans, t } from '@lingui/macro';
+import { DialogUpdate } from './UpdateGroup/DialogUpdate';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -48,7 +49,7 @@ function TabPanel(props: TabPanelProps) {
 export const GroupProjectView = () => {
   const { data: group, isLoading } = getGroup();
   const { data: role } = getOwnRole();
-  const { setUserRole, isModerator } = useGroupContext();
+  const { setUserRole, isModerator, isGranted } = useGroupContext();
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -85,9 +86,13 @@ export const GroupProjectView = () => {
     <Box>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {group.groupName}
-          </Typography>
+          {isGranted ? (
+            <DialogUpdate title={group.groupName} groupId={group.groupID} />
+          ) : (
+            <Typography variant="h6" component="div">
+              {group.groupName}
+            </Typography>
+          )}
           {isModerator && (
             <>
               <DialogCreate groupId={group.groupID} />
