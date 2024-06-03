@@ -2,6 +2,8 @@ import axios from 'axios';
 import { BASE_URL } from '~/config/constants';
 import { registerFormSchema } from '~/View/RegisterView/schema';
 import { loginFormSchema } from '~/View/LoginView/schema';
+import { userModel } from '~/component/UserBox/schema';
+import { axiosInstance as authInstance }from '../api'
 import {
   forgotPasswordModel,
   resetPasswordModel,
@@ -39,4 +41,8 @@ export const postDeleteAccount = async () => {
 export const queryMyAccount = async () => {
   const response = await loggedInstance.get('/api/account/getMyAccount');
   return response.data as MyAccount;
+};
+
+export const updateUser = async (userData: userModel) => {
+  return await authInstance.patch('/api/account/updateAccount', userData);
 };

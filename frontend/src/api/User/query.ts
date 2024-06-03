@@ -6,6 +6,7 @@ import {
   postUserLogin,
   postUserRegister,
   queryMyAccount,
+  updateUser,
 } from './api';
 import { registerFormSchema } from '~/View/RegisterView/schema';
 import { loginFormSchema } from '~/View/LoginView/schema';
@@ -19,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { STATUS_CODE } from '../api';
 import { AxiosError } from 'axios';
 import { t } from '@lingui/macro';
+import { userModel } from '~/component/UserBox/schema';
 
 export const mutateUserRegister = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -104,5 +106,21 @@ export const getMyAccount = () => {
   return useQuery({
     queryKey: ['getMyAccount'],
     queryFn: () => queryMyAccount(),
+  });
+};
+
+export const mutateUpdateAccount = () => {
+  const { logout } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+  return useMutation({
+    mutationKey: ['updateAccount'],
+    mutationFn: (userData: userModel) => updateUser(userData),
+    onSuccess: () => {
+      enqueueSnackbar(t({message:'Account updated'}));
+      logout();
+    },
+    onError: ()=>{
+      enqueueSnackbar(t({message:'Invalid old password'}));
+    }
   });
 };

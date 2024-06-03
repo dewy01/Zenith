@@ -2,6 +2,7 @@ import { Avatar, Box, Paper, Typography } from '@mui/material';
 import { MyAccount } from '~/api/User/api';
 import { stringAvatar } from '~/utils/userAvatar';
 import { Trans } from '@lingui/macro';
+import { DialogUpdate } from './DialogUpdate';
 
 type Props = {
   user: MyAccount;
@@ -23,9 +24,7 @@ export const UserBox = ({ user }: Props) => {
         }}
         elevation={2}
       >
-        <Typography variant="h5">
-          <Trans>Account</Trans>
-        </Typography>
+        <DialogUpdate user={user} />
         <Box display="flex" gap={1} alignItems="center">
           <Typography
             sx={(theme) => ({

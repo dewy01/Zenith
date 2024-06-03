@@ -6,6 +6,7 @@ import {
   AccordionDetails,
   IconButton,
   Tooltip,
+  Paper,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -19,6 +20,10 @@ import { Trans } from '@lingui/macro';
 export const NotificationBox = () => {
   const { data } = getAllNotifications();
   const { mutateAsync } = mutateMarkAsRead();
+  const isEmpty =
+    data?.calendarEventNotifications.length === 0 &&
+    data?.groupProjectNotifications.length === 0 &&
+    data?.projectNotifications.length === 0;
 
   return (
     <>
@@ -45,15 +50,23 @@ export const NotificationBox = () => {
         <AccordionDetails
           sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
         >
-          {data?.calendarEventNotifications.map((item) => (
-            <NotificationRow item={item} markAsRead={mutateAsync} />
-          ))}
-          {data?.projectNotifications.map((item) => (
-            <NotificationRow item={item} markAsRead={mutateAsync} />
-          ))}
-          {data?.groupProjectNotifications.map((item) => (
-            <NotificationRow item={item} markAsRead={mutateAsync} />
-          ))}
+          {!isEmpty ? (
+            <>
+              {data?.calendarEventNotifications.map((item) => (
+                <NotificationRow item={item} markAsRead={mutateAsync} />
+              ))}
+              {data?.projectNotifications.map((item) => (
+                <NotificationRow item={item} markAsRead={mutateAsync} />
+              ))}
+              {data?.groupProjectNotifications.map((item) => (
+                <NotificationRow item={item} markAsRead={mutateAsync} />
+              ))}
+            </>
+          ) : (
+            <Paper sx={{ padding: 2 }} elevation={10}>
+              No notifications
+            </Paper>
+          )}
         </AccordionDetails>
       </Accordion>
     </>
