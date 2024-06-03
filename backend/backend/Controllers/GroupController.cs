@@ -41,6 +41,14 @@ namespace backend.Controllers
             return Ok();
         }
 
+        [HttpDelete("deleteGroup/{groupId}")]
+        [Authorize]
+        public async Task<ActionResult> deleteGroup([FromRoute] int groupId)
+        {
+            await _groupService.DeleteGroup(groupId);
+            return Ok();
+        }
+
         [HttpPatch("updateGroup/{groupId}")]
         [Authorize]
         public async Task<ActionResult> updateGroup(GroupEditDto dto, [FromRoute] int groupId)

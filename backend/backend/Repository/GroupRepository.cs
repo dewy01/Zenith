@@ -144,6 +144,18 @@ namespace backend.Repository
             var group = await _context.Groups
                 .SingleOrDefaultAsync(group => group.Users.SingleOrDefault(x => x.UserID == userId).UserID == userId && group.GroupID == groupId);
 
+            if (group == null)
+            {
+                throw new NotFoundException("Group not found");
+            }
+
+            var groupRole = await _context.GroupRoles
+                .FirstOrDefaultAsync(gr => gr.GroupId == group.GroupID && gr.UserId == userId);
+            if (groupRole == null || groupRole.Role != Enums.GroupRole.Admin)
+            {
+                throw new Exception("Invalid operation");
+            }
+
             if (dto.GroupName != null && dto.GroupName != "")
             {
                 group.GroupName = dto.GroupName;
@@ -157,6 +169,14 @@ namespace backend.Repository
         {
             var group = await _context.Groups
                 .SingleOrDefaultAsync(group => group.GroupID == groupId);
+
+            var users = await _context.Users.Where(x => x.GroupID == groupId).ToListAsync();
+
+            foreach (var user in users)
+            {
+                user.GroupID = null;
+            }
+
             if (group != null)
             {
                 _context.Groups.Remove(group);
