@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 
 pdfMake.vfs = { ...pdfFonts.pdfMake.vfs };
 
-const PdfPreview: React.FC = () => {
+export const PdfPreview = () => {
   const { htmlContent } = useContext(PdfContext);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -29,21 +29,6 @@ const PdfPreview: React.FC = () => {
       });
     }
   }, [htmlContent]);
-
-  // TODO: if iframe isn't proper, consider manual download and preview
-
-  // const handleDownload = () => {
-  //   if (htmlContent) {
-  //     const pdfMakeDoc = htmlToPdfmake(htmlContent);
-  //     const documentDefinition = {
-  //       content: pdfMakeDoc,
-  //       defaultStyle: {
-  //         font: 'Arial',
-  //       },
-  //     };
-  //     pdfMake.createPdf(documentDefinition).download('note.pdf');
-  //   }
-  // };
 
   return (
     <Box>
@@ -84,5 +69,3 @@ const PdfPreview: React.FC = () => {
     </Box>
   );
 };
-
-export default PdfPreview;

@@ -1,6 +1,8 @@
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../Sidebar/Sidebar';
+import { LoadingView } from '~/View/LoadingView/LoadingView';
+import { Suspense } from 'react';
 
 type RouterProps = {
   routes: { [routeName: string]: boolean };
@@ -20,7 +22,9 @@ export const Layout = ({ routes }: RouterProps) => {
           marginLeft: '58px',
         }}
       >
-        <Outlet />
+        <Suspense fallback={<LoadingView />}>
+          <Outlet />
+        </Suspense>
       </Box>
     </Box>
   );

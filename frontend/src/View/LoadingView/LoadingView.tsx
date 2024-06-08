@@ -1,9 +1,9 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from '@mui/material';
 
 export const LoadingView = () => {
   return (
     <Box
-      sx={{ height: "90vh" }}
+      sx={{ height: '90vh', zIndex: 9999999 }}
       display="flex"
       justifyContent="center"
       alignItems="center"
