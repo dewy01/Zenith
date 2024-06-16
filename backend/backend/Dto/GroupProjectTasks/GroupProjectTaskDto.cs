@@ -7,5 +7,6 @@
         public string Category { get; set; }
         public string Status { get; set; }
         public string User { get; set; }
+        public string? UserImage { get; set; }
     }
 }

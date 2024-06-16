@@ -14,6 +14,7 @@ namespace backend.Models
         public string Password { get; set; }
         public Roles Role { get; set; }
         public int? GroupID { get; set; }
+        public string? Image {  get; set; }
 
         public virtual UserPreferences Preferences { get; set; }
         public virtual Group Group { get; set; }

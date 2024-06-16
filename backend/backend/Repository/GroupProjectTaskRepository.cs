@@ -55,6 +55,8 @@ namespace backend.Repository
                 Category = projectTask.Category,
                 Description = projectTask.Description,
                 User = projectTask.User.Username,
+                UserImage = projectTask.User.Image,
+
             };
 
             return projectTaskDto;

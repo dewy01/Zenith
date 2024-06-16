@@ -61,7 +61,6 @@ namespace backend.Repository
                 {
                     Username = user.Username,
                     Email = user.Email,
-                    GroupName = null,
                 };
             }
 
@@ -70,6 +69,7 @@ namespace backend.Repository
                 Username = user.Username,
                 Email = user.Email,
                 GroupName = group.GroupName,
+                Image = user.Image,
             };
 
             return userDto;
