@@ -25,11 +25,11 @@ enum ViewMode {
 }
 
 export const TodoView = () => {
+  const { data: projects } = getProjectTodos();
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.unfinished);
   const [selectedProject, setSelectedProject] = useState<
     ProjectTodo | undefined
-  >(undefined);
-  const { data: projects } = getProjectTodos();
+  >(projects?.doneProjects.at(0));
 
   useEffect(() => {
     const allProjects =

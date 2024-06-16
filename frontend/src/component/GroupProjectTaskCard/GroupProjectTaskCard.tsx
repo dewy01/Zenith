@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
@@ -10,8 +9,8 @@ import {
 } from '@mui/material';
 import { pulseScale } from '~/Theme/Animations';
 import { GroupProjectTask } from '~/api/GroupProjectTask/api';
-import { stringAvatar } from '~/utils/userAvatar';
 import { DialogEdit } from '~/View/GroupView/GroupProjectTaskView/DialogEdit';
+import { UserAvatar } from '../UserAvatar/UserAvatar';
 
 type Props = {
   task: GroupProjectTask;
@@ -114,7 +113,7 @@ export const GroupProjectTaskCard: React.FC<Props> = ({ task }) => {
         }}
       >
         <Tooltip title={task.user}>
-          <Avatar {...stringAvatar(task.user)} />
+          <UserAvatar username={task.user} image={task.userImage} />
         </Tooltip>
         <Chip
           variant="outlined"

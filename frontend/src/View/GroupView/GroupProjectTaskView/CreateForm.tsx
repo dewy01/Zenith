@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   FormControl,
   InputLabel,
@@ -10,8 +9,8 @@ import {
 import { taskModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
 import { GroupUser } from '~/api/Group/api';
-import { stringAvatar } from '~/utils/userAvatar';
 import { Trans } from '@lingui/macro';
+import { UserAvatar } from '~/component/UserAvatar/UserAvatar';
 
 const categories = [
   'Note',
@@ -159,7 +158,7 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
                     alignItems="center"
                     gap={2}
                   >
-                    <Avatar {...stringAvatar(item.username)} />
+                    <UserAvatar username={item.username} image={item.image} />
                     {item.username}
                   </Box>
                 </MenuItem>

@@ -16,6 +16,7 @@ import { useGroupContext } from '~/context/GroupRole';
 import { SetAdminDialog } from './SetAdminDialog';
 import { Trans } from '@lingui/macro';
 import { RemoveGroupDialog } from './RemoveGroupDialog';
+import { UserAvatar } from '../UserAvatar/UserAvatar';
 
 type Props = {
   user: GroupUser;
@@ -36,7 +37,8 @@ export const GroupUserCard = ({ user, groupId }: Props) => {
       })}
     >
       <List sx={{ flex: 1 }}>
-        <Box>
+        <Box display="flex" alignItems="center" gap={2}>
+          <UserAvatar username={user.username} image={user.image} />
           <ListItemText
             sx={{
               display: 'flex',

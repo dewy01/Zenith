@@ -6,6 +6,7 @@ export interface GroupUser {
   userRole: GroupRole;
   email: string;
   isMe: boolean;
+  image:string | null;
 }
 
 export enum GroupRole {

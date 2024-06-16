@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { GroupProject } from '~/api/Group/api';
 import { GroupProjectMenu } from '../GroupProjectMenu';
 import { useGroupContext } from '~/context/GroupRole';
+import { ProjectAvatar } from '../ProjectAvatar';
 
 type Props = {
   project: GroupProject;
@@ -25,7 +26,11 @@ export const GroupProjectCard = ({ project }: Props) => {
           component={NavLink}
           to={`/group/project/${project.groupProjectID}`}
           sx={{ textDecoration: 'none' }}
+          display="flex"
+          alignItems="center"
+          gap={2}
         >
+          <ProjectAvatar name={project.title} />
           <ListItemText
             sx={(theme) => ({
               display: 'flex',

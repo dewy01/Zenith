@@ -14,9 +14,11 @@ import { NotePreview } from './NotePreview';
 import { NoNoteView } from './NoNoteView';
 
 export const NotesView = () => {
-  const [selectedNote, setSelectedNote] = useState<number | null>(null);
   const { data: notes } = getAllNotes();
   const { mutateAsync } = mutateAddNote();
+  const [selectedNote, setSelectedNote] = useState<number | null>(
+    notes?.at(0)?.noteID ?? null,
+  );
 
   useEffect(() => {
     if (selectedNote && notes) {

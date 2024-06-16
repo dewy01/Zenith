@@ -13,3 +13,11 @@ export const userSchema = z
   });;
 
 export type userModel = z.infer<typeof userSchema>;
+
+
+export const avatarSchema = z
+  .object({
+    image: z.union([z.instanceof(File), z.null()]),
+  })
+
+export type avatarModel = z.infer<typeof avatarSchema>;

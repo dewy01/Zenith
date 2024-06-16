@@ -7,7 +7,7 @@ export const stringAvatar = (name: string) => {
     };
 }
 
-const stringToColor = (string: string) => {
+export const stringToColor = (string: string) => {
     let hash = 0;
     let i;
   

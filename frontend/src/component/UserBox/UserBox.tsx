@@ -1,9 +1,8 @@
-import { Avatar, Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { MyAccount } from '~/api/User/api';
-import { stringAvatar } from '~/utils/userAvatar';
 import { Trans } from '@lingui/macro';
 import { DialogUpdate } from './DialogUpdate';
-
+import { AvatarForm } from './AvatarForm';
 type Props = {
   user: MyAccount;
 };
@@ -94,10 +93,7 @@ export const UserBox = ({ user }: Props) => {
             >
               <Trans>Avatar</Trans>:
             </Typography>
-            <Avatar
-              {...stringAvatar(user.username)}
-              style={{ width: 35, height: 35 }}
-            />
+            <AvatarForm username={user.username} initialImage={user.image} />
           </Box>
         </Paper>
       )}

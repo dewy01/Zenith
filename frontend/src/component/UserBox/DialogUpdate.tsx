@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
@@ -55,20 +56,22 @@ export const DialogUpdate = ({ user }: Props) => {
 
   return (
     <>
-      <Typography
-        onClick={handleClickOpen}
-        variant="h5"
-        component="div"
-        sx={{
-          flexGrow: 1,
-          '&:hover': {
-            textDecoration: 'underline',
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <Trans>Account</Trans>
-      </Typography>
+      <Tooltip title={t({ message: 'Edit account' })} placement="right">
+        <Typography
+          onClick={handleClickOpen}
+          variant="h5"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            '&:hover': {
+              textDecoration: 'underline',
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <Trans>Account</Trans>
+        </Typography>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}

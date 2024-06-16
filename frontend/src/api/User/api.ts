@@ -14,6 +14,7 @@ export interface MyAccount {
   username: string;
   email: string;
   groupName: string;
+  image:string;
 }
 
 const axiosInstance = axios.create({ baseURL: BASE_URL });

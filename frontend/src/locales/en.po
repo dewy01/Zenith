@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/component/UserBox/DialogUpdate.tsx:70
+#: src/component/UserBox/DialogUpdate.tsx:72
 msgid "Account"
 msgstr ""
 
@@ -51,15 +51,19 @@ msgstr ""
 msgid "Are you sure"
 msgstr ""
 
-#: src/component/UserBox/UserBox.tsx:95
+#: src/component/UserBox/UserBox.tsx:94
 msgid "Avatar"
+msgstr ""
+
+#: src/api/Image/query.ts:15
+msgid "Avatar updated"
 msgstr ""
 
 #: src/View/SettingsView/SettingsView.tsx:156
 msgid "Background color"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:96
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:95
 #: src/View/ProjectTask/CreateForm.tsx:87
 msgid "Backlog"
 msgstr ""
@@ -74,13 +78,14 @@ msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:97
 #: src/View/CalendarView/CalendarView.tsx:95
+#: src/View/SettingsView/SettingsView.tsx:27
 msgid "Calendar"
 msgstr ""
 
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:63
 #: src/component/GroupUserCard/SetAdminDialog.tsx:89
 #: src/component/ProjectDeleteDialog/ProjectDelete.tsx:67
-#: src/component/UserBox/DialogUpdate.tsx:90
+#: src/component/UserBox/DialogUpdate.tsx:93
 #: src/View/CalendarView/DialogCreate.tsx:66
 #: src/View/CalendarView/DialogEdit.tsx:86
 #: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:83
@@ -107,18 +112,22 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:125
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:128
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:124
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:127
 #: src/View/ProjectTask/CreateForm.tsx:115
 #: src/View/ProjectTask/CreateForm.tsx:118
 msgid "Category"
 msgstr ""
 
-#: src/component/UserBox/DialogUpdate.tsx:50
+#: src/component/UserAvatar/UserAvatarInput.tsx:57
+msgid "Change avatar"
+msgstr ""
+
+#: src/component/UserBox/DialogUpdate.tsx:51
 msgid "Check email for verification link"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:105
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:104
 #: src/View/ProjectTask/CreateForm.tsx:96
 msgid "Closed"
 msgstr ""
@@ -271,7 +280,7 @@ msgid "Deleting this Todo means that all provided data will be lost."
 msgstr ""
 
 #: src/View/CalendarView/CreateForm.tsx:95
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:113
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:112
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:90
 #: src/View/ProjectTask/CreateForm.tsx:104
 #: src/View/ProjectView/CreateForm.tsx:88
@@ -289,7 +298,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: src/component/UserBox/DialogUpdate.tsx:93
+#: src/component/UserBox/DialogUpdate.tsx:96
 #: src/View/CalendarView/DialogEdit.tsx:89
 #: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:123
 #: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:145
@@ -302,7 +311,11 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: src/component/UserBox/DialogUpdate.tsx:83
+#: src/component/UserBox/DialogUpdate.tsx:59
+msgid "Edit account"
+msgstr ""
+
+#: src/component/UserBox/DialogUpdate.tsx:86
 msgid "Edit Account"
 msgstr ""
 
@@ -320,7 +333,7 @@ msgid "Edit Project"
 msgstr ""
 
 #: src/component/UserBox/CreateForm.tsx:64
-#: src/component/UserBox/UserBox.tsx:50
+#: src/component/UserBox/UserBox.tsx:49
 #: src/View/LoginView/LoginForm.tsx:41
 #: src/View/RegisterView/PasswordRenew/EmailSection.tsx:32
 #: src/View/RegisterView/RegisterForm.tsx:62
@@ -359,7 +372,7 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:102
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:101
 #: src/View/ProjectTask/CreateForm.tsx:93
 msgid "For Review"
 msgstr ""
@@ -389,7 +402,7 @@ msgstr ""
 msgid "Green"
 msgstr ""
 
-#: src/component/UserBox/UserBox.tsx:71
+#: src/component/UserBox/UserBox.tsx:70
 msgid "Group"
 msgstr ""
 
@@ -414,6 +427,7 @@ msgid "Group name"
 msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:118
+#: src/View/SettingsView/SettingsView.tsx:30
 msgid "Group Projects"
 msgstr ""
 
@@ -432,7 +446,7 @@ msgstr ""
 msgid "in Progress"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:99
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:98
 msgid "In Progress"
 msgstr ""
 
@@ -464,7 +478,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/component/GroupUserCard/GroupUserCard.tsx:66
+#: src/component/GroupUserCard/GroupUserCard.tsx:68
 msgid "Leave group"
 msgstr ""
 
@@ -494,7 +508,7 @@ msgstr ""
 msgid "Month reset"
 msgstr ""
 
-#: src/component/UserBox/UserBox.tsx:82
+#: src/component/UserBox/UserBox.tsx:81
 msgid "Name"
 msgstr ""
 
@@ -535,7 +549,8 @@ msgid "Note title"
 msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:91
-#: src/View/NotesView/NotesView.tsx:64
+#: src/View/NotesView/NotesView.tsx:66
+#: src/View/SettingsView/SettingsView.tsx:26
 msgid "Notes"
 msgstr ""
 
@@ -570,7 +585,7 @@ msgstr ""
 msgid "Polish"
 msgstr ""
 
-#: src/View/NotesView/PdfPreview.tsx:62
+#: src/View/NotesView/PdfPreview.tsx:47
 msgid "Preview"
 msgstr ""
 
@@ -625,6 +640,7 @@ msgstr ""
 #: src/component/Sidebar/Sidebar.tsx:109
 #: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:124
 #: src/View/ProjectView/ProjectView.tsx:31
+#: src/View/SettingsView/SettingsView.tsx:29
 msgid "Projects"
 msgstr ""
 
@@ -674,6 +690,10 @@ msgstr ""
 msgid "Reset token sent to email"
 msgstr ""
 
+#: src/component/UserBox/AvatarForm.tsx:70
+msgid "Restore avatar"
+msgstr ""
+
 #: src/View/NoConnectionView/NoConnectionView.tsx:24
 msgid "Retry"
 msgstr ""
@@ -698,7 +718,7 @@ msgstr ""
 msgid "Saving"
 msgstr ""
 
-#: src/View/NotesView/NotesView.tsx:70
+#: src/View/NotesView/NotesView.tsx:72
 msgid "Search note"
 msgstr ""
 
@@ -732,8 +752,8 @@ msgstr ""
 msgid "Share note"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:85
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:88
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:84
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:87
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:67
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:70
 #: src/View/ProjectTask/CreateForm.tsx:76
@@ -742,7 +762,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: src/component/GroupUserCard/GroupUserCard.tsx:80
+#: src/component/GroupUserCard/GroupUserCard.tsx:82
 msgid "Switch role ( User / Moderator )"
 msgstr ""
 
@@ -763,7 +783,7 @@ msgstr ""
 #~ msgstr ""
 
 #: src/View/CalendarView/CreateForm.tsx:80
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:74
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:73
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:56
 #: src/View/ProjectTask/CreateForm.tsx:65
 #: src/View/ProjectView/CreateForm.tsx:56
@@ -783,6 +803,10 @@ msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:103
 msgid "To Do"
+msgstr ""
+
+#: src/View/SettingsView/SettingsView.tsx:28
+msgid "Todo"
 msgstr ""
 
 #: src/api/ProjectTodos/query.ts:36
@@ -814,17 +838,21 @@ msgstr ""
 msgid "Unexpected Error"
 msgstr ""
 
+#: src/component/UserBox/AvatarForm.tsx:65
+msgid "Update avatar"
+msgstr ""
+
 #: src/component/UserBox/CreateForm.tsx:104
 msgid "Updating account will cause a logout"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:144
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:147
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:143
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:146
 msgid "User"
 msgstr ""
 
 #: src/component/UserBox/CreateForm.tsx:54
-#: src/component/UserBox/UserBox.tsx:37
+#: src/component/UserBox/UserBox.tsx:36
 #: src/View/RegisterView/RegisterForm.tsx:48
 msgid "Username"
 msgstr ""

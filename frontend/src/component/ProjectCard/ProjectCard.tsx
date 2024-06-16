@@ -10,6 +10,7 @@ import { Project } from '~/api/Projects/api';
 import { formatDate } from '~/utils/dateTime';
 import { ProjectMenu } from '../ProjectMenu';
 import { NavLink } from 'react-router-dom';
+import { ProjectAvatar } from '../ProjectAvatar';
 
 type Props = {
   project: Project;
@@ -23,7 +24,11 @@ export const ProjectCard = ({ project }: Props) => {
           component={NavLink}
           to={`/projects/${project.projectID}`}
           sx={{ textDecoration: 'none' }}
+          display="flex"
+          alignItems="center"
+          gap={2}
         >
+          <ProjectAvatar name={project.title} />
           <ListItemText
             sx={(theme) => ({
               display: 'flex',

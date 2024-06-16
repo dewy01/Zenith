@@ -23,11 +23,11 @@ const getMainColor = (colorPalette: PaletteColorOptions) =>
   colorPalette['500' as PaletteColorKey];
 
 const routes: { [routeName: string]: boolean } = {
-  ['Notes']: true,
-  ['Calendar']: true,
-  ['Todo']: true,
-  ['Projects']: true,
-  ['Group Projects']: true,
+  [t({ message: 'Notes' })]: true,
+  [t({ message: 'Calendar' })]: true,
+  [t({ message: 'Todo' })]: true,
+  [t({ message: 'Projects' })]: true,
+  [t({ message: 'Group Projects' })]: true,
 };
 
 const colors = [
