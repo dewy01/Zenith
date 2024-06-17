@@ -9,6 +9,7 @@ import { mutatePostImage } from '~/api/Image/query';
 import { ClassAttributes, ButtonHTMLAttributes } from 'react';
 import { JSX } from 'react/jsx-runtime';
 import { t } from '@lingui/macro';
+import { DialogRemoveAvatar } from './DialogRemoveAvatar';
 
 type Props = {
   username: string;
@@ -80,7 +81,7 @@ export const AvatarForm = ({ username, initialImage }: Props) => {
           </Tooltip>
         </>
       ) : (
-        <></>
+        <DialogRemoveAvatar initialImage={initialImage} />
       )}
     </>
   );

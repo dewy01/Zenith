@@ -45,6 +45,7 @@ msgstr ""
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:58
 #: src/component/GroupUserCard/SetAdminDialog.tsx:68
 #: src/component/ProjectDeleteDialog/ProjectDelete.tsx:56
+#: src/component/UserBox/DialogRemoveAvatar.tsx:61
 #: src/View/NotesView/DialogDelete.tsx:55
 #: src/View/SettingsView/DeleteAccountDialog.tsx:63
 #: src/View/TodoView/DialogDelete.tsx:55
@@ -55,7 +56,11 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
-#: src/api/Image/query.ts:15
+#: src/api/Image/query.ts:25
+msgid "Avatar deleted"
+msgstr ""
+
+#: src/api/Image/query.ts:13
 msgid "Avatar updated"
 msgstr ""
 
@@ -85,6 +90,7 @@ msgstr ""
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:63
 #: src/component/GroupUserCard/SetAdminDialog.tsx:89
 #: src/component/ProjectDeleteDialog/ProjectDelete.tsx:67
+#: src/component/UserBox/DialogRemoveAvatar.tsx:66
 #: src/component/UserBox/DialogUpdate.tsx:93
 #: src/View/CalendarView/DialogCreate.tsx:66
 #: src/View/CalendarView/DialogEdit.tsx:86
@@ -261,6 +267,10 @@ msgstr ""
 
 #: src/View/TodoView/DialogDelete.tsx:47
 msgid "Delete Todo"
+msgstr ""
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:59
+msgid "Deleting avatar means that it will be forever lost."
 msgstr ""
 
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:54
@@ -677,6 +687,18 @@ msgstr ""
 msgid "Reminder"
 msgstr ""
 
+#: src/component/UserBox/DialogRemoveAvatar.tsx:69
+msgid "Remove"
+msgstr ""
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:39
+msgid "Remove avatar"
+msgstr ""
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:55
+msgid "Remove Avatar"
+msgstr ""
+
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:34
 msgid "Remove group"
 msgstr ""
@@ -690,7 +712,7 @@ msgstr ""
 msgid "Reset token sent to email"
 msgstr ""
 
-#: src/component/UserBox/AvatarForm.tsx:70
+#: src/component/UserBox/AvatarForm.tsx:73
 msgid "Restore avatar"
 msgstr ""
 
@@ -838,7 +860,7 @@ msgstr ""
 msgid "Unexpected Error"
 msgstr ""
 
-#: src/component/UserBox/AvatarForm.tsx:65
+#: src/component/UserBox/AvatarForm.tsx:24
 msgid "Update avatar"
 msgstr ""
 

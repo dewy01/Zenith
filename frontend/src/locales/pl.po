@@ -45,6 +45,7 @@ msgstr "Wprowadzone zmiany będą widoczne jutro"
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:58
 #: src/component/GroupUserCard/SetAdminDialog.tsx:68
 #: src/component/ProjectDeleteDialog/ProjectDelete.tsx:56
+#: src/component/UserBox/DialogRemoveAvatar.tsx:61
 #: src/View/NotesView/DialogDelete.tsx:55
 #: src/View/SettingsView/DeleteAccountDialog.tsx:63
 #: src/View/TodoView/DialogDelete.tsx:55
@@ -55,7 +56,11 @@ msgstr "Czy jesteś pewien"
 msgid "Avatar"
 msgstr "Awatar"
 
-#: src/api/Image/query.ts:15
+#: src/api/Image/query.ts:25
+msgid "Avatar deleted"
+msgstr "Awatar usunięty"
+
+#: src/api/Image/query.ts:13
 msgid "Avatar updated"
 msgstr "Awatar zmieniony"
 
@@ -85,6 +90,7 @@ msgstr "Kalendarz"
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:63
 #: src/component/GroupUserCard/SetAdminDialog.tsx:89
 #: src/component/ProjectDeleteDialog/ProjectDelete.tsx:67
+#: src/component/UserBox/DialogRemoveAvatar.tsx:66
 #: src/component/UserBox/DialogUpdate.tsx:93
 #: src/View/CalendarView/DialogCreate.tsx:66
 #: src/View/CalendarView/DialogEdit.tsx:86
@@ -262,6 +268,10 @@ msgstr "Usuń projekt"
 #: src/View/TodoView/DialogDelete.tsx:47
 msgid "Delete Todo"
 msgstr "Usuń Todo"
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:59
+msgid "Deleting avatar means that it will be forever lost."
+msgstr "Usunięcie awatara spowoduje stracenie go na zawsze"
 
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:54
 msgid "Deleting this group means that all provided data will be lost."
@@ -677,6 +687,18 @@ msgstr "Rejestracja pomyślna, teraz zweryfikuj email"
 msgid "Reminder"
 msgstr "Powiadomienie"
 
+#: src/component/UserBox/DialogRemoveAvatar.tsx:69
+msgid "Remove"
+msgstr "Usuń"
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:39
+msgid "Remove avatar"
+msgstr "Usuń awatar"
+
+#: src/component/UserBox/DialogRemoveAvatar.tsx:55
+msgid "Remove Avatar"
+msgstr "Usuń awatar"
+
 #: src/component/GroupUserCard/RemoveGroupDialog.tsx:34
 msgid "Remove group"
 msgstr "Usuń grupę"
@@ -690,7 +712,7 @@ msgstr "Odnów hasło"
 msgid "Reset token sent to email"
 msgstr "Token wysłany na email"
 
-#: src/component/UserBox/AvatarForm.tsx:70
+#: src/component/UserBox/AvatarForm.tsx:73
 msgid "Restore avatar"
 msgstr "Przywróć awatar"
 
@@ -838,7 +860,7 @@ msgstr "Spróbuj ponownie"
 msgid "Unexpected Error"
 msgstr "Niespodziewany błąd"
 
-#: src/component/UserBox/AvatarForm.tsx:65
+#: src/component/UserBox/AvatarForm.tsx:24
 msgid "Update avatar"
 msgstr "Zamień awatar"
 

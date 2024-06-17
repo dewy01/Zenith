@@ -7,3 +7,7 @@ export const postImage = async (data: FormData) => {
     },
   });
 };
+
+export const deleteImage = async (data: string) => {
+  return await axiosInstance.delete(`/api/images/${data}`);
+};
