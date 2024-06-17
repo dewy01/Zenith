@@ -30,5 +30,11 @@ namespace backend.Controllers
             await _imageService.SaveAsync(dto.Image);
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteImage(string id)
+        {
+            await _imageService.DeleteAvatar(id);
+            return Ok();
+        }
     }
 }
