@@ -1,27 +1,26 @@
-import {
-  AppBar,
-  Box,
-  Divider,
-  LinearProgress,
-  List,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import { getAllProjects } from '~/api/Projects/query';
-import { LoadingView } from '../LoadingView/LoadingView';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { DialogCreate } from './DialogCreate';
-import { ProjectCard } from '~/component/ProjectCard';
 import { SearchField } from '~/component/SearchField';
-import { deriveBarColor } from '~/utils/deriveBarColor';
 import { Trans, t } from '@lingui/macro';
+import { useRef, useState } from 'react';
+import { debounce } from 'lodash';
+import { ProjectList } from './ProjectList';
 
 export const ProjectView = () => {
-  const { data: projects, isLoading } = getAllProjects();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [filter, setFilter] = useState<string>('');
+  const pageSize = 5;
 
-  if (isLoading || projects === undefined) {
-    return <LoadingView />;
-  }
+  const onPageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPageNumber(value);
+  };
+
+  const handleFilter = useRef(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+      setFilter(event.target.value);
+      setPageNumber(1);
+    }, 500),
+  ).current;
 
   return (
     <Box>
@@ -30,41 +29,18 @@ export const ProjectView = () => {
           <Typography variant="h6" component="div">
             <Trans>Projects</Trans>
           </Typography>
-          <SearchField placeholder={t({ message: 'Search projects' })} />
+          <SearchField
+            onChange={handleFilter}
+            placeholder={t({ message: 'Search projects' })}
+          />
           <DialogCreate />
         </Toolbar>
       </AppBar>
-
-      <List
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1,
-          paddingY: 8,
-        }}
-      >
-        {projects.map((item) => (
-          <Box key={item.projectID}>
-            <ProjectCard project={item} />
-            <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>
-              <LinearProgress
-                sx={{
-                  width: '20%',
-                  marginTop: -1,
-                  marginBottom: 2,
-                  marginLeft: 2,
-                  padding: 0.5,
-                }}
-                color={deriveBarColor(item.status)}
-                variant="determinate"
-                value={item.completion}
-              />
-            </Tooltip>
-            <Divider variant="middle" />
-          </Box>
-        ))}
-      </List>
+      <ProjectList
+        query={{ pageNumber: pageNumber, pageSize: pageSize, filter: filter }}
+        handlePageChange={onPageChange}
+        pageNumber={pageNumber}
+      />
     </Box>
   );
 };

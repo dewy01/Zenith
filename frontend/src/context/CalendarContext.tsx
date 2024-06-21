@@ -23,7 +23,8 @@ type Props = { children: ReactNode };
 export const CalendarProvider = ({ children }: Props) => {
   const [monthAsNumber, setMonthAsNumber] = useState(dayjs().month());
   const [weekAsNumber, setWeekAsNumber] = useState(
-    dayjs().diff(dayjs().startOf('month'), 'week'),
+    //TODO: validate if +1 always returns valid week or temporary fix
+    dayjs().diff(dayjs().startOf('month'), 'week') + 1,
   );
 
   return (

@@ -1,5 +1,6 @@
 import { axiosInstance } from '../api';
 import { projectModel } from '~/View/ProjectView/schema';
+import { PaginationRequest, PaginationResponse } from '../pagination';
 
 export interface Project {
   projectID: number;
@@ -59,9 +60,15 @@ export interface AddProject {
   status: string;
 }
 
-export const queryAllProjects = async () => {
-  const response = await axiosInstance.get('/api/projects/getAllProjects');
-  return response.data as Project[];
+export const queryAllProjects = async (pagination: PaginationRequest) => {
+  const response = await axiosInstance.get('/api/projects/getAllProjects',{
+    params:{
+      pageNumber: pagination.pageNumber,
+      pageSize: pagination.pageSize,
+      filter: pagination.filter
+    }
+  });
+  return response.data as PaginationResponse<Project>;
 };
 
 export const postAddProject = async (project: projectModel) => {

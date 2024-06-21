@@ -1,5 +1,6 @@
 import { groupProjectModel } from '~/View/GroupView/GroupProjectView/schema';
 import { axiosInstance } from '../api';
+import { PaginationRequest, PaginationResponse } from '../pagination';
 
 
 export interface Project {
@@ -19,6 +20,7 @@ export interface ProjectTask {
   category: string;
   status: string;
   user:string;
+  userImage:string;
   canEdit: boolean;
 }
 
@@ -62,9 +64,15 @@ export interface AddProject {
   status: string;
 }
 
-export const queryAllGroupProjects = async () => {
-  const response = await axiosInstance.get('/api/group-projects/getAllGroupProjects');
-  return response.data as Project[];
+export const queryAllGroupProjects = async (pagination: PaginationRequest) => {
+  const response = await axiosInstance.get('/api/group-projects/getAllGroupProjects',{
+    params:{
+      pageNumber: pagination.pageNumber,
+      pageSize: pagination.pageSize,
+      filter: pagination.filter
+    }
+  });
+  return response.data as PaginationResponse<Project>;
 };
 
 export const postAddGroupProject = async (project: groupProjectModel) => {

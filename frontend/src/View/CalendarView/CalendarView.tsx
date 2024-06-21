@@ -50,7 +50,8 @@ export const CalendarView = () => {
 
   const handleReset = () => {
     setMonthAsNumber(dayjs().month());
-    setWeekAsNumber(dayjs().diff(dayjs().startOf('month'), 'week'));
+    //TODO: validate if +1 always returns valid week or temporary fix
+    setWeekAsNumber(dayjs().diff(dayjs().startOf('month'), 'week') + 1);
     enqueueSnackbar(<Trans>Month reset</Trans>, {
       autoHideDuration: 1000,
     });
@@ -62,7 +63,8 @@ export const CalendarView = () => {
     } else {
       return (
         monthAsNumber === dayjs().month() &&
-        weekAsNumber === dayjs().diff(dayjs().startOf('month'), 'week')
+        //TODO: validate if +1 always returns valid week or temporary fix
+        weekAsNumber === dayjs().diff(dayjs().startOf('month'), 'week') + 1
       );
     }
   }, [monthAsNumber, weekAsNumber, viewMode]);
@@ -80,7 +82,7 @@ export const CalendarView = () => {
           display={'flex'}
           flexDirection={'column'}
           gap={5}
-          sx={{ overflow: 'hidden' }}
+          sx={{ overflow: 'auto' }}
         >
           <Box
             display={'flex'}

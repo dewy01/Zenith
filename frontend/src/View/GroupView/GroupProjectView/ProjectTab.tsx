@@ -1,24 +1,26 @@
 import { Trans, t } from '@lingui/macro';
-import {
-  Box,
-  Typography,
-  List,
-  Tooltip,
-  LinearProgress,
-  Divider,
-} from '@mui/material';
-import { LoadingView } from '~/View/LoadingView/LoadingView';
-import { getAllGroupProjects } from '~/api/GroupProjects/query';
-import { GroupProjectCard } from '~/component/GroupProjectCard/GroupProjectCard';
+import { Box, Typography } from '@mui/material';
+import { debounce } from 'lodash';
+import { useRef, useState } from 'react';
 import { SearchField } from '~/component/SearchField';
-import { deriveBarColor } from '~/utils/deriveBarColor';
+import { ProjectList } from './ProjectList';
 
 export const ProjectTab = () => {
-  const { data: group, isLoading } = getAllGroupProjects();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [filter, setFilter] = useState<string>('');
+  const pageSize = 5;
 
-  if (isLoading || !group) {
-    return <LoadingView />;
-  }
+  const onPageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPageNumber(value);
+  };
+
+  const handleFilter = useRef(
+    debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+      setFilter(event.target.value);
+      setPageNumber(1);
+    }, 500),
+  ).current;
+
   return (
     <>
       <Box
@@ -32,38 +34,17 @@ export const ProjectTab = () => {
           <Trans>Explore projects</Trans>
         </Typography>
         <Box display={'flex'} gap={2}>
-          <SearchField placeholder={t({ message: 'Search projects' })} />
+          <SearchField
+            onChange={handleFilter}
+            placeholder={t({ message: 'Search projects' })}
+          />
         </Box>
       </Box>
-      <List
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1,
-        }}
-      >
-        {group.map((item) => (
-          <Box key={item.groupProjectID}>
-            <GroupProjectCard project={item} />
-            <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>
-              <LinearProgress
-                sx={{
-                  width: '20%',
-                  marginTop: -1,
-                  marginBottom: 2,
-                  marginLeft: 2,
-                  padding: 0.5,
-                }}
-                color={deriveBarColor(item.status)}
-                variant="determinate"
-                value={item.completion}
-              />
-            </Tooltip>
-            <Divider variant="middle" />
-          </Box>
-        ))}
-      </List>
+      <ProjectList
+        query={{ pageNumber: pageNumber, pageSize: pageSize, filter: filter }}
+        handlePageChange={onPageChange}
+        pageNumber={pageNumber}
+      />
     </>
   );
 };

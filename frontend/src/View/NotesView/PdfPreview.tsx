@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef } from 'react';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfmake from 'html-to-pdfmake';
 import { PdfContext } from '~/context/PdfContext';
 import { Trans } from '@lingui/macro';
 import { NavLink } from 'react-router-dom';
 
-pdfMake.vfs = { ...pdfFonts.pdfMake.vfs };
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 export const PdfPreview = () => {
   const { htmlContent } = useContext(PdfContext);

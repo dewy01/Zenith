@@ -10,11 +10,12 @@ import {
 } from './api';
 import { projectModel } from '~/View/ProjectView/schema';
 import { t } from '@lingui/macro';
+import { PaginationRequest } from '../pagination';
 
-export const getAllProjects = () => {
+export const getAllProjects = (pagination: PaginationRequest) => {
   return useQuery({
-    queryKey: ['allProjects'],
-    queryFn: queryAllProjects,
+    queryKey: ['allProjects',pagination.pageNumber,pagination.filter],
+    queryFn: ()=>queryAllProjects(pagination),
   });
 };
 

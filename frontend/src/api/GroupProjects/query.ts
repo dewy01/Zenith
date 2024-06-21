@@ -10,11 +10,12 @@ import {
   queryGroupProjectID,
 } from './api';
 import { t } from '@lingui/macro';
+import { PaginationRequest } from '../pagination';
 
-export const getAllGroupProjects = () => {
+export const getAllGroupProjects = (pagination: PaginationRequest) => {
   return useQuery({
-    queryKey: ['allGroupProjects'],
-    queryFn: queryAllGroupProjects,
+    queryKey: ['allGroupProjects',pagination.pageNumber,pagination.filter],
+    queryFn: ()=>queryAllGroupProjects(pagination),
   });
 };
 
