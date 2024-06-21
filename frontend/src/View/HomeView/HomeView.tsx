@@ -20,6 +20,7 @@ export const HomeView = () => {
       padding={8}
       gap={6}
       height={'100vh'}
+      overflow={'auto'}
     >
       <Box
         display="flex"

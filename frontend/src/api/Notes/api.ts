@@ -1,4 +1,5 @@
 import { axiosInstance } from '../api';
+import { PaginationRequest, PaginationResponse } from '../pagination';
 
 export interface Note {
   noteID: number;
@@ -16,9 +17,15 @@ type editProps = {
   content: string;
 };
 
-export const queryAllNotes = async () => {
-  const response = await axiosInstance.get('/api/notes/getAllNotes');
-  return response.data as Note[];
+export const queryAllNotes = async (pagination : PaginationRequest) => {
+  const response = await axiosInstance.get('/api/notes/getAllNotes',{
+    params:{
+      pageNumber: pagination.pageNumber,
+      pageSize: pagination.pageSize,
+      filter: pagination.filter
+    }
+  });
+  return response.data as PaginationResponse<Note>;
 };
 
 export const postAddNote = async () => {

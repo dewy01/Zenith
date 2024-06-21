@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 import {
+  Note,
   deleteNoteById,
   editNoteById,
   postAddNote,
@@ -10,13 +11,23 @@ import {
   queryShareToken,
 } from './api';
 import { t } from '@lingui/macro';
+import { PaginationResponse, PaginationRequest } from '../pagination';
 
-export const getAllNotes = () => {
-  return useQuery({
-    queryKey: ['allNotes'],
-    queryFn: queryAllNotes,
+
+export const getAllNotes = (pagination: PaginationRequest) => {
+  return useInfiniteQuery<PaginationResponse<Note>, Error>({
+    queryKey: ['allNotes', pagination.filter, pagination.pageNumber],
+    queryFn: ({ pageParam = pagination.pageNumber }) => queryAllNotes({ ...pagination, pageNumber: pageParam as number }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNumber < lastPage.totalPages) {
+        return lastPage.pageNumber + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
   });
 };
+
 
 export const getNoteById = (noteId: number) => {
   return useQuery({

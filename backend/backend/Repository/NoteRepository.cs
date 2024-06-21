@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
 using backend.Dto.Notes;
+using backend.Dto.Pagination;
 
 namespace backend.Repository
 {
@@ -60,21 +61,50 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<AllNotesDto>> GetAllNotes()
+        public async Task<PaginationResponseDto<AllNotesDto>> GetAllNotes(PaginationRequestDto paginationRequest)
         {
-            List<Note> userNotes;
             var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
 
-            userNotes = await _context.Notes
+            var query = _context.Notes
                 .Where(note => note.UserID == userId)
-                .AsNoTracking() 
+                .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(paginationRequest.Filter))
+            {
+                query = query.Where(note => note.Title.Contains(paginationRequest.Filter));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var userNotes = await query
+                .OrderBy(note => note.NoteID)
+                .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
+                .Take(paginationRequest.PageSize)
                 .ToListAsync();
 
-            if (userNotes.Count == 0) { return new List<AllNotesDto>(); }
+            if (userNotes.Count == 0)
+            {
+                return new PaginationResponseDto<AllNotesDto>();
+            }
 
             var noteDtos = _mapper.Map<List<AllNotesDto>>(userNotes);
-            return noteDtos;
+
+            var response = new PaginationResponseDto<AllNotesDto>
+            {
+                Items = noteDtos,
+                TotalItems = totalItems,
+                PageNumber = paginationRequest.PageNumber,
+                PageSize = paginationRequest.PageSize,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
+            };
+
+            return response;
         }
+
 
         public async Task<EditNoteDto> GetNoteById(int noteId)
         {

@@ -48,7 +48,13 @@ export const NotificationBox = () => {
           </Box>
         </AccordionSummary>
         <AccordionDetails
-          sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            maxHeight: '180px',
+            overflow: 'auto',
+          }}
         >
           {!isEmpty ? (
             <>

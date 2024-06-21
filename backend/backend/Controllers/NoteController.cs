@@ -1,4 +1,5 @@
 ﻿using backend.Dto.Notes;
+using backend.Dto.Pagination;
 using backend.Interface;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +19,9 @@ namespace backend.Controllers
 
         [HttpGet("getAllNotes")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllNotesDto>>> GetAllNotes()
+        public async Task<ActionResult<PaginationResponseDto<AllNotesDto>>> GetAllNotes([FromQuery] PaginationRequestDto paginationRequest)
         {
-            var notes = await _noteService.GetAllNotes();
+            var notes = await _noteService.GetAllNotes(paginationRequest);
             return Ok(notes);
         }
         [HttpGet("getNoteById/{noteId}")]

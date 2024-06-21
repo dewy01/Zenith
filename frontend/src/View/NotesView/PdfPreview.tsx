@@ -8,7 +8,7 @@ import { PdfContext } from '~/context/PdfContext';
 import { Trans } from '@lingui/macro';
 import { NavLink } from 'react-router-dom';
 
-(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
+(window as any).pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export const PdfPreview = () => {
   const { htmlContent } = useContext(PdfContext);
