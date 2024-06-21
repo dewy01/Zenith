@@ -137,7 +137,7 @@ namespace backend.Repository
                 if (preferences != null && preferences.Reminder != 0)
                 {
                     var notifications = await _context.Notifications
-                        .Where(x => x.UserID == user.UserID && !x.isActive)
+                        .Where(x => x.UserID == user.UserID)
                         .ToListAsync();
 
                     var notificationsToUpdate = new List<Notification>(); 

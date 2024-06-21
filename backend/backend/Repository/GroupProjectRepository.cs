@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using backend.Dto.Projects;
 using backend.Dto.GroupProjects;
 using backend.Dto.GroupProjectTasks;
+using backend.Dto.Pagination;
 
 namespace backend.Repository
 {
@@ -84,43 +85,73 @@ namespace backend.Repository
             return projectDto;
         }
 
-        public async Task<IEnumerable<AllGroupProjectsDto>> GetAllGroupProjects()
+        public async Task<PaginationResponseDto<AllGroupProjectsDto>> GetAllGroupProjects(PaginationRequestDto paginationRequest)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
             {
                 throw new NotFoundException("User not found");
             }
+
             var userGroup = await _context.Groups
                 .AsNoTracking()
                 .Include(g => g.Users)
                 .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
 
-            var projects = await _context.GroupProjects
-                .AsNoTracking()
-                .Include(p => p.GroupProjectTasks)
-                .Where(x => x.GroupID == userGroup.GroupID)
-                .ToListAsync();
-
-            if (projects.Count == 0) { return new List<AllGroupProjectsDto>(); }
-            var projectDtos = new List<AllGroupProjectsDto>();
-            foreach (GroupProject project in projects)
+            if (userGroup == null)
             {
-                projectDtos.Add(new AllGroupProjectsDto
-                {
-                    GroupProjectID = project.GroupProjectID,
-                    Title = project.Title,
-                    Deadline = project.Deadline,
-                    Description = project.Description,
-                    Status = project.Status,
-                    Completion = project.GroupProjectTasks.Count() != 0 ? (float)Math.Truncate(((float)project.GroupProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.GroupProjectTasks.Count()) * 100) : 0,
-                    isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
-                });
+                throw new NotFoundException("User's group not found");
             }
 
+            var query = _context.GroupProjects
+                .AsNoTracking()
+                .Include(p => p.GroupProjectTasks)
+                .Where(x => x.GroupID == userGroup.GroupID);
 
-            return projectDtos;
+            if (!string.IsNullOrEmpty(paginationRequest.Filter))
+            {
+                query = query.Where(p => p.Title.Contains(paginationRequest.Filter));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var projects = await query
+                .OrderBy(p => p.GroupProjectID)
+                .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
+                .Take(paginationRequest.PageSize)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (projects.Count == 0)
+            {
+                return new PaginationResponseDto<AllGroupProjectsDto>();
+            }
+
+            var projectDtos = projects.Select(project => new AllGroupProjectsDto
+            {
+                GroupProjectID = project.GroupProjectID,
+                Title = project.Title,
+                Deadline = project.Deadline,
+                Description = project.Description,
+                Status = project.Status,
+                Completion = project.GroupProjectTasks.Count != 0
+                    ? (float)Math.Truncate(((float)project.GroupProjectTasks.Count(x => x.Status == "Closed") / project.GroupProjectTasks.Count) * 100)
+                    : 0,
+                isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
+            }).ToList();
+
+            var response = new PaginationResponseDto<AllGroupProjectsDto>
+            {
+                Items = projectDtos,
+                TotalItems = totalItems,
+                PageNumber = paginationRequest.PageNumber,
+                PageSize = paginationRequest.PageSize,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
+            };
+
+            return response;
         }
+
 
         public async Task AddGroupProject(AddGroupProjectDto dto)
         {

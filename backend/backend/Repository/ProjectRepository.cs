@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using backend.Dto.Projects;
 using backend.Dto.ProjectTasks;
+using backend.Dto.Pagination;
 
 namespace backend.Repository
 {
@@ -62,7 +63,7 @@ namespace backend.Repository
             return projectDto;
         }
 
-        public async Task<IEnumerable<AllProjectsDto>> GetAllProjects()
+        public async Task<PaginationResponseDto<AllProjectsDto>> GetAllProjects(PaginationRequestDto paginationRequest)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -70,15 +71,27 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var projects = await _context.Projects
+            var query = _context.Projects
                 .Include(p => p.ProjectTasks)
-                .Where(x => x.UserID == userId)
+                .Where(x => x.UserID == userId);
+
+            if (!string.IsNullOrEmpty(paginationRequest.Filter))
+            {
+                query = query.Where(p => p.Title.Contains(paginationRequest.Filter));
+            }
+
+            var totalItems = await query.CountAsync();
+
+            var projects = await query
+                .OrderBy(p => p.ProjectID)
+                .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
+                .Take(paginationRequest.PageSize)
                 .AsNoTracking()
                 .ToListAsync();
 
             if (projects.Count == 0)
             {
-                return new List<AllProjectsDto>();
+                return new PaginationResponseDto<AllProjectsDto>();
             }
 
             var projectDtos = new List<AllProjectsDto>();
@@ -98,7 +111,16 @@ namespace backend.Repository
                 });
             }
 
-            return projectDtos;
+            var repsonse =  new PaginationResponseDto<AllProjectsDto> 
+            { 
+                Items = projectDtos, 
+                TotalItems = totalItems, 
+                PageNumber = paginationRequest.PageNumber, 
+                PageSize = paginationRequest.PageSize,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
+            };
+
+            return repsonse;
         }
 
         public async Task AddProject(AddProjectDto dto)

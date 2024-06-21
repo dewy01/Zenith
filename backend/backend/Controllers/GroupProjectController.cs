@@ -1,4 +1,5 @@
 ﻿using backend.Dto.GroupProjects;
+using backend.Dto.Pagination;
 using backend.Dto.Projects;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -21,9 +22,9 @@ namespace backend.Controllers
 
         [HttpGet("getAllGroupProjects")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AllProjectsDto>>> GetAllGroupProjects()
+        public async Task<ActionResult<PaginationResponseDto<AllGroupProjectsDto>>> GetAllGroupProjects([FromQuery] PaginationRequestDto paginationRequest)
         {
-            var projects = await _groupProjectService.GetAllGroupProjects();
+            var projects = await _groupProjectService.GetAllGroupProjects(paginationRequest);
             return Ok(projects);
         }
 
