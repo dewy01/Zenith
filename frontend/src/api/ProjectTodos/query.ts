@@ -1,8 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSnackbar } from 'notistack';
 import {
   AddProjectTodo,
   EditProjectTodo,
+  ProjectTodo,
   postAddProjectTodo,
   postDeleteProjectTodo,
   postEditProjectTodo,
@@ -10,13 +11,22 @@ import {
   queryProjectTodoById,
 } from './api';
 import { t } from '@lingui/macro';
+import { PaginationRequest, PaginationResponse } from '../pagination';
 
-export const getProjectTodos = () => {
-  return useQuery({
-    queryKey: ['projectTodos'],
-    queryFn: queryProjectTodo,
+export const getProjectTodos = (isDone: boolean, pagination: PaginationRequest) => {
+  return useInfiniteQuery<PaginationResponse<ProjectTodo>, Error>({
+    queryKey: ['projectTodos', isDone, pagination.filter, pagination.pageNumber],
+    queryFn: ({ pageParam = pagination.pageNumber }) => queryProjectTodo(isDone,{ ...pagination, pageNumber: pageParam as number } as PaginationRequest),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNumber < lastPage.totalPages) {
+        return lastPage.pageNumber + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
   });
 };
+
 
 export const getProjectTodoById = (projectId: number) => {
   return useQuery({

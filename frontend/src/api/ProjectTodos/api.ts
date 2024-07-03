@@ -1,4 +1,5 @@
 import { axiosInstance } from '../api';
+import { PaginationRequest, PaginationResponse } from '../pagination';
 
 export interface ProjectTodo {
   projectTodoID: number;
@@ -34,13 +35,19 @@ export interface Todo {
 }
 
 export interface TodoList {
-  doneProjects: ProjectTodo[];
-  undoneProjects: ProjectTodo[];
+  projects: ProjectTodo[];
 }
 
-export const queryProjectTodo = async () => {
-  const response = await axiosInstance.get(`/api/projectTodos/getAllProjects`);
-  return response.data as TodoList;
+export const queryProjectTodo = async (isDone: boolean,pagination : PaginationRequest) => {
+  const response = await axiosInstance.get(`/api/projectTodos/getAllProjects`, {
+    params:{
+      isDone: isDone,
+      pageNumber: pagination.pageNumber,
+      pageSize: pagination.pageSize,
+      filter: pagination.filter
+    }
+  });
+  return response.data as PaginationResponse<ProjectTodo>;;
 };
 
 export const queryProjectTodoById = async (projectId: number) => {

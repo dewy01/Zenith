@@ -11,7 +11,7 @@ type Props = {
 export const TodoPreview = ({ projectId }: Props) => {
   const { data: project, isLoading } = getProjectTodoById(projectId);
 
-  if (isLoading || !project) {
+  if (isLoading || project === undefined) {
     return <LoadingView />;
   }
 
