@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using backend.Dto.Todos;
 using backend.Dto.ProjectTodo;
+using backend.Dto.Pagination;
 
 namespace backend.Repository
 {
@@ -23,7 +24,7 @@ namespace backend.Repository
             _mapper = mapper;
         }
 
-        public async Task<ProjectsTodoDto> GetAllProjects()
+        public async Task<PaginationResponseDto<AllProjectsTodoDto>> GetAllProjects(bool isDone, PaginationRequestDto paginationRequest)
         {
             var userId = _userContextRepository.GetUserId;
             if (userId == null)
@@ -31,31 +32,43 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-            var projects = await _context.ProjectTodos
-                .AsNoTracking()
-                .Where(x => x.UserID == userId)
-                .OrderBy(x => x.ProjectTodoID)
-                .ToListAsync();
+            var query = _context.ProjectTodos
+                .Where(x => x.UserID == userId && x.IsDone == isDone)
+                .AsNoTracking();
 
-            if (projects.Count == 0)
+            if (!string.IsNullOrEmpty(paginationRequest.Filter))
             {
-                return new ProjectsTodoDto();
+                query = query.Where(x => x.Title.Contains(paginationRequest.Filter));
             }
 
-            var doneProjects = projects.Where(x => x.IsDone).ToList();
-            var undoneProjects = projects.Where(x => !x.IsDone).ToList();
+            var totalItems = await query.CountAsync();
 
-            var doneProjectsDto = _mapper.Map<List<AllProjectsTodoDto>>(doneProjects);
-            var undoneProjectsDto = _mapper.Map<List<AllProjectsTodoDto>>(undoneProjects);
+            var projectTodos = await query
+                .OrderBy(x => x.ProjectTodoID)
+                .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
+                .Take(paginationRequest.PageSize)
+                .ToListAsync();
 
-            var projectsDto = new ProjectsTodoDto
+
+            if (projectTodos.Count == 0)
             {
-                DoneProjects = doneProjectsDto,
-                UndoneProjects = undoneProjectsDto
+                return new PaginationResponseDto<AllProjectsTodoDto>();
+            }
+
+            var projectTodoDtos = _mapper.Map<List<AllProjectsTodoDto>>(projectTodos);
+
+            var response = new PaginationResponseDto<AllProjectsTodoDto>
+            {
+                Items = projectTodoDtos,
+                TotalItems = totalItems,
+                PageNumber = paginationRequest.PageNumber,
+                PageSize = paginationRequest.PageSize,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
             };
 
-            return projectsDto;
+            return response;
         }
+
 
         public async Task<ProjectTodoDto> GetProjectById(int projectId)
         {

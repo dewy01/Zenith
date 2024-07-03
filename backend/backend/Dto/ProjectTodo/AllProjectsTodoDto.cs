@@ -2,8 +2,7 @@
 {
     public class ProjectsTodoDto
     {
-        public List<AllProjectsTodoDto> DoneProjects { get; set; } = new List<AllProjectsTodoDto>();
-        public List<AllProjectsTodoDto> UndoneProjects { get; set; } = new List<AllProjectsTodoDto>();
+        public List<AllProjectsTodoDto> Projects { get; set; } = new List<AllProjectsTodoDto>();
     }
     public class AllProjectsTodoDto
     {
