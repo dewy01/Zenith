@@ -2,10 +2,7 @@
 using backend.Interface;
 using backend.Models;
 using backend.Exceptions;
-using System.Collections.Generic;
-using System.Linq;
 using Task = System.Threading.Tasks.Task;
-using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using backend.Dto.Users;
+using backend.Dto.Token;
 
 namespace backend.Repository
 {
@@ -24,14 +22,16 @@ namespace backend.Repository
         private readonly AuthSettings _authSettings;
         private readonly IEmailRepository _emailSettings;
         private readonly IUserContextRepository _userContextRepository;
+        private readonly ITokenRepository _tokenRepository;
 
-        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, AuthSettings authSettings, IEmailRepository emailSettings, IUserContextRepository userContextRepository)
+        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, AuthSettings authSettings, IEmailRepository emailSettings, IUserContextRepository userContextRepository, ITokenRepository tokenRepository)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _authSettings = authSettings;
             _emailSettings = emailSettings;
             _userContextRepository = userContextRepository;
+            _tokenRepository = tokenRepository;
         }
 
         public async Task<UserDto> GetUserById()
@@ -84,7 +84,7 @@ namespace backend.Repository
         {
             var user = await _context.Users.SingleOrDefaultAsync(user => user.Email == dto.Email || user.Username == dto.Username);
 
-            if (user != null) 
+            if (user != null)
             {
                 throw new Exception("This user already exists");
             }
@@ -98,7 +98,6 @@ namespace backend.Repository
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
             newUser.Password = hashedPassword;
-
 
             await _context.Users.AddAsync(newUser);
             await _emailSettings.SendEmailAsync(dto.Email, "Email Confirmation - " + $"{newUser.Username}", "https://localhost:7086/api/account/verifyemail/" + $"{newUser.VerificationToken}");
@@ -116,8 +115,6 @@ namespace backend.Repository
 
             await _context.UserPreferences.AddAsync(preferences);
             await _context.SaveChangesAsync();
-
-
         }
 
         public async Task UpdateUser(UpdateUserDto userDto)
@@ -144,7 +141,6 @@ namespace backend.Repository
                 }
                 var hashedPassword = _passwordHasher.HashPassword(user, userDto.Password);
                 user.Password = hashedPassword;
-
             }
             if (!string.IsNullOrEmpty(userDto.Username) && userDto.Username != user.Username)
             {
@@ -190,7 +186,7 @@ namespace backend.Repository
             return Convert.ToHexString(RandomNumberGenerator.GetBytes(8));
         }
 
-        public async Task<string> GenerateJwt(LoginUserDto dto)
+        public async Task<AccessTokenDto> LoginUser(LoginUserDto dto)
         {
             var user = await _context.Users
                 .AsNoTracking()
@@ -206,24 +202,12 @@ namespace backend.Repository
                 throw new Exception("Invalid credentials");
             }
 
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
-                new Claim(ClaimTypes.Name, $"{user.Email}"),
-            };
+            return await _tokenRepository.GenerateJwt(user);
+        }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey));
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(_authSettings.JwtExpireDays);
-
-            var token = new JwtSecurityToken(_authSettings.JwtIssuer,
-                _authSettings.JwtIssuer,
-                claims,
-                expires: expires,
-                signingCredentials: cred);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            return await Task.FromResult(tokenHandler.WriteToken(token));
+        public async Task<AccessTokenDto> Refresh(AccessTokenDto model)
+        {
+            return await _tokenRepository.Refresh(model);
         }
 
         public async Task<bool> VerifyEmail(string token)
@@ -238,6 +222,7 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
             return await Task.FromResult(true);
         }
+
         public async Task ForgotPassword(ForgotPasswordDto dto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLower() == dto.Email.ToLower() && x.PasswordResetTime == null || DateTime.Now > x.PasswordResetTime);
@@ -255,7 +240,7 @@ namespace backend.Repository
 
         public async Task ResetPassword(ResetPasswordDto dto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.PasswordResetToken == dto.ResetToken && DateTime.Now < x.PasswordResetTime );
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.PasswordResetToken == dto.ResetToken && DateTime.Now < x.PasswordResetTime);
             if (user is null)
             {
                 throw new Exception("User not found");

@@ -8,6 +8,7 @@ using backend.Repository;
 using FluentValidation;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +35,7 @@ builder.Services.AddSingleton(emailSetting);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IUserContextRepository, UserContextRepository>();
@@ -67,9 +69,10 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthentication(option =>
 {
-    option.DefaultAuthenticateScheme = "Bearer";
-    option.DefaultScheme = "Bearer";
-    option.DefaultChallengeScheme = "Bearer";
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
 }).AddJwtBearer(cfg =>
 {
     cfg.RequireHttpsMetadata = false;
@@ -79,6 +82,7 @@ builder.Services.AddAuthentication(option =>
         ValidIssuer = authSetting.JwtIssuer,
         ValidAudience = authSetting.JwtIssuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSetting.JwtKey)),
+        ClockSkew = TimeSpan.Zero
     };
 });
 

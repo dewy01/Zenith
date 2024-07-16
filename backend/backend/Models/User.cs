@@ -6,6 +6,8 @@ namespace backend.Models
     public class User
     {
         public int UserID { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiry { get; set; }
         public string VerificationToken { get; set; }
         public string? PasswordResetToken { get; set; }
         public DateTime? PasswordResetTime { get; set; }

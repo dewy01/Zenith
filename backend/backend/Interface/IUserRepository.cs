@@ -1,4 +1,5 @@
-﻿using backend.Dto.Users;
+﻿using backend.Dto.Token;
+using backend.Dto.Users;
 using backend.Models;
 using Task = System.Threading.Tasks.Task;
 
@@ -11,7 +12,7 @@ namespace backend.Interface
         Task AddUser(RegisterUserDto user);
         Task UpdateUser(UpdateUserDto user);
         Task DeleteUser();
-        Task<string> GenerateJwt(LoginUserDto dto);
+        Task<AccessTokenDto> LoginUser(LoginUserDto dto);
         Task<bool> VerifyEmail(string token);
         Task ForgotPassword(ForgotPasswordDto email);
         Task ResetPassword(ResetPasswordDto dto);

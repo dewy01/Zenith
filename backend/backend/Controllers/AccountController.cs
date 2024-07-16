@@ -1,4 +1,5 @@
-﻿using backend.Dto.Users;
+﻿using backend.Dto.Token;
+using backend.Dto.Users;
 using backend.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,9 +33,9 @@ namespace backend.Controllers
             return NotFound("Error while trying to verify email, please try again");
         }
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginUserDto dto)
+        public async Task<ActionResult<AccessTokenDto>> Login([FromBody] LoginUserDto dto)
         {
-            string token = await _accountService.GenerateJwt(dto);
+            var token = await _accountService.LoginUser(dto);
             return Ok(token);
         }
         [HttpPost("forgotPassword")]
