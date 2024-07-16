@@ -30,7 +30,6 @@ export const postUserRegister = async (userData: registerFormSchema) => {
 
 export const postUserLogin = async (userData: loginFormSchema) => {
   const response = await axiosInstance.post('/api/account/login', userData);
-  console.log(response.data)
   return response.data as AccessToken;
 };
 

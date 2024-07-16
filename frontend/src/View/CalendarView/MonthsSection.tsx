@@ -39,7 +39,7 @@ export const MonthsSection = () => {
         alignItems="center"
       >
         {months.map((month, index) => (
-          <Box sx={{ width: '50px', height: '50px' }}>
+          <Box key={month} sx={{ width: '50px', height: '50px' }}>
             <Box
               sx={(theme) => ({
                 width: '40px',

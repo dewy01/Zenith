@@ -59,13 +59,25 @@ export const NotificationBox = () => {
           {!isEmpty ? (
             <>
               {data?.calendarEventNotifications.map((item) => (
-                <NotificationRow item={item} markAsRead={mutateAsync} />
+                <NotificationRow
+                  key={item.notificationID}
+                  item={item}
+                  markAsRead={mutateAsync}
+                />
               ))}
               {data?.projectNotifications.map((item) => (
-                <NotificationRow item={item} markAsRead={mutateAsync} />
+                <NotificationRow
+                  key={item.notificationID}
+                  item={item}
+                  markAsRead={mutateAsync}
+                />
               ))}
               {data?.groupProjectNotifications.map((item) => (
-                <NotificationRow item={item} markAsRead={mutateAsync} />
+                <NotificationRow
+                  key={item.notificationID}
+                  item={item}
+                  markAsRead={mutateAsync}
+                />
               ))}
             </>
           ) : (

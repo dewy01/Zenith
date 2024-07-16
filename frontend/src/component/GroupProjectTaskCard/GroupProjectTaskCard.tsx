@@ -18,7 +18,7 @@ type Props = {
 
 export const GroupProjectTaskCard: React.FC<Props> = ({ task }) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
-  const cloneRef = React.useRef();
+  const cloneRef = React.useRef<HTMLDivElement | null>(null);
 
   const handleOnDragStart = (e: any) => {
     if (!task.canEdit) {
