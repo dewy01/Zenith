@@ -53,8 +53,9 @@ export const mutateUserLogin = () => {
     mutationKey: ['login'],
     mutationFn: (userData: loginFormSchema) => postUserLogin(userData),
     onSuccess: (data) => {
-      const jwtToken = 'Bearer ' + data.data;
-      login(jwtToken);
+      const jwtToken = data.accessToken;
+      const refreshToken = data.refreshToken
+      login(jwtToken,refreshToken);
       navigate('/home', { replace: true });
     },
     onError: (err) => {

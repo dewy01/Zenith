@@ -17,14 +17,21 @@ export interface MyAccount {
   image:string;
 }
 
-const axiosInstance = axios.create({ baseURL: BASE_URL });
+export interface AccessToken {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export const axiosInstance = axios.create({ baseURL: BASE_URL });
 
 export const postUserRegister = async (userData: registerFormSchema) => {
   return await axiosInstance.post('/api/account/register', userData);
 };
 
 export const postUserLogin = async (userData: loginFormSchema) => {
-  return await axiosInstance.post('/api/account/login', userData);
+  const response = await axiosInstance.post('/api/account/login', userData);
+  console.log(response.data)
+  return response.data as AccessToken;
 };
 
 export const postForgotPassword = async (userData: forgotPasswordModel) => {

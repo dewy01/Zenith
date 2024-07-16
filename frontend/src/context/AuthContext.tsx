@@ -1,9 +1,10 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { queryClient } from '~/api/api';
+import { AUTH_TOKEN, REFRESH_TOKEN } from '~/config/constants';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  login: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
 }
 
@@ -13,16 +14,21 @@ type Props = { children: ReactNode };
 
 export const AuthProvider = ({ children }: Props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('Auth-token') !== null;
+    return (
+      localStorage.getItem(AUTH_TOKEN) !== null &&
+      localStorage.getItem(REFRESH_TOKEN) !== null
+    );
   });
 
-  const login = (token: string) => {
-    localStorage.setItem('Auth-token', token);
+  const login = (accessToken: string, refreshToken: string) => {
+    localStorage.setItem(AUTH_TOKEN, accessToken);
+    localStorage.setItem(REFRESH_TOKEN, refreshToken);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem('Auth-token');
+    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
     setIsAuthenticated(false);
     queryClient.removeQueries();
   };
