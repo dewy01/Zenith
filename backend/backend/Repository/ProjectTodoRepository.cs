@@ -44,7 +44,7 @@ namespace backend.Repository
             var totalItems = await query.CountAsync();
 
             var projectTodos = await query
-                .OrderBy(x => x.ProjectTodoID)
+                .OrderByDescending(x => x.ProjectTodoID)
                 .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
                 .Take(paginationRequest.PageSize)
                 .ToListAsync();

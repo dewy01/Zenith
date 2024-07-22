@@ -51,10 +51,10 @@ namespace backend.Repository
                 .Include(p => p.GroupProjectTasks)
                 .SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
-            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x=>x.EditTime);
-            var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
-            var Review = project.GroupProjectTasks.Where(pt => pt.Status == "For Review").OrderBy(x => x.EditTime);
-            var Closed = project.GroupProjectTasks.Where(pt => pt.Status == "Closed").OrderBy(x => x.EditTime);
+            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == "Backlog").OrderByDescending(x=>x.EditTime);
+            var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == "in Progress").OrderByDescending(x => x.EditTime);
+            var Review = project.GroupProjectTasks.Where(pt => pt.Status == "For Review").OrderByDescending(x => x.EditTime);
+            var Closed = project.GroupProjectTasks.Where(pt => pt.Status == "Closed").OrderByDescending(x => x.EditTime);
 
 
             var projectDto = new GroupProjectByStatusDto
@@ -116,7 +116,7 @@ namespace backend.Repository
             var totalItems = await query.CountAsync();
 
             var projects = await query
-                .OrderBy(p => p.GroupProjectID)
+                .OrderByDescending(p => p.GroupProjectID)
                 .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
                 .Take(paginationRequest.PageSize)
                 .AsNoTracking()

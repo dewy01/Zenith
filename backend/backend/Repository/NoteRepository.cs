@@ -81,7 +81,7 @@ namespace backend.Repository
             var totalItems = await query.CountAsync();
 
             var userNotes = await query
-                .OrderBy(note => note.NoteID)
+                .OrderByDescending(note => note.NoteID)
                 .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
                 .Take(paginationRequest.PageSize)
                 .ToListAsync();

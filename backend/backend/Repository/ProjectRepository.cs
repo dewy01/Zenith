@@ -42,10 +42,10 @@ namespace backend.Repository
                 throw new NotFoundException("Project not found");
             }
 
-            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderBy(x => x.EditTime);
-            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderBy(x => x.EditTime);
-            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderBy(x => x.EditTime);
-            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed").OrderBy(x => x.EditTime);
+            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderByDescending(x => x.EditTime);
+            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderByDescending(x => x.EditTime);
+            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderByDescending(x => x.EditTime);
+            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed").OrderByDescending(x => x.EditTime);
 
             var projectDto = new ProjectByStatusDto
             {
@@ -72,6 +72,7 @@ namespace backend.Repository
             }
 
             var query = _context.Projects
+                .OrderByDescending(project => project.ProjectID)
                 .Include(p => p.ProjectTasks)
                 .Where(x => x.UserID == userId);
 
