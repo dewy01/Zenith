@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_TOKEN, BASE_URL, REFRESH_TOKEN } from '~/config/constants';
-import { QueryCache, QueryClient } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import { AxiosError } from 'axios';
 import { AccessToken, axiosInstance as noAuthInstance } from './User/api';
@@ -25,34 +25,20 @@ export const STATUS_CODE = {
 };
 
 export const queryClient = new QueryClient({
-  queryCache: new QueryCache({
+  mutationCache: new MutationCache({
     onSuccess: () => {
-      // Catch wrong path and replace when connection is established
-      if (location.pathname === '/connection') {
-        location.pathname = '/home';
-      }
+      handleSuccessCache()
     },
     onError: async (err) => {
-      if (err instanceof AxiosError) {
-        // Refresh tokens when unauthorized
-        if (err.response?.status === STATUS_CODE.UNAUTHORIZED) {
-          try {
-            await refreshAccessToken();
-          } catch (error) {
-            // If unable to refresh, logout user
-            localStorage.removeItem(AUTH_TOKEN);
-            localStorage.removeItem(REFRESH_TOKEN);
-            queryClient.removeQueries();
-            location.reload();
-          }
-        } else if (err.code === STATUS_CODE.ERR_NETWORK) {
-          queryClient.cancelQueries();
-          location.pathname = '/connection';
-          return;
-        } else {
-          enqueueSnackbar({ variant: 'error', message: err.code });
-        }
-      }
+      await handleErrorCache(err)
+    },
+  }),
+  queryCache: new QueryCache({
+    onSuccess: () => {
+      handleSuccessCache()
+    },
+    onError: async (err) => {
+      await handleErrorCache(err)
     },
   }),
   defaultOptions: {
@@ -64,6 +50,36 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+const handleErrorCache= async (err:Error) => {
+  if (err instanceof AxiosError) {
+    // Refresh tokens when unauthorized
+    if (err.response?.status === STATUS_CODE.UNAUTHORIZED) {
+      try {
+        await refreshAccessToken()
+      } catch (error) {
+        // If unable to refresh, logout user
+        localStorage.removeItem(AUTH_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
+        queryClient.removeQueries();
+        location.reload();
+      }
+    } else if (err.code === STATUS_CODE.ERR_NETWORK) {
+      queryClient.cancelQueries();
+      location.pathname = '/connection';
+      return;
+    } else {
+      enqueueSnackbar({ variant: 'error', message: err.code });
+    }
+  }
+}
+
+const handleSuccessCache = ()=>{
+  // Catch wrong path and replace when connection is established
+  if (location.pathname === '/connection') {
+    location.pathname = '/home';
+  }
+}
 
 const refreshAccessToken = async () => {
   const refToken = localStorage.getItem(REFRESH_TOKEN);

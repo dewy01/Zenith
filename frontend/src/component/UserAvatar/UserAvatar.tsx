@@ -11,6 +11,9 @@ export const UserAvatar = ({ username, image }: Props) => {
   return (
     <Avatar
       src={image !== null ? `${BASE_URL}/api/images/${image}` : undefined}
+      style={{
+        pointerEvents: 'none',
+      }}
       {...stringAvatar(username)}
     />
   );

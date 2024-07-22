@@ -130,6 +130,9 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
               onChange={category.field.onChange}
               onBlur={category.field.onBlur}
               inputRef={category.field.ref}
+              sx={{
+                height: '60px',
+              }}
             >
               {categories.map((item) => (
                 <MenuItem value={item} key={item}>
@@ -149,6 +152,9 @@ export const CreateForm = ({ onSubmit, users, formContext }: Props) => {
               onChange={userId.field.onChange}
               onBlur={userId.field.onBlur}
               inputRef={userId.field.ref}
+              sx={{
+                height: '60px',
+              }}
             >
               {users.map((item) => (
                 <MenuItem value={item.userID} key={item.userID}>

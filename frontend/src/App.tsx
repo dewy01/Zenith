@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './component/Router';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
@@ -48,6 +48,10 @@ const App = () => {
   const { theme, routes, language } = handleSettings();
   const classes = useStyles();
 
+  const scrollbarStyle = useMemo(() => {
+    return theme.palette.mode === 'dark' ? darkScrollbar() : () => {};
+  }, [theme]);
+
   useEffect(() => {
     dynamicActivate(language);
   }, [language]);
@@ -68,7 +72,7 @@ const App = () => {
                 </PdfProvider>
               </GroupProvider>
               <CssBaseline />
-              <GlobalStyles styles={{ ...darkScrollbar() }} />
+              <GlobalStyles styles={{ ...scrollbarStyle }} />
             </BrowserRouter>
           </ThemeProvider>
         </LocalizationProvider>

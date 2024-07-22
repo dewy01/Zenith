@@ -7,7 +7,8 @@ export const getSettings = () => {
   return useQuery({
     queryKey: ['allSettings'],
     queryFn: querySettings,
-    enabled: isAuthenticated
+    enabled: isAuthenticated,
+    retryDelay: 10
   });
 };
 
