@@ -1,8 +1,10 @@
-export const deriveBarColor = (completion: string) => {
+import { ProjectStatus } from "~/api/Projects/api";
+
+export const deriveBarColor = (completion: ProjectStatus) => {
     switch (completion) {
-      case 'on Hold':
+      case ProjectStatus.OnHold:
         return 'inherit';
-      case 'Done':
+      case ProjectStatus.Done:
         return 'success';
       default:
         return 'info';

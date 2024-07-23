@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using backend.Enums;
+
+namespace backend.Models
 {
     public class ProjectTask
     {
@@ -7,7 +9,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public string Status { get; set; }
+        public ProjectTaskStatus Status { get; set; }
         public DateTime EditTime { get; set; }
 
         public virtual Project Project { get; set; }

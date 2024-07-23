@@ -14,6 +14,7 @@ import { getGroup } from '~/api/Group/query';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
 import { mutateAddGroupProjectTask } from '~/api/GroupProjectTask/query';
 import { Trans } from '@lingui/macro';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 type Props = {
   projectId: number;
@@ -41,7 +42,7 @@ export const DialogCreate = ({ projectId }: Props) => {
       title: '',
       description: '',
       userId: group.users[0].userID,
-      status: 'Backlog',
+      status: ProjectTaskStatus.Backlog,
       category: 'Note',
     },
     resolver: zodResolver(taskSchema),

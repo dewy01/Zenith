@@ -9,6 +9,7 @@ import {
 import { taskModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
 import { Trans } from '@lingui/macro';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 const categories = [
   'Note',
@@ -83,16 +84,16 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
               onBlur={status.field.onBlur}
               inputRef={status.field.ref}
             >
-              <MenuItem value="Backlog">
+              <MenuItem value={ProjectTaskStatus.Backlog}>
                 <Trans>Backlog</Trans>
               </MenuItem>
-              <MenuItem value="in Progress">
+              <MenuItem value={ProjectTaskStatus.InProgress}>
                 <Trans>in Progress</Trans>
               </MenuItem>
-              <MenuItem value="For Review">
+              <MenuItem value={ProjectTaskStatus.ForReview}>
                 <Trans>For Review</Trans>
               </MenuItem>
-              <MenuItem value="Closed">
+              <MenuItem value={ProjectTaskStatus.Closed}>
                 <Trans>Closed</Trans>
               </MenuItem>
             </Select>

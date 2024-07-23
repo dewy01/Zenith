@@ -1,15 +1,23 @@
 import { Box, Typography, alpha } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 import { changeTaskStatus } from '~/api/ProjectTask/api';
 
 type Props = {
   name: string;
+  column: ProjectTaskStatus;
   color: string;
   children: ReactNode;
   mutateStatus: (task: changeTaskStatus) => void;
 };
 
-export const Column = ({ name, color, children, mutateStatus }: Props) => {
+export const Column = ({
+  name,
+  color,
+  children,
+  column,
+  mutateStatus,
+}: Props) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const updateTask = (task: changeTaskStatus) => {
     if (task) {
@@ -26,8 +34,11 @@ export const Column = ({ name, color, children, mutateStatus }: Props) => {
     setIsHovering(false);
     const taskId = e.dataTransfer.getData('taskId');
     const taskColumn = e.dataTransfer.getData('taskColumn');
-    if (taskColumn !== name) {
-      updateTask({ status: { status: name }, projectTaskID: taskId });
+    if (taskColumn !== column.toString()) {
+      updateTask({
+        status: { status: column },
+        projectTaskID: taskId,
+      });
     }
   };
 

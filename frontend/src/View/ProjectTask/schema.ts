@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 export const taskSchema = z
   .object({
@@ -6,7 +7,7 @@ export const taskSchema = z
     title: z.string().min(1),
     description: z.string().min(1),
     category: z.enum(['Note' , 'Email'  , 'Meeting'  , 'Research' , 'Design' , 'Development'  , 'Maintenance']),
-    status: z.enum(['Backlog','in Progress','For Review','Closed']),
+    status: z.nativeEnum(ProjectTaskStatus),
   });
 
 export type taskModel = z.infer<typeof taskSchema>;

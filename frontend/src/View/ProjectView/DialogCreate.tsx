@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateAddProject } from '~/api/Projects/query';
 import { Trans } from '@lingui/macro';
+import { ProjectStatus } from '~/api/Projects/api';
 
 export const DialogCreate = () => {
   const [open, setOpen] = useState(false);
@@ -29,7 +30,7 @@ export const DialogCreate = () => {
       title: '',
       description: '',
       deadline: new Date(),
-      status: 'on Hold',
+      status: ProjectStatus.InProgress,
     },
     resolver: zodResolver(projectSchema),
   });

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProjectStatus } from '~/api/Projects/api';
 
 export const groupProjectSchema = z
   .object({
@@ -6,7 +7,7 @@ export const groupProjectSchema = z
     groupID: z.number().optional(),
     description: z.string().optional(),
     deadline: z.date(),
-    status: z.enum(['on Hold','in Progress','Done']),
+    status: z.nativeEnum(ProjectStatus),
   });
 
 export type groupProjectModel = z.infer<typeof groupProjectSchema>;

@@ -1,6 +1,7 @@
 import { groupProjectModel } from '~/View/GroupView/GroupProjectView/schema';
 import { axiosInstance } from '../api';
 import { PaginationRequest, PaginationResponse } from '../pagination';
+import { ProjectStatus, ProjectTaskStatus } from '../Projects/api';
 
 
 export interface Project {
@@ -8,7 +9,7 @@ export interface Project {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   completion: number;
   isOutdated: boolean;
 }
@@ -18,7 +19,7 @@ export interface ProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
   user:string;
   userImage:string;
   canEdit: boolean;
@@ -29,7 +30,7 @@ export interface ProjectWithTasks {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   projectTasks: ProjectTask[];
 }
 
@@ -38,7 +39,7 @@ export interface ProjectByStatus {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   backlog: ProjectTask[];
   inProgress: ProjectTask[];
   review: ProjectTask[];
@@ -49,7 +50,7 @@ export interface EditProject {
   Title: string;
   Description: string;
   Deadline: Date;
-  Status: string;
+  Status: ProjectStatus;
 }
 
 export interface mutateProject {
@@ -61,7 +62,7 @@ export interface AddProject {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
 }
 
 export const queryAllGroupProjects = async (pagination: PaginationRequest) => {

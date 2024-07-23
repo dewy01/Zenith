@@ -12,6 +12,7 @@ import { taskModel, taskSchema } from './schema';
 import { mutateAddProjectTask } from '~/api/ProjectTask/query';
 import { CreateForm } from './CreateForm';
 import { Trans } from '@lingui/macro';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 type Props = {
   projectId: number;
@@ -33,7 +34,7 @@ export const DialogCreate = ({ projectId }: Props) => {
       projectID: projectId,
       title: '',
       description: '',
-      status: 'Backlog',
+      status: ProjectTaskStatus.Backlog,
       category: 'Note',
     },
     resolver: zodResolver(taskSchema),

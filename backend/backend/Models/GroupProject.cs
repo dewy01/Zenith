@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using backend.Enums;
+
+namespace backend.Models
 {
     public class GroupProject
     {
@@ -8,7 +10,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
-        public string Status { get; set; }
+        public ProjectStatus Status { get; set; }
 
 
         public virtual ICollection<GroupProjectTask> GroupProjectTasks { get; set; }

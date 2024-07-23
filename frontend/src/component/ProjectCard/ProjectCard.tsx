@@ -11,6 +11,7 @@ import { formatDate } from '~/utils/dateTime';
 import { ProjectMenu } from '../ProjectMenu';
 import { NavLink } from 'react-router-dom';
 import { ProjectAvatar } from '../ProjectAvatar';
+import { deriveProjectStatus } from '~/utils/deriveProjectStatus';
 
 type Props = {
   project: Project;
@@ -55,7 +56,9 @@ export const ProjectCard = ({ project }: Props) => {
 
       <Box display="flex" gap={2}>
         <Stack alignItems={'end'}>
-          <Typography color="text.secondary">{project.status}</Typography>
+          <Typography color="text.secondary">
+            {deriveProjectStatus(project.status)}
+          </Typography>
           <Typography
             sx={(theme) => ({
               color: project.isOutdated

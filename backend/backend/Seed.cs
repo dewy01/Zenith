@@ -28,8 +28,8 @@ namespace backend
                 var group2 = new Group { GroupName = "Group2" };
                 dataContext.Groups.AddRange(group1, group2);
 
-                var project1 = new Project { Title = "Project1", Description = "Description1", Deadline = DateTime.Now.AddDays(30), Status = "Active", User = user1 };
-                var project2 = new Project { Title = "Project2", Description = "Description2", Deadline = DateTime.Now.AddDays(45), Status = "Active", User = user2 };
+                var project1 = new Project { Title = "Project1", Description = "Description1", Deadline = DateTime.Now.AddDays(30), Status = Enums.ProjectStatus.InProgress, User = user1 };
+                var project2 = new Project { Title = "Project2", Description = "Description2", Deadline = DateTime.Now.AddDays(45), Status = Enums.ProjectStatus.InProgress, User = user2 };
                 dataContext.Projects.AddRange(project1, project2);
 
                 var groupProject1 = new GroupProject { Group = group1};
@@ -41,7 +41,7 @@ namespace backend
                     Title = "GroupTask1",
                     Description = "Group task description 1",
                     Category = "Category1",
-                    Status = "In Progress",
+                    Status = Enums.ProjectTaskStatus.InProgress,
                     GroupProject = groupProject1
                 };
 
@@ -50,7 +50,7 @@ namespace backend
                     Title = "GroupTask2",
                     Description = "Group task description 2",
                     Category = "Category2",
-                    Status = "To Do",
+                    Status = Enums.ProjectTaskStatus.Backlog,
                     GroupProject = groupProject2
                 };
 

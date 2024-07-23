@@ -10,6 +10,7 @@ using backend.Dto.Projects;
 using backend.Dto.GroupProjects;
 using backend.Dto.GroupProjectTasks;
 using backend.Dto.Pagination;
+using backend.Enums;
 
 namespace backend.Repository
 {
@@ -51,10 +52,10 @@ namespace backend.Repository
                 .Include(p => p.GroupProjectTasks)
                 .SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
-            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == "Backlog").OrderByDescending(x=>x.EditTime);
-            var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == "in Progress").OrderByDescending(x => x.EditTime);
-            var Review = project.GroupProjectTasks.Where(pt => pt.Status == "For Review").OrderByDescending(x => x.EditTime);
-            var Closed = project.GroupProjectTasks.Where(pt => pt.Status == "Closed").OrderByDescending(x => x.EditTime);
+            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Backlog).OrderByDescending(x=>x.EditTime);
+            var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.InProgress).OrderByDescending(x => x.EditTime);
+            var Review = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.ForReview).OrderByDescending(x => x.EditTime);
+            var Closed = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Closed).OrderByDescending(x => x.EditTime);
 
 
             var projectDto = new GroupProjectByStatusDto
@@ -135,9 +136,9 @@ namespace backend.Repository
                 Description = project.Description,
                 Status = project.Status,
                 Completion = project.GroupProjectTasks.Count != 0
-                    ? (float)Math.Truncate(((float)project.GroupProjectTasks.Count(x => x.Status == "Closed") / project.GroupProjectTasks.Count) * 100)
+                    ? (float)Math.Truncate(((float)project.GroupProjectTasks.Count(x => x.Status == ProjectTaskStatus.Closed) / project.GroupProjectTasks.Count) * 100)
                     : 0,
-                isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
+                isOutdated = project.Deadline < DateTime.Now && project.Status == ProjectStatus.InProgress
             }).ToList();
 
             var response = new PaginationResponseDto<AllGroupProjectsDto>

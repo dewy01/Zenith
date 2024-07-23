@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using backend.Dto.Projects;
 using backend.Dto.ProjectTasks;
 using backend.Dto.Pagination;
+using backend.Enums;
 
 namespace backend.Repository
 {
@@ -42,10 +43,10 @@ namespace backend.Repository
                 throw new NotFoundException("Project not found");
             }
 
-            var Backlog = project.ProjectTasks.Where(pt => pt.Status == "Backlog").OrderByDescending(x => x.EditTime);
-            var inProgress = project.ProjectTasks.Where(pt => pt.Status == "in Progress").OrderByDescending(x => x.EditTime);
-            var Review = project.ProjectTasks.Where(pt => pt.Status == "For Review").OrderByDescending(x => x.EditTime);
-            var Closed = project.ProjectTasks.Where(pt => pt.Status == "Closed").OrderByDescending(x => x.EditTime);
+            var Backlog = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Backlog).OrderByDescending(x => x.EditTime);
+            var inProgress = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.InProgress).OrderByDescending(x => x.EditTime);
+            var Review = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.ForReview).OrderByDescending(x => x.EditTime);
+            var Closed = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Closed).OrderByDescending(x => x.EditTime);
 
             var projectDto = new ProjectByStatusDto
             {
@@ -72,7 +73,6 @@ namespace backend.Repository
             }
 
             var query = _context.Projects
-                .OrderByDescending(project => project.ProjectID)
                 .Include(p => p.ProjectTasks)
                 .Where(x => x.UserID == userId);
 
@@ -84,7 +84,7 @@ namespace backend.Repository
             var totalItems = await query.CountAsync();
 
             var projects = await query
-                .OrderBy(p => p.ProjectID)
+                .OrderByDescending(p => p.ProjectID)
                 .Skip((paginationRequest.PageNumber - 1) * paginationRequest.PageSize)
                 .Take(paginationRequest.PageSize)
                 .AsNoTracking()
@@ -106,9 +106,9 @@ namespace backend.Repository
                     Description = project.Description,
                     Status = project.Status,
                     Completion = project.ProjectTasks.Count() != 0
-                        ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == "Closed").ToList().Count() / (float)project.ProjectTasks.Count()) * 100)
+                        ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == ProjectTaskStatus.Closed).ToList().Count() / (float)project.ProjectTasks.Count()) * 100)
                         : 0,
-                    isOutdated = project.Deadline < DateTime.Now && project.Status == "in Progress"
+                    isOutdated = project.Deadline < DateTime.Now && project.Status == ProjectStatus.InProgress
                 });
             }
 

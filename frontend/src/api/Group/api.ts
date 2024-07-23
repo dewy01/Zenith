@@ -1,4 +1,5 @@
 import { axiosInstance } from '../api';
+import { ProjectStatus } from '../Projects/api';
 
 export interface GroupUser {
   userID: number;
@@ -20,7 +21,7 @@ export interface GroupProject {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   completion: number;
   isOutdated: boolean;
 }

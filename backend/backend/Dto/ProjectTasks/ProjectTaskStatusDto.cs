@@ -1,7 +1,9 @@
-﻿namespace backend.Dto.ProjectTasks
+﻿using backend.Enums;
+
+namespace backend.Dto.ProjectTasks
 {
     public class ProjectTaskStatusDto
     {
-        public string Status { get; set; }
+        public ProjectTaskStatus Status { get; set; }
     }
 }

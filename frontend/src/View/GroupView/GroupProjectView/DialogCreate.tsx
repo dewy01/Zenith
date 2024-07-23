@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mutateAddGroupProject } from '~/api/GroupProjects/query';
 import { Trans } from '@lingui/macro';
+import { ProjectStatus } from '~/api/Projects/api';
 
 type Props = {
   groupId: number;
@@ -34,7 +35,7 @@ export const DialogCreate = ({ groupId }: Props) => {
       groupID: groupId,
       description: '',
       deadline: new Date(),
-      status: 'on Hold',
+      status: ProjectStatus.OnHold,
     },
     resolver: zodResolver(groupProjectSchema),
   });

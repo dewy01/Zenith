@@ -7,7 +7,7 @@ export interface Project {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   completion: number;
   isOutdated: boolean;
 }
@@ -17,7 +17,7 @@ export interface ProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
 }
 
 export interface ProjectWithTasks {
@@ -25,7 +25,7 @@ export interface ProjectWithTasks {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectTaskStatus;
   projectTasks: ProjectTask[];
 }
 
@@ -34,7 +34,7 @@ export interface ProjectByStatus {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
   backlog: ProjectTask[];
   inProgress: ProjectTask[];
   review: ProjectTask[];
@@ -45,7 +45,7 @@ export interface EditProject {
   Title: string;
   Description: string;
   Deadline: Date;
-  Status: string;
+  Status: ProjectStatus;
 }
 
 export interface mutateProject {
@@ -57,8 +57,22 @@ export interface AddProject {
   title: string;
   description: string;
   deadline: string;
-  status: string;
+  status: ProjectStatus;
 }
+
+export enum ProjectStatus {
+  OnHold,
+  InProgress,
+  Done,
+}
+
+export enum ProjectTaskStatus {
+  Backlog,
+  InProgress,
+  ForReview,
+  Closed
+}
+
 
 export const queryAllProjects = async (pagination: PaginationRequest) => {
   const response = await axiosInstance.get('/api/projects/getAllProjects',{

@@ -12,6 +12,7 @@ import { GroupProject } from '~/api/Group/api';
 import { GroupProjectMenu } from '../GroupProjectMenu';
 import { useGroupContext } from '~/context/GroupRole';
 import { ProjectAvatar } from '../ProjectAvatar';
+import { deriveProjectStatus } from '~/utils/deriveProjectStatus';
 
 type Props = {
   project: GroupProject;
@@ -56,7 +57,9 @@ export const GroupProjectCard = ({ project }: Props) => {
       </List>
       <Box display="flex" gap={2}>
         <Stack alignItems={'end'}>
-          <Typography color="text.secondary">{project.status}</Typography>
+          <Typography color="text.secondary">
+            {deriveProjectStatus(project.status)}
+          </Typography>
           <Typography
             sx={(theme) => ({
               color: project.isOutdated

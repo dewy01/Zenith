@@ -16,6 +16,7 @@ import { GroupProjectTaskCard } from '~/component/GroupProjectTaskCard';
 import { mutateChangeGroupTaskStatus } from '~/api/GroupProjectTask/query';
 import { useGroupContext } from '~/context/GroupRole';
 import { GroupRole } from '~/api/Group/api';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 type Params = {
   id: string;
@@ -63,6 +64,7 @@ export const GroupProjectTaskView = () => {
         <Box display="flex" justifyContent="space-evenly" alignItems="start">
           <Column
             name={'Backlog'}
+            column={ProjectTaskStatus.Backlog}
             color={theme.palette.error.main}
             mutateStatus={mutateAsync}
           >
@@ -73,6 +75,7 @@ export const GroupProjectTaskView = () => {
 
           <Column
             name={'in Progress'}
+            column={ProjectTaskStatus.InProgress}
             color={theme.palette.warning.main}
             mutateStatus={mutateAsync}
           >
@@ -83,6 +86,7 @@ export const GroupProjectTaskView = () => {
 
           <Column
             name={'For Review'}
+            column={ProjectTaskStatus.ForReview}
             color={theme.palette.info.main}
             mutateStatus={mutateAsync}
           >
@@ -93,6 +97,7 @@ export const GroupProjectTaskView = () => {
 
           <Column
             name={'Closed'}
+            column={ProjectTaskStatus.Closed}
             color={theme.palette.success.main}
             mutateStatus={userRole !== GroupRole.User ? mutateAsync : () => {}}
           >

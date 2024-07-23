@@ -2,6 +2,7 @@
 using backend.Data;
 using backend.Dto.GroupProjectTasks;
 using backend.Dto.ProjectTasks;
+using backend.Enums;
 using backend.Exceptions;
 using backend.Interface;
 using backend.Models;
@@ -216,17 +217,17 @@ namespace backend.Repository
                 .Include(p => p.GroupProjectTasks)
                 .SingleOrDefaultAsync(x => x.GroupProjectID == projectId);
 
-            if (project != null && project.Status != "on Hold")
+            if (project != null && project.Status != ProjectStatus.OnHold)
             {
-                bool allTasksClosed = project.GroupProjectTasks.All(task => task.Status == "Closed");
+                bool allTasksClosed = project.GroupProjectTasks.All(task => task.Status == ProjectTaskStatus.Closed);
 
                 if (!allTasksClosed)
                 {
-                    project.Status = "in Progress";
+                    project.Status = ProjectStatus.InProgress;
                 }
                 else
                 {
-                    project.Status = "Done";
+                    project.Status = ProjectStatus.Done;
                 }
 
                 _context.GroupProjects.Update(project);

@@ -1,11 +1,12 @@
 import { axiosInstance } from '../api';
+import { ProjectTaskStatus } from '../Projects/api';
 
 export interface GroupProjectTask {
   projectTaskID: number;
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
   user:string;
   userImage: string | null;
   canEdit:boolean;
@@ -15,7 +16,7 @@ export interface EditProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
   userId: number;
 }
 
@@ -24,13 +25,13 @@ export interface MutateProjectTask {
   data: EditProjectTask;
 }
 
-export interface ProjectTaskStatus {
-  status: string;
+interface ChangeProjectStatus {
+  status: ProjectTaskStatus
 }
 
 export interface changeTaskStatus {
   projectTaskID: string;
-  status: ProjectTaskStatus;
+  status: ChangeProjectStatus;
 }
 
 export interface AddGroupProjectTask {
@@ -38,7 +39,7 @@ export interface AddGroupProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
   userId: number;
 }
 

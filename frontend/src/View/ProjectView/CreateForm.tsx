@@ -10,6 +10,7 @@ import { projectModel } from './schema';
 import { Controller, UseFormReturn, useController } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Trans } from '@lingui/macro';
+import { ProjectStatus } from '~/api/Projects/api';
 
 type Props = {
   onSubmit: (value: projectModel) => void;
@@ -72,13 +73,13 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
               onBlur={status.field.onBlur}
               inputRef={status.field.ref}
             >
-              <MenuItem value="on Hold">
+              <MenuItem value={ProjectStatus.OnHold}>
                 <Trans>on Hold</Trans>
               </MenuItem>
-              <MenuItem value="in Progress">
+              <MenuItem value={ProjectStatus.InProgress}>
                 <Trans>in Progress</Trans>
               </MenuItem>
-              <MenuItem value="Done">
+              <MenuItem value={ProjectStatus.Done}>
                 <Trans>Done</Trans>
               </MenuItem>
             </Select>

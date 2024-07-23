@@ -1,17 +1,18 @@
 import { axiosInstance } from '../api';
+import { ProjectTaskStatus } from '../Projects/api';
 
 export interface ProjectTask {
   projectTaskID: number;
   title: string;
   description: string;
-  status: string;
+  status: ProjectTaskStatus;
 }
 
 export interface EditProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
 }
 
 export interface MutateProjectTask {
@@ -19,13 +20,13 @@ export interface MutateProjectTask {
   data: EditProjectTask;
 }
 
-export interface ProjectTaskStatus {
-  status: string;
+interface ChangeProjectStatus {
+  status: ProjectTaskStatus
 }
 
 export interface changeTaskStatus {
   projectTaskID: string;
-  status: ProjectTaskStatus;
+  status: ChangeProjectStatus;
 }
 
 export interface AddProjectTask {
@@ -33,7 +34,7 @@ export interface AddProjectTask {
   title: string;
   description: string;
   category: string;
-  status: string;
+  status: ProjectTaskStatus;
 }
 
 export interface TaskCategory {

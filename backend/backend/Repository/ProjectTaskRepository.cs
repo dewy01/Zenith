@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Data;
 using backend.Dto.ProjectTasks;
+using backend.Enums;
 using backend.Exceptions;
 using backend.Interface;
 using backend.Models;
@@ -141,17 +142,17 @@ namespace backend.Repository
                 .Include(p => p.ProjectTasks)
                 .SingleOrDefaultAsync(x => x.ProjectID == projectId);
 
-            if (project != null && project.Status != "on Hold")
+            if (project != null && project.Status != ProjectStatus.OnHold)
             {
-                bool allTasksClosed = project.ProjectTasks.All(task => task.Status == "Closed");
+                bool allTasksClosed = project.ProjectTasks.All(task => task.Status == ProjectTaskStatus.Closed);
 
                 if (!allTasksClosed)
                 {
-                    project.Status = "in Progress";
+                    project.Status = ProjectStatus.InProgress;
                 }
                 else
                 {
-                    project.Status = "Done";
+                    project.Status = ProjectStatus.Done;
                 }
 
                 _context.Update(project);

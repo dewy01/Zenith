@@ -14,6 +14,7 @@ import { DialogCreate } from './DialogCreate';
 import { ProjectTaskCard } from '~/component/ProjectTaskCard';
 import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
 import { Column } from '~/component/Column';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 
 type Params = {
   id: string;
@@ -60,6 +61,7 @@ export const ProjectTaskView = () => {
         <Box display="flex" justifyContent="space-evenly" alignItems="start">
           <Column
             name={'Backlog'}
+            column={ProjectTaskStatus.Backlog}
             color={theme.palette.error.main}
             mutateStatus={mutateAsync}
           >
@@ -70,6 +72,7 @@ export const ProjectTaskView = () => {
 
           <Column
             name={'in Progress'}
+            column={ProjectTaskStatus.InProgress}
             color={theme.palette.warning.main}
             mutateStatus={mutateAsync}
           >
@@ -80,6 +83,7 @@ export const ProjectTaskView = () => {
 
           <Column
             name={'For Review'}
+            column={ProjectTaskStatus.ForReview}
             color={theme.palette.info.main}
             mutateStatus={mutateAsync}
           >
@@ -90,6 +94,7 @@ export const ProjectTaskView = () => {
 
           <Column
             name={'Closed'}
+            column={ProjectTaskStatus.Closed}
             color={theme.palette.success.main}
             mutateStatus={mutateAsync}
           >
