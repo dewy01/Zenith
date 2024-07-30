@@ -1,7 +1,9 @@
 import { Box, Typography, alpha } from '@mui/material';
 import React, { ReactNode, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { ProjectTaskStatus } from '~/api/Projects/api';
 import { changeTaskStatus } from '~/api/ProjectTask/api';
+import { DropBox } from '../DropBox';
 
 type Props = {
   name: string;
@@ -21,7 +23,10 @@ export const Column = ({
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const updateTask = (task: changeTaskStatus) => {
     if (task) {
-      mutateStatus(task);
+      document.startViewTransition(() => {
+        flushSync(() => {});
+        mutateStatus(task);
+      });
     }
   };
 
@@ -103,10 +108,12 @@ export const Column = ({
           flexDirection="column"
           gap={2}
           sx={{
+            pointerEvents: isHovering ? 'none' : '',
             minWidth: '200px',
             width: '80%',
           }}
         >
+          {isHovering && <DropBox />}
           {children}
         </Box>
       </Box>
