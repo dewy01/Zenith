@@ -38,6 +38,12 @@ namespace backend.Controllers
             var token = await _accountService.LoginUser(dto);
             return Ok(token);
         }
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountService.LogoutUser();
+            return Ok();
+        }
         [HttpPost("forgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {

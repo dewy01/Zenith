@@ -109,7 +109,9 @@ export const NotesDrawer = ({
             isLoading={isFetchingNextPage}
           >
             {notes && notes.length > 0 ? (
-              notes.map((note) => <DrawerCard key={note.noteID} {...note} />)
+              notes
+                .filter((note) => note)
+                .map((note) => <DrawerCard key={note.noteID} {...note} />)
             ) : (
               <></>
             )}

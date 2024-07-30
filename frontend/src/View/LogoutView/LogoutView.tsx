@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
+import { mutateUserLogout } from '~/api/User/query';
 import { useAuth } from '~/context/AuthContext';
 import { useGroupContext } from '~/context/GroupRole';
 
 export const LogoutView = () => {
-  const { logout } = useAuth();
-  const { setUserRole } = useGroupContext();
+  const { mutateAsync } = mutateUserLogout();
 
   useEffect(() => {
-    setUserRole(0);
-    logout();
-  }, [logout, setUserRole]);
+    mutateAsync();
+  }, []);
 
   return null;
 };

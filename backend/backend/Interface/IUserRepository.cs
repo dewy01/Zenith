@@ -16,5 +16,7 @@ namespace backend.Interface
         Task<bool> VerifyEmail(string token);
         Task ForgotPassword(ForgotPasswordDto email);
         Task ResetPassword(ResetPasswordDto dto);
+        Task LogoutUser();
+
     }
 }

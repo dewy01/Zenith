@@ -4,6 +4,7 @@ import {
   postForgotPassword,
   postResetPassword,
   postUserLogin,
+  postUserLogout,
   postUserRegister,
   queryMyAccount,
   updateUser,
@@ -21,6 +22,7 @@ import { STATUS_CODE } from '../api';
 import { AxiosError } from 'axios';
 import { t } from '@lingui/macro';
 import { userModel } from '~/component/UserBox/schema';
+import { useGroupContext } from '~/context/GroupRole';
 
 export const mutateUserRegister = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -64,6 +66,19 @@ export const mutateUserLogin = () => {
           enqueueSnackbar({ variant: 'error', message: t({message:'Invalid credentials'}) });
         }
       }
+    },
+  });
+};
+
+export const mutateUserLogout = () => {
+  const { logout } = useAuth();
+  const { setUserRole } = useGroupContext();
+  return useMutation({
+    mutationKey: ['logout'],
+    mutationFn: () => postUserLogout(),
+    onSuccess: () => {
+      setUserRole(0);
+      logout();
     },
   });
 };

@@ -252,5 +252,28 @@ namespace backend.Repository
             _context.Update(user);
             await _context.SaveChangesAsync();
         }
+
+        public async Task LogoutUser()
+        {
+            var userId = _userContextRepository.GetUserId;
+            if (userId == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var user = await _context.Users
+                .AsNoTracking()
+                .SingleOrDefaultAsync(user => user.UserID == userId);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            user.RefreshToken = null;
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

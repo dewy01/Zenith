@@ -33,6 +33,10 @@ export const postUserLogin = async (userData: loginFormSchema) => {
   return response.data as AccessToken;
 };
 
+export const postUserLogout = async () => {
+  return await loggedInstance.post('/api/account/logout');
+};
+
 export const postForgotPassword = async (userData: forgotPasswordModel) => {
   return await axiosInstance.post('/api/account/forgotPassword', userData);
 };
