@@ -12,10 +12,20 @@ namespace backend.Repository
             _httpContextAccessor = httpContextAccessor;
         }
         public ClaimsPrincipal User =>
-            _httpContextAccessor.HttpContext?.User;
-        public int? GetUserId =>
-            User is null ? null : (int?)int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
-
+            _httpContextAccessor.HttpContext?.User ?? new ClaimsPrincipal();
+        public int? GetUserId
+        {
+            get
+            {
+                var user = User;
+                var claim = user.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);
+                if (claim == null || !int.TryParse(claim.Value, out int userId))
+                {
+                    return null;
+                }
+                return userId;
+            }
         }
-    
+    }
+
 }

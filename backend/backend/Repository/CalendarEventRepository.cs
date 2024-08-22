@@ -16,10 +16,10 @@ namespace backend.Repository
         private readonly IUserContextRepository _userContextRepository;
         private readonly IMapper _mapper;
         // As long as colors in DB are just color codes, need to decode by static dictionary
-        private Dictionary<string,string> colorNameToCode = new Dictionary<string, string>
+        private Dictionary<string, string> colorNameToCode = new Dictionary<string, string>
         {
-            { "Yellow", "#f57c00" }, 
-            { "Red", "#d32f2f" }, 
+            { "Yellow", "#f57c00" },
+            { "Red", "#d32f2f" },
             { "Green", "#388e3c" },
             { "Blue", "#0288d1" },
             { "Purple", "#ab47bc" }
@@ -77,9 +77,16 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
+
+            if (ev == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
             _context.CalendarEvents.Remove(ev);
             var notification = await _context.Notifications
                 .SingleOrDefaultAsync(notification => notification.NotificationID == ev.NotificationID);
+
             if (notification != null)
             {
                 _context.Notifications.Remove(notification);
@@ -123,11 +130,16 @@ namespace backend.Repository
             }
 
             var ev = await _context.CalendarEvents.SingleOrDefaultAsync(ev => ev.UserID == userId && ev.EventID == eventId);
-            
+
+            if (ev == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
             ev.Title = dto.Title;
             ev.DateTime = DateTime.Parse(dto.DateTime);
             ev.EventColor = dto.EventColor;
-            ev.Description  = dto.Description;
+            ev.Description = dto.Description;
 
             _context.CalendarEvents.Update(ev);
             await _context.SaveChangesAsync();

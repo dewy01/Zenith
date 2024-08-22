@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240616124753_avatar_images")]
-    partial class avatar_images
+    [Migration("20240616124753_Avatar_images")]
+    partial class Avatar_images
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

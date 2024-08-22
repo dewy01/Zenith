@@ -44,15 +44,43 @@ namespace backend.Repository
             }
 
 
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
             var userGroup = await _context.Groups
                 .Include(g => g.Users)
-                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+                .SingleOrDefaultAsync(x => x.GroupID == user.GroupID);
+
+            if (userGroup == null)
+            {
+                throw new NotFoundException("Group not found");
+            }
 
             var project = await _context.GroupProjects
                 .Include(p => p.GroupProjectTasks)
-                .SingleOrDefaultAsync(x=>x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
+                .SingleOrDefaultAsync(x => x.Group != null && x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
-            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Backlog).OrderByDescending(x=>x.EditTime);
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
+
+            if (project.GroupProjectTasks == null)
+            {
+                return new GroupProjectByStatusDto
+                {
+                    ProjectID = project.GroupProjectID,
+                    Title = project.Title,
+                    Deadline = project.Deadline,
+                    Description = project.Description,
+                    Status = project.Status,
+                };
+            }
+
+            var Backlog = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Backlog).OrderByDescending(x => x.EditTime);
             var inProgress = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.InProgress).OrderByDescending(x => x.EditTime);
             var Review = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.ForReview).OrderByDescending(x => x.EditTime);
             var Closed = project.GroupProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Closed).OrderByDescending(x => x.EditTime);
@@ -65,19 +93,23 @@ namespace backend.Repository
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                Backlog = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Backlog, opt => {
+                Backlog = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Backlog, opt =>
+                {
                     opt.Items["CurrentUserId"] = userId;
                     opt.Items["CurrentUserRole"] = currentUserRole.Role;
                 }),
-                inProgress = _mapper.Map<Collection<GroupProjectTaskShortDto>>(inProgress, opt => {
+                inProgress = _mapper.Map<Collection<GroupProjectTaskShortDto>>(inProgress, opt =>
+                {
                     opt.Items["CurrentUserId"] = userId;
                     opt.Items["CurrentUserRole"] = currentUserRole.Role;
                 }),
-                Review = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Review, opt => {
+                Review = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Review, opt =>
+                {
                     opt.Items["CurrentUserId"] = userId;
                     opt.Items["CurrentUserRole"] = currentUserRole.Role;
                 }),
-                Closed = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Closed, opt => {
+                Closed = _mapper.Map<Collection<GroupProjectTaskShortDto>>(Closed, opt =>
+                {
                     opt.Items["CurrentUserId"] = -1;
                     opt.Items["CurrentUserRole"] = currentUserRole.Role;
                 }),
@@ -94,10 +126,17 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
             var userGroup = await _context.Groups
                 .AsNoTracking()
                 .Include(g => g.Users)
-                .SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
+                .SingleOrDefaultAsync(x => x.GroupID == user.GroupID);
 
             if (userGroup == null)
             {
@@ -135,8 +174,8 @@ namespace backend.Repository
                 Deadline = project.Deadline,
                 Description = project.Description,
                 Status = project.Status,
-                Completion = project.GroupProjectTasks.Count != 0
-                    ? (float)Math.Truncate(((float)project.GroupProjectTasks.Count(x => x.Status == ProjectTaskStatus.Closed) / project.GroupProjectTasks.Count) * 100)
+                Completion = project.GroupProjectTasks != null && project.GroupProjectTasks.Count != 0
+                    ? (float)Math.Truncate((float)project.GroupProjectTasks.Count(x => x.Status == ProjectTaskStatus.Closed) / project.GroupProjectTasks.Count * 100)
                     : 0,
                 isOutdated = project.Deadline < DateTime.Now && project.Status == ProjectStatus.InProgress
             }).ToList();
@@ -169,8 +208,8 @@ namespace backend.Repository
                 GroupID = dto.GroupID,
                 Title = dto.Title,
                 Status = dto.Status,
-                Deadline= dto.Deadline,
-                Description= dto.Description,
+                Deadline = dto.Deadline,
+                Description = dto.Description,
             };
 
             await _context.GroupProjects.AddAsync(newProject);
@@ -190,7 +229,7 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateGroupProject(EditProjectDto dto , int projectId)
+        public async Task UpdateGroupProject(EditProjectDto dto, int projectId)
         {
             var userId = _userContextRepository.GetUserId;
 
@@ -198,9 +237,26 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
-            var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
 
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == user.GroupID);
+
+            if (userGroup == null)
+            {
+                throw new NotFoundException("Group not found");
+            }
+
+            var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group != null && x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
+
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
 
             project.Title = dto.Title;
             project.Status = dto.Status;
@@ -227,13 +283,32 @@ namespace backend.Repository
             {
                 throw new NotFoundException("User not found");
             }
-            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == x.Users.SingleOrDefault(u => u.UserID == userId).GroupID);
-            var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            var userGroup = await _context.Groups.Include(g => g.Users).SingleOrDefaultAsync(x => x.GroupID == user.GroupID);
+
+            if (userGroup == null)
+            {
+                throw new NotFoundException("Group not found");
+            }
+
+            var project = await _context.GroupProjects.Include(p => p.GroupProjectTasks).SingleOrDefaultAsync(x => x.Group != null && x.Group.GroupID == userGroup.GroupID && x.GroupProjectID == projectId);
+
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
+
             var notification = await _context.Notifications.SingleOrDefaultAsync(x => x.NotificationID == project.NotificationID);
             if (notification != null)
             {
                 _context.Notifications.Remove(notification);
-  
+
             }
 
             _context.GroupProjects.Remove(project);

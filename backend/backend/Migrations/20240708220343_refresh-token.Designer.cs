@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240708220343_refresh-token")]
-    partial class refreshtoken
+    [Migration("20240708220343_Refresh-token")]
+    partial class Refreshtoken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

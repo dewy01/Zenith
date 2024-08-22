@@ -57,6 +57,11 @@ namespace backend.Repository
 
             var note = await _context.Notes
                 .SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            if (note == null)
+            {
+                throw new NotFoundException("Note not found");
+            }
+
             _context.Notes.Remove(note);
             await _context.SaveChangesAsync();
         }
@@ -115,8 +120,12 @@ namespace backend.Repository
             }
 
             var note = await _context.Notes
-                .AsNoTracking() 
+                .AsNoTracking()
                 .SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            if (note == null)
+            {
+                throw new NotFoundException("Note not found");
+            }
 
             var noteDto = new EditNoteDto
             {
@@ -137,6 +146,10 @@ namespace backend.Repository
 
             var note = await _context.Notes
                 .SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            if (note == null)
+            {
+                throw new NotFoundException("Note not found");
+            }
 
             if (dto.Title != null && dto.Title != "")
             {
@@ -158,10 +171,14 @@ namespace backend.Repository
 
             var note = await _context.Notes
                 .SingleOrDefaultAsync(note => note.UserID == userId && note.NoteID == noteId);
+            if (note == null)
+            {
+                throw new NotFoundException("Note not found");
+            }
 
             var token = "NT-";
 
-            if (note.TokenResetTime > DateTime.Now)
+            if (note.TokenResetTime > DateTime.Now && note.ShareToken != null)
             {
                 token = note.ShareToken;
             }

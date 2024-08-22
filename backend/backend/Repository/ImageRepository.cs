@@ -64,11 +64,11 @@ namespace backend.Repository
                 {
                     imageSharp.Mutate(x => x.Resize(new ResizeOptions
                     {
-                        Size = new Size(200, 200), 
+                        Size = new Size(200, 200),
                         Mode = ResizeMode.Max
                     }));
 
-                    var encoder = new JpegEncoder { Quality = 75 }; 
+                    var encoder = new JpegEncoder { Quality = 75 };
                     await using var fileStream = new FileStream(filePath, FileMode.Create);
                     await imageSharp.SaveAsync(fileStream, encoder);
                 }
@@ -88,7 +88,7 @@ namespace backend.Repository
             await _context.SaveChangesAsync();
         }
 
-        public void Delete(string imageName)
+        public void Delete(string? imageName)
         {
             if (string.IsNullOrEmpty(imageName))
             {

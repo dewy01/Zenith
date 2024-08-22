@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Dto.Token;
 using backend.Models;
+using backend.Store;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -37,7 +38,7 @@ namespace backend.Repository
                 new Claim(ClaimTypes.Name, $"{user.Email}"),
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey ?? StringGenerator.RandomString(10)));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMinutes(_authSettings.JwtExpireMinutes);
 
@@ -73,7 +74,13 @@ namespace backend.Repository
                 throw new Exception("Unauthorized");
             }
 
-            var userId = int.Parse(principal.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var claimId = principal.FindFirst(ClaimTypes.NameIdentifier);
+            if (claimId == null)
+            {
+                throw new Exception("Unauthorized");
+            }
+
+            var userId = int.Parse(claimId.Value);
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserID == userId);
             if (user == null)
             {
@@ -102,7 +109,7 @@ namespace backend.Repository
             return new AccessTokenDto()
             {
                 AccessToken = tokenHandler.WriteToken(token),
-                RefreshToken =  newRefreshToken,
+                RefreshToken = newRefreshToken,
             };
         }
 
@@ -114,7 +121,7 @@ namespace backend.Repository
                 new Claim(ClaimTypes.Name, $"{user.Email}"),
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey ?? StringGenerator.RandomString(10)));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddMinutes(_authSettings.JwtExpireMinutes);
 
@@ -133,7 +140,7 @@ namespace backend.Repository
             {
                 ValidIssuer = _authSettings.JwtIssuer,
                 ValidAudience = _authSettings.JwtIssuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.JwtKey ?? "FALLBACK")),
                 ValidateLifetime = false
             };
 

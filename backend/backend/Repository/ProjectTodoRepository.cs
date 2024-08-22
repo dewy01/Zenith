@@ -82,6 +82,10 @@ namespace backend.Repository
                 .Include(p => p.Todos)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserID == userId && x.ProjectTodoID == projectId);
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
 
             var projectDto = new ProjectTodoDto
             {
@@ -126,6 +130,10 @@ namespace backend.Repository
 
             var project = await _context.ProjectTodos
                 .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
 
             project.Title = dto.Title;
             project.Color = dto.Color;
@@ -145,6 +153,10 @@ namespace backend.Repository
 
             var project = await _context.ProjectTodos
                 .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectTodoID == projectId);
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
 
             _context.Remove(project);
             await _context.SaveChangesAsync();

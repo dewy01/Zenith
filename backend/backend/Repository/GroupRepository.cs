@@ -47,11 +47,14 @@ namespace backend.Repository
                 .AsNoTracking()
                 .ToListAsync();
 
+
             var userDto = _mapper.Map<List<GroupUsersDto>>(group.Users);
             userDto.ForEach(u =>
             {
+                var userRole = groupRoles.FirstOrDefault(x => x.UserId == u.UserID);
+
                 u.IsMe = u.UserID == userId;
-                u.UserRole = groupRoles.FirstOrDefault(x => x.UserId == u.UserID).Role;
+                u.UserRole = userRole != null ? userRole.Role : Enums.GroupRole.User;
             });
 
             var groupDto = new GroupByIdDto
@@ -73,8 +76,8 @@ namespace backend.Repository
             }
 
             var group = await _context.Groups
-                .AsNoTracking()
-                .SingleOrDefaultAsync(g => g.Users.SingleOrDefault(x => x.UserID == userId).UserID == userId);
+             .AsNoTracking()
+             .SingleOrDefaultAsync(g => g.Users.Any(x => x.UserID == userId));
 
             if (group == null)
             {
@@ -142,7 +145,7 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
             var group = await _context.Groups
-                .SingleOrDefaultAsync(group => group.Users.SingleOrDefault(x => x.UserID == userId).UserID == userId && group.GroupID == groupId);
+                .SingleOrDefaultAsync(group => group.Users.Any(x => x.UserID == userId) && group.GroupID == groupId);
 
             if (group == null)
             {
@@ -193,9 +196,15 @@ namespace backend.Repository
             }
 
             var group = await _context.Groups
-                .SingleOrDefaultAsync(group => group.GroupID == groupId && group.Users.FirstOrDefault(u => u.UserID == userId).UserID == userId);
+                .SingleOrDefaultAsync(group => group.GroupID == groupId && group.Users.Any(u => u.UserID == userId));
+
+            if (group == null)
+            {
+                throw new NotFoundException("Grop not found");
+            }
+
             var token = "GP-";
-            if (group.TokenResetTime > DateTime.Now)
+            if (group.TokenResetTime > DateTime.Now && group.InviteToken != null)
             {
                 token = group.InviteToken;
             }
@@ -228,6 +237,11 @@ namespace backend.Repository
             }
             var user = await _context.Users
                 .SingleOrDefaultAsync(x => x.UserID == userId);
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
 
             user.GroupID = group.GroupID;
             _context.Users.Update(user);

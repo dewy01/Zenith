@@ -33,7 +33,11 @@ namespace backend.Repository
 
             var projectTask = await _context.ProjectTasks
                 .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+                .SingleOrDefaultAsync(x => x.Project != null && x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+            if (projectTask == null)
+            {
+                throw new NotFoundException("Task not found");
+            }
 
             var projectTaskDto = new ProjectTaskDto
             {
@@ -79,7 +83,11 @@ namespace backend.Repository
             }
 
             var projectTask = await _context.ProjectTasks
-                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+                .SingleOrDefaultAsync(x => x.Project != null && x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+            if (projectTask == null)
+            {
+                throw new NotFoundException("Task not found");
+            }
 
             projectTask.Status = status.Status;
             projectTask.EditTime = DateTime.UtcNow;
@@ -101,9 +109,17 @@ namespace backend.Repository
             }
 
             var projectTask = await _context.ProjectTasks
-                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+                .SingleOrDefaultAsync(x => x.Project != null && x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+            if (projectTask == null)
+            {
+                throw new NotFoundException("Task not found");
+            }
 
             projectTask.Title = dto.Title;
+            if (projectTask == null)
+            {
+                throw new NotFoundException("Task not found");
+            }
 
             if (projectTask.Status != dto.Status)
             {
@@ -130,7 +146,11 @@ namespace backend.Repository
             }
 
             var projectTask = await _context.ProjectTasks
-                .SingleOrDefaultAsync(x => x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+                .SingleOrDefaultAsync(x => x.Project != null && x.Project.UserID == userId && x.ProjectTaskID == projectTaskId);
+            if (projectTask == null)
+            {
+                throw new NotFoundException("Task not found");
+            }
 
             _context.Remove(projectTask);
             await _context.SaveChangesAsync();
@@ -142,7 +162,7 @@ namespace backend.Repository
                 .Include(p => p.ProjectTasks)
                 .SingleOrDefaultAsync(x => x.ProjectID == projectId);
 
-            if (project != null && project.Status != ProjectStatus.OnHold)
+            if (project != null && project.Status != ProjectStatus.OnHold && project.ProjectTasks != null)
             {
                 bool allTasksClosed = project.ProjectTasks.All(task => task.Status == ProjectTaskStatus.Closed);
 

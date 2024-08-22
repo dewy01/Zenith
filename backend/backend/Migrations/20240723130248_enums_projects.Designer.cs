@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240723130248_enums_projects")]
-    partial class enums_projects
+    [Migration("20240723130248_Enums_projects")]
+    partial class Enums_projects
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

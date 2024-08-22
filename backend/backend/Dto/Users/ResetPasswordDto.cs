@@ -2,8 +2,8 @@
 {
     public class ResetPasswordDto
     {
-        public string ResetToken { get; set; }
-        public string Password { get; set; }
-        public string PasswordConfirm { get; set; }
+        public required string ResetToken { get; set; }
+        public required string Password { get; set; }
+        public required string PasswordConfirm { get; set; }
     }
 }

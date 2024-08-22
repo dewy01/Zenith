@@ -2,6 +2,6 @@
 {
     public class GroupEditDto
     {
-        public string GroupName { get; set; }
+        public required string GroupName { get; set; }
     }
 }

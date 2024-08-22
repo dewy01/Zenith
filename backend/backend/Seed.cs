@@ -24,16 +24,16 @@ namespace backend
                 var user2 = new User { Username = "user2", Password = "password2", Email = "user2@example.com" };
                 dataContext.Users.AddRange(user1, user2);
 
-                var group1 = new Group { GroupName = "Group1" };
-                var group2 = new Group { GroupName = "Group2" };
+                var group1 = new Group { GroupName = "Group1", Users = new List<User> { user1 } };
+                var group2 = new Group { GroupName = "Group2", Users = new List<User> { user1 } };
                 dataContext.Groups.AddRange(group1, group2);
 
                 var project1 = new Project { Title = "Project1", Description = "Description1", Deadline = DateTime.Now.AddDays(30), Status = Enums.ProjectStatus.InProgress, User = user1 };
                 var project2 = new Project { Title = "Project2", Description = "Description2", Deadline = DateTime.Now.AddDays(45), Status = Enums.ProjectStatus.InProgress, User = user2 };
                 dataContext.Projects.AddRange(project1, project2);
 
-                var groupProject1 = new GroupProject { Group = group1};
-                var groupProject2 = new GroupProject { Group = group2};
+                var groupProject1 = new GroupProject { Title = "", Description = "", Group = group1 };
+                var groupProject2 = new GroupProject { Title = "", Description = "", Group = group2 };
                 dataContext.GroupProjects.AddRange(groupProject1, groupProject2);
 
                 var groupProjectTask1 = new GroupProjectTask
@@ -55,10 +55,6 @@ namespace backend
                 };
 
                 dataContext.GroupProjectTasks.AddRange(groupProjectTask1, groupProjectTask2);
-
-                var userPreferences1 = new UserPreferences { Theme = "Dark", User = user1 };
-                var userPreferences2 = new UserPreferences { Theme = "Light", User = user2 };
-                dataContext.UserPreferences.AddRange(userPreferences1, userPreferences2);
 
                 dataContext.SaveChanges();
             }

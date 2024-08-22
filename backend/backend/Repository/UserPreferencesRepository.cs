@@ -35,7 +35,12 @@ namespace backend.Repository
                 .AsNoTracking()
                 .SingleOrDefaultAsync(settings => settings.UserID == userId);
 
-            var routes = JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes);
+            if (settings == null)
+            {
+                throw new NotFoundException("User settings not found");
+            }
+
+            var routes = JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes) ?? new Dictionary<string, bool>();
 
             var dto = new UserPreferencesDto
             {
@@ -61,6 +66,10 @@ namespace backend.Repository
 
             var settings = await _context.UserPreferences
                 .SingleOrDefaultAsync(settings => settings.UserID == userId);
+            if (settings == null)
+            {
+                throw new NotFoundException("User settings not found");
+            }
 
             settings.Theme = dto.Theme;
             settings.Color = dto.Color;

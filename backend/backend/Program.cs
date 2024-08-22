@@ -5,6 +5,7 @@ using backend.Dto.Validators;
 using backend.Interface;
 using backend.Models;
 using backend.Repository;
+using backend.Store;
 using FluentValidation;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -81,7 +82,7 @@ builder.Services.AddAuthentication(option =>
     {
         ValidIssuer = authSetting.JwtIssuer,
         ValidAudience = authSetting.JwtIssuer,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSetting.JwtKey)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSetting.JwtKey ?? StringGenerator.RandomString(10))),
         ClockSkew = TimeSpan.Zero
     };
 });
@@ -115,10 +116,18 @@ if (args.Length == 1 && args[0].ToLower() == "seeddata")
 void SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    if (scopedFactory == null)
+    {
+        throw new InvalidOperationException("Scoped factory is null");
+    }
 
     using (var scope = scopedFactory.CreateScope())
     {
         var service = scope.ServiceProvider.GetService<Seed>();
+        if (service == null)
+        {
+            throw new InvalidOperationException("Seed service is null");
+        }
         service.SeedData();
     }
 }

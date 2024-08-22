@@ -6,10 +6,6 @@ using Task = System.Threading.Tasks.Task;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using backend.Dto.Users;
 using backend.Dto.Token;
 
@@ -19,16 +15,14 @@ namespace backend.Repository
     {
         private readonly DataContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly AuthSettings _authSettings;
         private readonly IEmailRepository _emailSettings;
         private readonly IUserContextRepository _userContextRepository;
         private readonly ITokenRepository _tokenRepository;
 
-        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, AuthSettings authSettings, IEmailRepository emailSettings, IUserContextRepository userContextRepository, ITokenRepository tokenRepository)
+        public UserRepository(DataContext context, IPasswordHasher<User> passwordHasher, IEmailRepository emailSettings, IUserContextRepository userContextRepository, ITokenRepository tokenRepository)
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _authSettings = authSettings;
             _emailSettings = emailSettings;
             _userContextRepository = userContextRepository;
             _tokenRepository = tokenRepository;
@@ -93,6 +87,7 @@ namespace backend.Repository
             {
                 Email = dto.Email,
                 Username = dto.Username,
+                Password = "",
                 Role = Enums.Roles.Unverified,
                 VerificationToken = CreateRandomToken()
             };

@@ -27,6 +27,11 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<IActionResult> PostImage([FromForm] AddImageDto dto)
         {
+            if (dto.Image == null)
+            {
+                return BadRequest("Invalid iamge");
+            }
+
             await _imageService.SaveAsync(dto.Image);
             return Ok();
         }

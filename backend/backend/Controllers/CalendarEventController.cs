@@ -24,7 +24,7 @@ namespace backend.Controllers
             [FromQuery] string colors)
         {
             var colorDict = JsonSerializer.Deserialize<Dictionary<string, bool>>(colors);
-            var events = await _calendarService.GetAllEventsBetween(from, to, colorDict);
+            var events = await _calendarService.GetAllEventsBetween(from, to, colorDict ?? new Dictionary<string, bool>());
             return Ok(events);
         }
 

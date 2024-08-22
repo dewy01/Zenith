@@ -58,6 +58,10 @@ namespace backend.Repository
             var userRole = await _context.GroupRoles
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserId == userId);
+            if (userRole == null)
+            {
+                throw new NotFoundException("Role not found");
+            }
 
             var notifications = await _context.Notifications
                 .Where(x => x.UserID == userId && x.isActive == true && x.isRead == false)
@@ -140,7 +144,7 @@ namespace backend.Repository
                         .Where(x => x.UserID == user.UserID)
                         .ToListAsync();
 
-                    var notificationsToUpdate = new List<Notification>(); 
+                    var notificationsToUpdate = new List<Notification>();
 
                     foreach (var notification in notifications)
                     {
@@ -153,7 +157,7 @@ namespace backend.Repository
                             notification.isActive = false;
                         }
 
-                        notificationsToUpdate.Add(notification); 
+                        notificationsToUpdate.Add(notification);
                     }
 
                     _context.Notifications.UpdateRange(notificationsToUpdate);

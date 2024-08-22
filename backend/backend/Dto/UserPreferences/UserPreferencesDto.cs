@@ -2,10 +2,10 @@
 {
     public class UserPreferencesDto
     {
-        public string Theme { get; set; }
-        public string Color { get; set; }
-        public string Language { get; set; }
+        public required string Theme { get; set; }
+        public required string Color { get; set; }
+        public required string Language { get; set; }
         public int Reminder { get; set; }
-        public Dictionary<string, bool> Routes { get; set; }
+        public required Dictionary<string, bool> Routes { get; set; }
     }
 }

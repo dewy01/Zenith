@@ -43,6 +43,18 @@ namespace backend.Repository
                 throw new NotFoundException("Project not found");
             }
 
+            if (project.ProjectTasks == null)
+            {
+                return new ProjectByStatusDto
+                {
+                    ProjectID = project.ProjectID,
+                    Title = project.Title,
+                    Deadline = project.Deadline,
+                    Description = project.Description,
+                    Status = project.Status,
+                };
+            }
+
             var Backlog = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.Backlog).OrderByDescending(x => x.EditTime);
             var inProgress = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.InProgress).OrderByDescending(x => x.EditTime);
             var Review = project.ProjectTasks.Where(pt => pt.Status == ProjectTaskStatus.ForReview).OrderByDescending(x => x.EditTime);
@@ -105,18 +117,18 @@ namespace backend.Repository
                     Deadline = project.Deadline,
                     Description = project.Description,
                     Status = project.Status,
-                    Completion = project.ProjectTasks.Count() != 0
-                        ? (float)Math.Truncate(((float)project.ProjectTasks.Where(x => x.Status == ProjectTaskStatus.Closed).ToList().Count() / (float)project.ProjectTasks.Count()) * 100)
+                    Completion = project.ProjectTasks != null && project.ProjectTasks.Count() != 0
+                        ? (float)Math.Truncate((float)project.ProjectTasks.Where(x => x.Status == ProjectTaskStatus.Closed).ToList().Count() / (float)project.ProjectTasks.Count() * 100)
                         : 0,
                     isOutdated = project.Deadline < DateTime.Now && project.Status == ProjectStatus.InProgress
                 });
             }
 
-            var repsonse =  new PaginationResponseDto<AllProjectsDto> 
-            { 
-                Items = projectDtos, 
-                TotalItems = totalItems, 
-                PageNumber = paginationRequest.PageNumber, 
+            var repsonse = new PaginationResponseDto<AllProjectsDto>
+            {
+                Items = projectDtos,
+                TotalItems = totalItems,
+                PageNumber = paginationRequest.PageNumber,
                 PageSize = paginationRequest.PageSize,
                 TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
             };
@@ -170,7 +182,12 @@ namespace backend.Repository
             var project = await _context.Projects
                 .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
 
-            if (dto.Title != null || dto.Title != "")
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
+
+            if (!string.IsNullOrEmpty(dto.Title))
             {
                 project.Title = dto.Title;
             }
@@ -203,6 +220,11 @@ namespace backend.Repository
 
             var project = await _context.Projects
                 .SingleOrDefaultAsync(project => project.UserID == userId && project.ProjectID == projectId);
+
+            if (project == null)
+            {
+                throw new NotFoundException("Project not found");
+            }
 
             _context.Projects.Remove(project);
 

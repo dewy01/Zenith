@@ -31,7 +31,7 @@ namespace backend.Repository
 
             var todos = await _context.Todos
                 .AsNoTracking()
-                .Where(x => x.ProjectTodo.UserID == userId && x.ProjectTodoID == projectId)
+                .Where(x => x.ProjectTodo != null && x.ProjectTodo.UserID == userId && x.ProjectTodoID == projectId)
                 .ToListAsync();
 
             var todoDtos = _mapper.Map<List<TodoDto>>(todos);
@@ -70,7 +70,7 @@ namespace backend.Repository
             }
 
             var todo = await _context.Todos
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo != null && todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
 
             if (todo == null)
             {
@@ -106,7 +106,7 @@ namespace backend.Repository
 
             var todo = await _context.Todos
                 .Include(x => x.ProjectTodo)
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo != null && todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
 
             if (todo == null)
             {
@@ -131,7 +131,7 @@ namespace backend.Repository
             }
 
             var todo = await _context.Todos
-                .SingleOrDefaultAsync(todo => todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
+                .SingleOrDefaultAsync(todo => todo.ProjectTodo != null && todo.ProjectTodo.UserID == userId && todo.TodoID == todoId);
 
             if (todo == null)
             {
@@ -153,7 +153,7 @@ namespace backend.Repository
                 .Include(p => p.Todos)
                 .SingleOrDefaultAsync(x => x.ProjectTodoID == projectId);
 
-            if (project != null)
+            if (project != null && project.Todos != null)
             {
                 if (project.Todos.Count == 0)
                 {

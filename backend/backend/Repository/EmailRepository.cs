@@ -18,6 +18,12 @@ namespace backend.Repository
                 EnableSsl = true,
                 Credentials = new NetworkCredential(_settings.Email, _settings.Password)
             };
+
+            if (_settings.Email == null)
+            {
+                throw new ArgumentException("Service email not found");
+            }
+
             await client.SendMailAsync(
                 new MailMessage(from: _settings.Email,
                 to: email,

@@ -2,7 +2,7 @@
 {
     public class EditNoteDto
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public required string Title { get; set; }
+        public required string Content { get; set; }
     }
 }
