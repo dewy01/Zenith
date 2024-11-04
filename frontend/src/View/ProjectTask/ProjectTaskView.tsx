@@ -1,3 +1,4 @@
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   AppBar,
   Box,
@@ -6,15 +7,14 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { LoadingView } from '../LoadingView/LoadingView';
 import { NavLink, useParams } from 'react-router-dom';
+import { ProjectTaskStatus } from '~/api/Projects/api';
 import { getProjectById } from '~/api/Projects/query';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { DialogCreate } from './DialogCreate';
-import { ProjectTaskCard } from '~/component/ProjectTaskCard';
 import { mutateChangeTaskStatus } from '~/api/ProjectTask/query';
 import { Column } from '~/component/Column';
-import { ProjectTaskStatus } from '~/api/Projects/api';
+import { ProjectTaskCard } from '~/component/ProjectTaskCard';
+import { LoadingView } from '../LoadingView/LoadingView';
+import { DialogCreate } from './DialogCreate';
 
 type Params = {
   id: string;

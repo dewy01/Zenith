@@ -1,8 +1,7 @@
-import axios from 'axios';
-import { AUTH_TOKEN, BASE_URL, REFRESH_TOKEN } from '~/config/constants';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import { enqueueSnackbar } from 'notistack';
-import { AxiosError } from 'axios';
+import { AUTH_TOKEN, BASE_URL, REFRESH_TOKEN } from '~/config/constants';
 import { AccessToken, axiosInstance as noAuthInstance } from './User/api';
 
 export const axiosInstance = axios.create({ baseURL: BASE_URL });
@@ -81,7 +80,7 @@ const handleSuccessCache = ()=>{
   }
 }
 
-const refreshAccessToken = async () => {
+export const refreshAccessToken = async () => {
   const refToken = localStorage.getItem(REFRESH_TOKEN);
   const authToken = localStorage.getItem(AUTH_TOKEN);
 

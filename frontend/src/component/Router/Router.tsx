@@ -1,6 +1,6 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { lazy, ReactNode, Suspense } from 'react';
 import { Box } from '@mui/material';
+import { lazy, ReactNode, Suspense } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from '~/context/AuthContext';
 import { CalendarProvider } from '~/context/CalendarContext';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
@@ -68,6 +68,11 @@ const GroupProjectTaskView = lazy(() =>
 const HomeView = lazy(() =>
   import('~/View/HomeView').then((module) => ({ default: module.HomeView })),
 );
+const DashboardView = lazy(() =>
+  import('~/View/DashboardView').then((module) => ({
+    default: module.DashboardView,
+  })),
+);
 const NoConnectionView = lazy(() =>
   import('~/View/NoConnectionView').then((module) => ({
     default: module.NoConnectionView,
@@ -83,23 +88,19 @@ type Props = { children: ReactNode };
 
 const PrivateRoute = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
-
   return isAuthenticated ? (
     <Box>{children}</Box>
   ) : (
-    <Navigate to={'/login'} replace={true} />
+    <Navigate to="/login" replace />
   );
 };
 
 const AuthPrevent = ({ children }: Props) => {
   const { isAuthenticated } = useAuth();
-
   return isAuthenticated ? (
-    <Navigate to={'/home'} replace={true} />
+    <Navigate to="/home" replace />
   ) : (
-    <Box>
-      <Suspense fallback={<LoadingView />}>{children}</Suspense>
-    </Box>
+    <Box>{children}</Box>
   );
 };
 
@@ -109,145 +110,138 @@ type RouterProps = {
 
 export const Router = ({ routes }: RouterProps) => {
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<Layout routes={routes} />}
-        errorElement={<ErrorView />}
-      >
+    <Suspense fallback={<LoadingView />}>
+      <Routes>
         <Route
-          index={true}
-          element={<Navigate to="/home" />}
+          path="/"
+          element={<Layout routes={routes} />}
+          errorElement={<ErrorView />}
+        >
+          <Route index element={<Navigate to="/home" />} />
+          <Route
+            path="/home"
+            element={
+              <PrivateRoute>
+                <HomeView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <DashboardView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <PrivateRoute>
+                <ProjectView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/projects/:id"
+            element={
+              <PrivateRoute>
+                <ProjectTaskView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <PrivateRoute>
+                <CalendarProvider>
+                  <CalendarView />
+                </CalendarProvider>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/notes"
+            element={
+              <PrivateRoute>
+                <NotesView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/notes/preview"
+            element={
+              <PrivateRoute>
+                <PdfPreview />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/todo"
+            element={
+              <PrivateRoute>
+                <TodoView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/group"
+            element={
+              <PrivateRoute>
+                <GroupView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/group/project/:id"
+            element={
+              <PrivateRoute>
+                <GroupProjectTaskView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <SettingsView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/logout"
+            element={
+              <PrivateRoute>
+                <LogoutView />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+
+        <Route
+          path="/register"
+          element={
+            <AuthPrevent>
+              <RegisterView />
+            </AuthPrevent>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <AuthPrevent>
+              <LoginView />
+            </AuthPrevent>
+          }
+        />
+        <Route path="/connection" element={<NoConnectionView />} />
+
+        <Route
+          path="*"
+          element={<NotFoundView />}
           errorElement={<ErrorView />}
         />
-        <Route
-          path="/home"
-          element={
-            <PrivateRoute>
-              <HomeView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/projects"
-          element={
-            <PrivateRoute>
-              <ProjectView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/projects/:id"
-          element={
-            <PrivateRoute>
-              <ProjectTaskView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/calendar"
-          element={
-            <PrivateRoute>
-              <CalendarProvider>
-                <CalendarView />
-              </CalendarProvider>
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/notes"
-          element={
-            <PrivateRoute>
-              <NotesView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/notes/preview"
-          element={
-            <PrivateRoute>
-              <PdfPreview />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/todo"
-          element={
-            <PrivateRoute>
-              <TodoView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/group"
-          element={
-            <PrivateRoute>
-              <GroupView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/group/project/:id"
-          element={
-            <PrivateRoute>
-              <GroupProjectTaskView />
-            </PrivateRoute>
-          }
-          errorElement={<ErrorView />}
-        />
-        <Route
-          path="/settings"
-          element={
-            <PrivateRoute>
-              <SettingsView />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/logout"
-          element={
-            <PrivateRoute>
-              <LogoutView />
-            </PrivateRoute>
-          }
-        />
-      </Route>
-      <Route path="*" element={<NotFoundView />} errorElement={<ErrorView />} />
-      <Route
-        path="/register"
-        element={
-          <AuthPrevent>
-            <RegisterView />
-          </AuthPrevent>
-        }
-        errorElement={<ErrorView />}
-      />
-      <Route
-        path="/login"
-        element={
-          <AuthPrevent>
-            <LoginView />
-          </AuthPrevent>
-        }
-        errorElement={<ErrorView />}
-      />
-      <Route
-        path="/connection"
-        element={
-          <Suspense fallback={<LoadingView />}>
-            <NoConnectionView />
-          </Suspense>
-        }
-        errorElement={<ErrorView />}
-      />
-    </Routes>
+      </Routes>
+    </Suspense>
   );
 };

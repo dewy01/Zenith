@@ -51,6 +51,7 @@ builder.Services.AddScoped<IGroupProjectRepository, GroupProjectRepository>();
 builder.Services.AddScoped<IGroupProjectTaskRepository, GroupProjectTaskRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

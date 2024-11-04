@@ -1,14 +1,15 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Trans } from '@lingui/macro';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { UseFormReturn, useController, useForm } from 'react-hook-form';
+import { mutateForgotPassword } from '~/api/User/query';
+import { PasswordField } from '~/component/PasswordField';
+import { EmailSection } from './EmailSection';
 import {
   forgotPasswordModel,
   forgotPasswordSchema,
   resetPasswordModel,
 } from './schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { EmailSection } from './EmailSection';
-import { mutateForgotPassword } from '~/api/User/query';
-import { Trans } from '@lingui/macro';
 
 type Props = {
   onSubmit: (value: resetPasswordModel) => void;
@@ -81,9 +82,8 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             error={errors.resetToken !== undefined}
             helperText={errors.resetToken?.message}
           />
-          <TextField
+          <PasswordField
             label={<Trans>Password</Trans>}
-            type="password"
             ref={password.field.ref}
             onChange={password.field.onChange}
             onBlur={password.field.onBlur}
@@ -91,9 +91,8 @@ export const PasswordForm = ({ onSubmit, formContext }: Props) => {
             error={errors.password !== undefined}
             helperText={errors.password?.message}
           />
-          <TextField
+          <PasswordField
             label={<Trans>Confirm Password</Trans>}
-            type="password"
             ref={passwordConfirm.field.ref}
             onChange={passwordConfirm.field.onChange}
             onBlur={passwordConfirm.field.onBlur}

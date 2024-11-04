@@ -314,5 +314,6 @@ namespace backend.Repository
             _context.GroupProjects.Remove(project);
             await _context.SaveChangesAsync();
         }
+
     }
 }

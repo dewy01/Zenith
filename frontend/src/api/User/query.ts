@@ -1,4 +1,18 @@
+import { t } from '@lingui/macro';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
+import { loginFormSchema } from '~/View/LoginView/schema';
+import {
+  forgotPasswordModel,
+  resetPasswordModel,
+} from '~/View/RegisterView/PasswordRenew/schema';
+import { registerFormSchema } from '~/View/RegisterView/schema';
+import { userModel } from '~/component/UserBox/schema';
+import { useAuth } from '~/context/AuthContext';
+import { useGroupContext } from '~/context/GroupRole';
+import { STATUS_CODE } from '../api';
 import {
   postDeleteAccount,
   postForgotPassword,
@@ -9,20 +23,6 @@ import {
   queryMyAccount,
   updateUser,
 } from './api';
-import { registerFormSchema } from '~/View/RegisterView/schema';
-import { loginFormSchema } from '~/View/LoginView/schema';
-import { useSnackbar } from 'notistack';
-import {
-  forgotPasswordModel,
-  resetPasswordModel,
-} from '~/View/RegisterView/PasswordRenew/schema';
-import { useAuth } from '~/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { STATUS_CODE } from '../api';
-import { AxiosError } from 'axios';
-import { t } from '@lingui/macro';
-import { userModel } from '~/component/UserBox/schema';
-import { useGroupContext } from '~/context/GroupRole';
 
 export const mutateUserRegister = () => {
   const { enqueueSnackbar } = useSnackbar();

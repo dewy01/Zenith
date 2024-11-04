@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Settings, editSettings, querySettings } from './api';
 import { useAuth } from '~/context/AuthContext';
+import { Settings, editSettings, querySettings } from './api';
 
 export const getSettings = () => {
   const { isAuthenticated } = useAuth();

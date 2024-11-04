@@ -96,6 +96,8 @@ namespace backend.Repository
 
             await _context.Users.AddAsync(newUser);
             await _emailSettings.SendEmailAsync(dto.Email, "Email Confirmation - " + $"{newUser.Username}", "https://localhost:7086/api/account/verifyemail/" + $"{newUser.VerificationToken}");
+
+
             await _context.SaveChangesAsync();
 
             var preferences = new UserPreferences

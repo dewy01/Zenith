@@ -1,7 +1,8 @@
-import { Box, TextField, Typography } from '@mui/material';
-import { userModel } from './schema';
-import { UseFormReturn, useController } from 'react-hook-form';
 import { Trans } from '@lingui/macro';
+import { Box, TextField, Typography } from '@mui/material';
+import { UseFormReturn, useController } from 'react-hook-form';
+import { PasswordField } from '../PasswordField';
+import { userModel } from './schema';
 
 type Props = {
   onSubmit: (value: userModel) => void;
@@ -70,7 +71,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
         error={errors.email !== undefined}
         helperText={errors.email?.message}
       />
-      <TextField
+      <PasswordField
         label={<Trans>Old password</Trans>}
         ref={oldPassword.field.ref}
         value={oldPassword.field.value}
@@ -80,7 +81,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
         error={errors.oldPassword !== undefined}
         helperText={errors.oldPassword?.message}
       />
-      <TextField
+      <PasswordField
         label={<Trans>New password</Trans>}
         ref={password.field.ref}
         value={password.field.value}
@@ -90,7 +91,7 @@ export const CreateForm = ({ onSubmit, formContext }: Props) => {
         error={errors.password !== undefined}
         helperText={errors.password?.message}
       />
-      <TextField
+      <PasswordField
         label={<Trans>Confirm password</Trans>}
         ref={passwordConfirm.field.ref}
         value={passwordConfirm.field.value}

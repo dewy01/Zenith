@@ -6,12 +6,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import { Project } from '~/api/Projects/api';
 import { formatDate } from '~/utils/dateTime';
-import { ProjectMenu } from '../ProjectMenu';
-import { NavLink } from 'react-router-dom';
-import { ProjectAvatar } from '../ProjectAvatar';
 import { deriveProjectStatus } from '~/utils/deriveProjectStatus';
+import { ProjectAvatar } from '../ProjectAvatar';
+import { ProjectMenu } from '../ProjectMenu';
 
 type Props = {
   project: Project;

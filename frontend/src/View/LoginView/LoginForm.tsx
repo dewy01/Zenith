@@ -1,7 +1,8 @@
+import { Trans } from '@lingui/macro';
 import { Box, Stack, TextField } from '@mui/material';
 import { UseFormReturn, useController } from 'react-hook-form';
+import { PasswordField } from '~/component/PasswordField';
 import { loginFormSchema } from './schema';
-import { Trans } from '@lingui/macro'; // Changed import here
 
 type loginFormProps = {
   onSubmit: (value: loginFormSchema) => void;
@@ -50,10 +51,9 @@ export const LoginForm = ({ onSubmit, formContext }: loginFormProps) => {
           helperText={errors.email?.message ?? ''}
         />
 
-        <TextField
+        <PasswordField
           sx={{ width: '300px' }}
           label={<Trans>Password</Trans>}
-          type="password"
           autoComplete="off"
           name={password.field.name}
           value={password.field.value}

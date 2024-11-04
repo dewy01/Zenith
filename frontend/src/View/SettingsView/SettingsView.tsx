@@ -1,44 +1,59 @@
+import { Trans, t } from '@lingui/macro';
 import {
   AppBar,
   Box,
-  Checkbox,
   PaletteColorOptions,
   Paper,
-  ToggleButton,
-  ToggleButtonGroup,
   Toolbar,
-  Tooltip,
   Typography,
 } from '@mui/material';
-import { getSettings, mutateEditSettings } from '~/api/Settings/query';
-import { LoadingView } from '../LoadingView/LoadingView';
-import CheckIcon from '@mui/icons-material/Check';
 import { makeStyles } from '@mui/styles';
-import { DeleteAccountDialog } from './DeleteAccountDialog';
-import { Trans, t } from '@lingui/macro';
+import { getSettings, mutateEditSettings } from '~/api/Settings/query';
 import { blue, green, purple, red } from '../../Theme/Color';
+import { LoadingView } from '../LoadingView/LoadingView';
+import { DeleteAccountDialog } from './DeleteAccountDialog';
+import {
+  ColorSection,
+  LanguageSection,
+  ReminderSection,
+  RouteSection,
+  ThemeSection,
+} from './Section';
 
 type PaletteColorKey = keyof PaletteColorOptions;
-const getMainColor = (colorPalette: PaletteColorOptions) =>
-  colorPalette['500' as PaletteColorKey];
+const getMainColor = (colorPalette: PaletteColorOptions) => {
+  return colorPalette['500' as PaletteColorKey] as string;
+};
 
 const routes: { [routeName: string]: boolean } = {
-  [t({ message: 'Notes' })]: true,
-  [t({ message: 'Calendar' })]: true,
-  [t({ message: 'Todo' })]: true,
-  [t({ message: 'Projects' })]: true,
-  [t({ message: 'Group Projects' })]: true,
+  ['Notes']: true,
+  ['Calendar']: true,
+  ['Todo']: true,
+  ['Projects']: true,
+  ['Group Projects']: true,
 };
 
 const colors = [
-  { name: t({ message: 'blue' }), color: getMainColor(blue) },
-  { name: t({ message: 'purple' }), color: getMainColor(purple) },
-  { name: t({ message: 'green' }), color: getMainColor(green) },
-  { name: t({ message: 'red' }), color: getMainColor(red) },
+  {
+    name: t({ message: 'blue' }),
+    value: 'blue',
+    color: getMainColor(blue),
+  },
+  {
+    name: t({ message: 'purple' }),
+    value: 'purple',
+    color: getMainColor(purple),
+  },
+  {
+    name: t({ message: 'green' }),
+    value: 'green',
+    color: getMainColor(green),
+  },
+  { name: t({ message: 'red' }), value: 'red', color: getMainColor(red) },
 ];
 const themeColor = [
-  { name: t({ message: 'light' }), color: '#f1f1f1' },
-  { name: t({ message: 'dark' }), color: '#000000' },
+  { name: t({ message: 'light' }), value: 'light', color: '#f1f1f1' },
+  { name: t({ message: 'dark' }), value: 'dark', color: '#000000' },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -61,20 +76,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface newSettingsProps {
+export interface newSettingsProps {
   theme?: string;
   color?: string;
   language?: string;
   reminder?: number;
   routes?: { [routeName: string]: boolean };
 }
-
-const CheckboxOption = ({ name, checked, onClick }: any) => (
-  <Box display="flex" alignItems="center">
-    <Checkbox checked={checked} onClick={onClick} />
-    <Typography>{name}</Typography>
-  </Box>
-);
 
 export const SettingsView = () => {
   const { data: settings, isLoading } = getSettings();
@@ -125,27 +133,15 @@ export const SettingsView = () => {
             </Typography>
             <Box display="flex" gap={1}>
               {colors.map((item) => (
-                <Paper key={item.name} className={classes.paper} elevation={8}>
-                  <Tooltip title={item.name}>
-                    <Box
-                      className={classes.box}
-                      sx={{
-                        backgroundColor: item.color,
-                      }}
-                      onClick={() => handleClick({ color: item.name })}
-                    >
-                      {settings?.color === item.name && (
-                        <CheckIcon
-                          sx={(theme) => ({
-                            color: theme.palette.getContrastText(item.color),
-                            stroke: theme.palette.getContrastText(item.color),
-                            strokeWidth: 2,
-                          })}
-                        />
-                      )}
-                    </Box>
-                  </Tooltip>
-                </Paper>
+                <ColorSection
+                  key={item.color}
+                  name={item.name}
+                  value={item.value}
+                  color={item.color}
+                  classes={classes}
+                  handleClick={handleClick}
+                  settings={settings}
+                />
               ))}
             </Box>
           </Box>
@@ -157,53 +153,21 @@ export const SettingsView = () => {
             </Typography>
             <Box display="flex" gap={1}>
               {themeColor.map((item) => (
-                <Paper key={item.name} className={classes.paper} elevation={8}>
-                  <Tooltip title={item.name}>
-                    <Box
-                      className={classes.box}
-                      sx={{
-                        backgroundColor: item.color,
-                      }}
-                      onClick={() => handleClick({ theme: item.name })}
-                    >
-                      {settings?.theme === item.name && (
-                        <CheckIcon
-                          sx={(theme) => ({
-                            color: theme.palette.getContrastText(item.color),
-                            stroke: theme.palette.getContrastText(
-                              theme.palette.background.default,
-                            ),
-                            strokeWidth: 2,
-                          })}
-                        />
-                      )}
-                    </Box>
-                  </Tooltip>
-                </Paper>
+                <ThemeSection
+                  key={item.color}
+                  name={item.name}
+                  value={item.value}
+                  color={item.color}
+                  classes={classes}
+                  handleClick={handleClick}
+                  settings={settings}
+                />
               ))}
             </Box>
           </Box>
         </Paper>
         <Paper sx={{ maxWidth: '320px', padding: 3 }}>
-          <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>
-              <Trans>Language</Trans>:
-            </Typography>
-            <ToggleButtonGroup value={settings?.language}>
-              <ToggleButton
-                value={'en'}
-                onClick={() => handleClick({ language: 'en' })}
-              >
-                <Trans>English</Trans>
-              </ToggleButton>
-              <ToggleButton
-                value={'pl'}
-                onClick={() => handleClick({ language: 'pl' })}
-              >
-                <Trans>Polish</Trans>
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
+          <LanguageSection settings={settings} handleClick={handleClick} />
         </Paper>
         <Paper
           sx={{
@@ -215,52 +179,11 @@ export const SettingsView = () => {
             gap: 2,
           }}
         >
-          <Box display="flex" gap={2} alignItems="center">
-            <Typography fontWeight={'medium'}>
-              <Trans>Reminder</Trans>:
-            </Typography>
-            <ToggleButtonGroup value={settings?.reminder}>
-              <ToggleButton
-                value={3}
-                onClick={() => handleClick({ reminder: 3 })}
-              >
-                3 <Trans>Days</Trans>
-              </ToggleButton>
-              <ToggleButton
-                value={1}
-                onClick={() => handleClick({ reminder: 1 })}
-              >
-                1 <Trans>Day</Trans>
-              </ToggleButton>
-              <ToggleButton
-                value={0}
-                onClick={() => handleClick({ reminder: 0 })}
-              >
-                <Trans>None</Trans>
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-          <Typography variant="caption" color="text.secondary">
-            <Trans>Applied changes will be visible tomorrow</Trans>
-          </Typography>
+          <ReminderSection settings={settings} handleClick={handleClick} />
         </Paper>
 
         <Paper sx={{ maxWidth: '350px', padding: 3 }}>
-          <Typography fontWeight={'medium'}>
-            <Trans>Routes</Trans>:
-          </Typography>
-          {Object.entries(settings!.routes).map(([routeName, isChecked]) => (
-            <CheckboxOption
-              key={routeName}
-              name={routeName}
-              checked={isChecked}
-              onClick={() =>
-                handleClick({
-                  routes: { ...settings!.routes, [routeName]: !isChecked },
-                })
-              }
-            />
-          ))}
+          <RouteSection settings={settings} handleClick={handleClick} />
         </Paper>
 
         <Paper

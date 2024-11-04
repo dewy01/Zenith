@@ -1,8 +1,8 @@
+import { Trans } from '@lingui/macro';
 import { Box, Paper, Typography } from '@mui/material';
 import { MyAccount } from '~/api/User/api';
-import { Trans } from '@lingui/macro';
-import { DialogUpdate } from './DialogUpdate';
 import { AvatarForm } from './AvatarForm';
+import { DialogUpdate } from './DialogUpdate';
 type Props = {
   user: MyAccount;
 };

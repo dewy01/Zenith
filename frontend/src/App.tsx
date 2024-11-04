@@ -1,18 +1,18 @@
-import { useEffect, useMemo } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Router } from './component/Router';
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import darkScrollbar from '@mui/material/darkScrollbar';
-import { SnackbarOrigin, SnackbarProvider } from 'notistack';
+import { makeStyles } from '@mui/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { enGB } from 'date-fns/locale';
-import { handleSettings } from './Theme';
-import { makeStyles } from '@mui/styles';
+import { SnackbarOrigin, SnackbarProvider } from 'notistack';
+import { useEffect, useMemo } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Router } from './component/Router';
 import { GroupProvider } from './context/GroupRole';
-import { i18n } from '@lingui/core';
-import { I18nProvider } from '@lingui/react';
 import { PdfProvider } from './context/PdfContext';
+import { handleSettings } from './Theme';
 
 const useStyles = makeStyles({
   root: {

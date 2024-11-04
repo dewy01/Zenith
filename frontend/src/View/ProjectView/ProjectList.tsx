@@ -1,11 +1,11 @@
 import {
   Box,
+  Divider,
+  LinearProgress,
   List,
+  Pagination,
   Tooltip,
   Typography,
-  LinearProgress,
-  Divider,
-  Pagination,
 } from '@mui/material';
 import { getAllProjects } from '~/api/Projects/query';
 import { PaginationRequest } from '~/api/pagination';
@@ -56,26 +56,30 @@ export const ProjectList = ({
           gap: 1,
         }}
       >
-        {data.items.map((item) => (
-          <Box key={item.projectID}>
-            <ProjectCard project={item} />
-            <Tooltip arrow title={<Typography>{item.completion}%</Typography>}>
-              <LinearProgress
-                sx={{
-                  width: '20%',
-                  marginTop: -1,
-                  marginBottom: 2,
-                  marginLeft: 2,
-                  padding: 0.5,
-                }}
-                color={deriveBarColor(item.status)}
-                variant="determinate"
-                value={item.completion}
-              />
-            </Tooltip>
-            <Divider variant="middle" />
-          </Box>
-        ))}
+        {data.items !== null &&
+          data.items.map((item) => (
+            <Box key={item.projectID}>
+              <ProjectCard project={item} />
+              <Tooltip
+                arrow
+                title={<Typography>{item.completion}%</Typography>}
+              >
+                <LinearProgress
+                  sx={{
+                    width: '20%',
+                    marginTop: -1,
+                    marginBottom: 2,
+                    marginLeft: 2,
+                    padding: 0.5,
+                  }}
+                  color={deriveBarColor(item.status)}
+                  variant="determinate"
+                  value={item.completion}
+                />
+              </Tooltip>
+              <Divider variant="middle" />
+            </Box>
+          ))}
       </List>
       <Box display={'flex'} justifyContent={'center'}>
         <Pagination

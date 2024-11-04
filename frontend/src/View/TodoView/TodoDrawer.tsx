@@ -1,3 +1,4 @@
+import { Trans, t } from '@lingui/macro';
 import {
   Box,
   Button,
@@ -6,19 +7,18 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
+import { DebouncedFunc } from 'lodash';
+import { useEffect, useMemo } from 'react';
+import { PaginationRequest } from '~/api/pagination';
+import { ProjectTodo } from '~/api/ProjectTodos/api';
 import { getProjectTodos } from '~/api/ProjectTodos/query';
+import { InfiniteScroll } from '~/component/InfiniteScroll/InfiniteScroll';
 import { SearchField } from '~/component/SearchField';
 import { SubDrawer } from '~/component/SubDrawer';
-import { useEffect, useMemo } from 'react';
 import { DialogCreate } from './DialogCreate';
 import { DialogDelete } from './DialogDelete';
-import { ProjectTodo } from '~/api/ProjectTodos/api';
-import { DebouncedFunc } from 'lodash';
-import { Trans, t } from '@lingui/macro';
 import { TodoLink } from './TodoLink';
-import { PaginationRequest } from '~/api/pagination';
 import { ViewMode } from './TodoView';
-import { InfiniteScroll } from '~/component/InfiniteScroll/InfiniteScroll';
 
 type Props = {
   handleFilter: DebouncedFunc<

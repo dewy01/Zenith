@@ -58,10 +58,7 @@ namespace backend.Repository
             var userRole = await _context.GroupRoles
                 .AsNoTracking()
                 .SingleOrDefaultAsync(x => x.UserId == userId);
-            if (userRole == null)
-            {
-                throw new NotFoundException("Role not found");
-            }
+
 
             var notifications = await _context.Notifications
                 .Where(x => x.UserID == userId && x.isActive == true && x.isRead == false)
@@ -80,7 +77,7 @@ namespace backend.Repository
                 switch (notification)
                 {
                     case GroupProjectNotification groupProjectNotification:
-                        if (userRole.Role == Enums.GroupRole.Admin)
+                        if (userRole != null && userRole.Role == Enums.GroupRole.Admin)
                         {
                             var groupProjectDto = new GroupProjectNotificationDto
                             {

@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
@@ -86,6 +87,10 @@ export const Sidebar = ({ routes }: RouterProps) => {
           <DrawerLink link="/home" tooltip="Home">
             <HomeIcon />
           </DrawerLink>
+          <DrawerLink link="/dashboard" tooltip="Dashboard">
+            <DashboardCustomizeIcon />
+          </DrawerLink>
+          <Divider />
 
           {routes['Notes'] && (
             <DrawerLink link="/notes" tooltip={<Trans>Notes</Trans>}>

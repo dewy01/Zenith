@@ -1,7 +1,8 @@
+import { Trans } from '@lingui/macro';
 import { Box, Stack, TextField } from '@mui/material';
 import { UseFormReturn, useController } from 'react-hook-form';
+import { PasswordField } from '~/component/PasswordField';
 import { registerFormSchema } from './schema';
-import { Trans } from '@lingui/macro';
 
 type registerFormProps = {
   onSubmit: (value: registerFormSchema) => void;
@@ -71,10 +72,9 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           helperText={errors.email?.message ?? ''}
         />
 
-        <TextField
+        <PasswordField
           sx={{ width: '300px' }}
           label={<Trans>Password</Trans>}
-          type="password"
           autoComplete="off"
           name={password.field.name}
           value={password.field.value}
@@ -85,10 +85,9 @@ export const RegisterForm = ({ onSubmit, formContext }: registerFormProps) => {
           helperText={errors.password?.message ?? ''}
         />
 
-        <TextField
+        <PasswordField
           sx={{ width: '300px' }}
           label={<Trans>Confirm Password</Trans>}
-          type="password"
           autoComplete="off"
           name={passwordConfirm.field.name}
           value={passwordConfirm.field.value}

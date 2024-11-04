@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material';
 import { getMyAccount } from '~/api/User/query';
 import { Clock } from '~/component/Clock';
 import { NotificationBox } from '~/component/NotificationBox';
-import { LoadingView } from '../LoadingView/LoadingView';
 import { UserBox } from '~/component/UserBox';
+import { LoadingView } from '../LoadingView/LoadingView';
 
 export const HomeView = () => {
   const today = new Date().toLocaleDateString();
