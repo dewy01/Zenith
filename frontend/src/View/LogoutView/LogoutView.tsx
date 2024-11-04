@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { mutateUserLogout } from '~/api/User/query';
-import { useAuth } from '~/context/AuthContext';
-import { useGroupContext } from '~/context/GroupRole';
+import { LoadingView } from '../LoadingView/LoadingView';
 
 export const LogoutView = () => {
   const { mutateAsync } = mutateUserLogout();
@@ -10,5 +9,5 @@ export const LogoutView = () => {
     mutateAsync();
   }, []);
 
-  return null;
+  return <LoadingView />;
 };

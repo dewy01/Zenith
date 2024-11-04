@@ -1,4 +1,7 @@
-export const BASE_URL = 'https://localhost:7086';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+export const BASE_URL = apiUrl ?? "https://localhost:7086";
 
 export const SIDEBAR_WIDTH = 58;
 

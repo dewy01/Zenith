@@ -6,6 +6,7 @@ using backend.Interface;
 using backend.Models;
 using backend.Repository;
 using backend.Store;
+using DotNetEnv;
 using FluentValidation;
 using Hangfire;
 using Hangfire.SqlServer;
@@ -20,18 +21,30 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Load env variables
+Env.Load();
+
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var authSetting = new AuthSettings();
-builder.Configuration.GetSection("Authentication").Bind(authSetting);
+var authSetting = new AuthSettings
+{
+    JwtKey = Environment.GetEnvironmentVariable("JWT_KEY"),
+    JwtExpireMinutes = int.Parse(Environment.GetEnvironmentVariable("JWT_EXPIRE_MINUTES") ?? "30"),
+    JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+};
+
 builder.Services.AddSingleton(authSetting);
 
-var emailSetting = new EmailSettings();
-builder.Configuration.GetSection("EmailSender").Bind(emailSetting);
+var emailSetting = new EmailSettings
+{
+    Email = Environment.GetEnvironmentVariable("EMAIL_SENDER"),
+    Password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD"),
+};
+
 builder.Services.AddSingleton(emailSetting);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpContextAccessor();
@@ -90,7 +103,7 @@ builder.Services.AddAuthentication(option =>
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 });
 
 // Hangfire implementation
@@ -98,7 +111,7 @@ builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
     .UseSimpleAssemblyNameTypeSerializer()
     .UseRecommendedSerializerSettings()
-    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+    .UseSqlServerStorage(Environment.GetEnvironmentVariable("CONNECTION_STRING"), new SqlServerStorageOptions
     {
         CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),

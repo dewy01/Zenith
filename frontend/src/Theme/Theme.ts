@@ -2,7 +2,6 @@ import { PaletteMode } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 import 'typeface-montserrat';
-import { refreshAccessToken } from '~/api/api';
 import { getSettings } from '~/api/Settings/query';
 import { useAuth } from '~/context/AuthContext';
 import { blue, green, purple, red } from './Color';
@@ -59,7 +58,6 @@ const handleColor = (color: string) => {
 export const handleSettings = () => {
   const { isAuthenticated } = useAuth();
   const { data: settings, isLoading } = getSettings();
-  refreshAccessToken()
 
   if (settings && !isLoading && isAuthenticated) {
     const theme = createTheme({

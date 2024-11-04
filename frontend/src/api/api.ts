@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro';
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { enqueueSnackbar } from 'notistack';
@@ -21,6 +22,16 @@ export const STATUS_CODE = {
   CONFLICT: 409,
   INTERNAL_SERVER_ERROR: 500,
   ERR_NETWORK: 'ERR_NETWORK',
+};
+
+const ERROR_MESSAGE_MAP = {
+  [STATUS_CODE.UNAUTHORIZED]: t`Your session has expired. Please log in again.`,
+  [STATUS_CODE.BAD_REQUEST]: t`There seems to be an issue with your request. Please check and try again.`,
+  [STATUS_CODE.NOT_FOUND]: t`The requested resource could not be found.`,
+  [STATUS_CODE.CONFLICT]: t`A conflict occurred with your request. Please try again.`,
+  [STATUS_CODE.INTERNAL_SERVER_ERROR]: t`The server encountered an error. Please try again later.`,
+  [STATUS_CODE.ERR_NETWORK]: t`Network error. Please check your connection and try again.`,
+  default: t`An unexpected error occurred. Please try again later.`
 };
 
 export const queryClient = new QueryClient({
@@ -50,28 +61,47 @@ export const queryClient = new QueryClient({
   },
 });
 
-const handleErrorCache= async (err:Error) => {
+const handleErrorCache = async (err: Error) => {
+  let message = ERROR_MESSAGE_MAP.default; 
+
   if (err instanceof AxiosError) {
-    // Refresh tokens when unauthorized
-    if (err.response?.status === STATUS_CODE.UNAUTHORIZED) {
+    const statusCode = err.response?.status;
+
+    if (statusCode) {
+      message = ERROR_MESSAGE_MAP[statusCode] || ERROR_MESSAGE_MAP.default;
+    }
+
+    if (err.code === STATUS_CODE.ERR_NETWORK) {
+      message = ERROR_MESSAGE_MAP[STATUS_CODE.ERR_NETWORK];
+      queryClient.cancelQueries();
+      location.pathname = '/connection';
+      return;
+    }
+
+    if (statusCode === STATUS_CODE.UNAUTHORIZED) {
       try {
-        await refreshAccessToken()
+        await refreshAccessToken();
+
+        // try to re-execute
+        if (err.config) {
+          if (err.config.method) {
+            return await axiosInstance(err.config);
+          }
+        }
+        
+        return; 
       } catch (error) {
-        // If unable to refresh, logout user
         localStorage.removeItem(AUTH_TOKEN);
         localStorage.removeItem(REFRESH_TOKEN);
         queryClient.removeQueries();
         location.reload();
       }
-    } else if (err.code === STATUS_CODE.ERR_NETWORK) {
-      queryClient.cancelQueries();
-      location.pathname = '/connection';
-      return;
-    } else {
-      enqueueSnackbar({ variant: 'error', message: err.code });
     }
   }
-}
+
+  enqueueSnackbar(message, { variant: 'error' });
+};
+
 
 const handleSuccessCache = ()=>{
   // Catch wrong path and replace when connection is established

@@ -52,6 +52,9 @@ export const GroupProjectSection = () => {
           justifyContent={'center'}
           alignItems="center"
         >
+          <Typography variant="h6">
+            <Trans>Group projects</Trans>
+          </Typography>
           <PieChart
             series={[
               {
@@ -81,9 +84,6 @@ export const GroupProjectSection = () => {
           />
         </Box>
         <Box>
-          <Typography variant="h6" color={'text.secondary'}>
-            <Trans>Group projects</Trans>
-          </Typography>
           {data.projects.map((item) => (
             <GroupProjectTask key={item.groupProjectID} project={item} />
           ))}
