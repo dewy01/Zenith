@@ -1,16 +1,16 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import dayjs from 'dayjs';
-import { useCalendar } from '~/context/CalendarContext';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Box, IconButton, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { getEventBetween } from '~/api/Calendar/query';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useCurrentWeek } from '~/utils/useCurrentWeek';
-import { WeekDayCard } from './WeekDayCard';
 import { Control, useWatch } from 'react-hook-form';
-import { colorSchema } from '../schema';
 import { z } from 'zod';
+import { getEventBetween } from '~/api/Calendar/query';
+import { useCalendar } from '~/context/CalendarContext';
+import { useCurrentWeek } from '~/utils/useCurrentWeek';
+import { colorSchema } from '../schema';
+import { WeekDayCard } from './WeekDayCard';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,8 +40,8 @@ export const WeekPreview = ({ control }: Props) => {
   }, [monthAsNumber, weekAsNumber]);
 
   const { data: events } = getEventBetween({
-    from: week[0].format('DD MM YYYY').toString(),
-    to: week[6].format('DD MM YYYY').toString(),
+    from: week[0].format('YYYY-MM-DD').toString(),
+    to: week[6].format('YYYY-MM-DD').toString(),
     colors: JSON.stringify(selectedColors),
   });
 

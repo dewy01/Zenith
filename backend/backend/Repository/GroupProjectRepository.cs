@@ -126,7 +126,6 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
-
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserID == userId);
             if (user == null)
             {
@@ -162,11 +161,6 @@ namespace backend.Repository
                 .AsNoTracking()
                 .ToListAsync();
 
-            if (projects.Count == 0)
-            {
-                return new PaginationResponseDto<AllGroupProjectsDto>();
-            }
-
             var projectDtos = projects.Select(project => new AllGroupProjectsDto
             {
                 GroupProjectID = project.GroupProjectID,
@@ -182,7 +176,7 @@ namespace backend.Repository
 
             var response = new PaginationResponseDto<AllGroupProjectsDto>
             {
-                Items = projectDtos,
+                Items = projectDtos, 
                 TotalItems = totalItems,
                 PageNumber = paginationRequest.PageNumber,
                 PageSize = paginationRequest.PageSize,

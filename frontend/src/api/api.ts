@@ -74,7 +74,9 @@ const handleErrorCache = async (err: Error) => {
     if (err.code === STATUS_CODE.ERR_NETWORK) {
       message = ERROR_MESSAGE_MAP[STATUS_CODE.ERR_NETWORK];
       queryClient.cancelQueries();
-      location.pathname = '/connection';
+      if(location.pathname !== '/connection'){
+        location.pathname = '/connection';
+      }
       return;
     }
 

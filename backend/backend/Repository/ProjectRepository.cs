@@ -102,11 +102,6 @@ namespace backend.Repository
                 .AsNoTracking()
                 .ToListAsync();
 
-            if (projects.Count == 0)
-            {
-                return new PaginationResponseDto<AllProjectsDto>();
-            }
-
             var projectDtos = new List<AllProjectsDto>();
             foreach (var project in projects)
             {
@@ -117,24 +112,25 @@ namespace backend.Repository
                     Deadline = project.Deadline,
                     Description = project.Description,
                     Status = project.Status,
-                    Completion = project.ProjectTasks != null && project.ProjectTasks.Count() != 0
-                        ? (float)Math.Truncate((float)project.ProjectTasks.Where(x => x.Status == ProjectTaskStatus.Closed).ToList().Count() / (float)project.ProjectTasks.Count() * 100)
+                    Completion = project.ProjectTasks != null && project.ProjectTasks.Count != 0
+                        ? (float)Math.Truncate((float)project.ProjectTasks.Count(x => x.Status == ProjectTaskStatus.Closed) / (float)project.ProjectTasks.Count * 100)
                         : 0,
                     isOutdated = project.Deadline < DateTime.Now && project.Status == ProjectStatus.InProgress
                 });
             }
 
-            var repsonse = new PaginationResponseDto<AllProjectsDto>
+            var response = new PaginationResponseDto<AllProjectsDto>
             {
-                Items = projectDtos,
+                Items = projectDtos,  
                 TotalItems = totalItems,
                 PageNumber = paginationRequest.PageNumber,
                 PageSize = paginationRequest.PageSize,
                 TotalPages = (int)Math.Ceiling(totalItems / (double)paginationRequest.PageSize),
             };
 
-            return repsonse;
+            return response;
         }
+
 
         public async Task AddProject(AddProjectDto dto)
         {

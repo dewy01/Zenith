@@ -13,15 +13,19 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/api/api.ts:31
+msgid "A conflict occurred with your request. Please try again."
+msgstr ""
+
 #: src/component/UserBox/DialogUpdate.tsx:72
 msgid "Account"
 msgstr ""
 
-#: src/api/User/query.ts:99
+#: src/api/User/query.ts:119
 msgid "Account deleted"
 msgstr ""
 
-#: src/api/User/query.ts:119
+#: src/api/User/query.ts:139
 msgid "Account updated"
 msgstr ""
 
@@ -38,7 +42,11 @@ msgstr ""
 msgid "Admin user changed"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:244
+#: src/api/api.ts:34
+msgid "An unexpected error occurred. Please try again later."
+msgstr ""
+
+#: src/View/SettingsView/Section/ReminderSection.tsx:36
 msgid "Applied changes will be visible tomorrow"
 msgstr ""
 
@@ -64,16 +72,16 @@ msgstr ""
 msgid "Avatar updated"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:156
+#: src/View/SettingsView/SettingsView.tsx:152
 msgid "Background color"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:95
-#: src/View/ProjectTask/CreateForm.tsx:87
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:96
+#: src/View/ProjectTask/CreateForm.tsx:88
 msgid "Backlog"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:34
+#: src/View/SettingsView/SettingsView.tsx:38
 msgid "blue"
 msgstr ""
 
@@ -81,9 +89,8 @@ msgstr ""
 msgid "Blue"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:97
-#: src/View/CalendarView/CalendarView.tsx:95
-#: src/View/SettingsView/SettingsView.tsx:27
+#: src/component/Sidebar/Sidebar.tsx:102
+#: src/View/CalendarView/CalendarView.tsx:97
 msgid "Calendar"
 msgstr ""
 
@@ -94,16 +101,16 @@ msgstr ""
 #: src/component/UserBox/DialogUpdate.tsx:93
 #: src/View/CalendarView/DialogCreate.tsx:66
 #: src/View/CalendarView/DialogEdit.tsx:86
-#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:83
-#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:142
-#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:72
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:84
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:138
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:73
 #: src/View/GroupView/GroupProjectView/DialogEdit.tsx:84
 #: src/View/GroupView/GroupProjectView/UpdateGroup/DialogUpdate.tsx:87
 #: src/View/NotesView/DialogCopy.tsx:76
 #: src/View/NotesView/DialogDelete.tsx:60
-#: src/View/ProjectTask/DialogCreate.tsx:71
-#: src/View/ProjectTask/DialogEdit.tsx:127
-#: src/View/ProjectView/DialogCreate.tsx:66
+#: src/View/ProjectTask/DialogCreate.tsx:72
+#: src/View/ProjectTask/DialogEdit.tsx:122
+#: src/View/ProjectView/DialogCreate.tsx:67
 #: src/View/ProjectView/DialogEdit.tsx:88
 #: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:73
 #: src/View/SettingsView/DeleteAccountDialog.tsx:79
@@ -118,10 +125,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:124
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:127
-#: src/View/ProjectTask/CreateForm.tsx:115
-#: src/View/ProjectTask/CreateForm.tsx:118
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:125
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:128
+#: src/View/ProjectTask/CreateForm.tsx:116
+#: src/View/ProjectTask/CreateForm.tsx:119
 msgid "Category"
 msgstr ""
 
@@ -133,8 +140,8 @@ msgstr ""
 msgid "Check email for verification link"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:104
-#: src/View/ProjectTask/CreateForm.tsx:96
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:105
+#: src/View/ProjectTask/CreateForm.tsx:97
 msgid "Closed"
 msgstr ""
 
@@ -142,7 +149,7 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:94
+#: src/component/UserBox/CreateForm.tsx:95
 msgid "Confirm password"
 msgstr ""
 
@@ -173,11 +180,11 @@ msgid "Copy note"
 msgstr ""
 
 #: src/View/CalendarView/DialogCreate.tsx:69
-#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:86
-#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:80
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:87
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:81
 #: src/View/GroupView/NoGroupView.tsx:64
-#: src/View/ProjectTask/DialogCreate.tsx:74
-#: src/View/ProjectView/DialogCreate.tsx:74
+#: src/View/ProjectTask/DialogCreate.tsx:75
+#: src/View/ProjectView/DialogCreate.tsx:75
 #: src/View/TodoView/DialogCreate.tsx:75
 msgid "Create"
 msgstr ""
@@ -199,13 +206,13 @@ msgstr ""
 msgid "Create a new todo to see preview"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:65
-#: src/View/ProjectView/DialogCreate.tsx:59
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:66
+#: src/View/ProjectView/DialogCreate.tsx:60
 msgid "Create Project"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:72
-#: src/View/ProjectTask/DialogCreate.tsx:64
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:73
+#: src/View/ProjectTask/DialogCreate.tsx:65
 msgid "Create Project Task"
 msgstr ""
 
@@ -219,20 +226,20 @@ msgstr ""
 msgid "Create Todo"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:41
+#: src/View/SettingsView/SettingsView.tsx:56
 msgid "dark"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:233
+#: src/View/SettingsView/Section/ReminderSection.tsx:28
 msgid "Day"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:227
+#: src/View/SettingsView/Section/ReminderSection.tsx:25
 msgid "Days"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:110
-#: src/View/ProjectView/CreateForm.tsx:108
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:111
+#: src/View/ProjectView/CreateForm.tsx:109
 msgid "Deadline"
 msgstr ""
 
@@ -245,7 +252,7 @@ msgid "Delete"
 msgstr ""
 
 #: src/View/SettingsView/DeleteAccountDialog.tsx:38
-#: src/View/SettingsView/SettingsView.tsx:276
+#: src/View/SettingsView/SettingsView.tsx:199
 msgid "Delete account"
 msgstr ""
 
@@ -289,11 +296,11 @@ msgstr ""
 msgid "Deleting this Todo means that all provided data will be lost."
 msgstr ""
 
-#: src/View/CalendarView/CreateForm.tsx:95
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:112
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:90
-#: src/View/ProjectTask/CreateForm.tsx:104
-#: src/View/ProjectView/CreateForm.tsx:88
+#: src/View/CalendarView/CreateForm.tsx:103
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:113
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:91
+#: src/View/ProjectTask/CreateForm.tsx:105
+#: src/View/ProjectView/CreateForm.tsx:89
 #: src/View/TodoView/CreateForm.tsx:54
 msgid "Description"
 msgstr ""
@@ -303,19 +310,19 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:84
-#: src/View/ProjectView/CreateForm.tsx:82
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:85
+#: src/View/ProjectView/CreateForm.tsx:83
 msgid "Done"
 msgstr ""
 
 #: src/component/UserBox/DialogUpdate.tsx:96
 #: src/View/CalendarView/DialogEdit.tsx:89
-#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:123
-#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:145
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:119
+#: src/View/GroupView/GroupProjectTaskView/DialogEdit.tsx:141
 #: src/View/GroupView/GroupProjectView/DialogEdit.tsx:87
 #: src/View/GroupView/GroupProjectView/UpdateGroup/DialogUpdate.tsx:90
-#: src/View/ProjectTask/DialogEdit.tsx:112
-#: src/View/ProjectTask/DialogEdit.tsx:130
+#: src/View/ProjectTask/DialogEdit.tsx:107
+#: src/View/ProjectTask/DialogEdit.tsx:125
 #: src/View/ProjectView/DialogEdit.tsx:97
 #: src/View/TodoView/DialogEdit.tsx:96
 msgid "Edit"
@@ -342,19 +349,19 @@ msgstr ""
 msgid "Edit Project"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:64
+#: src/component/UserBox/CreateForm.tsx:65
 #: src/component/UserBox/UserBox.tsx:49
-#: src/View/LoginView/LoginForm.tsx:41
+#: src/View/LoginView/LoginForm.tsx:42
 #: src/View/RegisterView/PasswordRenew/EmailSection.tsx:32
-#: src/View/RegisterView/RegisterForm.tsx:62
+#: src/View/RegisterView/RegisterForm.tsx:63
 msgid "Email"
 msgstr ""
 
-#: src/api/User/query.ts:40
+#: src/api/User/query.ts:42
 msgid "Email or username already in use"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:197
+#: src/View/SettingsView/Section/LanguageSection.tsx:27
 msgid "English"
 msgstr ""
 
@@ -370,7 +377,7 @@ msgstr ""
 msgid "Event edited"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/ProjectTab.tsx:32
+#: src/View/GroupView/GroupProjectView/ProjectTab.tsx:34
 msgid "Explore projects"
 msgstr ""
 
@@ -382,8 +389,8 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:101
-#: src/View/ProjectTask/CreateForm.tsx:93
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:102
+#: src/View/ProjectTask/CreateForm.tsx:94
 msgid "For Review"
 msgstr ""
 
@@ -404,7 +411,7 @@ msgstr ""
 msgid "Grant admin"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:36
+#: src/View/SettingsView/SettingsView.tsx:48
 msgid "green"
 msgstr ""
 
@@ -436,8 +443,11 @@ msgstr ""
 msgid "Group name"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:118
-#: src/View/SettingsView/SettingsView.tsx:30
+#: src/View/DashboardView/Sections/GroupProjectSection.tsx:56
+msgid "Group projects"
+msgstr ""
+
+#: src/component/Sidebar/Sidebar.tsx:123
 msgid "Group Projects"
 msgstr ""
 
@@ -450,21 +460,21 @@ msgstr ""
 msgid "Im sure"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:81
-#: src/View/ProjectTask/CreateForm.tsx:90
-#: src/View/ProjectView/CreateForm.tsx:79
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:82
+#: src/View/ProjectTask/CreateForm.tsx:91
+#: src/View/ProjectView/CreateForm.tsx:80
 msgid "in Progress"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:98
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:99
 msgid "In Progress"
 msgstr ""
 
-#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:63
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:64
 msgid "Input new data"
 msgstr ""
 
-#: src/api/User/query.ts:63
+#: src/api/User/query.ts:66
 msgid "Invalid credentials"
 msgstr ""
 
@@ -472,7 +482,7 @@ msgstr ""
 msgid "Invalid group code"
 msgstr ""
 
-#: src/api/User/query.ts:123
+#: src/api/User/query.ts:143
 msgid "Invalid old password"
 msgstr ""
 
@@ -484,15 +494,19 @@ msgstr ""
 msgid "Join"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:190
+#: src/View/SettingsView/Section/LanguageSection.tsx:20
 msgid "Language"
+msgstr ""
+
+#: src/View/DashboardView/Sections/NoteSection.tsx:25
+msgid "Last notes"
 msgstr ""
 
 #: src/component/GroupUserCard/GroupUserCard.tsx:68
 msgid "Leave group"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:40
+#: src/View/SettingsView/SettingsView.tsx:55
 msgid "light"
 msgstr ""
 
@@ -501,20 +515,20 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:130
+#: src/component/Sidebar/Sidebar.tsx:135
 #: src/View/NoConnectionView/NoConnectionView.tsx:27
 msgid "Logout"
 msgstr ""
 
-#: src/component/NotificationBox/NotificationBox.tsx:107
+#: src/component/NotificationBox/NotificationBox.tsx:125
 msgid "Mark as read"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:107
+#: src/View/CalendarView/CalendarView.tsx:109
 msgid "Month"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:54
+#: src/View/CalendarView/CalendarView.tsx:55
 msgid "Month reset"
 msgstr ""
 
@@ -522,11 +536,15 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: src/api/api.ts:33
+msgid "Network error. Please check your connection and try again."
+msgstr ""
+
 #: src/View/CalendarView/DialogCreate.tsx:59
 msgid "New Event"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:84
+#: src/component/UserBox/CreateForm.tsx:85
 msgid "New password"
 msgstr ""
 
@@ -538,19 +556,23 @@ msgstr ""
 msgid "No Note"
 msgstr ""
 
+#: src/component/NotificationBox/NotificationBox.tsx:85
+msgid "No notifications"
+msgstr ""
+
 #: src/View/TodoView/NoTodoView.tsx:21
 msgid "No Todo"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:239
+#: src/View/SettingsView/Section/ReminderSection.tsx:31
 msgid "None"
 msgstr ""
 
-#: src/api/Notes/query.ts:35
+#: src/api/Notes/query.ts:46
 msgid "Note added"
 msgstr ""
 
-#: src/api/Notes/query.ts:70
+#: src/api/Notes/query.ts:81
 msgid "Note deleted"
 msgstr ""
 
@@ -558,9 +580,8 @@ msgstr ""
 msgid "Note title"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:91
-#: src/View/NotesView/NotesView.tsx:66
-#: src/View/SettingsView/SettingsView.tsx:26
+#: src/component/Sidebar/Sidebar.tsx:96
+#: src/View/NotesView/NotesDrawer.tsx:89
 msgid "Notes"
 msgstr ""
 
@@ -572,26 +593,26 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:74
+#: src/component/UserBox/CreateForm.tsx:75
 msgid "Old password"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:78
-#: src/View/ProjectView/CreateForm.tsx:76
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:79
+#: src/View/ProjectView/CreateForm.tsx:77
 msgid "on Hold"
 msgstr ""
 
-#: src/View/LoginView/LoginForm.tsx:55
-#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:85
-#: src/View/RegisterView/RegisterForm.tsx:76
+#: src/View/LoginView/LoginForm.tsx:56
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:86
+#: src/View/RegisterView/RegisterForm.tsx:77
 msgid "Password"
 msgstr ""
 
-#: src/api/User/query.ts:87
+#: src/api/User/query.ts:107
 msgid "Password renewed"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:203
+#: src/View/SettingsView/Section/LanguageSection.tsx:33
 msgid "Polish"
 msgstr ""
 
@@ -599,7 +620,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:124
+#: src/View/SettingsView/SettingsView.tsx:132
 msgid "Primary color"
 msgstr ""
 
@@ -607,28 +628,28 @@ msgstr ""
 msgid "Print note"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:52
-#: src/View/ProjectView/DialogCreate.tsx:46
+#: src/View/GroupView/GroupProjectView/DialogCreate.tsx:53
+#: src/View/ProjectView/DialogCreate.tsx:47
 msgid "Project"
 msgstr ""
 
-#: src/api/GroupProjects/query.ts:35
-#: src/api/Projects/query.ts:35
+#: src/api/GroupProjects/query.ts:36
+#: src/api/Projects/query.ts:36
 msgid "Project added"
 msgstr ""
 
-#: src/api/GroupProjects/query.ts:62
-#: src/api/Projects/query.ts:62
+#: src/api/GroupProjects/query.ts:63
+#: src/api/Projects/query.ts:63
 msgid "Project deleted"
 msgstr ""
 
-#: src/api/GroupProjects/query.ts:48
-#: src/api/Projects/query.ts:48
+#: src/api/GroupProjects/query.ts:49
+#: src/api/Projects/query.ts:49
 msgid "Project edited"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:59
-#: src/View/ProjectTask/DialogCreate.tsx:51
+#: src/View/GroupView/GroupProjectTaskView/DialogCreate.tsx:60
+#: src/View/ProjectTask/DialogCreate.tsx:52
 msgid "Project Task"
 msgstr ""
 
@@ -647,10 +668,9 @@ msgstr ""
 msgid "Project task edited"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:109
+#: src/component/Sidebar/Sidebar.tsx:114
 #: src/View/GroupView/GroupProjectView/GroupProjectView.tsx:124
-#: src/View/ProjectView/ProjectView.tsx:31
-#: src/View/SettingsView/SettingsView.tsx:29
+#: src/View/ProjectView/ProjectView.tsx:30
 msgid "Projects"
 msgstr ""
 
@@ -658,7 +678,7 @@ msgstr ""
 #~ msgid "pruple"
 #~ msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:35
+#: src/View/SettingsView/SettingsView.tsx:43
 msgid "purple"
 msgstr ""
 
@@ -666,7 +686,7 @@ msgstr ""
 msgid "Purple"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:37
+#: src/View/SettingsView/SettingsView.tsx:52
 msgid "red"
 msgstr ""
 
@@ -679,11 +699,11 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: src/api/User/query.ts:32
+#: src/api/User/query.ts:34
 msgid "Registration completed, now verify your email"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:220
+#: src/View/SettingsView/Section/ReminderSection.tsx:21
 msgid "Reminder"
 msgstr ""
 
@@ -708,7 +728,7 @@ msgstr ""
 msgid "Renew Password"
 msgstr ""
 
-#: src/api/User/query.ts:76
+#: src/api/User/query.ts:96
 msgid "Reset token sent to email"
 msgstr ""
 
@@ -728,7 +748,7 @@ msgstr ""
 msgid "Role changed"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:250
+#: src/View/SettingsView/Section/RouteSection.tsx:28
 msgid "Routes"
 msgstr ""
 
@@ -740,16 +760,16 @@ msgstr ""
 msgid "Saving"
 msgstr ""
 
-#: src/View/NotesView/NotesView.tsx:72
+#: src/View/NotesView/NotesDrawer.tsx:95
 msgid "Search note"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectView/ProjectTab.tsx:35
-#: src/View/ProjectView/ProjectView.tsx:33
+#: src/View/GroupView/GroupProjectView/ProjectTab.tsx:39
+#: src/View/ProjectView/ProjectView.tsx:34
 msgid "Search projects"
 msgstr ""
 
-#: src/View/TodoView/TodoView.tsx:92
+#: src/View/TodoView/TodoDrawer.tsx:96
 msgid "Search todos"
 msgstr ""
 
@@ -757,7 +777,7 @@ msgstr ""
 msgid "Search users"
 msgstr ""
 
-#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:58
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:59
 msgid "Send Code"
 msgstr ""
 
@@ -765,8 +785,8 @@ msgstr ""
 msgid "Setting another user as admin will remove your current role."
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:127
-#: src/View/SettingsView/SettingsView.tsx:105
+#: src/component/Sidebar/Sidebar.tsx:132
+#: src/View/SettingsView/SettingsView.tsx:113
 msgid "Settings"
 msgstr ""
 
@@ -774,13 +794,13 @@ msgstr ""
 msgid "Share note"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:84
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:87
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:67
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:70
-#: src/View/ProjectTask/CreateForm.tsx:76
-#: src/View/ProjectTask/CreateForm.tsx:79
-#: src/View/ProjectView/CreateForm.tsx:68
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:85
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:88
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:68
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:71
+#: src/View/ProjectTask/CreateForm.tsx:77
+#: src/View/ProjectTask/CreateForm.tsx:80
+#: src/View/ProjectView/CreateForm.tsx:69
 msgid "Status"
 msgstr ""
 
@@ -796,6 +816,18 @@ msgstr ""
 msgid "Task deleted"
 msgstr ""
 
+#: src/api/api.ts:30
+msgid "The requested resource could not be found."
+msgstr ""
+
+#: src/api/api.ts:32
+msgid "The server encountered an error. Please try again later."
+msgstr ""
+
+#: src/api/api.ts:29
+msgid "There seems to be an issue with your request. Please check and try again."
+msgstr ""
+
 #: src/View/SettingsView/DeleteAccountDialog.tsx:59
 msgid "This action will remove your account and its whole data."
 msgstr ""
@@ -804,11 +836,11 @@ msgstr ""
 #~ msgid "This action will remove your account and its whole data.<0/>Are you sure?"
 #~ msgstr ""
 
-#: src/View/CalendarView/CreateForm.tsx:80
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:73
-#: src/View/GroupView/GroupProjectView/CreateForm.tsx:56
-#: src/View/ProjectTask/CreateForm.tsx:65
-#: src/View/ProjectView/CreateForm.tsx:56
+#: src/View/CalendarView/CreateForm.tsx:88
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:74
+#: src/View/GroupView/GroupProjectView/CreateForm.tsx:57
+#: src/View/ProjectTask/CreateForm.tsx:66
+#: src/View/ProjectView/CreateForm.tsx:57
 #: src/View/TodoView/CreateForm.tsx:43
 msgid "Title"
 msgstr ""
@@ -823,33 +855,41 @@ msgstr ""
 msgid "to clipboard"
 msgstr ""
 
-#: src/component/Sidebar/Sidebar.tsx:103
+#: src/component/Sidebar/Sidebar.tsx:108
 msgid "To Do"
 msgstr ""
 
 #: src/View/SettingsView/SettingsView.tsx:28
-msgid "Todo"
-msgstr ""
+#~ msgid "Todo"
+#~ msgstr ""
 
-#: src/api/ProjectTodos/query.ts:36
+#: src/api/ProjectTodos/query.ts:46
 msgid "Todo added"
 msgstr ""
 
-#: src/api/ProjectTodos/query.ts:64
+#: src/api/ProjectTodos/query.ts:74
 msgid "Todo deleted"
 msgstr ""
 
-#: src/api/ProjectTodos/query.ts:50
+#: src/api/ProjectTodos/query.ts:60
 msgid "Todo edited"
 msgstr ""
 
-#: src/View/TodoView/TodoView.tsx:86
+#: src/View/DashboardView/Sections/TodoSection.tsx:25
+msgid "Todo projects"
+msgstr ""
+
+#: src/View/TodoView/TodoDrawer.tsx:90
 msgid "Todos"
 msgstr ""
 
 #: src/View/NotesView/DialogCopy.tsx:71
-#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:76
+#: src/View/RegisterView/PasswordRenew/PasswordForm.tsx:77
 msgid "Token"
+msgstr ""
+
+#: src/View/DashboardView/Sections/TodoSection.tsx:40
+msgid "Total toods"
 msgstr ""
 
 #: src/View/Errors/ErrorView.tsx:37
@@ -860,22 +900,30 @@ msgstr ""
 msgid "Unexpected Error"
 msgstr ""
 
+#: src/View/DashboardView/Sections/EventSection.tsx:25
+msgid "Upcoming events"
+msgstr ""
+
+#: src/View/DashboardView/Sections/ProjectSection.tsx:56
+msgid "Upcoming projects"
+msgstr ""
+
 #: src/component/UserBox/AvatarForm.tsx:24
 msgid "Update avatar"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:104
+#: src/component/UserBox/CreateForm.tsx:105
 msgid "Updating account will cause a logout"
 msgstr ""
 
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:143
-#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:146
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:147
+#: src/View/GroupView/GroupProjectTaskView/CreateForm.tsx:150
 msgid "User"
 msgstr ""
 
-#: src/component/UserBox/CreateForm.tsx:54
+#: src/component/UserBox/CreateForm.tsx:55
 #: src/component/UserBox/UserBox.tsx:36
-#: src/View/RegisterView/RegisterForm.tsx:48
+#: src/View/RegisterView/RegisterForm.tsx:49
 msgid "Username"
 msgstr ""
 
@@ -887,10 +935,14 @@ msgstr ""
 msgid "View not found"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:114
+#: src/View/CalendarView/CalendarView.tsx:116
 msgid "Week"
 msgstr ""
 
 #: src/View/CalendarView/LabelSection.tsx:49
 msgid "Yellow"
+msgstr ""
+
+#: src/api/api.ts:28
+msgid "Your session has expired. Please log in again."
 msgstr ""

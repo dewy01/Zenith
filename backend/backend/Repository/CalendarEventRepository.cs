@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using backend.Dto.CalendarEvents;
+using System.Globalization;
 
 namespace backend.Repository
 {
@@ -42,12 +43,22 @@ namespace backend.Repository
                 throw new NotFoundException("User not found");
             }
 
+            DateTime parsedDateTime;
+            try
+            {
+                parsedDateTime = DateTime.ParseExact(dto.DateTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException("Date format is invalid. Please use DD.MM.YYYY.");
+            }
+
             var newEvent = new CalendarEvent
             {
                 UserID = userId.Value,
                 Title = dto.Title,
                 Description = dto.Description,
-                DateTime = DateTime.Parse(dto.DateTime),
+                DateTime = parsedDateTime,
                 EventColor = dto.EventColor,
             };
 
@@ -61,13 +72,12 @@ namespace backend.Repository
                 DateTime = newEvent.DateTime,
                 CalendarEvent = newEvent,
                 CalendarEventID = newEvent.EventID
-
             };
 
             await _context.Notifications.AddAsync(notification);
-
             await _context.SaveChangesAsync();
         }
+
 
         public async Task DeleteEvent(int eventId)
         {
@@ -98,9 +108,12 @@ namespace backend.Repository
         {
             var userId = _userContextRepository.GetUserId;
 
+            var startDate = DateTime.ParseExact(from, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var endDate = DateTime.ParseExact(to, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
             var userEvents = await _context.CalendarEvents
                 .AsNoTracking()
-                .Where(ev => ev.UserID == userId && ev.DateTime >= DateTime.Parse(from) && ev.DateTime <= DateTime.Parse(to))
+                .Where(ev => ev.UserID == userId && ev.DateTime >= startDate && ev.DateTime <= endDate)
                 .ToListAsync();
 
             if (userEvents.Count == 0)
@@ -133,11 +146,21 @@ namespace backend.Repository
 
             if (ev == null)
             {
-                throw new NotFoundException("User not found");
+                throw new NotFoundException("Event not found");
+            }
+
+            DateTime parsedDateTime;
+            try
+            {
+                parsedDateTime = DateTime.ParseExact(dto.DateTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                throw new ArgumentException("Date format is invalid. Please use DD.MM.YYYY.");
             }
 
             ev.Title = dto.Title;
-            ev.DateTime = DateTime.Parse(dto.DateTime);
+            ev.DateTime = parsedDateTime;
             ev.EventColor = dto.EventColor;
             ev.Description = dto.Description;
 
@@ -150,7 +173,7 @@ namespace backend.Repository
             if (notification != null)
             {
                 notification.Message = $"{ev.Title} is rescheduled on {ev.DateTime:MMMM dd, yyyy}";
-                notification.DateTime = DateTime.Parse(dto.DateTime);
+                notification.DateTime = parsedDateTime; // Update to the new parsed date
                 _context.Notifications.Update(notification);
                 await _context.SaveChangesAsync();
             }

@@ -80,6 +80,10 @@ export const mutateUserLogout = () => {
       setUserRole(0);
       logout();
     },
+    onError: () => {
+      setUserRole(0);
+      logout();
+    },
   });
 };
 

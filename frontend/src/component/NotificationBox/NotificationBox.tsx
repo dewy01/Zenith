@@ -1,21 +1,21 @@
-import {
-  Accordion,
-  AccordionSummary,
-  Box,
-  Typography,
-  AccordionDetails,
-  IconButton,
-  Tooltip,
-  Paper,
-} from '@mui/material';
+import { Trans } from '@lingui/macro';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import {
   getAllNotifications,
   mutateMarkAsRead,
 } from '~/api/Notifications/query';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-import { Trans } from '@lingui/macro';
 
 export const NotificationBox = () => {
   const { data } = getAllNotifications();
@@ -82,7 +82,7 @@ export const NotificationBox = () => {
             </>
           ) : (
             <Paper sx={{ padding: 2 }} elevation={10}>
-              No notifications
+              <Trans>No notifications</Trans>
             </Paper>
           )}
         </AccordionDetails>

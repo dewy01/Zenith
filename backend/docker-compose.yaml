@@ -1,0 +1,18 @@
+
+services:
+  backend:
+    container_name: backend
+    build: . 
+    env_file: "./backend/.env"
+    ports:
+      - "5000:8080"
+    depends_on:
+      - mssql    
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password1*
+    ports:
+      - "1433:1433"

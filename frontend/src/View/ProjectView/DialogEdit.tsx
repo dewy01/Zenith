@@ -1,3 +1,6 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Trans } from '@lingui/macro';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
   Dialog,
@@ -7,14 +10,11 @@ import {
   MenuItem,
 } from '@mui/material';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Project } from '~/api/Projects/api';
+import { mutateEditProject } from '~/api/Projects/query';
 import { CreateForm } from './CreateForm';
 import { projectModel, projectSchema } from './schema';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { mutateEditProject } from '~/api/Projects/query';
-import EditIcon from '@mui/icons-material/Edit';
-import { Project } from '~/api/Projects/api';
-import { Trans } from '@lingui/macro';
 
 type Props = {
   project: Project;
@@ -37,7 +37,7 @@ export const DialogEdit = ({ project, onSubmit }: Props) => {
       title: project.title,
       description: project.description,
       deadline: new Date(project.deadline),
-      status: project.status as 'on Hold' | 'in Progress' | 'Done' | undefined,
+      status: project.status,
     },
     resolver: zodResolver(projectSchema),
   });

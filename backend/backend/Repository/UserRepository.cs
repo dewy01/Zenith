@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using backend.Dto.Users;
 using backend.Dto.Token;
+using DotNetEnv;
 
 namespace backend.Repository
 {
@@ -93,10 +94,10 @@ namespace backend.Repository
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
             newUser.Password = hashedPassword;
+            Env.Load();
+            var baseUrl = Environment.GetEnvironmentVariable("JWT_ISSUER");
 
             await _context.Users.AddAsync(newUser);
-            await _emailSettings.SendEmailAsync(dto.Email, "Email Confirmation - " + $"{newUser.Username}", "https://localhost:7086/api/account/verifyemail/" + $"{newUser.VerificationToken}");
-
 
             await _context.SaveChangesAsync();
 
@@ -112,6 +113,8 @@ namespace backend.Repository
 
             await _context.UserPreferences.AddAsync(preferences);
             await _context.SaveChangesAsync();
+
+            await _emailSettings.SendEmailAsync(dto.Email, "Email Confirmation - " + $"{newUser.Username}", $"{baseUrl}/account/verifyemail/" + $"{newUser.VerificationToken}");
         }
 
         public async Task UpdateUser(UpdateUserDto userDto)

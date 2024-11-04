@@ -1,3 +1,8 @@
+import { Trans } from '@lingui/macro';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import TitleIcon from '@mui/icons-material/Title';
+import TocIcon from '@mui/icons-material/Toc';
 import {
   Box,
   Paper,
@@ -6,13 +11,8 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from '@mui/material';
-import { eventModel } from './schema';
 import { UseFormReturn, useController } from 'react-hook-form';
-import TitleIcon from '@mui/icons-material/Title';
-import TocIcon from '@mui/icons-material/Toc';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { Trans } from '@lingui/macro';
+import { eventModel } from './schema';
 
 type toggleProps = {
   value: string;
@@ -21,7 +21,15 @@ type toggleProps = {
 const ColorToggle = ({ value }: toggleProps) => {
   return (
     <ToggleButton sx={{ width: '50px', height: '50px' }} value={value}>
-      <Paper sx={{ width: '20px', height: '20px', backgroundColor: value }} />
+      <Paper
+        component={'div'}
+        sx={{
+          width: '20px',
+          height: '20px',
+          backgroundColor: value,
+          pointerEvents: 'none',
+        }}
+      />
     </ToggleButton>
   );
 };

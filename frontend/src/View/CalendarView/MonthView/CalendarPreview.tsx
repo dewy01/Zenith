@@ -1,16 +1,16 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import dayjs from 'dayjs';
-import { DayCard } from './DayCard';
-import { useCalendar } from '~/context/CalendarContext';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Box, IconButton, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { getEventBetween } from '~/api/Calendar/query';
-import { useCurrentDate } from '~/utils/useCurrentDate';
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { Control, useWatch } from 'react-hook-form';
-import { colorSchema } from '../schema';
 import { z } from 'zod';
+import { getEventBetween } from '~/api/Calendar/query';
+import { useCalendar } from '~/context/CalendarContext';
+import { useCurrentDate } from '~/utils/useCurrentDate';
+import { colorSchema } from '../schema';
+import { DayCard } from './DayCard';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -37,8 +37,8 @@ export const CalendarPreview = ({ control }: Props) => {
   }, [monthAsNumber]);
 
   const { data: events } = getEventBetween({
-    from: month[0][0].format('DD MM YYYY').toString(),
-    to: month[4][6].format('DD MM YYYY').toString(),
+    from: month[0][0].format('YYYY-MM-DD').toString(),
+    to: month[4][6].format('YYYY-MM-DD').toString(),
     colors: JSON.stringify(selectedColors),
   });
 

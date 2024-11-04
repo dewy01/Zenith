@@ -19,36 +19,35 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// Load env variables
+// Load environment variables
 Env.Load();
 
+// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configure authentication settings
 var authSetting = new AuthSettings
 {
     JwtKey = Environment.GetEnvironmentVariable("JWT_KEY"),
     JwtExpireMinutes = int.Parse(Environment.GetEnvironmentVariable("JWT_EXPIRE_MINUTES") ?? "30"),
     JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
 };
-
 builder.Services.AddSingleton(authSetting);
 
+// Configure email settings
 var emailSetting = new EmailSettings
 {
     Email = Environment.GetEnvironmentVariable("EMAIL_SENDER"),
     Password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD"),
 };
-
 builder.Services.AddSingleton(emailSetting);
+
+// Register other services
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
@@ -65,29 +64,28 @@ builder.Services.AddScoped<IGroupProjectTaskRepository, GroupProjectTaskReposito
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
-
-
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddTransient<IEmailRepository, EmailRepository>();
 
+// CORS policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
+    options.AddPolicy("AllowAllOrigins",
         builder =>
         {
             builder.AllowAnyOrigin()
                    .AllowAnyMethod()
-                   .AllowAnyHeader();
+                   .AllowAnyHeader().SetIsOriginAllowed(origin => true);
         });
 });
 
+// Configure JWT Authentication
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
 }).AddJwtBearer(cfg =>
 {
     cfg.RequireHttpsMetadata = false;
@@ -101,12 +99,13 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
+// Configure Entity Framework and SQL Server
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
 });
 
-// Hangfire implementation
+// Hangfire configuration
 builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
     .UseSimpleAssemblyNameTypeSerializer()
@@ -119,14 +118,22 @@ builder.Services.AddHangfire(configuration => configuration
         UseRecommendedIsolationLevel = true,
         DisableGlobalLocks = true
     }));
-
 builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
+// Database migration
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Database.Migrate();
+}
+
+// Data seeding
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
     SeedData(app);
 
+// Method to seed data
 void SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
@@ -153,19 +160,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAll");
-
-app.UseHttpsRedirection();
-
+app.UseCors("AllowAllOrigins");
+//app.UseHttpsRedirection();
+app.UseAuthentication(); // Ensure Authentication middleware is added
 app.UseAuthorization();
-
 app.MapControllers();
 
-// Hangfire execution
+// Hangfire dashboard and recurring jobs
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
     DashboardTitle = "Hangfire Dashboard"
 });
-RecurringJob.AddOrUpdate<NotificationRepository>("update-notifications", service => service.UpdateNotifications(), Cron.Daily);
+RecurringJob.AddOrUpdate<INotificationRepository>("update-notifications", service => service.UpdateNotifications(), Cron.Daily);
 
 app.Run();

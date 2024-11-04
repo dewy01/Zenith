@@ -1,3 +1,6 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Trans } from '@lingui/macro';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {
   Button,
   Dialog,
@@ -9,16 +12,13 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateForm } from './CreateForm';
 import { ProjectTask } from '~/api/Projects/api';
-import { taskModel, taskSchema } from './schema';
 import {
   deleteProjectTask,
   mutateEditProjectTask,
 } from '~/api/ProjectTask/query';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { Trans } from '@lingui/macro';
+import { CreateForm } from './CreateForm';
+import { taskModel, taskSchema } from './schema';
 
 type Props = {
   task: ProjectTask;
@@ -40,12 +40,7 @@ export const DialogEdit = ({ task }: Props) => {
       projectID: task.projectTaskID,
       title: task.title,
       description: task.description,
-      status: task.status as
-        | 'Backlog'
-        | 'in Progress'
-        | 'For Review'
-        | 'Closed'
-        | undefined,
+      status: task.status,
       category: task.category as
         | 'Note'
         | 'Email'
