@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 import { lazy, ReactNode, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from '~/context/AuthContext';
-import { CalendarProvider } from '~/context/CalendarContext';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
 
 const Layout = lazy(() =>
@@ -154,9 +153,7 @@ export const Router = ({ routes }: RouterProps) => {
             path="/calendar"
             element={
               <PrivateRoute>
-                <CalendarProvider>
-                  <CalendarView />
-                </CalendarProvider>
+                <CalendarView />
               </PrivateRoute>
             }
           />

@@ -90,13 +90,15 @@ export const handleSettings = () => {
     return {
       theme: theme,
       routes: settings.routes,
-      language: settings.language
+      language: settings.language,
+      colors: settings.colors
     };
   } else {
     return {
       theme: dark,
       routes: {},
-      language: 'en'
+      language: 'en',
+      colors: {}
     };
   }
 };

@@ -1,3 +1,4 @@
+export * from './ColorEditSection';
 export * from './ColorSection';
 export * from './LanguageSection';
 export * from './ReminderSection';

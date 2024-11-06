@@ -1,16 +1,16 @@
+import { Trans, t } from '@lingui/macro';
 import {
   Box,
+  Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
-  Checkbox,
-  useTheme,
   Typography,
+  useTheme,
 } from '@mui/material';
-import { Controller, Control } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { colorSchema } from './schema';
-import { Trans, t } from '@lingui/macro';
 
 interface Color {
   name: string;
@@ -20,33 +20,41 @@ interface Color {
 
 interface Props {
   control: Control<z.infer<typeof colorSchema>>;
+  colors: { [color: string]: string };
 }
 
-export const LabelSection = ({ control }: Props) => {
+export const LabelSection = ({ control, colors }: Props) => {
   const theme = useTheme();
-  const colors: Color[] = [
+  const colorsMap: Color[] = [
     {
-      name: t({ message: 'Purple' }),
+      name:
+        colors['Purple'] === 'Purple'
+          ? t({ message: 'Purple' })
+          : colors['Purple'],
       internalKey: 'Purple',
       colorKey: theme.palette.secondary.dark,
     },
     {
-      name: t({ message: 'Red' }),
+      name: colors['Red'] === 'Red' ? t({ message: 'Red' }) : colors['Red'],
       internalKey: 'Red',
       colorKey: theme.palette.error.dark,
     },
     {
-      name: t({ message: 'Green' }),
+      name:
+        colors['Green'] === 'Green' ? t({ message: 'Green' }) : colors['Green'],
       internalKey: 'Green',
       colorKey: theme.palette.success.dark,
     },
     {
-      name: t({ message: 'Blue' }),
+      name: colors['Blue'] === 'Blue' ? t({ message: 'Blue' }) : colors['Blue'],
       internalKey: 'Blue',
       colorKey: theme.palette.info.dark,
     },
     {
-      name: t({ message: 'Yellow' }),
+      name:
+        colors['Yellow'] === 'Yellow'
+          ? t({ message: 'Yellow' })
+          : colors['Yellow'],
       internalKey: 'Yellow',
       colorKey: theme.palette.warning.dark,
     },
@@ -66,7 +74,7 @@ export const LabelSection = ({ control }: Props) => {
       </Typography>
       <FormControl component="fieldset" sx={{ width: '100%' }}>
         <FormGroup>
-          {colors.map((color) => (
+          {colorsMap.map((color) => (
             <FormControlLabel
               sx={(theme) => ({
                 width: '100%',

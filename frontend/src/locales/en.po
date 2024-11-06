@@ -84,7 +84,7 @@ msgstr ""
 msgid "Avatar updated"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:152
+#: src/View/SettingsView/SettingsView.tsx:165
 msgid "Background color"
 msgstr ""
 
@@ -93,16 +93,17 @@ msgstr ""
 msgid "Backlog"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:38
+#: src/View/SettingsView/SettingsView.tsx:47
 msgid "blue"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:44
+#: src/View/CalendarView/LabelSection.tsx:49
+#: src/View/SettingsView/Section/ColorEditSection.tsx:39
 msgid "Blue"
 msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:102
-#: src/View/CalendarView/CalendarView.tsx:97
+#: src/View/CalendarView/CalendarView.tsx:102
 msgid "Calendar"
 msgstr ""
 
@@ -156,6 +157,10 @@ msgstr ""
 #: src/View/ProjectTask/CreateForm.tsx:97
 msgid "Closed"
 msgstr ""
+
+#: src/View/SettingsView/Section/ColorEditSection.tsx:88
+#~ msgid "Color Name"
+#~ msgstr ""
 
 #: src/View/RegisterView/PasswordRenew/DialogPassword.tsx:76
 msgid "Confirm"
@@ -238,7 +243,7 @@ msgstr ""
 msgid "Create Todo"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:56
+#: src/View/SettingsView/SettingsView.tsx:65
 msgid "dark"
 msgstr ""
 
@@ -268,7 +273,7 @@ msgid "Delete"
 msgstr ""
 
 #: src/View/SettingsView/DeleteAccountDialog.tsx:38
-#: src/View/SettingsView/SettingsView.tsx:199
+#: src/View/SettingsView/SettingsView.tsx:216
 msgid "Delete account"
 msgstr ""
 
@@ -353,6 +358,10 @@ msgstr ""
 msgid "Edit Account"
 msgstr ""
 
+#: src/View/SettingsView/Section/ColorEditSection.tsx:64
+msgid "Edit Colors"
+msgstr ""
+
 #: src/View/CalendarView/DialogEdit.tsx:76
 msgid "Edit Event"
 msgstr ""
@@ -402,7 +411,7 @@ msgstr ""
 msgid "Explore Users"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:65
+#: src/View/CalendarView/LabelSection.tsx:73
 msgid "Filters"
 msgstr ""
 
@@ -428,11 +437,12 @@ msgstr ""
 msgid "Grant admin"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:48
+#: src/View/SettingsView/SettingsView.tsx:57
 msgid "green"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:39
+#: src/View/CalendarView/LabelSection.tsx:44
+#: src/View/SettingsView/Section/ColorEditSection.tsx:34
 msgid "Green"
 msgstr ""
 
@@ -527,7 +537,7 @@ msgstr ""
 msgid "Leave group"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:55
+#: src/View/SettingsView/SettingsView.tsx:64
 msgid "light"
 msgstr ""
 
@@ -550,11 +560,11 @@ msgstr ""
 msgid "Mark as read"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:109
+#: src/View/CalendarView/CalendarView.tsx:114
 msgid "Month"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:55
+#: src/View/CalendarView/CalendarView.tsx:60
 msgid "Month reset"
 msgstr ""
 
@@ -646,7 +656,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:132
+#: src/View/SettingsView/SettingsView.tsx:145
 msgid "Primary color"
 msgstr ""
 
@@ -704,19 +714,21 @@ msgstr ""
 #~ msgid "pruple"
 #~ msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:43
+#: src/View/SettingsView/SettingsView.tsx:52
 msgid "purple"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:29
+#: src/View/CalendarView/LabelSection.tsx:32
+#: src/View/SettingsView/Section/ColorEditSection.tsx:24
 msgid "Purple"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:52
+#: src/View/SettingsView/SettingsView.tsx:61
 msgid "red"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:34
+#: src/View/CalendarView/LabelSection.tsx:38
+#: src/View/SettingsView/Section/ColorEditSection.tsx:29
 msgid "Red"
 msgstr ""
 
@@ -778,6 +790,10 @@ msgstr ""
 msgid "Routes"
 msgstr ""
 
+#: src/View/SettingsView/Section/ColorEditSection.tsx:92
+msgid "Save"
+msgstr ""
+
 #: src/View/NotesView/NotePreview.tsx:233
 msgid "Saved"
 msgstr ""
@@ -812,7 +828,7 @@ msgid "Setting another user as admin will remove your current role."
 msgstr ""
 
 #: src/component/Sidebar/Sidebar.tsx:132
-#: src/View/SettingsView/SettingsView.tsx:113
+#: src/View/SettingsView/SettingsView.tsx:126
 msgid "Settings"
 msgstr ""
 
@@ -885,7 +901,7 @@ msgstr ""
 msgid "To Do"
 msgstr ""
 
-#: src/View/SettingsView/SettingsView.tsx:28
+#: src/View/SettingsView/Section/RouteSection.tsx:27
 #~ msgid "Todo"
 #~ msgstr ""
 
@@ -961,11 +977,12 @@ msgstr ""
 msgid "View not found"
 msgstr ""
 
-#: src/View/CalendarView/CalendarView.tsx:116
+#: src/View/CalendarView/CalendarView.tsx:121
 msgid "Week"
 msgstr ""
 
-#: src/View/CalendarView/LabelSection.tsx:49
+#: src/View/CalendarView/LabelSection.tsx:56
+#: src/View/SettingsView/Section/ColorEditSection.tsx:44
 msgid "Yellow"
 msgstr ""
 

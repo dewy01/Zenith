@@ -1,3 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Trans } from '@lingui/macro';
+import AddIcon from '@mui/icons-material/Add';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   Box,
   IconButton,
@@ -5,23 +9,19 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
-import { Main } from '~/component/Main';
-import { SubDrawer } from '~/component/SubDrawer';
-import { CalendarPreview } from './MonthView/CalendarPreview';
-import { useCalendar } from '~/context/CalendarContext';
-import AddIcon from '@mui/icons-material/Add';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import dayjs from 'dayjs';
 import { enqueueSnackbar } from 'notistack';
-import { DialogCreate } from './DialogCreate';
-import { WeekPreview } from './WeekView/WeekPreview';
-import { MonthsSection } from './MonthsSection';
-import { Trans } from '@lingui/macro';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { colorSchema, ColorModel } from './schema';
+import { Main } from '~/component/Main';
+import { SubDrawer } from '~/component/SubDrawer';
+import { useCalendar } from '~/context/CalendarContext';
+import { DialogCreate } from './DialogCreate';
 import { LabelSection } from './LabelSection';
+import { MonthsSection } from './MonthsSection';
+import { CalendarPreview } from './MonthView/CalendarPreview';
+import { ColorModel, colorSchema } from './schema';
+import { WeekPreview } from './WeekView/WeekPreview';
 
 enum ViewMode {
   month,
@@ -40,8 +40,13 @@ const defaultValues: ColorModel = {
 
 export const CalendarView = () => {
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.month);
-  const { monthAsNumber, setMonthAsNumber, setWeekAsNumber, weekAsNumber } =
-    useCalendar();
+  const {
+    monthAsNumber,
+    setMonthAsNumber,
+    setWeekAsNumber,
+    weekAsNumber,
+    colors,
+  } = useCalendar();
 
   const { control } = useForm({
     resolver: zodResolver(colorSchema),
@@ -117,7 +122,7 @@ export const CalendarView = () => {
             </ToggleButton>
           </ToggleButtonGroup>
           <MonthsSection />
-          <LabelSection control={control} />
+          <LabelSection control={control}  colors={colors}/>
         </Box>
       </SubDrawer>
 

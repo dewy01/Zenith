@@ -6,6 +6,7 @@ export interface Settings {
   language: string;
   reminder: number;
   routes: { [routeName: string]: boolean };
+  colors: { [color: string]: string };
 }
 
 export const querySettings = async () => {

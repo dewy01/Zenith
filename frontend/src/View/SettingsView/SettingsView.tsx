@@ -13,6 +13,7 @@ import { blue, green, purple, red } from '../../Theme/Color';
 import { LoadingView } from '../LoadingView/LoadingView';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
 import {
+  ColorEditSection,
   ColorSection,
   LanguageSection,
   ReminderSection,
@@ -31,6 +32,14 @@ const routes: { [routeName: string]: boolean } = {
   ['Todo']: true,
   ['Projects']: true,
   ['Group Projects']: true,
+};
+
+const calendarColors: { [color: string]: string } = {
+  ['Purple']: 'Purple',
+  ['Red']: 'Red',
+  ['Green']: 'Green',
+  ['Blue']: 'Blue',
+  ['Yellow']: 'Yellow',
 };
 
 const colors = [
@@ -82,6 +91,7 @@ export interface newSettingsProps {
   language?: string;
   reminder?: number;
   routes?: { [routeName: string]: boolean };
+  colors?: { [color: string]: string };
 }
 
 export const SettingsView = () => {
@@ -92,11 +102,14 @@ export const SettingsView = () => {
   const handleClick = (newSettings: newSettingsProps) => {
     const updatedRoutes =
       newSettings.routes || (settings ? settings.routes : routes);
+    const updatedColors =
+      newSettings.colors || (settings ? settings.colors : calendarColors);
     if (newSettings && settings) {
       mutateAsync({
         ...settings,
         ...newSettings,
         routes: updatedRoutes,
+        colors: updatedColors,
       });
     }
   };
@@ -184,6 +197,10 @@ export const SettingsView = () => {
 
         <Paper sx={{ maxWidth: '350px', padding: 3 }}>
           <RouteSection settings={settings} handleClick={handleClick} />
+        </Paper>
+
+        <Paper sx={{ maxWidth: '350px', padding: 3 }}>
+          <ColorEditSection settings={settings} handleClick={handleClick} />
         </Paper>
 
         <Paper

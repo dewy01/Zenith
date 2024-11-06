@@ -10,6 +10,7 @@ import { SnackbarOrigin, SnackbarProvider } from 'notistack';
 import { useEffect, useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './component/Router';
+import { CalendarProvider } from './context/CalendarContext';
 import { GroupProvider } from './context/GroupRole';
 import { PdfProvider } from './context/PdfContext';
 import { handleSettings } from './Theme';
@@ -45,7 +46,7 @@ async function dynamicActivate(locale: string) {
 }
 
 const App = () => {
-  const { theme, routes, language } = handleSettings();
+  const { theme, routes, language, colors } = handleSettings();
   const classes = useStyles();
 
   const scrollbarStyle = useMemo(() => {
@@ -67,9 +68,11 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <BrowserRouter>
               <GroupProvider>
-                <PdfProvider>
-                  <Router routes={routes} />
-                </PdfProvider>
+                <CalendarProvider colors={colors}>
+                  <PdfProvider>
+                    <Router routes={routes} />
+                  </PdfProvider>
+                </CalendarProvider>
               </GroupProvider>
               <CssBaseline />
               <GlobalStyles styles={{ ...scrollbarStyle }} />
