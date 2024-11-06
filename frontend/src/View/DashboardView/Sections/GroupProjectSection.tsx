@@ -124,7 +124,7 @@ const ProjectCard = ({ project }: { project: GroupProjectsDashboard }) => {
       <List sx={{ flex: 1 }}>
         <Box
           component={NavLink}
-          to={`/groupprojects/${project.groupProjectID}`}
+          to={`/group/project/${project.groupProjectID}`}
           sx={{ textDecoration: 'none' }}
           display="flex"
           alignItems="center"

@@ -125,7 +125,9 @@ export const TodoDrawer = ({
             )}
           </InfiniteScroll>
           <Button variant="text" disabled={!hasNextPage} onClick={loadNextPage}>
-            {hasNextPage ? 'Load more' : 'All projects loaded'}
+            {hasNextPage
+              ? t({ message: 'Load more' })
+              : t({ message: 'All projects loaded' })}
           </Button>
         </List>
         <ToggleButtonGroup value={viewMode}>
@@ -136,7 +138,7 @@ export const TodoDrawer = ({
             }}
             sx={{ width: '50%' }}
           >
-            Active
+            <Trans>Active</Trans>
           </ToggleButton>
           <ToggleButton
             value={ViewMode.completed}
@@ -145,7 +147,7 @@ export const TodoDrawer = ({
             }}
             sx={{ width: '50%' }}
           >
-            Done
+            <Trans>Done</Trans>
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>

@@ -33,6 +33,10 @@ msgstr ""
 msgid "Action will create a new note"
 msgstr ""
 
+#: src/View/TodoView/TodoDrawer.tsx:141
+msgid "Active"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/View/TodoView/TodoTask/DialogCreate.tsx:67
 msgid "Add new Task"
@@ -40,6 +44,14 @@ msgstr ""
 
 #: src/api/Group/query.ts:147
 msgid "Admin user changed"
+msgstr ""
+
+#: src/View/NotesView/NotesDrawer.tsx:122
+msgid "All notes loaded"
+msgstr ""
+
+#: src/View/TodoView/TodoDrawer.tsx:130
+msgid "All projects loaded"
 msgstr ""
 
 #: src/api/api.ts:34
@@ -230,6 +242,10 @@ msgstr ""
 msgid "dark"
 msgstr ""
 
+#: src/component/Sidebar/Sidebar.tsx:90
+msgid "Dashboard"
+msgstr ""
+
 #: src/View/SettingsView/Section/ReminderSection.tsx:28
 msgid "Day"
 msgstr ""
@@ -312,6 +328,7 @@ msgstr ""
 
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:85
 #: src/View/ProjectView/CreateForm.tsx:83
+#: src/View/TodoView/TodoDrawer.tsx:150
 msgid "Done"
 msgstr ""
 
@@ -455,6 +472,10 @@ msgstr ""
 msgid "Group updated"
 msgstr ""
 
+#: src/component/Sidebar/Sidebar.tsx:87
+msgid "Home"
+msgstr ""
+
 #: src/component/GroupUserCard/SetAdminDialog.tsx:78
 #: src/View/SettingsView/DeleteAccountDialog.tsx:74
 msgid "Im sure"
@@ -508,6 +529,11 @@ msgstr ""
 
 #: src/View/SettingsView/SettingsView.tsx:55
 msgid "light"
+msgstr ""
+
+#: src/View/NotesView/NotesDrawer.tsx:121
+#: src/View/TodoView/TodoDrawer.tsx:129
+msgid "Load more"
 msgstr ""
 
 #: src/View/LoginView/LoginView.tsx:44

@@ -1,3 +1,13 @@
+import { Trans } from '@lingui/macro';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import HomeIcon from '@mui/icons-material/Home';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import {
   Box,
   Divider,
@@ -9,18 +19,8 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
-import PersonIcon from '@mui/icons-material/Person';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { NavLink, useLocation } from 'react-router-dom';
 import { SIDEBAR_WIDTH } from '~/config/constants';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { Trans } from '@lingui/macro';
 
 type DrawerProps = {
   link: string;
@@ -84,10 +84,10 @@ export const Sidebar = ({ routes }: RouterProps) => {
         <Toolbar></Toolbar>
         <Divider />
         <List sx={{ display: 'flex', flexDirection: 'column', gap: '2vh' }}>
-          <DrawerLink link="/home" tooltip="Home">
+          <DrawerLink link="/home" tooltip={<Trans>Home</Trans>}>
             <HomeIcon />
           </DrawerLink>
-          <DrawerLink link="/dashboard" tooltip="Dashboard">
+          <DrawerLink link="/dashboard" tooltip={<Trans>Dashboard</Trans>}>
             <DashboardCustomizeIcon />
           </DrawerLink>
           <Divider />

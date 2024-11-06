@@ -1,3 +1,5 @@
+import { Trans, t } from '@lingui/macro';
+import IosShareIcon from '@mui/icons-material/IosShare';
 import {
   AppBar,
   Box,
@@ -8,17 +10,15 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { enqueueSnackbar } from 'notistack';
 import { useEffect, useState } from 'react';
 import { LoadingView } from '~/View/LoadingView/LoadingView';
 import { getGroup, getInviteToken, getOwnRole } from '~/api/Group/query';
-import { ProjectTab } from './ProjectTab';
-import { UserTab } from './UsersTab';
-import IosShareIcon from '@mui/icons-material/IosShare';
-import { enqueueSnackbar } from 'notistack';
-import { DialogCreate } from './DialogCreate';
 import { useGroupContext } from '~/context/GroupRole';
-import { Trans, t } from '@lingui/macro';
+import { DialogCreate } from './DialogCreate';
+import { ProjectTab } from './ProjectTab';
 import { DialogUpdate } from './UpdateGroup/DialogUpdate';
+import { UserTab } from './UsersTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -89,7 +89,7 @@ export const GroupProjectView = () => {
           {isGranted ? (
             <DialogUpdate title={group.groupName} groupId={group.groupID} />
           ) : (
-            <Typography variant="h6" component="div">
+            <Typography sx={{ flexGrow: 1 }} variant="h6" component="div">
               {group.groupName}
             </Typography>
           )}

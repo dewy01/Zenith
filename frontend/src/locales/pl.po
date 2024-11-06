@@ -33,6 +33,10 @@ msgstr "Konto zedytowane"
 msgid "Action will create a new note"
 msgstr "Akcja spowoduje stworzenie nowej notatki"
 
+#: src/View/TodoView/TodoDrawer.tsx:141
+msgid "Active"
+msgstr "Aktywne"
+
 #. js-lingui-explicit-id
 #: src/View/TodoView/TodoTask/DialogCreate.tsx:67
 msgid "Add new Task"
@@ -41,6 +45,14 @@ msgstr "Dodaj zadanie"
 #: src/api/Group/query.ts:147
 msgid "Admin user changed"
 msgstr "Zmiana admina"
+
+#: src/View/NotesView/NotesDrawer.tsx:122
+msgid "All notes loaded"
+msgstr "Wszystkie notatki"
+
+#: src/View/TodoView/TodoDrawer.tsx:130
+msgid "All projects loaded"
+msgstr "Wszystkie projekty"
 
 #: src/api/api.ts:34
 msgid "An unexpected error occurred. Please try again later."
@@ -230,6 +242,10 @@ msgstr "Stwórz Todo"
 msgid "dark"
 msgstr "ciemny"
 
+#: src/component/Sidebar/Sidebar.tsx:90
+msgid "Dashboard"
+msgstr "Panel główny"
+
 #: src/View/SettingsView/Section/ReminderSection.tsx:28
 msgid "Day"
 msgstr "Dzień"
@@ -312,8 +328,9 @@ msgstr "Opis"
 
 #: src/View/GroupView/GroupProjectView/CreateForm.tsx:85
 #: src/View/ProjectView/CreateForm.tsx:83
+#: src/View/TodoView/TodoDrawer.tsx:150
 msgid "Done"
-msgstr "Done"
+msgstr "Ukończone"
 
 #: src/component/UserBox/DialogUpdate.tsx:96
 #: src/View/CalendarView/DialogEdit.tsx:89
@@ -455,6 +472,10 @@ msgstr "Projekty grupowe"
 msgid "Group updated"
 msgstr "Grupa zedytowana"
 
+#: src/component/Sidebar/Sidebar.tsx:87
+msgid "Home"
+msgstr "Strona główna"
+
 #: src/component/GroupUserCard/SetAdminDialog.tsx:78
 #: src/View/SettingsView/DeleteAccountDialog.tsx:74
 msgid "Im sure"
@@ -509,6 +530,11 @@ msgstr "Opuść grupę"
 #: src/View/SettingsView/SettingsView.tsx:55
 msgid "light"
 msgstr "jasny"
+
+#: src/View/NotesView/NotesDrawer.tsx:121
+#: src/View/TodoView/TodoDrawer.tsx:129
+msgid "Load more"
+msgstr "Wczytaj więcej"
 
 #: src/View/LoginView/LoginView.tsx:44
 #: src/View/LoginView/LoginView.tsx:49

@@ -1,18 +1,18 @@
-import { Box, Button, IconButton, List, Typography } from '@mui/material';
-import { SubDrawer } from '~/component/SubDrawer';
-import AddIcon from '@mui/icons-material/Add';
-import { SearchField } from '~/component/SearchField';
-import { DrawerLink } from './DrawerLink';
-import { getAllNotes, mutateAddNote } from '~/api/Notes/query';
-import { useContext, useEffect, useMemo } from 'react';
-import { formatDate } from '~/utils/dateTime';
-import { DialogDelete } from './DialogDelete';
 import { Trans, t } from '@lingui/macro';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, IconButton, List, Typography } from '@mui/material';
 import { DebouncedFunc } from 'lodash';
+import { useContext, useEffect, useMemo } from 'react';
+import { Note } from '~/api/Notes/api';
+import { getAllNotes, mutateAddNote } from '~/api/Notes/query';
 import { PaginationRequest } from '~/api/pagination';
 import { InfiniteScroll } from '~/component/InfiniteScroll/InfiniteScroll';
-import { Note } from '~/api/Notes/api';
+import { SearchField } from '~/component/SearchField';
+import { SubDrawer } from '~/component/SubDrawer';
 import { PdfContext } from '~/context/PdfContext';
+import { formatDate } from '~/utils/dateTime';
+import { DialogDelete } from './DialogDelete';
+import { DrawerLink } from './DrawerLink';
 
 type Props = {
   handleFilter: DebouncedFunc<
@@ -117,7 +117,9 @@ export const NotesDrawer = ({
             )}
           </InfiniteScroll>
           <Button variant="text" disabled={!hasNextPage} onClick={loadNextPage}>
-            {hasNextPage ? 'Load more' : 'All notes loaded'}
+            {hasNextPage
+              ? t({ message: 'Load more' })
+              : t({ message: 'All notes loaded' })}
           </Button>
         </List>
       </Box>
