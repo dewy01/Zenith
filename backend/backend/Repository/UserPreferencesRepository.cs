@@ -41,6 +41,7 @@ namespace backend.Repository
             }
 
             var routes = JsonConvert.DeserializeObject<Dictionary<string, bool>>(settings.Routes) ?? new Dictionary<string, bool>();
+            var colors = JsonConvert.DeserializeObject<Dictionary<string, string>>(settings.Colors) ?? new Dictionary<string, string>();
 
             var dto = new UserPreferencesDto
             {
@@ -48,7 +49,8 @@ namespace backend.Repository
                 Color = settings.Color,
                 Language = settings.Language,
                 Reminder = settings.Reminder,
-                Routes = routes
+                Routes = routes,
+                Colors = colors,
             };
 
             return dto;
@@ -77,6 +79,8 @@ namespace backend.Repository
             settings.Reminder = dto.Reminder;
             string routesJson = JsonConvert.SerializeObject(dto.Routes);
             settings.Routes = routesJson;
+            string colorsJson = JsonConvert.SerializeObject(dto.Colors);
+            settings.Colors = colorsJson;
 
             _context.UserPreferences.Update(settings);
             await _context.SaveChangesAsync();

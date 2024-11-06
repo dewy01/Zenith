@@ -7,5 +7,7 @@
         public required string Language { get; set; }
         public int Reminder { get; set; }
         public required Dictionary<string, bool> Routes { get; set; }
+        public required Dictionary<string, string> Colors { get; set; }
+
     }
 }

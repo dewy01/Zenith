@@ -108,8 +108,9 @@ namespace backend.Repository
                 Color = "blue",
                 Language = "en",
                 Reminder = 3,
-                Routes = "{\"Notes\":true,\"Calendar\":true,\"Todo\":true,\"Projects\":true,\"Group Projects\":true}"
-            };
+                Routes = "{\"Notes\":true,\"Calendar\":true,\"Todo\":true,\"Projects\":true,\"Group Projects\":true}",
+                Colors = "{\"Purple\":\"Purple\",\"Red\":\"Red\",\"Green\":\"Green\",\"Blue\":\"Blue\",\"Yellow\":\"Yellow\"}",
+        };
 
             await _context.UserPreferences.AddAsync(preferences);
             await _context.SaveChangesAsync();
@@ -146,6 +147,10 @@ namespace backend.Repository
             {
                 user.Username = userDto.Username;
             }
+
+            Env.Load();
+            var baseUrl = Environment.GetEnvironmentVariable("JWT_ISSUER");
+
             if (!string.IsNullOrEmpty(userDto.Email) && userDto.Email != user.Email)
             {
                 user.Email = userDto.Email;
@@ -153,7 +158,7 @@ namespace backend.Repository
                 user.VerificationToken = CreateRandomToken();
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
-                await _emailSettings.SendEmailAsync(user.Email, "Email Confirmation - " + $"{user.Username}", "https://localhost:7086/api/account/verifyemail/" + $"{user.VerificationToken}");
+                await _emailSettings.SendEmailAsync(user.Email, "Email Confirmation - " + $"{user.Username}", $"{baseUrl}/account/verifyemail/" + $"{user.VerificationToken}");
             }
 
             _context.Users.Update(user);

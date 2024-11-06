@@ -9,6 +9,7 @@
         public required string Language { get; set; }
         public int Reminder { get; set; }
         public required string Routes { get; set; }
+        public string Colors { get; set; }
 
 
         public virtual User? User { get; set; }
