@@ -94,7 +94,56 @@ The backend will be available at `https://localhost:7086`.
 ![Thumbnail](./assets/Zenith.png)
 _Thumbnail_
 
-[Design](https://www.figma.com/design/tWP4svUBCZxPiGxgxh3hcA/Zenith?t=FG236HG1aegHMSVp-0)
+Zenith offers a clean and modern interface to help you stay productive. Here's a visual guide to some of the core features and views within the app:
+
+### 1. Register & Log In
+
+Start by creating your account or logging in to your existing one to access your productivity hub.
+
+![Register](./assets/register.png)  
+_Registration & Login Screen_
+
+### 2. Calendar
+
+Keep track of important events and deadlines with a clean and interactive calendar view.
+
+![Calendar](./assets/calendar.png)  
+_Calendar View_
+
+### 3. Notes
+
+Write and manage your notes using markdown. Share them with collaborators and export as PDF or print directly.
+
+![Notes](./assets/notes.png)  
+_Notes Editor_
+
+### 4. To-Do Lists
+
+Manage tasks with ease. Quickly view what’s done and what’s still pending.
+
+![To-Do](./assets/todo.png)  
+_To-Do List View_
+
+### 5. Projects
+
+Organize your work into projects. Use Kanban boards to track progress and structure your tasks efficiently.
+
+![Projects](./assets/projects.png)  
+_Project Overview_
+
+### 6. Project Tasks
+
+Dive deeper into individual project boards to manage tasks with precision.
+
+![Project Tasks](./assets/projecttask.png)  
+_Project Task View_
+
+### 7. Settings
+
+Customize your app experience: themes, languages, notifications, colors, and more.
+
+![Settings](./assets/settings.png)  
+_Settings Panel_
 
 ## Getting Started
 
